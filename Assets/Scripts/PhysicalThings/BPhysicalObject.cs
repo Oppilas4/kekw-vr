@@ -10,6 +10,7 @@ namespace Kekw.PhysicalThings
     {
         private void Awake()
         {
+            // Check for collider if no found throw error.
             Collider collider = this.GetComponent<Collider>();
             if (collider == null)
             {
