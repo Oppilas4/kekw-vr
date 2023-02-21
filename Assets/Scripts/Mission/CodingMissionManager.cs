@@ -53,7 +53,6 @@ namespace Kekw.Mission
             _isActive = true;
         }
 
-
         /// <summary>
         /// <seealso cref="IMissionManager"/>
         /// </summary>
