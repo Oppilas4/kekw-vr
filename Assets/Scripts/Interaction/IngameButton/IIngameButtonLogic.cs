@@ -12,7 +12,7 @@ namespace Kekw.Interaction
     interface IIngameButtonLogic
     {
         /// <summary>
-        /// ACtion to trigger when button fires.
+        /// Action to trigger when button fires.
         /// </summary>
         public void TriggerAction();
     }
