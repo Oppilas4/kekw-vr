@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Kekw.Interaction;
 
 namespace Kekw.Mission
 {
     /// <summary>
-    /// Coding mission button actions.
+    /// Coding mission activation button scripts.
     /// </summary>
     public class CodingMissionButtonAction : MonoBehaviour, IIngameButtonLogic
     {
@@ -17,7 +15,7 @@ namespace Kekw.Mission
 
         [SerializeField]
         [Tooltip("Actual mission manager")]
-        CodingMissionManager codingMission;
+        CodingMissionManager _codingMission;
         
         /// <summary>
         /// <seealso cref="IIngameButtonLogic"/>
@@ -26,12 +24,12 @@ namespace Kekw.Mission
         {
             if (_missionStartButton)
             {
-                codingMission.OnMissionStart();
+                _codingMission.OnMissionStart();
             }
 
             if (!_missionStartButton)
             {
-                codingMission.OnMissionStop();
+                _codingMission.OnMissionStop();
             }
         }
     }

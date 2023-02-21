@@ -10,10 +10,11 @@ namespace Kekw.Mission
         [SerializeField]
         [Tooltip("Material")]
         LineRenderer _lineRenderer;
+
         Material _material;
 
         [SerializeField]
-        [Tooltip("")]
+        [Tooltip("Fill speed")]
         float _speed;
 
         [SerializeField]
@@ -22,9 +23,9 @@ namespace Kekw.Mission
 
         private bool _isActive;
 
-
         private void Awake()
         {
+            // Get reference to material/shader.
             _material = _lineRenderer.materials[0];
         }
 
@@ -32,8 +33,8 @@ namespace Kekw.Mission
         {
             if (_isActive)
             {
-                // Mission is running
-                if(_material.GetFloat("_OffsetX") >= 0.0f)
+                // Shader _OffsetX aka fill value is greater than 0. 
+                if (_material.GetFloat("_OffsetX") >= 0.0f)
                 {
                     _material.SetFloat("_OffsetX", _material.GetFloat("_OffsetX") - Time.deltaTime * _fillRate);
                 }
@@ -49,6 +50,7 @@ namespace Kekw.Mission
         /// </summary>
         public void OnMissionStart()
         {
+            // Set shader time multiplier.
             _material.SetFloat("_TimeMultiplier", _speed);
             _isActive = true;
         }
@@ -58,7 +60,8 @@ namespace Kekw.Mission
         /// </summary>
         public void OnMissionStop()
         {
-            if(_material.GetFloat("_OffsetX") > .01 && _material.GetFloat("_OffsetX") < .2f)
+            // if shader _OffsetX is in last 20% mission is success
+            if (_material.GetFloat("_OffsetX") > .01 && _material.GetFloat("_OffsetX") < .2f)
             {
                 OnMissionSuccess();
             }
