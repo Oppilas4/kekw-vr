@@ -8,8 +8,5 @@ namespace Kekw.PhysicalThings
     /// Common physical object in world. Player cannot directly interact with this.<br></br>
     /// Responds to collisions but not interactable by player.
     /// </summary>
-    public class PhysicalObject : BPhysicalObject
-    {
-        
-    } 
+    public class PhysicalObject : BPhysicalObject{} 
 }
