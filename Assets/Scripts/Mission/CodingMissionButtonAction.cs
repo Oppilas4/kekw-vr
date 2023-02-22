@@ -24,8 +24,6 @@ namespace Kekw.Mission
             if (_missionStartButton)
             {
                 _codingMission.OnMissionStart();
-               
-                   
             }
 
             if (!_missionStartButton)
