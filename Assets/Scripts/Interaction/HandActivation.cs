@@ -5,10 +5,21 @@ using UnityEngine.InputSystem;
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// Hand activation control.
+    /// Hand activation control. Provides event where state changes can be listened.
     /// </summary>
     class HandActivation: MonoBehaviour
     {
+        /// <summary>
+        /// Event type
+        /// </summary>
+        /// <param name="handsActiveState"></param>
+        public delegate void HandActiveAction(bool handsActiveState);
+
+        /// <summary>
+        /// Event that notifies listeners about state change.
+        /// </summary>
+        public static event HandActiveAction OnHandStateChanged;
+
         [SerializeField]
         [Tooltip("Left hand")]
         GameObject leftHand;
@@ -17,22 +28,22 @@ namespace Kekw.Interaction
         [Tooltip("Right hand")]
         GameObject RightHand;
 
-        InputActionManager inputActionManager;
-        InputAction handActivation;
+        InputActionManager _inputActionManager;
+        InputAction _handActivation;
 
-        private bool handsActive;
+        private bool _handsActive;
 
         private void Awake()
         {
             // Get reference to InputActionManager
-            inputActionManager = FindObjectOfType<InputActionManager>();
+            _inputActionManager = FindObjectOfType<InputActionManager>();
 
             // handactivation input action
-            handActivation = inputActionManager.actionAssets[0].FindActionMap("XRI RightHand").FindAction("HandActivate");
+            _handActivation = _inputActionManager.actionAssets[0].FindActionMap("XRI RightHand").FindAction("HandActivate");
 
             // Attach event for hand activation input action performed.
-            handActivation.performed += OnHandActivated;
-            handsActive = false;
+            _handActivation.performed += OnHandActivated;
+            _handsActive = false;
         }
 
         /// <summary>
@@ -41,9 +52,10 @@ namespace Kekw.Interaction
         /// <param name="context"></param>
         private void OnHandActivated(InputAction.CallbackContext context)
         {
-            handsActive = !handsActive;
-            RightHand.SetActive(handsActive);
-            leftHand.SetActive(handsActive);
+            _handsActive = !_handsActive;
+            RightHand.SetActive(_handsActive);
+            leftHand.SetActive(_handsActive);
+            OnHandStateChanged?.Invoke(_handsActive);
         }
     }
 }

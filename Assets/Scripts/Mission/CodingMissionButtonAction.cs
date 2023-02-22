@@ -8,7 +8,6 @@ namespace Kekw.Mission
     /// </summary>
     public class CodingMissionButtonAction : MonoBehaviour, IIngameButtonLogic
     {
-
         [SerializeField]
         [Tooltip("Is this the mission start button?")]
         bool _missionStartButton;
@@ -25,6 +24,8 @@ namespace Kekw.Mission
             if (_missionStartButton)
             {
                 _codingMission.OnMissionStart();
+               
+                   
             }
 
             if (!_missionStartButton)
