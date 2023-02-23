@@ -9,7 +9,7 @@ using System;
 namespace Kekw.Animation
 {
     /// <summary>
-    /// Handles hand animation playing in sync with user interaction.
+    /// Handles hand animation playing in sync with user interaction mode selection.
     /// </summary>
     public class HandAnimation : MonoBehaviour
     {
@@ -51,7 +51,6 @@ namespace Kekw.Animation
         /// <param name="handsActiveState"></param>
         private void ToggleColor(bool handsActiveState)
         {
-            Debug.Log("sadasd");
             // If hands are active play punch pose and change color.
             if (handsActiveState)
             {
