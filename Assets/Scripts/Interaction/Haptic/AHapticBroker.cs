@@ -10,11 +10,11 @@ namespace Kekw.Interaction
     [RequireComponent(typeof(ActionBasedController))]
     public abstract class AHapticBroker : MonoBehaviour
     {
-        ActionBasedController _xrControllerBase;
+        ActionBasedController _xrController;
 
         private void Awake()
         {
-            _xrControllerBase = GetComponent<ActionBasedController>();
+            _xrController = GetComponent<ActionBasedController>();
         }
 
         /// <summary>
@@ -22,6 +22,6 @@ namespace Kekw.Interaction
         /// </summary>
         /// <param name="amplitude"></param>
         /// <param name="duration"></param>
-        public void TriggerHapticFeedback(float amplitude, float duration) => _xrControllerBase?.SendHapticImpulse(amplitude, duration);
+        public void TriggerHapticFeedback(float amplitude, float duration) => _xrController?.SendHapticImpulse(amplitude, duration);
     } 
 }
