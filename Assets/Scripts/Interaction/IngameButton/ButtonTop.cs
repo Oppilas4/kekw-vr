@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -15,6 +13,9 @@ namespace Kekw.Interaction
 
         LeftHapticBroker _leftHapticBroker;
         RightHapticBroker _rightHapticBroker;
+
+        const float _hapticForce = .5f;
+        const float _hapticDuration = .25f;
 
         private void Awake()
         {
@@ -45,7 +46,7 @@ namespace Kekw.Interaction
         {
             if (collision.gameObject.CompareTag("IngameButton"))
             {
-                SendHapticFeedback(1f,1f);
+                SendHapticFeedback(_hapticForce, _hapticDuration);
             }
         }
 
