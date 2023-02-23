@@ -14,7 +14,7 @@ namespace Kekw.Interaction
 
         private void Awake()
         {
-            _xrControllerBase = this.GetComponent<XRController>().GetComponent<ActionBasedController>();
+            _xrControllerBase = GetComponent<ActionBasedController>();
         }
 
         /// <summary>
