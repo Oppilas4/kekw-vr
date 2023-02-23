@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
 using UnityEngine.InputSystem;
 using Kekw.Interaction;
-using System;
 
 namespace Kekw.Animation
 {

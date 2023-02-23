@@ -42,7 +42,7 @@ namespace Kekw.Interaction
             _handActivation = _inputActionManager.actionAssets[0].FindActionMap("XRI RightHand").FindAction("HandActivate");
 
             // Attach event for hand activation input action performed.
-            _handActivation.performed += OnHandActivated;
+            _handActivation.performed += OnHandActiveStatusChange;
             _handsActive = false;
         }
 
@@ -50,7 +50,7 @@ namespace Kekw.Interaction
         /// Sets hands active or deactive.
         /// </summary>
         /// <param name="context"></param>
-        private void OnHandActivated(InputAction.CallbackContext context)
+        private void OnHandActiveStatusChange(InputAction.CallbackContext context)
         {
             _handsActive = !_handsActive;
             RightHand.SetActive(_handsActive);
