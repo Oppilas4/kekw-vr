@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// Component sends haptic feedback when button bottom trigger is collided.
+    /// Component sends haptic feedback when button bottom trigger is collided with.
     /// </summary>
     public class ButtonTop : MonoBehaviour, IHapticFeedbackSender
     {
