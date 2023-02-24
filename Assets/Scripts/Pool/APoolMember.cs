@@ -8,7 +8,7 @@ namespace Kekw.Pool
     public abstract class APoolMember : MonoBehaviour
     {
 
-        private APool _ownerPool;
+        protected APool _ownerPool;
 
         /// <summary>
         /// Set pool that owns this object.

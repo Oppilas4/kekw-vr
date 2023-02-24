@@ -20,6 +20,7 @@ namespace Kekw.Pool
 
         private void Awake()
         {
+            _pool = new Queue<APoolMember>();
             // initialize pool
             for (int i = 0; i < _size; i++)
             {
@@ -37,6 +38,7 @@ namespace Kekw.Pool
         public APoolMember GetFromPool()
         {
             APoolMember poolMember = _pool.Dequeue();
+            poolMember.gameObject.SetActive(true);
             poolMember.SetOwnerPool(this);
             return poolMember;
         }
