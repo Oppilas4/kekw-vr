@@ -6,7 +6,7 @@ namespace Kekw.Interaction
     /// <summary>
     /// Component sends haptic feedback when button bottom trigger is collided with.
     /// </summary>
-    public class ButtonTop : MonoBehaviour, IHapticFeedbackSender
+    public class ButtonTop : MonoBehaviour
     {
         // Hand that presses button
         string _handTag;
@@ -29,7 +29,7 @@ namespace Kekw.Interaction
         /// </summary>
         /// <param name="amplitude"></param>
         /// <param name="duration"></param>
-        public void SendHapticFeedback(float amplitude, float duration)
+        private void SendHapticFeedback(float amplitude, float duration)
         {
             if (_handTag != null && _handTag.Equals("LeftHand"))
             {
