@@ -50,6 +50,8 @@ namespace Kekw.Animation
             _material = GetComponentInChildren<SkinnedMeshRenderer>().materials[0];
             _originalColor = _material.color;
             _inputActionManager = FindObjectOfType<InputActionManager>();
+
+            // Bind to corret inputs based on hand variable.
             switch (hand)
             {
                 case Hand.Left:
@@ -88,30 +90,6 @@ namespace Kekw.Animation
 
             // Bind to event hand active state changed.
             HandActivation.OnHandStateChanged += ToggleColor;
-
-            /*
-            // Find item hold action
-            _holdItemActionL = _inputActionManager.actionAssets[0].FindActionMap("XRI LeftHand Interaction").FindAction("Select");
-            _holdItemActionR = _inputActionManager.actionAssets[0].FindActionMap("XRI RightHand Interaction").FindAction("Select");
-            // Bind grip trigger pressed
-            _holdItemActionL.performed += OnItemHeld;
-            _holdItemActionR.performed += OnItemHeld;
-            //Bind grip trigger cancelled
-            _holdItemActionL.canceled += OnItemReleased;
-            _holdItemActionR.canceled += OnItemReleased;
-            // Bind to event hand active state changed.
-            HandActivation.OnHandStateChanged += ToggleColor;
-
-            // Find teleport activate actions
-            _teleportModeActionLeft = _inputActionManager.actionAssets[0].FindActionMap("XRI LeftHand Locomotion").FindAction("Teleport Mode Activate");
-            _teleportModeActionRight = _inputActionManager.actionAssets[0].FindActionMap("XRI RightHand Locomotion").FindAction("Teleport Mode Activate");
-            _teleportModeActionLeft.performed += TeleportModeActionPerformed;
-            _teleportModeActionRight.performed += TeleportModeActionPerformed;
-            // find and bind teleport canceled actions
-            _teleportModeActionLeftCancelled = _inputActionManager.actionAssets[0].FindActionMap("XRI LeftHand Locomotion").FindAction("Teleport Mode Cancel");
-            _teleportModeActionRightCancelled = _inputActionManager.actionAssets[0].FindActionMap("XRI RightHand Locomotion").FindAction("Teleport Mode Cancel");
-            _teleportModeActionLeftCancelled.performed += TeleportModeActionCanceled;
-            _teleportModeActionRightCancelled.performed += TeleportModeActionCanceled;*/
         }
 
         /// <summary>
