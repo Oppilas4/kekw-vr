@@ -59,7 +59,7 @@ namespace Kekw.Animation
             // find and bind teleport canceled actions
             _teleportModeActionLeftCancelled = _inputActionManager.actionAssets[0].FindActionMap("XRI LeftHand Locomotion").FindAction("Teleport Mode Cancel");
             _teleportModeActionRightCancelled = _inputActionManager.actionAssets[0].FindActionMap("XRI RightHand Locomotion").FindAction("Teleport Mode Cancel");
-            _teleportModeActionRightCancelled.performed += TeleportModeActionCanceled;
+            _teleportModeActionLeftCancelled.performed += TeleportModeActionCanceled;
             _teleportModeActionRightCancelled.performed += TeleportModeActionCanceled;
         }
 
