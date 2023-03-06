@@ -25,7 +25,7 @@ namespace Kekw.Interaction
         }
 
         /// <summary>
-        /// <seealso cref="IHapticFeedbackSender"/>
+        /// Send haptic feedback to correct hand.
         /// </summary>
         /// <param name="amplitude"></param>
         /// <param name="duration"></param>
