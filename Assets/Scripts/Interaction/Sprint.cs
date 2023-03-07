@@ -33,19 +33,21 @@ namespace Kekw.Interaction
             _sprintAction.performed += SprintActionPerformed;
             _sprintAction.canceled += SprintActionPerformed;
             _currentSpeed = _normalSpeed;
+            _targetSpeed = _normalSpeed;
         }
 
         private void Update()
         {
             // Set speed to target if delta is small enough
-            if(Mathf.Abs(_currentSpeed -_targetSpeed) < .1f)
+            if(Mathf.Abs(_currentSpeed -_targetSpeed) < .05f)
             {
                 _dynamicMoveProvider.moveSpeed = _targetSpeed;
                 return;
             }
             // Lerp towards _targetSpeed
-            _dynamicMoveProvider.moveSpeed = Mathf.Lerp(_currentSpeed, _targetSpeed, .1f * Time.deltaTime);
-            Debug.Log(_dynamicMoveProvider.moveSpeed);
+            _currentSpeed = Mathf.Lerp(_currentSpeed, _targetSpeed, 5f * Time.deltaTime);
+            _dynamicMoveProvider.moveSpeed = _currentSpeed;
+            
         }
 
         /// <summary>
