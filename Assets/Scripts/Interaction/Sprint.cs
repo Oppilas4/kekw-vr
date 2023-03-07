@@ -23,6 +23,7 @@ namespace Kekw.Interaction
         InputAction _sprintAction;
 
         float _currentSpeed;
+        float _targetSpeed;
 
         private void Awake()
         {
@@ -36,7 +37,15 @@ namespace Kekw.Interaction
 
         private void Update()
         {
-            _dynamicMoveProvider.moveSpeed = _currentSpeed;
+            // Set speed to target if delta is small enough
+            if(Mathf.Abs(_currentSpeed -_targetSpeed) < .1f)
+            {
+                _dynamicMoveProvider.moveSpeed = _targetSpeed;
+                return;
+            }
+            // Lerp towards _targetSpeed
+            _dynamicMoveProvider.moveSpeed = Mathf.Lerp(_currentSpeed, _targetSpeed, .1f * Time.deltaTime);
+            Debug.Log(_dynamicMoveProvider.moveSpeed);
         }
 
         /// <summary>
@@ -47,11 +56,11 @@ namespace Kekw.Interaction
         {
             if (context.performed)
             {
-                _currentSpeed = _sprintSpeed;
+                _targetSpeed = _sprintSpeed;
             }
             else
             {
-                _currentSpeed = _normalSpeed;
+                _targetSpeed = _normalSpeed;
             }
         }
     }
