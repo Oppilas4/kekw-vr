@@ -17,7 +17,7 @@ namespace Kekw.Example
         {
             // Find broker objects
             _leftHapticBroker = FindObjectOfType<LeftHapticBroker>();
-            _rightHapticBroker = FindFirstObjectByType<RightHapticBroker>();
+            _rightHapticBroker = FindObjectOfType<RightHapticBroker>();
         }
 
         private void OnCollisionEnter(Collision collision)
