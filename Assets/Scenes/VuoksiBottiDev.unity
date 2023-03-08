@@ -128,17 +128,17 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1343862612}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 3348710c21e8b3949a209418229ebc75,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3348710c21e8b3949a209418229ebc75,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.043062344
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3348710c21e8b3949a209418229ebc75,
         type: 3}
@@ -148,27 +148,27 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 3348710c21e8b3949a209418229ebc75,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.07475056
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3348710c21e8b3949a209418229ebc75,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.00000035762784
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3348710c21e8b3949a209418229ebc75,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3348710c21e8b3949a209418229ebc75,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3348710c21e8b3949a209418229ebc75,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3348710c21e8b3949a209418229ebc75,
         type: 3}
@@ -178,7 +178,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 3348710c21e8b3949a209418229ebc75,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3348710c21e8b3949a209418229ebc75,
         type: 3}
@@ -190,8 +190,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: VuoksiBotti
       objectReference: {fileID: 0}
+    - target: {fileID: 7227273879551335516, guid: 3348710c21e8b3949a209418229ebc75,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d079f94c33713149a80ace99baee7be, type: 2}
+    - target: {fileID: 7227273879551335516, guid: 3348710c21e8b3949a209418229ebc75,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3cc8f71c68205fb4bb4a9f7585103c5e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3348710c21e8b3949a209418229ebc75, type: 3}
+--- !u!4 &176721262 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3348710c21e8b3949a209418229ebc75,
+    type: 3}
+  m_PrefabInstance: {fileID: 176721261}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &668596874
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,7 +405,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1261324515}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 3348710c21e8b3949a209418229ebc75, type: 3}
+  m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ed5d47230fad79c45827d41416715f76, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -400,6 +416,38 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!1 &1343862611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1343862612}
+  m_Layer: 0
+  m_Name: VuoksiGbt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1343862612
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343862611}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 176721262}
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1815407560
 GameObject:
   m_ObjectHideFlags: 0
