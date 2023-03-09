@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Kekw.Common;
 
 namespace Kekw.VuoksiBotti
 {
     /// <summary>
     /// Handles bot moving and routing.
     /// </summary>
-    public class Mover : MonoBehaviour
+    public class Mover : MonoBehaviour, IPause
     {
         [SerializeField]
         [Tooltip("Baked navmesh plane data(nav mesh data) where we want random navigation points to occur.")]
@@ -29,6 +30,32 @@ namespace Kekw.VuoksiBotti
             if(_navMeshAgent.remainingDistance < .1f)
             {
                 _navMeshAgent.path = GetNewPath();
+            }
+        }
+
+        /// <summary>
+        /// <seealso cref="IPause"/>
+        /// </summary>
+        public void SetPause()
+        {
+            if (!_navMeshAgent.isStopped)
+            {
+                _navMeshAgent.isStopped = true;
+            }
+            else
+            {
+                UnPause();
+            }
+        }
+
+        /// <summary>
+        /// <seealso cref="IPause"/>
+        /// </summary>
+        public void UnPause()
+        {
+            if (_navMeshAgent.isStopped)
+            {
+                _navMeshAgent.isStopped = false;
             }
         }
 
@@ -56,5 +83,7 @@ namespace Kekw.VuoksiBotti
                 }
             }
         }
+
+       
     } 
 }

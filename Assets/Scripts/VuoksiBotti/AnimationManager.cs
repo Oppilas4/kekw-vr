@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Kekw.Common;
 
 namespace Kekw.VuoksiBotti
 {
-    class AnimationManager : MonoBehaviour
+    class AnimationManager : MonoBehaviour, IPause
     {
         /// <summary>
         /// Helper struct to identify animation layers
@@ -48,6 +49,7 @@ namespace Kekw.VuoksiBotti
 
         Coroutine activeTimer;
         bool _isPLayingRandomDance = false;
+        bool _isPaused = false;
 
         private void Start()
         {
@@ -58,31 +60,59 @@ namespace Kekw.VuoksiBotti
 
         private void Update()
         {
-            // Randomize character animation if not talking.
-            if (!IsTalking)
+            if (!_isPaused)
             {
-                if (!_isPLayingRandomDance)
+                // Randomize character animation if not talking.
+                if (!IsTalking)
                 {
-                    _isPLayingRandomDance = true;
-                    if(activeTimer != null) StopCoroutine(activeTimer);
-                    // Chance to play random dance default 30%
-                    if (UnityEngine.Random.Range(1, 101) <= _randomDanceChance)
+                    if (!_isPLayingRandomDance)
                     {
-                        this.SetRandomDanceWeight();
-                        activeTimer = StartCoroutine(ResetDance(UnityEngine.Random.Range(_danceTimeDelta.x, _danceTimeDelta.y)));
-                    }
-                    else
-                    {
-                        this.SetLayerWeights(_danceLayerRange, 0);
-                        activeTimer = StartCoroutine(ResetDance(UnityEngine.Random.Range(_danceTimeDelta.x, _danceTimeDelta.y)));
+                        _isPLayingRandomDance = true;
+                        if (activeTimer != null) StopCoroutine(activeTimer);
+                        // Chance to play random dance default 30%
+                        if (UnityEngine.Random.Range(1, 101) <= _randomDanceChance)
+                        {
+                            this.SetRandomDanceWeight();
+                            activeTimer = StartCoroutine(ResetDance(UnityEngine.Random.Range(_danceTimeDelta.x, _danceTimeDelta.y)));
+                        }
+                        else
+                        {
+                            this.SetLayerWeights(_danceLayerRange, 0);
+                            activeTimer = StartCoroutine(ResetDance(UnityEngine.Random.Range(_danceTimeDelta.x, _danceTimeDelta.y)));
+                        }
                     }
                 }
+                else
+                {
+                    this.SetTalkMode();
+                }
+            }
+        }
+
+        /// <summary>
+        /// <seealso cref="IPause"/>
+        /// </summary>
+        public void SetPause()
+        {
+            if (!_isPaused)
+            {
+                // stop animations
+                _animator.StopPlayback();
             }
             else
             {
-                this.SetTalkMode();
+                UnPause();
             }
         }
+
+        /// <summary>
+        /// <seealso cref="IPause"/>
+        /// </summary>
+        public void UnPause()
+        {
+            _animator.StartPlayback();
+        }
+
 
         /// <summary>
         /// Set character to talking mode
@@ -126,5 +156,6 @@ namespace Kekw.VuoksiBotti
             this.SetLayerWeights(_danceLayerRange, 0);
             _isPLayingRandomDance = false;
         }
+
     }
 }
