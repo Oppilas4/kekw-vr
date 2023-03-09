@@ -68,6 +68,7 @@ namespace Kekw.VuoksiBotti
                 // Randomize character animation if not talking.
                 if (!IsTalking)
                 {
+                    // Set talk layer weight to 0
                     this.SetLayerWeights(_talkingLayerRange, 0);
 
                     if (!_isPLayingRandomDance)
@@ -82,12 +83,13 @@ namespace Kekw.VuoksiBotti
                         }
                         else
                         {
+                            // play default animations
                             this.SetLayerWeights(_danceLayerRange, 0);
                             _activeTimer = StartCoroutine(ResetDance(UnityEngine.Random.Range(_danceTimeDelta.x, _danceTimeDelta.y)));
                         }
                     }
                 }
-
+                // Play talk animations
                 if(IsTalking)
                 {
                     this.SetTalkMode();

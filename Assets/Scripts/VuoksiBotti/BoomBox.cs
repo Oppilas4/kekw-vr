@@ -38,6 +38,9 @@ namespace Kekw.VuoksiBotti
             QueueNextClip();
         }
 
+        /// <summary>
+        /// Get next clip and play it.
+        /// </summary>
         private void QueueNextClip()
         {
             _currentPlaying = _clipQueue.Dequeue();
@@ -53,7 +56,7 @@ namespace Kekw.VuoksiBotti
         {
             if(_audioSource.volume > .95f)
             {
-                _audioSource.volume = 0f;
+                _audioSource.volume = .15f;
             }
             else
             {
@@ -70,22 +73,6 @@ namespace Kekw.VuoksiBotti
             {
                 _audioSource.volume = 1f;
             }
-        }
-
-        /// <summary>
-        /// Lovers volume of the boom box audio
-        /// </summary>
-        public void SetToSpeechMode()
-        {
-            _audioSource.volume = .25f;
-        }
-
-        /// <summary>
-        /// Lovers volume of the boom box audio
-        /// </summary>
-        public void ReleaseFromSpeechMode()
-        {
-            _audioSource.volume = 1f;
         }
     }
 }

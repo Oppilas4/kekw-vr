@@ -4,6 +4,9 @@ using Kekw.Common;
 
 namespace Kekw.VuoksiBotti
 {
+    /// <summary>
+    /// Vuoksi GBT robots talk chip.
+    /// </summary>
     class Talk: MonoBehaviour, IPause
     {
         [SerializeField]
@@ -59,9 +62,7 @@ namespace Kekw.VuoksiBotti
             if (!_audioSource.isPlaying && !_isTalking && !_isPaused)
             {
                 _isTalking = true;
-                NotifyAnimatorOfSpeech(true);
-                NotifyBoomBoxOfSpeech(true);
-                NotifyMoverOfSpeech(true);
+                NotifyOtherComponents(true);
                 AudioClip temp = _audioClips[UnityEngine.Random.Range(0, _audioClips.Length)];
                 _audioSource.PlayOneShot(temp);
                 StartCoroutine(WaitForSpeechEnd(temp.length + .5f));
@@ -69,60 +70,35 @@ namespace Kekw.VuoksiBotti
         }
 
         /// <summary>
-        /// Set animator to speech mode.
+        /// NOtify other components that bot should speak.
         /// </summary>
-        private void NotifyAnimatorOfSpeech(bool isTalking)
+        /// <param name="isTalking"></param>
+        private void NotifyOtherComponents(bool isTalking)
         {
             if (isTalking)
             {
                 _animationManager.IsTalking = true;
+                _mover.SetPause();
+                _boomBox.SetPause();
             }
             else
             {
                 _animationManager.IsTalking = false;
-            }
-        }
-
-        /// <summary>
-        /// Set mover component to pause mode.
-        /// </summary>
-        private void NotifyMoverOfSpeech(bool isTalking)
-        {
-            if (isTalking)
-            {
-                _mover.SetPause();
-            }
-            else
-            {
                 _mover.UnPause();
+                _boomBox.UnPause();
             }
         }
 
         /// <summary>
-        /// Lower boom box volume while talking.
+        /// Wait for audio clip to be sinished playing then notify other components.
         /// </summary>
-        private void NotifyBoomBoxOfSpeech(bool isTalking)
-        {
-            if (isTalking)
-            {
-                _boomBox.SetToSpeechMode();
-            }
-            else
-            {
-                _boomBox.ReleaseFromSpeechMode();
-            }
-        }
-
-
+        /// <param name="length"></param>
+        /// <returns></returns>
         IEnumerator WaitForSpeechEnd(float length)
         {
             yield return new WaitForSeconds(length);
-            NotifyAnimatorOfSpeech(false);
-            NotifyBoomBoxOfSpeech(false);
-            NotifyMoverOfSpeech(false);
+            NotifyOtherComponents(false);
             _isTalking = false;
         }
-
-        
     }
 }
