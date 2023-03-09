@@ -53,7 +53,7 @@ namespace Kekw.VuoksiBotti
         {
             if(_audioSource.isPlaying)
             {
-                _audioSource.Pause();
+                _audioSource.volume = 0f;
             }
             else
             {
@@ -68,7 +68,7 @@ namespace Kekw.VuoksiBotti
         {
             if (!_audioSource.isPlaying)
             {
-                _audioSource.Play();
+                _audioSource.volume = 1f;
             }
         }
 

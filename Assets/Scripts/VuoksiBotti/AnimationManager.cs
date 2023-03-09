@@ -68,6 +68,8 @@ namespace Kekw.VuoksiBotti
                 // Randomize character animation if not talking.
                 if (!IsTalking)
                 {
+                    this.SetLayerWeights(_talkingLayerRange, 0);
+
                     if (!_isPLayingRandomDance)
                     {
                         _isPLayingRandomDance = true;
@@ -85,7 +87,8 @@ namespace Kekw.VuoksiBotti
                         }
                     }
                 }
-                else
+
+                if(IsTalking)
                 {
                     this.SetTalkMode();
                 }

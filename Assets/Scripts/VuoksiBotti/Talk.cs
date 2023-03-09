@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Kekw.Interaction;
+using Kekw.Common;
 
 namespace Kekw.VuoksiBotti
 {
-    class Talk: MonoBehaviour
+    class Talk: MonoBehaviour, IPause
     {
         [SerializeField]
         [Tooltip("Animation manager component")]
@@ -28,19 +28,43 @@ namespace Kekw.VuoksiBotti
 
         bool _isTalking = false;
 
+        bool _isPaused = false;
+
+        public void SetPause()
+        {
+            if (!_isPaused)
+            {
+                _isPaused = true;
+            }
+            else
+            {
+                UnPause();
+            }
+        }
+
+        public void UnPause()
+        {
+            if (_isPaused)
+            {
+                _isPaused = false;
+            }
+        }
+
+
         /// <summary>
         /// Speak single voice line. Hook to ui button "Talk".
         /// </summary>
         public void TalkSingle()
         {
-            if (!_audioSource.isPlaying && !_isTalking)
+            if (!_audioSource.isPlaying && !_isTalking && !_isPaused)
             {
                 _isTalking = true;
                 NotifyAnimatorOfSpeech(true);
                 NotifyBoomBoxOfSpeech(true);
                 NotifyMoverOfSpeech(true);
-                _audioSource.PlayOneShot(_audioClips[UnityEngine.Random.Range(0, _audioClips.Length)]);
-                StartCoroutine(WaitForSpeechEnd(_audioSource.clip.length + .5f));
+                AudioClip temp = _audioClips[UnityEngine.Random.Range(0, _audioClips.Length)];
+                _audioSource.PlayOneShot(temp);
+                StartCoroutine(WaitForSpeechEnd(temp.length + .5f));
             }
         }
 
@@ -98,5 +122,7 @@ namespace Kekw.VuoksiBotti
             NotifyMoverOfSpeech(false);
             _isTalking = false;
         }
+
+        
     }
 }
