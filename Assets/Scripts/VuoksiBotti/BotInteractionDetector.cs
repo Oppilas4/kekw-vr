@@ -2,6 +2,7 @@
 using Kekw.Interaction;
 using System;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace Kekw.VuoksiBotti
 {
@@ -26,12 +27,17 @@ namespace Kekw.VuoksiBotti
         [Tooltip("Talk component")]
         Talk _talk;
 
+        [SerializeField]
+        [Tooltip("Ui panel to display bot buttons.")]
+        GameObject _botHelpUi;
+
 
         private void OnTriggerStay(Collider other)
         {
             // Activate bot input action map when near robot.
             if (other.gameObject.CompareTag("Player"))
             {
+                _botHelpUi.SetActive(true);
                 InputMapInitializer.NormalLeftHandActionMap.Disable();
                 InputMapInitializer.BotLeftHandActionMap.Enable();
                 InputMapInitializer.BotLeftHandActionMap.FindAction("BotPause").performed += SetBotToPause;
@@ -45,7 +51,7 @@ namespace Kekw.VuoksiBotti
             // DeActivate bot input action map when left robot proximity.
             if (other.gameObject.CompareTag("Player"))
             {
-                Debug.Log("Player has left bot assssss");
+                _botHelpUi.SetActive(false);
                 InputMapInitializer.BotLeftHandActionMap.FindAction("BotPause").performed -= SetBotToPause;
                 InputMapInitializer.BotLeftHandActionMap.FindAction("BotTalk").performed -= SetBotToTalk;
                 InputMapInitializer.NormalLeftHandActionMap.Enable();
