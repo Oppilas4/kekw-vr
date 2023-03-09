@@ -104,12 +104,12 @@ namespace Kekw.VuoksiBotti
                     StopCoroutine(_activeTimer);
                     _activeTimer = null;
                 }
+                // Stop all but base swing animation.
                 this.SetLayerWeights(_danceLayerRange, 0);
                 this.SetLayerWeights(_talkingLayerRange, 0);
+                this.SetLayerWeights(_baseLayerRange, 0);
                 _isPLayingRandomDance = false;
                 _isPaused = true;
-                // stop animations
-                _animator.StopPlayback();
             }
             else
             {
@@ -122,8 +122,12 @@ namespace Kekw.VuoksiBotti
         /// </summary>
         public void UnPause()
         {
-            _isPaused = false;
-            _animator.StartPlayback();
+            if (_isPaused)
+            {
+                // Continue with base animations.
+                this.SetLayerWeights(_baseLayerRange, 1);
+                _isPaused = false;
+            }
         }
 
 
