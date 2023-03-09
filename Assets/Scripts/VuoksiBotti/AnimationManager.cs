@@ -130,7 +130,6 @@ namespace Kekw.VuoksiBotti
             }
         }
 
-
         /// <summary>
         /// Set character to talking mode
         /// </summary>
