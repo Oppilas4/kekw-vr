@@ -55,11 +55,13 @@ namespace Kekw.VuoksiBotti
 
         private void SetBotToTalk(InputAction.CallbackContext obj)
         {
+            Debug.Log("Talking");
             _talk.TalkSingle();
         }
 
         private void SetBotToPause(InputAction.CallbackContext obj)
         {
+            Debug.Log("Pause");
             _talk.SetPause();
             _animationManager.SetPause();
             _boomBox.SetPause();
