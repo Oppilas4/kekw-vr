@@ -37,8 +37,8 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028484, g: 0.22571608, b: 0.30692434, a: 1}
+  m_Sun: {fileID: 1167882060}
+  m_IndirectSpecularColor: {r: 0.18028365, g: 0.22571495, b: 0.30692318, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -226,6 +226,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 11019cfa85a67be4084b996abe7ee3c3,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 11019cfa85a67be4084b996abe7ee3c3,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f662d2df264d1064cb7d7ae5c91fa69e, type: 2}
@@ -341,6 +346,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 124e4103b881ed745bb0db11e650b33c,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 124e4103b881ed745bb0db11e650b33c,
         type: 3}
@@ -544,6 +554,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: d9edf67fb51d6934da1d06ef135ef341,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d9edf67fb51d6934da1d06ef135ef341,
+        type: 3}
       propertyPath: m_ScaleInLightmap
       value: 0.57
       objectReference: {fileID: 0}
@@ -698,7 +713,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 2.85
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -745,14 +760,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1167882059}
-  m_LocalRotation: {x: 0.3928046, y: -0.33436936, z: 0.15591899, w: 0.84237224}
-  m_LocalPosition: {x: 1.28, y: 3.82, z: 0.68}
+  m_LocalRotation: {x: -0.422216, y: 0.03953244, z: -0.018434279, w: -0.9054452}
+  m_LocalPosition: {x: 1.759, y: 1.999, z: 0.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50, y: -43.3, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: -365, z: 0}
 --- !u!114 &1167882062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -989,6 +1004,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 5f319ac1174fc664489bb883d5a8e734,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5f319ac1174fc664489bb883d5a8e734,
+        type: 3}
       propertyPath: m_ScaleInLightmap
       value: 1
       objectReference: {fileID: 0}
@@ -1138,6 +1158,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 45769f7b95570ad41afff027b39fe3ad,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 45769f7b95570ad41afff027b39fe3ad,
+        type: 3}
       propertyPath: m_ScaleInLightmap
       value: 0.5
       objectReference: {fileID: 0}
@@ -1230,6 +1255,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a8e21106352e98c4c8abab8a254ee45b,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: a8e21106352e98c4c8abab8a254ee45b,
         type: 3}
