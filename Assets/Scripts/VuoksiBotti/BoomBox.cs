@@ -51,7 +51,7 @@ namespace Kekw.VuoksiBotti
         /// </summary>
         public void SetPause()
         {
-            if(_audioSource.isPlaying)
+            if(_audioSource.volume > .95f)
             {
                 _audioSource.volume = 0f;
             }
@@ -66,7 +66,7 @@ namespace Kekw.VuoksiBotti
         /// </summary>
         public void UnPause()
         {
-            if (!_audioSource.isPlaying)
+            if (_audioSource.volume < .95f)
             {
                 _audioSource.volume = 1f;
             }
