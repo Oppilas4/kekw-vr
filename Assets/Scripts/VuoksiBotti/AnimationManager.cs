@@ -5,6 +5,9 @@ using Kekw.Common;
 
 namespace Kekw.VuoksiBotti
 {
+    /// <summary>
+    /// VUoksi botti animation manager.
+    /// </summary>
     class AnimationManager : MonoBehaviour, IPause
     {
         /// <summary>
@@ -47,7 +50,7 @@ namespace Kekw.VuoksiBotti
         public bool IsTalking { get; set; } = false;
 
 
-        Coroutine activeTimer;
+        Coroutine _activeTimer;
         bool _isPLayingRandomDance = false;
         bool _isPaused = false;
 
@@ -68,17 +71,17 @@ namespace Kekw.VuoksiBotti
                     if (!_isPLayingRandomDance)
                     {
                         _isPLayingRandomDance = true;
-                        if (activeTimer != null) StopCoroutine(activeTimer);
+                        if (_activeTimer != null) StopCoroutine(_activeTimer);
                         // Chance to play random dance default 30%
                         if (UnityEngine.Random.Range(1, 101) <= _randomDanceChance)
                         {
                             this.SetRandomDanceWeight();
-                            activeTimer = StartCoroutine(ResetDance(UnityEngine.Random.Range(_danceTimeDelta.x, _danceTimeDelta.y)));
+                            _activeTimer = StartCoroutine(ResetDance(UnityEngine.Random.Range(_danceTimeDelta.x, _danceTimeDelta.y)));
                         }
                         else
                         {
                             this.SetLayerWeights(_danceLayerRange, 0);
-                            activeTimer = StartCoroutine(ResetDance(UnityEngine.Random.Range(_danceTimeDelta.x, _danceTimeDelta.y)));
+                            _activeTimer = StartCoroutine(ResetDance(UnityEngine.Random.Range(_danceTimeDelta.x, _danceTimeDelta.y)));
                         }
                     }
                 }
@@ -96,6 +99,15 @@ namespace Kekw.VuoksiBotti
         {
             if (!_isPaused)
             {
+                if (_activeTimer != null)
+                {
+                    StopCoroutine(_activeTimer);
+                    _activeTimer = null;
+                }
+                this.SetLayerWeights(_danceLayerRange, 0);
+                this.SetLayerWeights(_talkingLayerRange, 0);
+                _isPLayingRandomDance = false;
+                _isPaused = true;
                 // stop animations
                 _animator.StopPlayback();
             }
@@ -110,6 +122,7 @@ namespace Kekw.VuoksiBotti
         /// </summary>
         public void UnPause()
         {
+            _isPaused = false;
             _animator.StartPlayback();
         }
 

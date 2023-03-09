@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Timeline;
 using Kekw.Common;
 using UnityEngine.Playables;
 
@@ -15,17 +14,33 @@ namespace Kekw.VuoksiBotti
 
         private void Awake()
         {
-
+            _playableDirector = GetComponent<PlayableDirector>();
         }
 
+        /// <summary>
+        /// <seealso cref="IPause"/>
+        /// </summary>
         public void SetPause()
         {
-            
+            if(_playableDirector.state == PlayState.Playing)
+            {
+                _playableDirector.Pause();
+            }
+            else
+            {
+                UnPause();
+            }
         }
 
+        /// <summary>
+        /// <seealso cref="IPause"/>
+        /// </summary>
         public void UnPause()
         {
-            throw new System.NotImplementedException();
+            if (_playableDirector.state == PlayState.Paused)
+            {
+                _playableDirector.Play();
+            }
         }
     }
 }
