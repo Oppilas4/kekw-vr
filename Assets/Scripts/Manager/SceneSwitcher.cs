@@ -38,7 +38,10 @@ namespace Kekw.Manager
         public void SwitchScene(string sceneName)
         {
             this._sceneToLoad = sceneName;
-            _ppDirector.Play(_inTransition);
+            _ppDirector.playableAsset = _inTransition;
+            _ppDirector.RebuildGraph();
+            _ppDirector.time = 0f;
+            _ppDirector.Play();
             _ppDirector.played += DoSceneSwitch;
         }
         
@@ -58,15 +61,19 @@ namespace Kekw.Manager
         /// <param name="operation"></param>
         private void OnSceneLoadComplete(AsyncOperation operation)
         {
+            Debug.Log("Scene loaded");
             if (operation.isDone)
             {
-                _ppDirector.Play(_outTransition);
+                _ppDirector.playableAsset = _outTransition;
+                _ppDirector.RebuildGraph();
+                _ppDirector.time = 0f;
+                _ppDirector.Play();
             }
         }
 
         IEnumerator Test()
         {
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(2);
             SwitchScene("Empty");
         }
         
