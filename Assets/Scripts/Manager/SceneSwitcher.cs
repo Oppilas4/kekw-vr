@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.Playables;
 using System.Collections;
+using UnityEngine.Timeline;
 
 namespace Kekw.Manager
 {
@@ -16,11 +17,11 @@ namespace Kekw.Manager
 
         [SerializeField]
         [Tooltip("IN playable asset")]
-        PlayableAsset _inTransition;
+        TimelineAsset _inTransition;
 
         [SerializeField]
         [Tooltip("OUT playable asset")]
-        PlayableAsset _outTransition;
+        TimelineAsset _outTransition;
 
 
         string _sceneToLoad;
@@ -37,9 +38,9 @@ namespace Kekw.Manager
         /// <param name="sceneName">Scene name</param>
         public void SwitchScene(string sceneName)
         {
+            _ppDirector.Stop();
             this._sceneToLoad = sceneName;
             _ppDirector.playableAsset = _inTransition;
-            _ppDirector.RebuildGraph();
             _ppDirector.time = 0f;
             _ppDirector.Play();
             _ppDirector.played += DoSceneSwitch;
