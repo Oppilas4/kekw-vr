@@ -7,6 +7,8 @@ namespace Kekw.Manager
     /// </summary>
     class PlayerSingleton: MonoBehaviour
     {
+
+        public static GameObject Instance { get => _playerInstance; }
         private static GameObject _playerInstance;
 
         private void Awake()
