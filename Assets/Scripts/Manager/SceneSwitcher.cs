@@ -25,13 +25,6 @@ namespace Kekw.Manager
         string _sceneToLoad;
 
         AsyncOperation sceneLoadOperation;
-        InputActionManager _inputActionManager;
-
-
-        private void Awake()
-        {
-            _inputActionManager = FindFirstObjectByType<InputActionManager>();
-        }
 
         private void Update()
         {
@@ -52,7 +45,6 @@ namespace Kekw.Manager
         /// <param name="sceneName">Scene name</param>
         public void SwitchScene(string sceneName)
         {
-            _inputActionManager.DisableInput();
             this._sceneToLoad = sceneName;
             _ppDirector.time = 0f;
             _ppDirector.Play(_inTransition);
@@ -83,7 +75,6 @@ namespace Kekw.Manager
                 sceneLoadOperation.completed -= OnSceneLoadComplete;
                 sceneLoadOperation = null;
                 _ppDirector.stopped -= DoSceneSwitchAsync;
-                _inputActionManager.EnableInput();
             }
         }
     }
