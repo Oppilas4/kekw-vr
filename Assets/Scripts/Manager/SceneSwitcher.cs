@@ -90,7 +90,7 @@ namespace Kekw.Manager
             if (operation.isDone && sceneLoadOperation != null)
             {
                 // Update player to new position in scene while screen is black.
-                PlayerSingleton.Instance.gameObject.transform.position = _sceneJumpPosition;
+                PlayerSingleton.Instance.gameObject.GetComponentInChildren<CharacterController>().gameObject.transform.position = _sceneJumpPosition;
                 // Start scene fading.
                 _ppDirector.Play(_outTransition);
                 sceneLoadOperation.completed -= OnSceneLoadComplete;
