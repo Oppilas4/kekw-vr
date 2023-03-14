@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Playables;
-using System.Collections;
-using UnityEngine.Timeline;
+using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
 namespace Kekw.Manager
 {
@@ -17,19 +16,34 @@ namespace Kekw.Manager
 
         [SerializeField]
         [Tooltip("IN playable asset")]
-        TimelineAsset _inTransition;
+        PlayableAsset _inTransition;
 
         [SerializeField]
         [Tooltip("OUT playable asset")]
-        TimelineAsset _outTransition;
-
+        PlayableAsset _outTransition;
 
         string _sceneToLoad;
 
+        AsyncOperation sceneLoadOperation;
+        InputActionManager _inputActionManager;
 
-        private void Start()
+
+        private void Awake()
         {
-            StartCoroutine(Test());
+            _inputActionManager = FindFirstObjectByType<InputActionManager>();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.X))
+            {
+                SwitchScene("Auditorio");
+            }
+
+            if (Input.GetKeyUp(KeyCode.Z))
+            {
+                SwitchScene("World_Dev");
+            }
         }
 
         /// <summary>
@@ -38,21 +52,22 @@ namespace Kekw.Manager
         /// <param name="sceneName">Scene name</param>
         public void SwitchScene(string sceneName)
         {
-            _ppDirector.Stop();
+            _inputActionManager.DisableInput();
             this._sceneToLoad = sceneName;
-            _ppDirector.playableAsset = _inTransition;
             _ppDirector.time = 0f;
-            _ppDirector.Play();
-            _ppDirector.played += DoSceneSwitch;
+            _ppDirector.Play(_inTransition);
+            // Hook to timeline finished event.
+            _ppDirector.stopped += DoSceneSwitchAsync;
         }
         
         /// <summary>
         /// Change scene after transition complete.
         /// </summary>
         /// <param name="obj"></param>
-        private void DoSceneSwitch(PlayableDirector director)
+        private void DoSceneSwitchAsync(PlayableDirector director)
         {
-            AsyncOperation sceneLoadOperation = SceneManager.LoadSceneAsync(_sceneToLoad);
+            // Asynchronous scene change.
+            sceneLoadOperation = SceneManager.LoadSceneAsync(_sceneToLoad);
             sceneLoadOperation.completed += OnSceneLoadComplete;
         }
         
@@ -62,21 +77,14 @@ namespace Kekw.Manager
         /// <param name="operation"></param>
         private void OnSceneLoadComplete(AsyncOperation operation)
         {
-            Debug.Log("Scene loaded");
-            if (operation.isDone)
+            if (operation.isDone && sceneLoadOperation != null)
             {
-                _ppDirector.playableAsset = _outTransition;
-                _ppDirector.RebuildGraph();
-                _ppDirector.time = 0f;
-                _ppDirector.Play();
+                _ppDirector.Play(_outTransition);
+                sceneLoadOperation.completed -= OnSceneLoadComplete;
+                sceneLoadOperation = null;
+                _ppDirector.stopped -= DoSceneSwitchAsync;
+                _inputActionManager.EnableInput();
             }
         }
-
-        IEnumerator Test()
-        {
-            yield return new WaitForSeconds(2);
-            SwitchScene("Empty");
-        }
-        
     }
 }
