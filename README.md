@@ -1,4 +1,5 @@
-# kekw-vr
+# Kauhean Edistynyt Koulu, World Virtual Reality eli tyyliteltynä kekw-vr.
+
 Vr unity projekti koululle. Toteutettu koso jaksolla.
 
 
