@@ -19,6 +19,11 @@ namespace Kekw.Manager
                 temp.transform.position = this.transform.position;
                 temp.transform.rotation = this.transform.rotation;
             }
+            else
+            {
+                // Reset player position to spawn point.
+                PlayerSingleton.Instance.gameObject.transform.position = this.transform.position;
+            }
         }
     }
 }
