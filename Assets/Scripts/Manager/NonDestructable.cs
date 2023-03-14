@@ -1,16 +1,12 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Manager
+namespace Kekw.Manager
 {
     class NonDestructable: MonoBehaviour
     {
-        [SerializeField]
-        [Tooltip("Root gameobject")]
-        GameObject _root;
-        
         private void Awake()
         {
-            DontDestroyOnLoad(_root);
+            DontDestroyOnLoad(this.gameObject);
         }
     }
 }

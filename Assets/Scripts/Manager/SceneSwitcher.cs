@@ -26,6 +26,11 @@ namespace Kekw.Manager
         string _sceneToLoad;
 
 
+        private void Start()
+        {
+            StartCoroutine(Test());
+        }
+
         /// <summary>
         /// Switch scene after playing post processing animations.
         /// </summary>
