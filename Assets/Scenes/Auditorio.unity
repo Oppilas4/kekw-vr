@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: fe30b3b82af6b314cb3c550406fdb9f7,
+  m_LightingDataAsset: {fileID: 112000000, guid: 97c88beff450cd64ebc7a4e4efdffc10,
     type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: f17e643d05d86fa43a32845491aeea67,
     type: 2}
@@ -125,6 +125,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &1577532372 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1512457721869880541, guid: f5b3f178f68235d488460c2b52b5ebe2,
+    type: 3}
+  m_PrefabInstance: {fileID: 6905660842628758423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1577532374 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3470134986532987506, guid: f5b3f178f68235d488460c2b52b5ebe2,
+    type: 3}
+  m_PrefabInstance: {fileID: 6905660842628758423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!328 &1577532378
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577532372}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 32900000, guid: 1b33a60d8596d134395e9c7a1374d6fc, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: _EmissionMap
+  m_RenderMode: 3
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 0
+  m_TargetAudioSources:
+  - {fileID: 1577532374}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: https://www.youtube.com/watch?v=bOQSOcuAK7M
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 1
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1001 &5268164950146052506
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -132,6 +179,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 708602684035099046, guid: c523243b450088f4abb09d1d18878179,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 8e-45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3723308309877936869, guid: c523243b450088f4abb09d1d18878179,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 6.890596e+22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3723308309877936869, guid: c523243b450088f4abb09d1d18878179,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 1.05e-43
+      objectReference: {fileID: 0}
+    - target: {fileID: 3723308309877936869, guid: c523243b450088f4abb09d1d18878179,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 4.028617e-11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3723308309877936869, guid: c523243b450088f4abb09d1d18878179,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 4.757186e+30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4828773264587083206, guid: c523243b450088f4abb09d1d18878179,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: -3.375613e-20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4828773264587083206, guid: c523243b450088f4abb09d1d18878179,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 8.67e-43
+      objectReference: {fileID: 0}
+    - target: {fileID: 4828773264587083206, guid: c523243b450088f4abb09d1d18878179,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 1.686e-42
+      objectReference: {fileID: 0}
     - target: {fileID: 5268164951019204108, guid: c523243b450088f4abb09d1d18878179,
         type: 3}
       propertyPath: m_RootOrder
@@ -192,6 +279,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: AuditorioDev1
       objectReference: {fileID: 0}
+    - target: {fileID: 8076154418719860646, guid: c523243b450088f4abb09d1d18878179,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 3.4e-44
+      objectReference: {fileID: 0}
+    - target: {fileID: 8076154418719860646, guid: c523243b450088f4abb09d1d18878179,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 4.8e-44
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c523243b450088f4abb09d1d18878179, type: 3}
 --- !u!1001 &6905660842628758423
@@ -201,6 +298,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 230472722143927962, guid: f5b3f178f68235d488460c2b52b5ebe2,
+        type: 3}
+      propertyPath: m_TargetMaterialProperty
+      value: _BaseMap
+      objectReference: {fileID: 0}
     - target: {fileID: 6905660842739951848, guid: f5b3f178f68235d488460c2b52b5ebe2,
         type: 3}
       propertyPath: m_RootOrder
