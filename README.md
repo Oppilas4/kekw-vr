@@ -1,4 +1,4 @@
-# Kauhean Edistynyt Koulu, World Virtual Reality! 
+# Kauhean Edistynyt Koulusimulaattori, World of Virtual Reality! 
 ## Tyyliteltynä, kekw-vr.
 
 Vr unity projekti koululle. Toteutettu koso jaksolla.
