@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
 using UnityEngine.InputSystem;
+using System;
 
 namespace Kekw.Interaction
 {
     /// <summary>
     /// Hand activation control. Provides event where state changes can be listened.
     /// </summary>
+    [Obsolete("Class is deprecated, hand colliders are active all the time.", true)]
     class HandActivation: MonoBehaviour
     {
         /// <summary>
@@ -50,6 +52,7 @@ namespace Kekw.Interaction
         /// Sets hands active or deactive.
         /// </summary>
         /// <param name="context"></param>
+        [Obsolete("Input binding is deprecated", true)]
         private void OnHandActiveStatusChange(InputAction.CallbackContext context)
         {
             _handsActive = !_handsActive;

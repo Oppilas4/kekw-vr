@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
 using UnityEngine.InputSystem;
 using Kekw.Interaction;
+using System;
 
 namespace Kekw.Animation
 {
@@ -88,8 +89,8 @@ namespace Kekw.Animation
                     throw new System.Exception("Hand is not selected!");
             }
 
-            // Bind to event hand active state changed.
-            HandActivation.OnHandStateChanged += ToggleColor;
+            // Bind to event hand active state changed. Hand anctivation is deprecated
+            //HandActivation.OnHandStateChanged += ToggleColor;
         }
 
         /// <summary>
@@ -129,6 +130,7 @@ namespace Kekw.Animation
         /// Callback for event defined in <seealso cref="HandActivation"/>
         /// </summary>
         /// <param name="handsActiveState"></param>
+        [Obsolete("Method is deprecated, hand colliders are active all the time", true)]
         private void ToggleColor(bool handsActiveState)
         {
             // If hands are active play punch pose and change color.
