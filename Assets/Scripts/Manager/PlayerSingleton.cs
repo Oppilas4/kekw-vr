@@ -31,6 +31,24 @@ namespace Kekw.Manager
                 _playerInstance = this.gameObject;
                 DontDestroyOnLoad(this.gameObject);
                 SetTeleportationAreas();
+                SetInteractables();
+
+                // TODO clean up other XRInteractionManager
+                CleanUpUselessInteractionManagers();
+            }
+        }
+
+        public void CleanUpUselessInteractionManagers()
+        {
+            Debug.Log(" TODO clean up other XRInteractionManager");
+        }
+
+        public void SetInteractables()
+        {
+            XRGrabInteractable[] interactables = FindObjectsOfType<XRGrabInteractable>();
+            foreach (XRGrabInteractable interactable in interactables)
+            {
+                interactable.interactionManager = _xRInteractionManager;
             }
         }
 
