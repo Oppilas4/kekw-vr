@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 namespace Kekw.Manager
 {
@@ -7,6 +8,10 @@ namespace Kekw.Manager
     /// </summary>
     class PlayerSingleton: MonoBehaviour
     {
+
+        [SerializeField]
+        [Tooltip("XR origin teleportation provider")]
+        TeleportationProvider _teleportationProvider;
 
         public static GameObject Instance { get => _playerInstance; }
         private static GameObject _playerInstance;
@@ -21,6 +26,16 @@ namespace Kekw.Manager
             {
                 _playerInstance = this.gameObject;
                 DontDestroyOnLoad(this.gameObject);
+                SetTeleportationAreas();
+            }
+        }
+
+        public void SetTeleportationAreas()
+        {
+            TeleportationArea[] teleportationAreas = FindObjectsOfType<TeleportationArea>();
+            foreach (TeleportationArea area in teleportationAreas)
+            {
+                area.teleportationProvider = _teleportationProvider;
             }
         }
     }
