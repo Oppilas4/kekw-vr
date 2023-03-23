@@ -15,23 +15,18 @@ namespace Kekw.Interaction
         GameObject _barrel;
 
         GameObject _trackedObject;
-        bool _firstCollision = true;
 
         /// <summary>
         /// <seealso cref="IIngameButtonLogic"/>
         /// </summary>
         public void TriggerAction()
         {
-            if(_trackedObject == null && !_firstCollision)
+            if(_trackedObject == null)
             {
                 _trackedObject = Instantiate(_disinfectionVFX);
                 _trackedObject.transform.position = _barrel.transform.position;
                 _trackedObject.transform.rotation = _barrel.transform.rotation;
                 Destroy(_trackedObject.gameObject, .8f);
-            }
-            else
-            {
-                _firstCollision = false;
             }
         }
 
