@@ -9,7 +9,7 @@ namespace Kekw.Interaction
     public class ButtonTop : MonoBehaviour
     {
         // Hand that presses button
-        string _handTag;
+        string _handTag = null;
 
         LeftHapticBroker _leftHapticBroker;
         RightHapticBroker _rightHapticBroker;
@@ -17,12 +17,6 @@ namespace Kekw.Interaction
         const float _hapticForce = .5f;
         const float _hapticDuration = .25f;
 
-        private void Awake()
-        {
-            _leftHapticBroker = FindAnyObjectByType<LeftHapticBroker>();
-            _rightHapticBroker = FindAnyObjectByType<RightHapticBroker>();
-            _handTag = null;
-        }
 
         /// <summary>
         /// Send haptic feedback to correct hand.
@@ -31,6 +25,12 @@ namespace Kekw.Interaction
         /// <param name="duration"></param>
         private void SendHapticFeedback(float amplitude, float duration)
         {
+            if(_leftHapticBroker == null || _rightHapticBroker == null)
+            {
+                _leftHapticBroker = FindAnyObjectByType<LeftHapticBroker>();
+                _rightHapticBroker = FindAnyObjectByType<RightHapticBroker>();
+            }
+
             if (_handTag != null && _handTag.Equals("LeftHand"))
             {
                 _leftHapticBroker.TriggerHapticFeedback(amplitude, duration);
