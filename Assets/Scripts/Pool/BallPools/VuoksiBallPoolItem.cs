@@ -17,7 +17,7 @@ namespace Kekw.Pool
 
         private void OnCollisionEnter(UnityEngine.Collision collision)
         {
-            if (collision.gameObject.CompareTag("Floor"))
+            if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("KillPlane"))
             {
                 if(_ownerPool.GetQueueuLength() > 0)
                 {
@@ -27,7 +27,7 @@ namespace Kekw.Pool
                
                 if(_delay == null)
                 {
-                   StartCoroutine(ReturnToPoolWithDelay());
+                   _delay = StartCoroutine(ReturnToPoolWithDelay());
                 }
             }
         }

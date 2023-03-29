@@ -96,7 +96,6 @@ namespace Kekw.Manager
                 sceneLoadOperation.completed -= OnSceneLoadComplete;
                 sceneLoadOperation = null;
                 _ppDirector.stopped -= DoSceneSwitchAsync;
-                PlayerSingleton.Instance.GetComponent<PlayerSingleton>().SetupSceneXR();
             }
         }
     }
