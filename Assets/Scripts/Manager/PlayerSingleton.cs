@@ -42,9 +42,9 @@ namespace Kekw.Manager
         /// </summary>
         public void SetupSceneXR()
         {
-            SetTeleportationAreas();
-            SetInteractables();
-            CleanUpUselessInteractionManagers();
+            //SetTeleportationAreas();
+            //SetInteractables();
+            //CleanUpUselessInteractionManagers();
         }
 
         /// <summary>
