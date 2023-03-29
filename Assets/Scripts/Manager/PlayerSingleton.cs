@@ -15,10 +15,6 @@ namespace Kekw.Manager
         [Tooltip("XR origin teleportation provider")]
         TeleportationProvider _teleportationProvider;
 
-        [SerializeField]
-        [Tooltip("Xr interaction manager")]
-        XRInteractionManager _xRInteractionManager;
-
         public static GameObject Instance { get => _playerInstance; }
         private static GameObject _playerInstance;
 
