@@ -32,6 +32,20 @@ namespace Kekw.Manager
             {
                 _playerInstance = this.gameObject;
                 DontDestroyOnLoad(this.gameObject);
+                SetTeleportationAreas();
+            }
+        }
+
+        /// <summary>
+        /// Set interaction manager to all teleport areas
+        /// </summary>
+        private void SetTeleportationAreas()
+        {
+            TeleportationArea[] teleportationAreas = FindObjectsOfType<TeleportationArea>();
+            foreach (TeleportationArea area in teleportationAreas)
+            {
+                area.teleportationProvider = _teleportationProvider;
+                area.interactionManager = _xRInteractionManager;
             }
         }
     }
