@@ -45,7 +45,6 @@ namespace Kekw.Manager
             foreach (TeleportationArea area in teleportationAreas)
             {
                 area.teleportationProvider = _teleportationProvider;
-                area.interactionManager = _xRInteractionManager;
             }
         }
     }
