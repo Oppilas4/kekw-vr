@@ -18,6 +18,11 @@ namespace Kekw.Pool
             DrinkSpawnManager.OnDrinkReset += DrinkSpawnManager_OnDrinkReset;
         }
 
+        private void OnDestroy()
+        {
+            DrinkSpawnManager.OnDrinkReset -= DrinkSpawnManager_OnDrinkReset;
+        }
+
         private void DrinkSpawnManager_OnDrinkReset()
         {
             if (!_spawnedDrink.isActiveAndEnabled)
