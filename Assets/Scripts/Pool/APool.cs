@@ -10,15 +10,23 @@ namespace Kekw.Pool
     {
         [SerializeField]
         [Tooltip("Pool object prefab, must implement IPoolMember interface.")]
-        GameObject _prefab;
+        protected GameObject _prefab;
 
         [SerializeField]
         [Tooltip("Pool size")]
-        int _size;
+        protected int _size;
 
-        private Queue<APoolMember> _pool;
+        protected Queue<APoolMember> _pool;
 
         private void Awake()
+        {
+            InitializePool();
+        }
+
+        /// <summary>
+        /// Used for pool initialization can be overriden.
+        /// </summary>
+        protected virtual void InitializePool()
         {
             _pool = new Queue<APoolMember>();
             // initialize pool
@@ -41,6 +49,15 @@ namespace Kekw.Pool
             poolMember.gameObject.SetActive(true);
             poolMember.SetOwnerPool(this);
             return poolMember;
+        }
+
+        /// <summary>
+        /// Get remaining item count.
+        /// </summary>
+        /// <returns></returns>
+        public int GetQueueuLength()
+        {
+            return _pool.Count;
         }
 
         /// <summary>
