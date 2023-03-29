@@ -29,6 +29,12 @@ namespace Kekw.Interaction
            _bottomMarker = this.transform.GetChild(1);
         }
 
+        public void DestroyTrackedVFX()
+        {
+            Destroy(_trackedEffect);
+            _trackedEffect = null;
+        }
+
         private void Update()
         {
             if(_bottomMarker.transform.position.y >= _upperMarker.transform.position.y)

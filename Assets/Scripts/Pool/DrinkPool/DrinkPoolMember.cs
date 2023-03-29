@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Kekw.Interaction;
 
 namespace Kekw.Pool
 {
@@ -25,7 +26,10 @@ namespace Kekw.Pool
         {
             yield return new WaitForSeconds(5f);
             _destroyDelay = null;
-            _ownerPool.ReturnToPool(this.gameObject);
+            if(_ownerPool != null){
+                this.gameObject.GetComponentInChildren<Vatupassi>().DestroyTrackedVFX();
+                _ownerPool.ReturnToPool(this.gameObject);
+            }
             DrinkSpawnManager.RaiseEvent();
         }
     }

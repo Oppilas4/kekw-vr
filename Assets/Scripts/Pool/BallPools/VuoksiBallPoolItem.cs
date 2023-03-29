@@ -35,7 +35,9 @@ namespace Kekw.Pool
         IEnumerator ReturnToPoolWithDelay()
         {
             yield return new WaitForSeconds(2f);
-            _ownerPool.ReturnToPool(this.gameObject);
+            if(_ownerPool != null){
+                _ownerPool.ReturnToPool(this.gameObject);
+            }
             _delay = null;
         }
     }
