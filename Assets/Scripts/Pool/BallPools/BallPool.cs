@@ -19,7 +19,7 @@ namespace Kekw.Pool
             // initialize pool
             for (int i = 0; i < _size; i++)
             {
-                GameObject temp = Instantiate(_prefab);
+                GameObject temp;
                 if (i % 2 == 0)
                 {
                     temp = Instantiate(_prefab);

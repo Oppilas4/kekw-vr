@@ -52,6 +52,15 @@ namespace Kekw.Pool
         }
 
         /// <summary>
+        /// Get remaining item count.
+        /// </summary>
+        /// <returns></returns>
+        public int GetQueueuLength()
+        {
+            return _pool.Count;
+        }
+
+        /// <summary>
         /// Return to poolmember to pool.<br></br><br></br>
         /// Sets returning object inactive and moves it to pool origin.
         /// </summary>
