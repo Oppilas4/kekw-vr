@@ -23,6 +23,8 @@ namespace Kekw.Interaction
 
         GameObject _trackedEffect;
 
+        public bool IsPouring { get; private set; }
+
         private void Awake()
         {
            _upperMarker = this.transform.GetChild(0);
@@ -39,6 +41,7 @@ namespace Kekw.Interaction
         {
             if(_bottomMarker.transform.position.y >= _upperMarker.transform.position.y)
             {
+                IsPouring = true;
                 if (_trackedEffect == null)
                 {
                     _trackedEffect = Instantiate(_visualEffect);
@@ -53,6 +56,7 @@ namespace Kekw.Interaction
             }
             else if(_trackedEffect != null)
             {
+                IsPouring = false;
                 _trackedEffect.GetComponent<VisualEffect>().Stop();
                 Destroy(_trackedEffect, 3f);
                 _trackedEffect = null;

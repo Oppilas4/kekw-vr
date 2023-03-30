@@ -36,7 +36,7 @@ namespace Kekw.Interaction
 
             if (edibleType.ETYPE == EdibleTypes.DRINK)
             {
-                if (!_drinkingAudio.isPlaying)
+                if (!_drinkingAudio.isPlaying && other.GetComponentInChildren<Vatupassi>().IsPouring)
                 {
                     _drinkingAudio.Play();
                 }
