@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.VFX;
 
 namespace Kekw.Interaction
 {
@@ -8,6 +9,15 @@ namespace Kekw.Interaction
     /// </summary>
     class Mouth: MonoBehaviour
     {
+
+        [SerializeField]
+        [Tooltip("VFX to play when taking bite")]
+        VisualEffect _visualEffect;
+
+        [SerializeField]
+        [Tooltip("Eating audio")]
+        AudioSource _audioSource;
+
         Coroutine _eatingDelay;
 
         private void OnTriggerStay(Collider other)
@@ -22,6 +32,8 @@ namespace Kekw.Interaction
         {
             yield return new WaitForSeconds(1f);
             other.GetComponent<Edible>().EatChunk();
+            _visualEffect.Play();
+            _audioSource.PlayOneShot(_audioSource.clip);
             _eatingDelay = null;
         }
     }

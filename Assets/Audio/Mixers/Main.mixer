@@ -141,13 +141,19 @@ AudioMixerController:
     - 179dfa569599d8f40bb43b1c16e35513
     - 37efdb48b972593458b252adbe0305b2
     - 3f6de8ed5f318e946a8b1203f37eef12
+    - f5901164a22effa489af3816b2a0b89c
+    - 2c3aaa1f1a57d154e99318b6c6d539b6
     name: VuoksiBot
   - guids:
     - 37efdb48b972593458b252adbe0305b2
     - 3f6de8ed5f318e946a8b1203f37eef12
     - 3e8a47442c43c9643b36ae1b69d73779
     name: Auditorio
-  m_CurrentViewIndex: 1
+  - guids:
+    - f5901164a22effa489af3816b2a0b89c
+    - 2c3aaa1f1a57d154e99318b6c6d539b6
+    name: Character
+  m_CurrentViewIndex: 3
   m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
 AudioMixerGroupController:
@@ -161,6 +167,7 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: -7327410279518916730}
   - {fileID: -4478723803407951834}
+  - {fileID: 5727236247358692782}
   m_Volume: c2b2f07a66479c34da49cae1c395dd5b
   m_Pitch: c670ad8a091778a41a47ea6d9947e92e
   m_Send: 00000000000000000000000000000000
@@ -211,6 +218,20 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &1064736477397449024
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 88ac1c1419805c94ba85acc8e708c90d
+  m_EffectName: Attenuation
+  m_MixLevel: d93b2c3b2a4478a4d8c70dc067523454
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &1690091839015798903
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -225,6 +246,59 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &2622588440641284510
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 098bd0d932176fb498c84e83446d9734
+  m_EffectName: Attenuation
+  m_MixLevel: 2200636dc2c1dce4f8bdb3b9626f291b
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!243 &5727236247358692782
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Character
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: f5901164a22effa489af3816b2a0b89c
+  m_Children:
+  - {fileID: 5922146069642572291}
+  m_Volume: 15973c18daa92f949837c51a0955332a
+  m_Pitch: 76de3bb516add5349a74bf0487f0f027
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 2622588440641284510}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!243 &5922146069642572291
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Eat
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 2c3aaa1f1a57d154e99318b6c6d539b6
+  m_Children: []
+  m_Volume: 211fd44613abd0f4495d7651de3a84eb
+  m_Pitch: fbbbb2c1fa625ab4fb0b1c4eb0727995
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 1064736477397449024}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!244 &7822997571405418721
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
