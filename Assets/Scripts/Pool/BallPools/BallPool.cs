@@ -15,7 +15,6 @@ namespace Kekw.Pool
 
         protected override void InitializePool()
         {
-            _pool = new Queue<APoolMember>();
             // initialize pool
             for (int i = 0; i < _size; i++)
             {

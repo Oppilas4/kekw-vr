@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Kekw.Pool
 {
@@ -12,10 +11,11 @@ namespace Kekw.Pool
         [Tooltip("Array of available drinks in game.")]
         GameObject[] _drinkPoolObjects;
 
+        /// <summary>
+        /// <seealso cref="APool"/>
+        /// </summary>
         protected override void InitializePool()
         {
-            _pool = new Queue<APoolMember>();
-            // initialize pool
             for (int i = 0; i < _size; i++)
             {
                 GameObject temp = Instantiate(_drinkPoolObjects[Random.Range(0, _drinkPoolObjects.Length)]);

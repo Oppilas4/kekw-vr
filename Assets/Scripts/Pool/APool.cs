@@ -20,6 +20,7 @@ namespace Kekw.Pool
 
         private void Awake()
         {
+            _pool = new Queue<APoolMember>();
             InitializePool();
         }
 
@@ -28,7 +29,6 @@ namespace Kekw.Pool
         /// </summary>
         protected virtual void InitializePool()
         {
-            _pool = new Queue<APoolMember>();
             // initialize pool
             for (int i = 0; i < _size; i++)
             {

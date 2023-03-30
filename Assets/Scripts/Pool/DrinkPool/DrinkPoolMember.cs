@@ -24,12 +24,14 @@ namespace Kekw.Pool
 
         IEnumerator Delay()
         {
+            // 5 second timer.
             yield return new WaitForSeconds(5f);
             _destroyDelay = null;
             if(_ownerPool != null){
                 this.gameObject.GetComponentInChildren<Vatupassi>().DestroyTrackedVFX();
                 _ownerPool.ReturnToPool(this.gameObject);
             }
+            // Raise event that notifies spawners that: "Hey one of you should do something! For fuck sake we are missing drink!"
             DrinkSpawnManager.RaiseEvent();
         }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Kekw.Pool
 {
@@ -20,12 +19,11 @@ namespace Kekw.Pool
         public static event DrinkStateChange OnDrinkReset;
 
         /// <summary>
-        /// Raise drink state change events.
+        /// Drinks raise this event when they want to return to pool.
         /// </summary>
         public static void RaiseEvent()
         {
             OnDrinkReset?.Invoke();
         }
-
     }
 }
