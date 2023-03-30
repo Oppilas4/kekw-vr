@@ -26,7 +26,6 @@ namespace Kekw.Interaction
 
         private void OnTriggerStay(Collider other)
         {
-            Debug.Log("asdasdasd");
             EdibleType edibleType = other.GetComponentInChildren<EdibleType>();
             
             if(edibleType.ETYPE == EdibleTypes.EAT && _eatingDelay == null)
