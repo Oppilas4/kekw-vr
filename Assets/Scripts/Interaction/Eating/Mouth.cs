@@ -27,7 +27,7 @@ namespace Kekw.Interaction
         private void OnTriggerStay(Collider other)
         {
             Debug.Log("asdasdasd");
-            EdibleType edibleType = GetEdibleType(other);
+            EdibleType edibleType = other.GetComponentInChildren<EdibleType>();
             
             if(edibleType.ETYPE == EdibleTypes.EAT && _eatingDelay == null)
             {
@@ -45,23 +45,6 @@ namespace Kekw.Interaction
             }
         }
 
-        private EdibleType GetEdibleType(Collider other)
-        {
-            EdibleType edibleType;
-
-            other.TryGetComponent<EdibleType>(out edibleType);
-
-            if (!edibleType)
-            {
-                edibleType = GetComponentInChildren<EdibleType>();
-            }
-
-            if (!edibleType)
-            {
-                throw new System.Exception("Edible type missing on edible object!");
-            }
-            return edibleType;
-        }
 
         /// <summary>
         /// When edible exits
@@ -69,7 +52,7 @@ namespace Kekw.Interaction
         /// <param name="other"></param>
         private void OnTriggerExit(Collider other)
         {
-            EdibleType edibleType = GetEdibleType(other);
+            EdibleType edibleType = other.GetComponentInChildren<EdibleType>();
             if (edibleType.ETYPE == EdibleTypes.DRINK)
             {
                 _drinkingAudio.Stop();
