@@ -43,7 +43,20 @@ namespace Kekw.Interaction
                 }
             }
         }
+        
+        /// <summary>
+        /// Destroy food when it hits floor
+        /// </summary>
+        public void DestroyOnFloor()
+        {
+            _spawner.Spawn();
+            Destroy(this.transform.parent.gameObject);
+        }
 
+        /// <summary>
+        /// <seealso cref="ISpawnAble"/>
+        /// </summary>
+        /// <param name="simpleSpawn"></param>
         public void SetSpawner(SimpleSpawn simpleSpawn)
         {
             _spawner = simpleSpawn;
