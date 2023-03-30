@@ -26,8 +26,9 @@ namespace Kekw.Interaction
 
         private void OnTriggerStay(Collider other)
         {
+            Debug.Log("asdasdasd");
             EdibleType edibleType = GetEdibleType(other);
-
+            
             if(edibleType.ETYPE == EdibleTypes.EAT && _eatingDelay == null)
             {
                 _eatingDelay = StartCoroutine(EatSingleChunkDelay(other));
