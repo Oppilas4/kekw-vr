@@ -88,5 +88,10 @@ namespace Kekw.Interaction
             _leftRotation.performed -= _rotation_performed;
             _direction = 0;
         }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            Debug.Log(collision.gameObject.name);
+        }
     }
 }
