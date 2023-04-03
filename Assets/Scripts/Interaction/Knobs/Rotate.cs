@@ -22,7 +22,7 @@ namespace Kekw.Interaction
         float _speed = 1f;
 
         [SerializeField]
-        [Tooltip("Rotatin in world space")]
+        [Tooltip("Rotation axis in local space")]
         RotateArounxAxis _around;
 
         InputAction _leftRotation;
@@ -45,11 +45,11 @@ namespace Kekw.Interaction
             float direction = context.ReadValue<Quaternion>().z;
             if (direction >= 0)
             {
-                _direction = 1;
+                _direction = -1;
             }
             else
             {
-                _direction = -1;
+                _direction = 1;
             }
         }
 
