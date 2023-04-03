@@ -25,13 +25,11 @@ namespace Kekw.Interaction
         [Tooltip("Rotation axis in local space")]
         RotateArounxAxis _around;
 
-        InputAction _leftRotation;
         InputAction _rightRotation;
 
         bool _isInteracting = false;
         int _direction = 0;
 
-        byte[] _handMask = { 0, 0 };
 
         private void Start()
         {
@@ -39,17 +37,16 @@ namespace Kekw.Interaction
 
             // Controller z rotation actions
             _rightRotation = inputActionManager.actionAssets[0].FindActionMap("XRI RightHand").FindAction("Rotation");
-            _leftRotation = inputActionManager.actionAssets[0].FindActionMap("XRI LeftHand").FindAction("Rotation");
         }
 
         private void _rotation_performed(InputAction.CallbackContext context)
         {
             float direction = context.ReadValue<Quaternion>().z;
-            if (direction >= 0.15f)
+            if (direction >= 0f)
             {
                 _direction = -1;
             }
-            else if(direction <= -.15f)
+            else if(direction < 0f)
             {
                 _direction = 1;
             }
@@ -76,51 +73,23 @@ namespace Kekw.Interaction
             }
         }
 
+        /// <summary>
+        /// Called from xr grab interactable when pick up is pressed
+        /// </summary>
         public void OnKnobSelected()
         {
-            if(_handMask[0] == 1)
-            {
-                _leftRotation.performed += _rotation_performed;
-            }
-
-            if(_handMask[1] == 1)
-            {
-                _rightRotation.performed += _rotation_performed;
-            }
+            _rightRotation.performed += _rotation_performed;
             _isInteracting = true;
         }
 
+        /// <summary>
+        /// Called from xr grab interactable when pick up is pressed
+        /// </summary>
         public void OnKnobReleased()
         {
             _isInteracting = false;
-            if (_handMask[0] == 1)
-            {
-                _leftRotation.performed -= _rotation_performed;
-            }
-
-            if (_handMask[1] == 1)
-            {
-                _rightRotation.performed -= _rotation_performed;
-            }
-
-            _handMask[0] = 0;
-            _handMask[1] = 0;
+            _rightRotation.performed -= _rotation_performed;
             _direction = 0;
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            // Set hand mask to bind correct input rotation.
-            if (collision.gameObject.CompareTag("LeftHand"))
-            {
-                _handMask[0] = 1;
-                _handMask[1] = 0;
-            }
-            else if (collision.gameObject.CompareTag("RightHand"))
-            {
-                _handMask[0] = 0;
-                _handMask[1] = 1;
-            }
         }
     }
 }
