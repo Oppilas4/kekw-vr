@@ -4,6 +4,14 @@ using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
 namespace Kekw.Interaction
 {
+
+    public enum RotateArounxAxis
+    {
+        X,
+        Y,
+        Z
+    }
+
     /// <summary>
     /// Rotates knob
     /// </summary>
@@ -13,6 +21,9 @@ namespace Kekw.Interaction
         [Tooltip("Rotation speed multiplier")]
         float _speed = 1f;
 
+        [SerializeField]
+        [Tooltip("Rotatin in world space")]
+        RotateArounxAxis _around;
 
         InputAction _leftRotation;
         InputAction _rightRotation;
@@ -46,13 +57,25 @@ namespace Kekw.Interaction
         {
             if (_isInteracting)
             {
-                this.transform.Rotate(this.transform.forward, _direction * _speed);
+                switch (_around)
+                {
+                    case RotateArounxAxis.X:
+                        this.transform.rotation = Quaternion.Euler(this.transform.rotation.x + _speed * _direction, this.transform.rotation.y, this.transform.rotation.z);
+                        break;
+                    case RotateArounxAxis.Y:
+                        this.transform.rotation = Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y + _speed * _direction, this.transform.rotation.z);
+                        break;
+                    case RotateArounxAxis.Z:
+                        this.transform.rotation = Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z + _speed * _direction);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
         public void OnKnobSelected()
         {
-            Debug.Log("Knob is in hand");
             _rightRotation.performed += _rotation_performed;
             _leftRotation.performed += _rotation_performed;
             _isInteracting = true;
@@ -60,7 +83,6 @@ namespace Kekw.Interaction
 
         public void OnKnobReleased()
         {
-            Debug.Log("Knob is released from hand");
             _isInteracting = false;
             _rightRotation.performed -= _rotation_performed;
             _leftRotation.performed -= _rotation_performed;
