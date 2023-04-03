@@ -31,6 +31,8 @@ namespace Kekw.Interaction
         bool _isInteracting = false;
         int _direction = 0;
 
+        byte[] _handMask = { 0, 0 };
+
         private void Start()
         {
             InputActionManager inputActionManager = FindObjectOfType<InputActionManager>();
@@ -43,11 +45,11 @@ namespace Kekw.Interaction
         private void _rotation_performed(InputAction.CallbackContext context)
         {
             float direction = context.ReadValue<Quaternion>().z;
-            if (direction >= 0)
+            if (direction >= 0.15f)
             {
                 _direction = -1;
             }
-            else
+            else if(direction <= -.15f)
             {
                 _direction = 1;
             }
@@ -76,22 +78,49 @@ namespace Kekw.Interaction
 
         public void OnKnobSelected()
         {
-            _rightRotation.performed += _rotation_performed;
-            _leftRotation.performed += _rotation_performed;
+            if(_handMask[0] == 1)
+            {
+                _leftRotation.performed += _rotation_performed;
+            }
+
+            if(_handMask[1] == 1)
+            {
+                _rightRotation.performed += _rotation_performed;
+            }
             _isInteracting = true;
         }
 
         public void OnKnobReleased()
         {
             _isInteracting = false;
-            _rightRotation.performed -= _rotation_performed;
-            _leftRotation.performed -= _rotation_performed;
+            if (_handMask[0] == 1)
+            {
+                _leftRotation.performed -= _rotation_performed;
+            }
+
+            if (_handMask[1] == 1)
+            {
+                _rightRotation.performed -= _rotation_performed;
+            }
+
+            _handMask[0] = 0;
+            _handMask[1] = 0;
             _direction = 0;
         }
 
         private void OnCollisionEnter(Collision collision)
         {
-            Debug.Log(collision.gameObject.name);
+            // Set hand mask to bind correct input rotation.
+            if (collision.gameObject.CompareTag("LeftHand"))
+            {
+                _handMask[0] = 1;
+                _handMask[1] = 0;
+            }
+            else if (collision.gameObject.CompareTag("RightHand"))
+            {
+                _handMask[0] = 0;
+                _handMask[1] = 1;
+            }
         }
     }
 }
