@@ -25,6 +25,10 @@ namespace Kekw.Interaction
         [Tooltip("Rotation axis in local space")]
         RotateArounxAxis _around;
 
+        [SerializeField]
+        [Tooltip("Rotating source")]
+        AudioSource _rotatingAudio;
+
         InputAction _rightRotation;
 
         bool _isInteracting = false;
@@ -80,6 +84,7 @@ namespace Kekw.Interaction
         {
             _rightRotation.performed += _rotation_performed;
             _isInteracting = true;
+            _rotatingAudio.Play();
         }
 
         /// <summary>
@@ -87,6 +92,7 @@ namespace Kekw.Interaction
         /// </summary>
         public void OnKnobReleased()
         {
+            _rotatingAudio.Stop();
             _isInteracting = false;
             _rightRotation.performed -= _rotation_performed;
             _direction = 0;
