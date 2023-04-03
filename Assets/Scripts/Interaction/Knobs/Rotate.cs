@@ -9,6 +9,11 @@ namespace Kekw.Interaction
     /// </summary>
     class Rotate: MonoBehaviour
     {
+        [SerializeField]
+        [Tooltip("Rotation speed multiplier")]
+        float _speed = 1f;
+
+
         InputAction _leftRotation;
         InputAction _rightRotation;
 
@@ -21,32 +26,45 @@ namespace Kekw.Interaction
 
             // Controller z rotation actions
             _rightRotation = inputActionManager.actionAssets[0].FindActionMap("XRI RightHand").FindAction("Rotation");
-            _rightRotation.performed += _rotation_performed;
             _leftRotation = inputActionManager.actionAssets[0].FindActionMap("XRI RightHand").FindAction("Rotation");
-            _leftRotation.performed += _rotation_performed;
         }
 
         private void _rotation_performed(InputAction.CallbackContext context)
         {
-            Debug.Log(context.ReadValue<Quaternion>());
+            float direction = context.ReadValue<Quaternion>().z;
+            if (direction >= 0)
+            {
+                _direction = 1;
+            }
+            else
+            {
+                _direction = -1;
+            }
         }
 
         private void Update()
         {
             if (_isInteracting)
             {
-
+                this.transform.Rotate(this.transform.forward, _direction * _speed);
             }
         }
 
         public void OnKnobSelected()
         {
             Debug.Log("Knob is in hand");
+            _rightRotation.performed += _rotation_performed;
+            _leftRotation.performed += _rotation_performed;
+            _isInteracting = true;
         }
 
         public void OnKnobReleased()
         {
             Debug.Log("Knob is released from hand");
+            _isInteracting = false;
+            _rightRotation.performed -= _rotation_performed;
+            _leftRotation.performed -= _rotation_performed;
+            _direction = 0;
         }
     }
 }
