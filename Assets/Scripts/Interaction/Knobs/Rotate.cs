@@ -60,13 +60,13 @@ namespace Kekw.Interaction
                 switch (_around)
                 {
                     case RotateArounxAxis.X:
-                        this.transform.rotation = Quaternion.Euler(this.transform.rotation.x + _speed * _direction, this.transform.rotation.y, this.transform.rotation.z);
+                        this.transform.rotation = Quaternion.Euler(this.transform.localEulerAngles.x + _speed * _direction, this.transform.localEulerAngles.y, this.transform.localEulerAngles.z);
                         break;
                     case RotateArounxAxis.Y:
-                        this.transform.rotation = Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y + _speed * _direction, this.transform.rotation.z);
+                        this.transform.rotation = Quaternion.Euler(this.transform.localEulerAngles.x, this.transform.localEulerAngles.y + _speed * _direction, this.transform.localEulerAngles.z);
                         break;
                     case RotateArounxAxis.Z:
-                        this.transform.rotation = Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z + _speed * _direction);
+                        this.transform.rotation = Quaternion.Euler(this.transform.localEulerAngles.x, this.transform.localEulerAngles.y, this.transform.localEulerAngles.z + _speed * _direction);
                         break;
                     default:
                         break;
