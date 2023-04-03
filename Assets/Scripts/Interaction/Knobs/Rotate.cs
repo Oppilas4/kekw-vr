@@ -37,7 +37,7 @@ namespace Kekw.Interaction
 
             // Controller z rotation actions
             _rightRotation = inputActionManager.actionAssets[0].FindActionMap("XRI RightHand").FindAction("Rotation");
-            _leftRotation = inputActionManager.actionAssets[0].FindActionMap("XRI RightHand").FindAction("Rotation");
+            _leftRotation = inputActionManager.actionAssets[0].FindActionMap("XRI LeftHand").FindAction("Rotation");
         }
 
         private void _rotation_performed(InputAction.CallbackContext context)
