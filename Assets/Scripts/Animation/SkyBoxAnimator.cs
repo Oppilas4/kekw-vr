@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Kekw.Animation
 {
+    [Obsolete("Deprecated", true)]
     public class SkyBoxAnimator : MonoBehaviour
     {
         [SerializeField]

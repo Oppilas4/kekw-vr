@@ -34,7 +34,6 @@ namespace Kekw.Interaction
         bool _isInteracting = false;
         int _direction = 0;
 
-
         private void Start()
         {
             InputActionManager inputActionManager = FindObjectOfType<InputActionManager>();
@@ -48,11 +47,11 @@ namespace Kekw.Interaction
             float direction = context.ReadValue<Quaternion>().z;
             if (direction >= 0f)
             {
-                _direction = -1;
+                _direction = 1;
             }
             else if(direction < 0f)
             {
-                _direction = 1;
+                _direction = -1;
             }
         }
 
@@ -63,13 +62,22 @@ namespace Kekw.Interaction
                 switch (_around)
                 {
                     case RotateArounxAxis.X:
-                        this.transform.rotation = Quaternion.Euler(this.transform.localEulerAngles.x + _speed * _direction, this.transform.localEulerAngles.y, this.transform.localEulerAngles.z);
+                        this.transform.rotation = Quaternion.Euler(
+                            this.transform.localEulerAngles.x + _speed * _direction, 
+                            this.transform.localEulerAngles.y, 
+                            this.transform.localEulerAngles.z);
                         break;
                     case RotateArounxAxis.Y:
-                        this.transform.rotation = Quaternion.Euler(this.transform.localEulerAngles.x, this.transform.localEulerAngles.y + _speed * _direction, this.transform.localEulerAngles.z);
+                        this.transform.rotation = Quaternion.Euler(
+                            this.transform.localEulerAngles.x, 
+                            this.transform.localEulerAngles.y + _speed * _direction, 
+                            this.transform.localEulerAngles.z);
                         break;
                     case RotateArounxAxis.Z:
-                        this.transform.rotation = Quaternion.Euler(this.transform.localEulerAngles.x, this.transform.localEulerAngles.y, this.transform.localEulerAngles.z + _speed * _direction);
+                        this.transform.rotation = Quaternion.Euler(
+                            this.transform.localEulerAngles.x, 
+                            this.transform.localEulerAngles.y, 
+                            this.transform.localEulerAngles.z + _speed * _direction);
                         break;
                     default:
                         break;
