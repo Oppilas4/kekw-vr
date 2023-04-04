@@ -26,12 +26,12 @@ namespace Kekw.Interaction
         {
             if(other.gameObject.CompareTag("Player"))
             {
-                _audioShow.PlayOneShot(_audioShow.clip);
                 _target.SetActive(true);
                 if(_runningCoroutine != null)
                 {
                     StopCoroutine(_runningCoroutine);
                 }
+                _audioShow.PlayOneShot(_audioShow.clip);
                 _runningCoroutine = StartCoroutine(AnimateShow(1f, .1f));
             }
         }
