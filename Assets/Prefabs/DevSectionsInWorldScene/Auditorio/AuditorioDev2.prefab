@@ -1414,6 +1414,51 @@ Transform:
   m_Father: {fileID: 1285561874268173395}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7491674162091628575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 615082733395531846}
+  - component: {fileID: 4844108259360943490}
+  m_Layer: 0
+  m_Name: KillPlane
+  m_TagString: KillPlane
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &615082733395531846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7491674162091628575}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.63, y: -3.12, z: -6.93}
+  m_LocalScale: {x: 314.33508, y: 0.09843, z: 334.25778}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7499508175279496441}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4844108259360943490
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7491674162091628575}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7499508175279496440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1445,6 +1490,7 @@ Transform:
   - {fileID: 1285561874268173395}
   - {fileID: 716668650499936442}
   - {fileID: 6796008981840445521}
+  - {fileID: 615082733395531846}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1969,6 +2015,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df194cf713399aa4281ebc144306202f, type: 3}
+--- !u!1 &196415639219685888 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: df194cf713399aa4281ebc144306202f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1042767113909466961}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &4129328778913713713
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196415639219685888}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 331.7831, y: 274.44858, z: 7.007015}
+  m_Center: {x: -88.02272, y: -51.662262, z: -2.5035079}
 --- !u!4 &716668650499936442 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: df194cf713399aa4281ebc144306202f,
@@ -2184,6 +2249,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 55dc53433ab8b6b408f3d18a419ea8cb,
         type: 3}
+      propertyPath: m_TagString
+      value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 55dc53433ab8b6b408f3d18a419ea8cb,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -2195,8 +2265,8 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5613774875337739361}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &5005452223120889060
-BoxCollider:
+--- !u!64 &7558316819269380083
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2205,9 +2275,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.25, y: 0.24999997, z: 0.054249045}
-  m_Center: {x: 0, y: 4.5247044e-17, z: -0.016875494}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2620047837973118146, guid: 55dc53433ab8b6b408f3d18a419ea8cb, type: 3}
 --- !u!4 &5360018017239018378 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 55dc53433ab8b6b408f3d18a419ea8cb,
