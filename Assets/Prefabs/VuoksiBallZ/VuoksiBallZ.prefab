@@ -1,0 +1,235 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &348292671536412938
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2877900761224983681}
+  - component: {fileID: 4846270290564624196}
+  m_Layer: 0
+  m_Name: VuoksiBallPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2877900761224983681
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348292671536412938}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 15.528999, y: 1.241, z: -22.028}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4609311207501019095}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4846270290564624196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348292671536412938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e30cd5ffd49dc6942a45629864676d67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 3749882606615838298, guid: 880be58186f56224e91604ad78b552c0, type: 3}
+  _size: 8
+  _secondaryPoolItem: {fileID: 5546390346172996157, guid: 992d4a82e1a8e73438b9ef0f3e930679,
+    type: 3}
+  _numOfItemsAtStart: 5
+--- !u!1 &2745690779779753553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4609311207501019095}
+  m_Layer: 0
+  m_Name: VuoksiBallZ
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4609311207501019095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2745690779779753553}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 548478162066342460}
+  - {fileID: 8725193908317837133}
+  - {fileID: 2877900761224983681}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &324700375696075649
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4609311207501019095}
+    m_Modifications:
+    - target: {fileID: 7810357003325044041, guid: c357aaa251df63f41be8309967308a64,
+        type: 3}
+      propertyPath: m_Name
+      value: VuoksiBallBasket
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049856890768669900, guid: c357aaa251df63f41be8309967308a64,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049856890768669900, guid: c357aaa251df63f41be8309967308a64,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 15.533
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049856890768669900, guid: c357aaa251df63f41be8309967308a64,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.525
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049856890768669900, guid: c357aaa251df63f41be8309967308a64,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -22.006
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049856890768669900, guid: c357aaa251df63f41be8309967308a64,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049856890768669900, guid: c357aaa251df63f41be8309967308a64,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049856890768669900, guid: c357aaa251df63f41be8309967308a64,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049856890768669900, guid: c357aaa251df63f41be8309967308a64,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049856890768669900, guid: c357aaa251df63f41be8309967308a64,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049856890768669900, guid: c357aaa251df63f41be8309967308a64,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049856890768669900, guid: c357aaa251df63f41be8309967308a64,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c357aaa251df63f41be8309967308a64, type: 3}
+--- !u!4 &8725193908317837133 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9049856890768669900, guid: c357aaa251df63f41be8309967308a64,
+    type: 3}
+  m_PrefabInstance: {fileID: 324700375696075649}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6589083246132643453
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4609311207501019095}
+    m_Modifications:
+    - target: {fileID: 3156967289003372840, guid: a725aa0dd55e7aa4781b7fdbe7639cf9,
+        type: 3}
+      propertyPath: m_Name
+      value: VuoksiHoop
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696208017617110081, guid: a725aa0dd55e7aa4781b7fdbe7639cf9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696208017617110081, guid: a725aa0dd55e7aa4781b7fdbe7639cf9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 14.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696208017617110081, guid: a725aa0dd55e7aa4781b7fdbe7639cf9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.227
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696208017617110081, guid: a725aa0dd55e7aa4781b7fdbe7639cf9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -22.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696208017617110081, guid: a725aa0dd55e7aa4781b7fdbe7639cf9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696208017617110081, guid: a725aa0dd55e7aa4781b7fdbe7639cf9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696208017617110081, guid: a725aa0dd55e7aa4781b7fdbe7639cf9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696208017617110081, guid: a725aa0dd55e7aa4781b7fdbe7639cf9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696208017617110081, guid: a725aa0dd55e7aa4781b7fdbe7639cf9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696208017617110081, guid: a725aa0dd55e7aa4781b7fdbe7639cf9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696208017617110081, guid: a725aa0dd55e7aa4781b7fdbe7639cf9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a725aa0dd55e7aa4781b7fdbe7639cf9, type: 3}
+--- !u!4 &548478162066342460 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6696208017617110081, guid: a725aa0dd55e7aa4781b7fdbe7639cf9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6589083246132643453}
+  m_PrefabAsset: {fileID: 0}
