@@ -22,3 +22,12 @@ Projektet kommer att fortsätta med kommande årskurser, som även kommer att l�
 Spelet är tänkt att köras på Quest 2-hårdvara "natively" (android) och via PC.
 
 Unity 2021.3.19f1
+
+### Contributors
+
+2023
+
+- https://github.com/VuoksiPetteri
+- https://github.com/JoskaKB
+- https://github.com/JereVierula
+- https://github.com/monkeyman-69 - https://github.com/linre-90
