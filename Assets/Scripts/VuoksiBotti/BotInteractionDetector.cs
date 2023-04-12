@@ -54,8 +54,8 @@ namespace Kekw.VuoksiBotti
                 _botHelpUi.SetActive(false);
                 InputMapInitializer.BotLeftHandActionMap.FindAction("BotPause").performed -= SetBotToPause;
                 InputMapInitializer.BotLeftHandActionMap.FindAction("BotTalk").performed -= SetBotToTalk;
-                InputMapInitializer.NormalLeftHandActionMap.Enable();
                 InputMapInitializer.BotLeftHandActionMap.Disable();
+                InputMapInitializer.NormalLeftHandActionMap.Enable();
             }
         }
 
