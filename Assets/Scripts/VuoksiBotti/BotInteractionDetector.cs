@@ -51,12 +51,20 @@ namespace Kekw.VuoksiBotti
             // DeActivate bot input action map when left robot proximity.
             if (other.gameObject.CompareTag("Player"))
             {
-                _botHelpUi.SetActive(false);
-                InputMapInitializer.BotLeftHandActionMap.FindAction("BotPause").performed -= SetBotToPause;
-                InputMapInitializer.BotLeftHandActionMap.FindAction("BotTalk").performed -= SetBotToTalk;
-                InputMapInitializer.BotLeftHandActionMap.Disable();
-                InputMapInitializer.NormalLeftHandActionMap.Enable();
+                DeactivateBotInteraction();
             }
+        }
+
+        /// <summary>
+        /// Deactivates bot interaction
+        /// </summary>
+        public void DeactivateBotInteraction()
+        {
+            _botHelpUi.SetActive(false);
+            InputMapInitializer.BotLeftHandActionMap.FindAction("BotPause").performed -= SetBotToPause;
+            InputMapInitializer.BotLeftHandActionMap.FindAction("BotTalk").performed -= SetBotToTalk;
+            InputMapInitializer.BotLeftHandActionMap.Disable();
+            InputMapInitializer.NormalLeftHandActionMap.Enable();
         }
 
 

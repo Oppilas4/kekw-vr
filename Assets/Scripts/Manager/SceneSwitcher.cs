@@ -139,8 +139,9 @@ namespace Kekw.Manager
             // Animate plane to black
             if (target == 1)
             {
+                _loadingRenderer.SetActive(true);
                 // while alpha is transparent
-                while(material.color.a < .95f)
+                while (material.color.a < .95f)
                 {
                     // increment alpha
                     IncrementColorAlpha(material, target);
@@ -162,6 +163,7 @@ namespace Kekw.Manager
                 }
                 // alpha opacity has reached high enough value to do scene change
                 material.color = new Color(material.color.r, material.color.g, material.color.b, target);
+                _loadingRenderer.SetActive(false);
             }
             // after coroutine finishes set tracked routine to null.
             _runningFadeAnimation = null;
