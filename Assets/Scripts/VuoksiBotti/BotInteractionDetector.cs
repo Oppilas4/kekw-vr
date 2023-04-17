@@ -46,6 +46,11 @@ namespace Kekw.VuoksiBotti
             }
         }
 
+        private void OnDestroy()
+        {
+            DeactivateBotInteraction();
+        }
+
         private void OnTriggerExit(Collider other)
         {
             // DeActivate bot input action map when left robot proximity.
@@ -66,7 +71,6 @@ namespace Kekw.VuoksiBotti
             InputMapInitializer.BotLeftHandActionMap.Disable();
             InputMapInitializer.NormalLeftHandActionMap.Enable();
         }
-
 
         private void SetBotToTalk(InputAction.CallbackContext obj)
         {

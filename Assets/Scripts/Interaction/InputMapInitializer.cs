@@ -28,6 +28,7 @@ namespace Kekw.Interaction
             BotLeftHandActionMap = _inputActionManager.actionAssets[0].FindActionMap("XRI RightHand_botti");
             NormalLeftHandActionMap = _inputActionManager.actionAssets[0].FindActionMap("XRI RightHand");
             BotLeftHandActionMap.Disable();
+            NormalLeftHandActionMap.Enable();
         }
     }
 }
