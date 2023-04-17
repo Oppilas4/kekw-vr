@@ -125,7 +125,6 @@ namespace Kekw.Manager
                 {
                     StopCoroutine(_runningFadeAnimation);
                 }
-                
                 _runningFadeAnimation = StartCoroutine(AnimateMaterial(0f, _camBlackMaterial));
             }
         }
