@@ -26,10 +26,6 @@ namespace Kekw.Manager
         Material _camBlackMaterial;
 
         [SerializeField]
-        [Tooltip("Loading txt renderer")]
-        GameObject _loadingRenderer;
-
-        [SerializeField]
         [Tooltip("Default jump position in scenes")]
         Vector3 _defaultJumpPosition;
 
@@ -98,7 +94,7 @@ namespace Kekw.Manager
             {
                 StopCoroutine(_runningFadeAnimation);
             }
-            _loadingRenderer.SetActive(true);
+            _camBlackPlane.SetActive(false);
             _runningFadeAnimation = StartCoroutine(AnimateMaterial(1f, _camBlackMaterial));
         }
 
@@ -129,8 +125,8 @@ namespace Kekw.Manager
                 {
                     StopCoroutine(_runningFadeAnimation);
                 }
+                
                 _runningFadeAnimation = StartCoroutine(AnimateMaterial(0f, _camBlackMaterial));
-                _loadingRenderer.SetActive(false);
             }
         }
 
@@ -140,7 +136,6 @@ namespace Kekw.Manager
             // Animate plane to black
             if (target == 1)
             {
-                _loadingRenderer.SetActive(true);
                 // while alpha is transparent
                 while (material.color.a < .95f)
                 {
@@ -164,10 +159,10 @@ namespace Kekw.Manager
                 }
                 // alpha opacity has reached high enough value to do scene change
                 material.color = new Color(material.color.r, material.color.g, material.color.b, target);
-                _loadingRenderer.SetActive(false);
             }
             // after coroutine finishes set tracked routine to null.
             _runningFadeAnimation = null;
+            _camBlackPlane.SetActive(false);
         }
 
         /// <summary>
