@@ -158,10 +158,10 @@ namespace Kekw.Manager
                 }
                 // alpha opacity has reached high enough value to do scene change
                 material.color = new Color(material.color.r, material.color.g, material.color.b, target);
+                _camBlackPlane.SetActive(false);
             }
             // after coroutine finishes set tracked routine to null.
             _runningFadeAnimation = null;
-            _camBlackPlane.SetActive(false);
         }
 
         /// <summary>
