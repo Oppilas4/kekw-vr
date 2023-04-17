@@ -94,7 +94,7 @@ namespace Kekw.Manager
             {
                 StopCoroutine(_runningFadeAnimation);
             }
-            _camBlackPlane.SetActive(false);
+            _camBlackPlane.SetActive(true);
             _runningFadeAnimation = StartCoroutine(AnimateMaterial(1f, _camBlackMaterial));
         }
 
