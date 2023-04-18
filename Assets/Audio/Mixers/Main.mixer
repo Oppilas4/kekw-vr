@@ -155,7 +155,6 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 1690091839015798903}
-  - {fileID: -294540242226529250}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -278,30 +277,6 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
---- !u!244 &-294540242226529250
-AudioMixerEffectController:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_EffectID: 23ce6276a3a30bb41afaf261852703bd
-  m_EffectName: Echo
-  m_MixLevel: c5c857b179972794b90d5ed63600e145
-  m_Parameters:
-  - m_ParameterName: Delay
-    m_GUID: 64fd394200e5b4a4ab2148c23b883d6f
-  - m_ParameterName: Decay
-    m_GUID: bf42d6c792f558b4f94e58ac43e0c35e
-  - m_ParameterName: Max channels
-    m_GUID: 3a9ef035ec6b81442acc5e07fb02246e
-  - m_ParameterName: Drymix
-    m_GUID: 9d31f99e59f4d5c4aa5ad69e684fa87e
-  - m_ParameterName: Wetmix
-    m_GUID: 33ab93ef63ed3974f975da033716ebef
-  m_SendTarget: {fileID: 0}
-  m_EnableWetMix: 0
-  m_Bypass: 0
 --- !u!244 &-236635912771774038
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -387,7 +362,7 @@ AudioMixerController:
   - guids:
     - 033351f3ae5de564f8041723edb16c46
     name: VuoksiDroplet
-  m_CurrentViewIndex: 7
+  m_CurrentViewIndex: 2
   m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
 AudioMixerGroupController:
