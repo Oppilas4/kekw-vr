@@ -16,14 +16,18 @@ namespace Kekw.Interaction
         [Tooltip("Animator for this droplet")]
         Animator _animator;
 
+        [SerializeField]
+        [Tooltip("Audio play delay")]
+        float _delay = 1f;
+
         private void OnTriggerEnter(Collider other)
         {
             // Start talkin when player enters trigger
             if (other.CompareTag("Player") && !_audioSource.isPlaying)
             {
-                _audioSource.PlayOneShot(_audioSource.clip);
+                _audioSource.PlayDelayed(_delay);
                 _animator.SetBool("Talking", true);
-                StartCoroutine(ResetTalkAnimation(_audioSource.clip.length));
+                StartCoroutine(ResetTalkAnimation(_audioSource.clip.length + _delay));
             }
         }
 
