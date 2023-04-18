@@ -2,6 +2,9 @@
 
 namespace Kekw.Animation
 {
+    /// <summary>
+    /// Select idle animatioin for character.
+    /// </summary>
     public class CharacterAnimationSelector : MonoBehaviour
     {
         [SerializeField]
