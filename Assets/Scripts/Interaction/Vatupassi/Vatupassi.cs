@@ -23,7 +23,7 @@ namespace Kekw.Interaction
 
         GameObject _trackedEffect;
 
-        public bool IsPouring { get; private set; }
+        public bool IsPouring { get; set; }
 
         private void Awake()
         {
