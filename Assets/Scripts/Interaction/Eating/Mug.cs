@@ -1,12 +1,13 @@
 ﻿using System;
 using UnityEngine;
+using Kekw.Manager;
 
 namespace Kekw.Interaction
 {
     /// <summary>
     /// Fillable mug
     /// </summary>
-    class Mug : MonoBehaviour
+    class Mug : MonoBehaviour, ISpawnAble, IDestroyable
     {
         [SerializeField]
         [Tooltip("Mug filling mesh")]
@@ -26,6 +27,8 @@ namespace Kekw.Interaction
 
         private float _fillPercentage = 0f;
         bool _filling = false;
+
+        private SimpleSpawn _spawner;
 
         private void Awake()
         {
@@ -78,5 +81,20 @@ namespace Kekw.Interaction
         public void StartFill() => _filling = true;
 
         public void StopFill() => _filling = false;
+
+        public void SetSpawner(SimpleSpawn simpleSpawn) => _spawner = simpleSpawn;
+
+
+        /// <summary>
+        /// <seealso cref="IDestroyable"/>
+        /// </summary>
+        public void OnDestroyRequested()
+        {
+            if (_spawner != null)
+            {
+                _spawner.Spawn();
+                Destroy(this.transform.parent.gameObject);
+            }
+        }
     }
 }
