@@ -1,28 +1,20 @@
 using Kekw.Manager;
 using UnityEngine;
 
-public class Pinkiponkispawneri : MonoBehaviour, ISpawnAble, IDestroyable
+namespace Kekw.Interaction.PingPong
 {
-    SimpleSpawn _simpleSpawn;
-
-    /// <summary>
-    /// <seealso cref="IDestroyable"/>
-    /// </summary>
-    public void OnDestroyRequested()
+    public class Pinkiponkispawneri : MonoBehaviour
     {
-        if (_simpleSpawn != null)
+        [SerializeField]
+        [Tooltip("Spawnable object")]
+        GameObject _item;
+
+        public GameObject Spawn(PingPongManager missionManager)
         {
-            _simpleSpawn.Spawn();
-            Destroy(this.transform.parent.gameObject);
+            GameObject temp = Instantiate(_item);
+            temp.transform.SetPositionAndRotation(this.gameObject.transform.position, this.transform.rotation);
+            temp.GetComponent<PingPongItem>().SetMissionManager(missionManager);
+            return temp;
         }
-    }
-
-    /// <summary>
-    /// <seealso cref="ISpawnAble"/>
-    /// </summary>
-    /// <param name="simpleSpawn"></param>
-    public void SetSpawner(SimpleSpawn simpleSpawn)
-    {
-        _simpleSpawn = simpleSpawn;
-    }
+    } 
 }

@@ -1,26 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Kekw.Mission;
+using System.Collections.Generic;
 
-public class PingPongManager : MonoBehaviour, IMissionManager
+namespace Kekw.Interaction.PingPong
 {
-        /// <summary>
-        /// Mission managers must provide OnMIssionStart method. What happens on mission start?
-        /// </summary>
-        public void OnMissionStart();
-        /// <summary>
-        /// Mission managers must provide OnMissionStop method. What happens on mission stop?
-        /// </summary>
-        public void OnMissionStop();
+    /// <summary>
+    /// Mannages ping pong gameplay
+    /// </summary>
+    public class PingPongManager : MonoBehaviour, IMissionManager
+    {
+        [SerializeField]
+        [Tooltip("Paddle spawn point")]
+        Pinkiponkispawneri _paddleSpawn;
+
+        [SerializeField]
+        [Tooltip("Ball spawn point")]
+        Pinkiponkispawneri _ballSpawn;
+
+        List<GameObject> _trackedObjects;
+
+        //initilaize tracked game equipment list
+        private void Awake() => _trackedObjects = new List<GameObject>();
 
         /// <summary>
-        /// What happens on mission fail.
+        /// <seealso cref="IMissionManager"/>
         /// </summary>
-        public void OnMissionFail();
+        public void OnMissionStart()
+        {
+            // Todo call _paddleSpawner and _ballSpawner Spawn() method and save returned objects to _trackedObjects
+        }
 
         /// <summary>
-        /// What happens when user completes mission succesfully.
+        /// <seealso cref="IMissionManager"/>
         /// </summary>
-        public void OnMissionSuccess();
+        public void OnMissionStop()
+        {
+            // call tracked object OnDestroyRequested method on all tracked objects.
+            // clear list
+        }
+
+        /// <summary>
+        /// Never gonna win so cannot lose, pepehands...
+        /// <seealso cref="IMissionManager"/>
+        /// </summary>
+        public void OnMissionFail() => throw new System.Exception("Method is not needed in ping pong game");
+
+        /// <summary>
+        /// Never gonna win, pepehands...
+        /// <seealso cref="IMissionManager"/>
+        /// </summary>
+        public void OnMissionSuccess() => throw new System.Exception("Method is not needed in ping pong game");
+    } 
 }
 
