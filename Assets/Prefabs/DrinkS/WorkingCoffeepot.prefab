@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 5609211057316932949}
   - component: {fileID: 5609211057316932950}
   - component: {fileID: 4038511967549964734}
+  - component: {fileID: 248079861063943442}
   m_Layer: 13
   m_Name: WorkingCoffeepot
   m_TagString: Untagged
@@ -281,6 +282,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08bb75805c8ba084ea6d53013025e227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &248079861063943442
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5609211057316932905}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1730167, y: 0.126876, z: 0.14817175}
+  m_Center: {x: 0.0053239316, y: -0.014197141, z: -0.010647818}
 --- !u!1 &5609211057584077804
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +447,6 @@ GameObject:
   - component: {fileID: 3147030119797147408}
   - component: {fileID: 1477817351961396375}
   - component: {fileID: 4027567379772481501}
-  - component: {fileID: 4027567379772481500}
   m_Layer: 0
   m_Name: KaffiMesh
   m_TagString: Untagged
@@ -506,16 +519,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4027567379772481500
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8167535062910572522}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.4018712, y: 1.580517, z: 1.2259659}
-  m_Center: {x: 0.1341456, y: -0.00045343046, z: -0.12740268}
