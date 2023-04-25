@@ -21,12 +21,12 @@ namespace Kekw.Interaction.Football
         {
             if (collision.collider.gameObject.CompareTag("RightHand"))
             {
-                _rightHapticBroker.TriggerHapticFeedback(.5f, .1f);
+                _rightHapticBroker.TriggerHapticFeedback(.3f, .1f);
             }
 
             if (collision.collider.gameObject.CompareTag("LeftHand"))
             {
-                _leftHapticBroker.TriggerHapticFeedback(.5f, .1f);
+                _leftHapticBroker.TriggerHapticFeedback(.3f, .1f);
             }
         }
     }
