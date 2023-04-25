@@ -29,7 +29,6 @@ namespace Assets.Scripts.Interaction
 
         private void OnTriggerEnter(Collider other)
         {
-
             if (other.gameObject.CompareTag("RightHand") || other.gameObject.CompareTag("LeftHand"))
             {
                 if (_stickControlType == StickControlType.MOVER)
