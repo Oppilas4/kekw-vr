@@ -12,11 +12,11 @@ namespace Kekw.Interaction.Football
         Rigidbody _rb;
 
         [SerializeField]
-        [Tooltip("Ray length to positive X")]
+        [Tooltip("Ray length to positive X(Red line)")]
         float _rayLenPosX;
 
         [SerializeField]
-        [Tooltip("Ray length to negative X")]
+        [Tooltip("Ray length to negative X(Green Line)")]
         float _rayLenNegX;
 
         [SerializeField]

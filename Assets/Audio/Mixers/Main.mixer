@@ -244,6 +244,25 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!243 &-2433568005902760139
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Football
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: b3d18776018904646b5d5798bb37c085
+  m_Children: []
+  m_Volume: 86b1c1a9123ab8b408f34f34cd9a4d44
+  m_Pitch: cc55c0ff1c957bc4abd0f1336348d2b5
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 8103462387134965863}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &-1952834602660447160
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -362,7 +381,10 @@ AudioMixerController:
   - guids:
     - 033351f3ae5de564f8041723edb16c46
     name: VuoksiDroplet
-  m_CurrentViewIndex: 7
+  - guids:
+    - b3d18776018904646b5d5798bb37c085
+    name: Football
+  m_CurrentViewIndex: 8
   m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
 AudioMixerGroupController:
@@ -381,6 +403,7 @@ AudioMixerGroupController:
   - {fileID: 2995429210342006624}
   - {fileID: -4836982898222967596}
   - {fileID: 4622293314269594862}
+  - {fileID: -2433568005902760139}
   m_Volume: c2b2f07a66479c34da49cae1c395dd5b
   m_Pitch: c670ad8a091778a41a47ea6d9947e92e
   m_Send: 00000000000000000000000000000000
@@ -421,6 +444,7 @@ AudioMixerSnapshotController:
     211fd44613abd0f4495d7651de3a84eb: 7.3797894
     db23d3c86fd3a3244a9e5f5681701d42: -6.556617
     98ab92e82456af54ea07520e9d60a910: 12.034826
+    86b1c1a9123ab8b408f34f34cd9a4d44: -19.928473
     c2313f2a014e93745831278a885aaa18: -1.7612991
     380df87b641c3ce48a9c02514d300850: 18.449533
     ce42b94cdaadd2b408f5a594bab55552: -17.29471
@@ -746,6 +770,20 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &8103462387134965863
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: d2dddffc6525cf544a2e24e1282444a0
+  m_EffectName: Attenuation
+  m_MixLevel: 42b81b474466a664188d5395b1921cca
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &8112058153163313382
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
