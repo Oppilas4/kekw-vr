@@ -31,7 +31,17 @@ namespace Kekw.Interaction.PingPong
         /// </summary>
         public void OnMissionStart()
         {
-            // Todo call _paddleSpawner and _ballSpawner Spawn() method and save returned objects to _trackedObjects
+            if(_trackedObjects.Count==0)
+            {
+                _trackedObjects.Add(_paddleSpawn.Spawn(this));
+                _trackedObjects.Add(_ballSpawn.Spawn(this));
+                _pingPongRoboAnimator.SetGameMode(true);
+            }
+            else
+            {
+                OnMissionStop();
+                OnMissionStart();
+            }
         }
 
         /// <summary>
@@ -39,8 +49,12 @@ namespace Kekw.Interaction.PingPong
         /// </summary>
         public void OnMissionStop()
         {
-            // call tracked object OnDestroyRequested method on all tracked objects.
-            // clear list
+            for(int i = 0; i<_trackedObjects.Count; i++)
+            {
+                _trackedObjects[i].GetComponent<PingPongItem>().OnDestroyRequested();
+            }
+            _trackedObjects.Clear();
+            _pingPongRoboAnimator.SetGameMode(false);
         }
 
         /// <summary>
