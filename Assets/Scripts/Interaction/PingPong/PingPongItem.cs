@@ -24,8 +24,10 @@ namespace Kekw.Interaction.PingPong
 
         private void OnCollisionEnter(Collision collision)
         {
-            // Todo check if floor || killPlane tag
-            // Call MANAGER on mission stop
+            if(collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("KillPlane"))
+            {
+               _missionManager.OnMissionStop();
+            }
         }
     }
 }
