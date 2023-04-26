@@ -32,6 +32,7 @@ namespace Kekw.Interaction.PingPong
         public void OnMissionStart()
         {
             // Todo call _paddleSpawner and _ballSpawner Spawn() method and save returned objects to _trackedObjects
+            // Call xxx.SetMissionManager(this);
         }
 
         /// <summary>
