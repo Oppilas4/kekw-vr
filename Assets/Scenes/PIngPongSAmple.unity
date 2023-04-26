@@ -661,6 +661,7 @@ GameObject:
   - component: {fileID: 1285085904}
   - component: {fileID: 1285085905}
   - component: {fileID: 1285085903}
+  - component: {fileID: 1285085906}
   m_Layer: 0
   m_Name: Collider_Right
   m_TagString: Untagged
@@ -704,12 +705,24 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1285085902}
-  m_Material: {fileID: 13400000, guid: 2d65c328f50c31e43a055286104bffe0, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.19669527, y: 0.5433577, z: 0.09229565}
   m_Center: {x: -0.10093585, y: -0.077210814, z: -0.11376524}
+--- !u!114 &1285085906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285085902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bab2f7b930c57ba4497390d9a7984f6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1447443042
 GameObject:
   m_ObjectHideFlags: 0
@@ -972,6 +985,7 @@ GameObject:
   - component: {fileID: 1974230438}
   - component: {fileID: 1974230440}
   - component: {fileID: 1974230439}
+  - component: {fileID: 1974230441}
   m_Layer: 0
   m_Name: Collider_Left
   m_TagString: Untagged
@@ -1015,12 +1029,24 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974230437}
-  m_Material: {fileID: 13400000, guid: 2d65c328f50c31e43a055286104bffe0, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.20180845, y: 0.54327726, z: 0.09177017}
   m_Center: {x: 0.09838998, y: -0.07718307, z: -0.11480427}
+--- !u!114 &1974230441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974230437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bab2f7b930c57ba4497390d9a7984f6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &543450653351214475 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8415197998201699740, guid: 7864a3a0045cb7c4289b2ca87e6e8b21,
@@ -1034,6 +1060,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 424662173}
     m_Modifications:
+    - target: {fileID: 900479401787294906, guid: 7864a3a0045cb7c4289b2ca87e6e8b21,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575593632151175378, guid: 7864a3a0045cb7c4289b2ca87e6e8b21,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1.2400138
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575593632151175378, guid: 7864a3a0045cb7c4289b2ca87e6e8b21,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575593632151175378, guid: 7864a3a0045cb7c4289b2ca87e6e8b21,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0.002299746
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575593632151175378, guid: 7864a3a0045cb7c4289b2ca87e6e8b21,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -0.0270868
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575593632151175378, guid: 7864a3a0045cb7c4289b2ca87e6e8b21,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.88230896
+      objectReference: {fileID: 0}
+    - target: {fileID: 7242884563313886963, guid: 7864a3a0045cb7c4289b2ca87e6e8b21,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fdb0fcf1899f19b4ca23c53bbbbf07db, type: 2}
+    - target: {fileID: 7242884563313886963, guid: 7864a3a0045cb7c4289b2ca87e6e8b21,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: fdb0fcf1899f19b4ca23c53bbbbf07db, type: 2}
     - target: {fileID: 8415197998201699740, guid: 7864a3a0045cb7c4289b2ca87e6e8b21,
         type: 3}
       propertyPath: m_RootOrder
