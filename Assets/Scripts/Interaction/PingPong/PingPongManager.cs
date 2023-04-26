@@ -11,12 +11,12 @@ namespace Kekw.Interaction.PingPong
     {
         [SerializeField]
         [Tooltip("Paddle spawn point")]
-        Pinkiponkispawneri _paddleSpawn;
+        PingPongSpawner _paddleSpawn;
 
         [SerializeField]
         [Tooltip("Ball spawn point")]
-        Pinkiponkispawneri _ballSpawn;
-
+        PingPongSpawner _ballSpawn;
+        
         [SerializeField]
         [Tooltip("Robo animator")]
         PingPongRoboAnimator _pingPongRoboAnimator;
