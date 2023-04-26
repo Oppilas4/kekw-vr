@@ -31,6 +31,7 @@ namespace Kekw.Interaction.PingPong
         /// </summary>
         public void OnMissionStart()
         {
+
             if(_trackedObjects.Count==0)
             {
                 _trackedObjects.Add(_paddleSpawn.Spawn(this));
@@ -42,6 +43,7 @@ namespace Kekw.Interaction.PingPong
                 OnMissionStop();
                 OnMissionStart();
             }
+
         }
 
         /// <summary>
