@@ -4,7 +4,7 @@ namespace Kekw.Interaction.PingPong
 {
     class PingPongRoboHit:MonoBehaviour
     {
-        public float PINGPONG_BOT_FORCE = .15f;
+        public float PINGPONG_BOT_FORCE = .35f;
 
         private void OnCollisionEnter(Collision collision)
         {
