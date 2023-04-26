@@ -4,7 +4,7 @@ namespace Kekw.Interaction.PingPong
 {
     class PingPongRoboHit:MonoBehaviour
     {
-        protected readonly static float PINGPONG_BOT_FORCE = 2f;
+        public float PINGPONG_BOT_FORCE = .3f;
 
         Rigidbody _cache;
 
