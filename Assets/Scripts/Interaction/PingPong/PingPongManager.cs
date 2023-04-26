@@ -7,7 +7,7 @@ namespace Kekw.Interaction.PingPong
     /// <summary>
     /// Mannages ping pong gameplay
     /// </summary>
-    public class PingPongManager : MonoBehaviour, IMissionManager
+    public class PingPongManager : MonoBehaviour, IMissionManager, IIngameButtonLogic
     {
         [SerializeField]
         [Tooltip("Paddle spawn point")]
@@ -54,6 +54,8 @@ namespace Kekw.Interaction.PingPong
         /// <seealso cref="IMissionManager"/>
         /// </summary>
         public void OnMissionSuccess() => throw new System.Exception("Method is not needed in ping pong game");
+
+        public void TriggerAction() => OnMissionStart();
     } 
 }
 
