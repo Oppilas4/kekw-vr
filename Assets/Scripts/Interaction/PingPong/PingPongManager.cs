@@ -17,6 +17,10 @@ namespace Kekw.Interaction.PingPong
         [Tooltip("Ball spawn point")]
         Pinkiponkispawneri _ballSpawn;
 
+        [SerializeField]
+        [Tooltip("Robo animator")]
+        PingPongRoboAnimator _pingPongRoboAnimator;
+
         List<GameObject> _trackedObjects;
 
         //initilaize tracked game equipment list
