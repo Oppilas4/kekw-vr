@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Kekw.Interaction.PingPong
 {
-    public class Pinkiponkispawneri : MonoBehaviour
+    public class PingPongSpawner : MonoBehaviour
     {
         [SerializeField]
         [Tooltip("Spawnable object")]
