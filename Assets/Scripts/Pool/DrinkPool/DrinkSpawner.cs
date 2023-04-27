@@ -7,16 +7,30 @@ namespace Kekw.Pool
     /// </summary>
     class DrinkSpawner: MonoBehaviour
     {
+        [SerializeField]
+        [Tooltip("Spawn at start")]
+        bool _spawnAtStart = true;
+
+        [SerializeField]
+        [Tooltip("Spawn new on destroy")]
+        bool _spawnOnDestroy = true;
+
         DrinkPool _drinkPool;
         APoolMember _spawnedDrink;
 
         private void Start()
         {
             _drinkPool = FindObjectOfType<DrinkPool>();
-            _spawnedDrink = _drinkPool.GetFromPool();
-            _spawnedDrink.transform.position = this.transform.position;
-            // Subscribe to event that is fired when drinks want to reset back to pool.
-            DrinkSpawnManager.OnDrinkReset += DrinkSpawnManager_OnDrinkReset;
+            if (_spawnAtStart)
+            {
+                _spawnedDrink = _drinkPool.GetFromPool();
+                _spawnedDrink.transform.position = this.transform.position;
+            }
+            if (_spawnOnDestroy)
+            {
+                // Subscribe to event that is fired when drinks want to reset back to pool.
+                DrinkSpawnManager.OnDrinkReset += DrinkSpawnManager_OnDrinkReset;
+            }
         }
 
         private void OnDestroy()
@@ -38,6 +52,30 @@ namespace Kekw.Pool
                     _spawnedDrink = _drinkPool.GetFromPool();
                     _spawnedDrink.transform.position = this.transform.position;
                 }
+                else
+                {
+                    Debug.LogWarning("Drink pool is empty");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Spawn drink manually.
+        /// </summary>
+        /// <returns></returns>
+        public APoolMember SpawnDrink()
+        {
+
+            if (_drinkPool.GetQueueuLength() > 0)
+            {
+                _spawnedDrink = _drinkPool.GetFromPool();
+                _spawnedDrink.transform.position = this.transform.position;
+                return _spawnedDrink;
+            }
+            else
+            {
+                Debug.LogWarning("Drink pool is empty");
+                return null;
             }
         }
     }
