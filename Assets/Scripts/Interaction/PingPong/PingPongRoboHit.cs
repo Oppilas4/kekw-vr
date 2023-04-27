@@ -4,7 +4,15 @@ namespace Kekw.Interaction.PingPong
 {
     class PingPongRoboHit:MonoBehaviour
     {
-        public float PINGPONG_BOT_FORCE = .35f;
+        public float _forceForward = .25f;
+        public float _forceUp = .25f;
+
+        Vector3 _hitDirection;
+
+        private void Awake()
+        {
+            _hitDirection = new Vector3(0f, 1f * _forceUp, 1f * _forceForward);
+        }
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -16,8 +24,11 @@ namespace Kekw.Interaction.PingPong
                 ballBody.velocity = Vector3.zero;
                 ballBody.isKinematic = false;
                 // <----- Stopping ball at robot
-                // "Hitting"
-                ballBody.AddForce(Vector3.forward * PINGPONG_BOT_FORCE, ForceMode.Impulse);
+#if UNITY_EDITOR
+                _hitDirection.y = 1f * _forceUp;
+                _hitDirection.z = 1f * _forceForward;
+#endif
+                ballBody.AddForce(_hitDirection, ForceMode.Impulse);
             }
         }
     }
