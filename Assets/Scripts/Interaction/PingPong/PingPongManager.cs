@@ -21,7 +21,12 @@ namespace Kekw.Interaction.PingPong
         [Tooltip("Robo animator")]
         PingPongRoboAnimator _pingPongRoboAnimator;
 
+        [SerializeField]
+        [Tooltip("GAme over audio")]
+        AudioSource _gameOver;
+
         List<GameObject> _trackedObjects;
+
 
         //initilaize tracked game equipment list
         private void Awake() => _trackedObjects = new List<GameObject>();
@@ -57,6 +62,7 @@ namespace Kekw.Interaction.PingPong
             }
             _trackedObjects.Clear();
             _pingPongRoboAnimator.SetGameMode(false);
+            _gameOver.PlayOneShot(_gameOver.clip);
         }
 
         /// <summary>

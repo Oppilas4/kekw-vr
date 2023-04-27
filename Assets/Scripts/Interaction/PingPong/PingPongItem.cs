@@ -11,6 +11,10 @@ namespace Kekw.Interaction.PingPong
     {
         PingPongManager _missionManager;
 
+        [SerializeField]
+        [Tooltip("Play hit audio if assigned ")]
+        AudioSource _BallHitAudio;
+
         /// <summary>
         /// <seealso cref="IDestroyable"/>
         /// </summary>
@@ -24,10 +28,16 @@ namespace Kekw.Interaction.PingPong
 
         private void OnCollisionEnter(Collision collision)
         {
+            if (_BallHitAudio != null)
+            {
+                _BallHitAudio.PlayOneShot(_BallHitAudio.clip);
+            }
+
             if(collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("KillPlane"))
             {
                _missionManager.OnMissionStop();
             }
+            
         }
     }
 }
