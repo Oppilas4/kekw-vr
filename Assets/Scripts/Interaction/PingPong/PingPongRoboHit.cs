@@ -17,7 +17,9 @@ namespace Kekw.Interaction.PingPong
 
         private void Awake()
         {
-            _hitDirection = new Vector3(0f, 1f * _forceUp, 1f * _forceForward);
+            _hitDirection = transform.forward;
+            _hitDirection *= _forceForward;
+            _hitDirection.y = 1f * _forceUp;
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -31,8 +33,10 @@ namespace Kekw.Interaction.PingPong
                 ballBody.isKinematic = false;
                 // <----- Stopping ball at robot
 #if UNITY_EDITOR
+                _hitDirection = transform.forward;
+                _hitDirection *= _forceForward;
                 _hitDirection.y = 1f * _forceUp;
-                _hitDirection.z = 1f * _forceForward;
+                
 #endif
                 ballBody.AddForce(_hitDirection, ForceMode.Impulse);
             }
