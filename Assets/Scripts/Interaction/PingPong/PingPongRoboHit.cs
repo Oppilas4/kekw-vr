@@ -12,9 +12,6 @@ namespace Kekw.Interaction.PingPong
         [Tooltip("Upward hit force")]
         private float _forceUp = .25f;
 
-        [SerializeField]
-        [Tooltip("Ballhit audio")]
-        AudioSource _ballHitAudio;
 
         Vector3 _hitDirection;
 
@@ -38,7 +35,6 @@ namespace Kekw.Interaction.PingPong
                 _hitDirection.z = 1f * _forceForward;
 #endif
                 ballBody.AddForce(_hitDirection, ForceMode.Impulse);
-                _ballHitAudio.PlayOneShot(_ballHitAudio.clip);
             }
         }
     }
