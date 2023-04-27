@@ -119,6 +119,7 @@ namespace Kekw.Manager
             {
                 // Update player to new position in scene while screen is black.
                 PlayerSingleton.Instance.gameObject.GetComponentInChildren<CharacterController>().gameObject.transform.position = _sceneJumpPosition;
+                // TODO maybe set rotation
                 sceneLoadOperation.completed -= OnSceneLoadComplete;
                 sceneLoadOperation = null;
                 if (_runningFadeAnimation != null)
