@@ -4,8 +4,13 @@ namespace Kekw.Interaction.PingPong
 {
     class PingPongRoboHit:MonoBehaviour
     {
-        public float _forceForward = .25f;
-        public float _forceUp = .25f;
+        [SerializeField]
+        [Tooltip("Forward hit force")]
+        private float _forceForward = .25f;
+
+        [SerializeField]
+        [Tooltip("Upward hit force")]
+        private float _forceUp = .25f;
 
         Vector3 _hitDirection;
 
