@@ -1,14 +1,24 @@
-using Kekw.Manager;
 using UnityEngine;
 
 namespace Kekw.Interaction.PingPong
 {
+    /// <summary>
+    /// Spawns needed objects to ping pong game.
+    /// </summary>
     public class PingPongSpawner : MonoBehaviour
     {
+        /// <summary>
+        /// What item should this spawn.
+        /// </summary>
         [SerializeField]
         [Tooltip("Spawnable object")]
         GameObject _item;
 
+        /// <summary>
+        /// Spawn <see cref="_item"/> to gameworld and set owning manager.
+        /// </summary>
+        /// <param name="missionManager"></param>
+        /// <returns></returns>
         public GameObject Spawn(PingPongManager missionManager)
         {
             GameObject temp = Instantiate(_item);

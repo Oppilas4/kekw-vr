@@ -1,14 +1,22 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Kekw.Interaction.PingPong
 {
+    /// <summary>
+    /// Animates ping pong opponent robot based on _triggerName string.
+    /// </summary>
     class PingPongRoboAnimator: MonoBehaviour
     {
+        /// <summary>
+        /// Trigger to trigger in animator.
+        /// </summary>
         [SerializeField]
         [Tooltip("Trigger to trigger")]
         string _triggerName;
 
+        /// <summary>
+        /// Animator component
+        /// </summary>
         [SerializeField]
         [Tooltip("Robo animator")]
         Animator _roboAnimator;
