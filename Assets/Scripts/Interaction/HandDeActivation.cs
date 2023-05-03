@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
-namespace Assets.Scripts.Interaction
+namespace Kekw.Interaction
 {
     /// <summary>
     /// Deactivates hand colliders when holding item in hand to avoid unwanted collisions.
