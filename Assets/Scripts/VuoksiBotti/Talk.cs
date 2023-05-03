@@ -9,22 +9,37 @@ namespace Kekw.VuoksiBotti
     /// </summary>
     class Talk: MonoBehaviour, IPause
     {
+        /// <summary>
+        /// Bots animation manager
+        /// </summary>
         [SerializeField]
         [Tooltip("Animation manager component")]
         AnimationManager _animationManager;
 
+        /// <summary>
+        /// Bots boombox
+        /// </summary>
         [SerializeField]
         [Tooltip("BoomBox component")]
         BoomBox _boomBox;
 
+        /// <summary>
+        /// Bots mover
+        /// </summary>
         [SerializeField]
         [Tooltip("Mover component")]
         Mover _mover;
 
+        /// <summary>
+        /// Talking audio source
+        /// </summary>
         [SerializeField]
         [Tooltip("Source where robots voice will be played.")]
         AudioSource _audioSource;
 
+        /// <summary>
+        /// Robots talking clips
+        /// </summary>
         [SerializeField]
         [Tooltip("Audio tracks that robot can talk.")]
         AudioClip[] _audioClips;

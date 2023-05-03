@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using Kekw.Interaction;
-using System;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 namespace Kekw.VuoksiBotti
 {
@@ -11,22 +9,37 @@ namespace Kekw.VuoksiBotti
     /// </summary>
     class BotInteractionDetector: MonoBehaviour
     {
+        /// <summary>
+        /// Bots boombox
+        /// </summary>
         [SerializeField]
         [Tooltip("Boombox")]
         BoomBox _boomBox;
 
+        /// <summary>
+        /// Bots mover
+        /// </summary>
         [SerializeField]
         [Tooltip("Mover component")]
         Mover _mover;
 
+        /// <summary>
+        /// Bots animation manager
+        /// </summary>
         [SerializeField]
         [Tooltip("Robot animation manager")]
         AnimationManager _animationManager;
 
+        /// <summary>
+        /// Bots talk component
+        /// </summary>
         [SerializeField]
         [Tooltip("Talk component")]
         Talk _talk;
 
+        /// <summary>
+        /// Button ui
+        /// </summary>
         [SerializeField]
         [Tooltip("Ui panel to display bot buttons.")]
         GameObject _botHelpUi;

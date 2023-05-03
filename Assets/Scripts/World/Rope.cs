@@ -3,21 +3,29 @@ using System.Linq;
 
 namespace Kekw.World
 {
-
     /// <summary>
     /// Creates rope "mesh" along given points.
     /// Adds and removes line renderer automagically to keep object manipulation easy.
     /// </summary>
     public class Rope : MonoBehaviour
     {
+        /// <summary>
+        /// Rope connected points
+        /// </summary>
         [SerializeField]
         [Tooltip("Rope points")]
         GameObject[] _points;
 
+        /// <summary>
+        /// Width of the rope
+        /// </summary>
         [SerializeField]
         [Tooltip("Rope width")]
         float _width;
 
+        /// <summary>
+        /// Rope material
+        /// </summary>
         [SerializeField]
         [Tooltip("Material")]
         Material _material;

@@ -19,27 +19,44 @@ namespace Kekw.VuoksiBotti
             public int indexEnd;
         }
 
-
+        /// <summary>
+        /// Animator that animates vuoksibotti.
+        /// </summary>
         [SerializeField]
         [Tooltip("Animator to control")]
         Animator _animator;
 
+        /// <summary>
+        /// Base animation index ranges
+        /// </summary>
         [SerializeField]
         [Tooltip("Base animation layers index range")]
         LayerData _baseLayerRange;
 
+        /// <summary>
+        /// Dance animation index ranges
+        /// </summary>
         [SerializeField]
         [Tooltip("Random dance move layer index range")]
         LayerData _danceLayerRange;
 
+        /// <summary>
+        /// Talking animation index ranges
+        /// </summary>
         [SerializeField]
         [Tooltip("Talking layer index range")]
         LayerData _talkingLayerRange;
 
+        /// <summary>
+        /// Dance animation chance
+        /// </summary>
         [SerializeField]
         [Tooltip("Random dance change %")]
         int _randomDanceChance = 30;
 
+        /// <summary>
+        /// How often random dance should be performed
+        /// </summary>
         [SerializeField]
         [Tooltip("Random dance time in seconds")]
         Vector2Int _danceTimeDelta;

@@ -12,6 +12,9 @@ namespace Kekw.VuoksiBotti
     {
         AudioSource _audioSource;
 
+        /// <summary>
+        /// Songs to play
+        /// </summary>
         [SerializeField]
         [Tooltip("Audio playlist")]
         AudioClip[] _audioClips;
