@@ -1,10 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Kekw.Interaction.Football
 {
     /// <summary>
-    /// Sends stick haptic when stick is touched... <--- ^_- nice
+    /// Sends stick haptic when stick is touched... <--- ^_- nice<br></br><br></br>
     /// </summary>
     class StickHaptic: MonoBehaviour
     {

@@ -1,10 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Kekw.Interaction.Football
 {
     /// <summary>
-    /// Resets ball in football game
+    /// Resets ball in football game.
     /// </summary>
     class BallReset: MonoBehaviour, IIngameButtonLogic
     {

@@ -3,30 +3,51 @@ using UnityEngine;
 namespace Kekw.Interaction.Football
 {
     /// <summary>
-    /// Stops rigid body based on ray cast result
+    /// Controls football game stick movement.<br></br>
+    /// Allows player to interact with stick by pushing and pulling.
+    /// Limits movement with raycasts.
+    /// IMPORTANT! Uses global axis instead of local axis.
     /// </summary>
     class Stopper: MonoBehaviour
     {
+        /// <summary>
+        /// What rigidbody this script should stop.
+        /// </summary>
         [SerializeField]
         [Tooltip("Rigidbody to stop")]
         Rigidbody _rb;
 
+        /// <summary>
+        /// Raylength to positive x direction.
+        /// </summary>
         [SerializeField]
         [Tooltip("Ray length to positive X(Red line)")]
         float _rayLenPosX;
 
+        /// <summary>
+        /// Raylength to negative x direction.
+        /// </summary>
         [SerializeField]
         [Tooltip("Ray length to negative X(Green Line)")]
         float _rayLenNegX;
 
+        /// <summary>
+        /// Distance to back up from detected collider.
+        /// </summary>
         [SerializeField]
         [Tooltip("Backup distance when colliding")]
         float _backUp;
 
+        /// <summary>
+        /// Max error compared to original position after reached performs hard reset.
+        /// </summary>
         [SerializeField]
         [Tooltip("Max x axis fallback error")]
         float _xMaxError = .3f;
 
+        /// <summary>
+        /// Should debug rays be drawn?
+        /// </summary>
         [SerializeField]
         [Tooltip("Draw debug rays")]
         bool _drawDebugRays = false;

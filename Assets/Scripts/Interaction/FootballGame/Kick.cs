@@ -1,10 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Kekw.Interaction.Football
 {
     /// <summary>
     /// Simulates kick, negates velocity
+    /// TODO contains bug where ball velocity infinitly rises.
     /// </summary>
     class Kick: MonoBehaviour
     {
