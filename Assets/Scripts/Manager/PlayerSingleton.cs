@@ -10,7 +10,9 @@ namespace Kekw.Manager
     /// </summary>
     class PlayerSingleton: MonoBehaviour
     {
-
+        /// <summary>
+        /// Teleportation provider.
+        /// </summary>
         [SerializeField]
         [Tooltip("XR origin teleportation provider")]
         TeleportationProvider _teleportationProvider;
