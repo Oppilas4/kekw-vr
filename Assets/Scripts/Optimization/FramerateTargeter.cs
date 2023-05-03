@@ -7,6 +7,9 @@ namespace Kekw.Optimization
     /// </summary>
     public class FramerateTargeter : MonoBehaviour
     {
+        /// <summary>
+        /// Requested framerate, default is 90.
+        /// </summary>
         [SerializeField] int _requestedFrameRate = 90;
 
         // Use this for initialization

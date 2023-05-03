@@ -4,43 +4,68 @@ using System.Collections;
 namespace Kekw.Mission
 {
     /// <summary>
-    /// CoDing mission base class contains required components.
+    /// Coding mission manager contains required components.
     /// </summary>
     public class CodingMissionManager : MonoBehaviour, IMissionManager
     {
+        /// <summary>
+        /// Line renderer to animate.
+        /// </summary>
         [SerializeField]
         [Tooltip("Material")]
         LineRenderer _lineRenderer;
 
         Material _material;
 
+        /// <summary>
+        /// How fast stuff moves
+        /// </summary>
         [SerializeField]
         [Tooltip("Fill speed")]
         float _speed;
 
+        /// <summary>
+        /// Filling rate
+        /// </summary>
         [SerializeField]
         [Tooltip("Fill rate")]
         float _fillRate;
 
+        /// <summary>
+        /// Succesfully completed mission
+        /// </summary>
         [SerializeField]
         [Tooltip("Success texture")]
         Texture _successTexture;
 
+        /// <summary>
+        /// Mission failed texture.
+        /// </summary>
         [SerializeField]
         [Tooltip("Fail texture")]
         Texture _FailTexture;
 
+        /// <summary>
+        /// Game is active texture
+        /// </summary>
         [SerializeField]
         [Tooltip("Game running texture")]
         Texture _IgTexture;
 
+        /// <summary>
+        /// Original help screen texture
+        /// </summary>
         [SerializeField]
         [Tooltip("Standby texture")]
         Texture _OriginalTexture;
 
+        /// <summary>
+        /// Object to show textures on
+        /// </summary>
         [SerializeField]
         [Tooltip("Fail and success target texture display")]
         GameObject _targetDisplay;
+
         MeshRenderer _targetDisplayMeshRenderer;
 
         private bool _isActive;
@@ -125,6 +150,10 @@ namespace Kekw.Mission
             _originalTextureSetter = StartCoroutine(SetOriginalTexture());
         }
 
+        /// <summary>
+        /// Sets original texture to display after 5 seconds.
+        /// </summary>
+        /// <returns></returns>
         IEnumerator SetOriginalTexture()
         {
             yield return new WaitForSeconds(5);
