@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Manager
+namespace Kekw.Manager
 {
     /// <summary>
     /// Keep xr interaction manager alive. 

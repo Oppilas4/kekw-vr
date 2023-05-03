@@ -1,9 +1,6 @@
-﻿using Kekw.Interaction;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Kekw.Manager
 {
@@ -12,9 +9,6 @@ namespace Kekw.Manager
     /// </summary>
     class SceneSwitcher: MonoBehaviour
     {
-
-
-
         [SerializeField]
         [Tooltip("Animation speed")]
         float _speed = 1f;
