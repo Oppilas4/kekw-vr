@@ -15,9 +15,9 @@ namespace Kekw.Interaction.PingPong
         GameObject _item;
 
         /// <summary>
-        /// Spawn <see cref="_item"/> to gameworld and set owning manager.
+        /// Spawn '_item' to gameworld and set owning manager.
         /// </summary>
-        /// <param name="missionManager"></param>
+        /// <param name="missionManager">Manager that controls this spawner</param>
         /// <returns></returns>
         public GameObject Spawn(PingPongManager missionManager)
         {
