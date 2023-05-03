@@ -3,14 +3,20 @@
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// Activate something with collision.
+    /// Activates not active gameobject when collision enters.
     /// </summary>
     class Activation:MonoBehaviour
     {
+        /// <summary>
+        /// Gameobject or hirachy that is hidden.
+        /// </summary>
         [SerializeField]
         [Tooltip("Hidden gameobject")]
         GameObject _hidden;
 
+        /// <summary>
+        /// Decal to show when revealing. OPTIONAL.
+        /// </summary>
         [SerializeField]
         [Tooltip("Clue decal")]
         GameObject _clueDecal;
@@ -21,7 +27,10 @@ namespace Kekw.Interaction
             {
                 this.GetComponent<Rigidbody>().useGravity = true;
                 _hidden.SetActive(true);
-                _clueDecal.SetActive(true);
+                if(_clueDecal != null)
+                {
+                    _clueDecal.SetActive(true);
+                }   
             }
         }
     }

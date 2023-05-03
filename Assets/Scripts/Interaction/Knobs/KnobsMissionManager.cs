@@ -5,18 +5,27 @@ using UnityEngine;
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// Knobs easter egg mission
+    /// Make easter egg scene mission manager.
     /// </summary>
     class KnobsMissionManager :MonoBehaviour,  IMissionManager
     {
+        /// <summary>
+        /// Num of knobs
+        /// </summary>
         [SerializeField]
         [Tooltip("How many knobs needs to be correct.")]
         int _correctLimit;
 
+        /// <summary>
+        /// Audio played when mission fails.
+        /// </summary>
         [SerializeField]
         [Tooltip("Audio source playing clips")]
         AudioSource _audioSourceFail;
 
+        /// <summary>
+        /// Audio played when mission succeeds
+        /// </summary>
         [SerializeField]
         [Tooltip("Audio source playing when teleporting clips")]
         AudioSource _audioSourceSuccess;
@@ -24,6 +33,9 @@ namespace Kekw.Interaction
 
         int _correctKnobs = 0;
 
+        /// <summary>
+        /// <seealso cref="IMissionManager"/>
+        /// </summary>
         public void OnMissionFail()
         {
             
@@ -38,16 +50,25 @@ namespace Kekw.Interaction
             }
         }
 
+        /// <summary>
+        /// <seealso cref="IMissionManager"/>
+        /// </summary>
         public void OnMissionStart()
         {
             throw new System.NotImplementedException();
         }
 
+        /// <summary>
+        /// <seealso cref="IMissionManager"/>
+        /// </summary>
         public void OnMissionStop()
         {
             throw new System.NotImplementedException();
         }
 
+        /// <summary>
+        /// <seealso cref="IMissionManager"/>
+        /// </summary>
         public void OnMissionSuccess()
         {
             _correctKnobs++;

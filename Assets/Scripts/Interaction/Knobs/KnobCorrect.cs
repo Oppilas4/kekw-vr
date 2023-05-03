@@ -4,10 +4,14 @@ using Kekw.Mission;
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// Correct knob trigger behaviour.
+    /// Knobs hit this collider and when knob is detected sends signal to <seealso cref="IMissionManager"/>.
     /// </summary>
     class KnobCorrect: MonoBehaviour
     {
+        /// <summary>
+        /// Gameobject that contains mission manager relative to this mission.<br></br>
+        /// <seealso cref="IMissionManager"/>
+        /// </summary>
         [SerializeField]
         [Tooltip("Knob mission manager")]
         GameObject _missionManager;
