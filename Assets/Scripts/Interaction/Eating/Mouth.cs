@@ -5,19 +5,29 @@ using UnityEngine.VFX;
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// Class provides mouth and eating functionality.
+    /// Playable character mouth implementation.
+    /// Plays correct sounds and vfx effect based on collider that hits mouth.
+    /// Relies heavily to <seealso cref="EdibleType"/>.
     /// </summary>
     class Mouth: MonoBehaviour
     {
-
+        /// <summary>
+        /// Biting vfx effect
+        /// </summary>
         [SerializeField]
         [Tooltip("VFX to play when taking bite")]
         VisualEffect _visualEffect;
 
+        /// <summary>
+        /// Audio to play when eating solid stuff.
+        /// </summary>
         [SerializeField]
         [Tooltip("Eating audio")]
         AudioSource _eatingAudio;
 
+        /// <summary>
+        /// Audio to play when drinking stuff.
+        /// </summary>
         [SerializeField]
         [Tooltip("Drinking audio")]
         AudioSource _drinkingAudio;
@@ -59,6 +69,11 @@ namespace Kekw.Interaction
             }
         }
 
+        /// <summary>
+        /// Delay between chunks while eating.
+        /// </summary>
+        /// <param name="other">Target we are eating.</param>
+        /// <returns></returns>
         IEnumerator EatSingleChunkDelay(Collider other)
         {
             yield return new WaitForSeconds(1f);

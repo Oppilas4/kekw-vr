@@ -3,7 +3,7 @@
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// Destroys edible when it hits floor.
+    /// Destroys edible when it hits floor. Very similar to <seealso cref="Destroyer"/>.
     /// </summary>
     class EdibleDestroyer: MonoBehaviour
     {
