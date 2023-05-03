@@ -7,9 +7,13 @@ namespace Kekw.Manager
     /// </summary>
     class PlayerSpawn: MonoBehaviour
     {
+        /// <summary>
+        /// Player prefab to spawn.
+        /// </summary>
         [SerializeField]
         [Tooltip("PLayer prefab")]
         GameObject _playerPrefab;
+
         private void Awake()
         {
             // Spawn player if static reference is null.

@@ -9,16 +9,25 @@ namespace Kekw.Manager
     /// </summary>
     class SceneSwitcher: MonoBehaviour
     {
+        /// <summary>
+        /// Animation speed
+        /// </summary>
         [SerializeField]
         [Tooltip("Animation speed")]
         float _speed = 1f;
 
+        /// <summary>
+        /// Plane to animate
+        /// </summary>
         [SerializeField]
         [Tooltip("plane in front of camera")]
         GameObject _camBlackPlane;
         
         Material _camBlackMaterial;
 
+        /// <summary>
+        /// Default jump position in scenes
+        /// </summary>
         [SerializeField]
         [Tooltip("Default jump position in scenes")]
         Vector3 _defaultJumpPosition;
@@ -124,6 +133,12 @@ namespace Kekw.Manager
             }
         }
 
+        /// <summary>
+        /// Animates material opacity.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="material"></param>
+        /// <returns></returns>
         IEnumerator AnimateMaterial(float target, Material material)
         {
             if (target != 0 && target != 1) throw new System.Exception("Invalid target value, value has to be 0 or 1");

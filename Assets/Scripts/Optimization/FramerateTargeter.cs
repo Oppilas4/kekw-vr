@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Optimization
+namespace Kekw.Optimization
 {
     /// <summary>
     /// Sets application target framerate on android builds

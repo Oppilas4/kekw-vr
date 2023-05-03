@@ -17,7 +17,7 @@ namespace Kekw.Manager
         }
 
         /// <summary>
-        /// Spawn object.
+        /// Spawn object manually.
         /// </summary>
         public void Spawn()
         {
