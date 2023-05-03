@@ -8,14 +8,23 @@ namespace Kekw.Interaction
     /// </summary>
     class TeleportTrigger: MonoBehaviour
     {
+        /// <summary>
+        /// What activates when player enters trigger.
+        /// </summary>
         [SerializeField]
         [Tooltip("Gameobject to activate when player enters the trigger.")]
         GameObject _target;
 
+        /// <summary>
+        /// Audio to play when ui shows.
+        /// </summary>
         [SerializeField]
         [Tooltip("Audio to play when shown")]
         AudioSource _audioShow;
 
+        /// <summary>
+        /// Audio to play when ui hides.
+        /// </summary>
         [SerializeField]
         [Tooltip("Audio to play when hiding")]
         AudioSource _audioHide;
@@ -49,6 +58,12 @@ namespace Kekw.Interaction
             }
         }
 
+        /// <summary>
+        /// Animates showing <seealso cref="_target"/>
+        /// </summary>
+        /// <param name="scaleTarget">Target scale of the object</param>
+        /// <param name="step">Amount to change scale on step</param>
+        /// <returns></returns>
         IEnumerator AnimateShow(float scaleTarget, float step)
         {
             while (_target.transform.localScale.y < scaleTarget)
@@ -60,6 +75,13 @@ namespace Kekw.Interaction
             }
         }
 
+        /// <summary>
+        /// Animates hiding <seealso cref="_target"/><br><br></br></br>
+        /// Set <see cref="_target"/> to non active after finished.
+        /// </summary>
+        /// <param name="scaleTarget">Target scale of the object</param>
+        /// <param name="step">Amount to change scale on step</param>
+        /// <returns></returns>
         IEnumerator AnimateHide(float scaleTarget, float step)
         {
             while ( _target.transform.localScale.y > scaleTarget)

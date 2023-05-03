@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
@@ -7,14 +6,21 @@ using UnityEngine.XR.Interaction.Toolkit.Inputs;
 namespace Assets.Scripts.Interaction
 {
     /// <summary>
-    /// Deactivates hand colliders when holding item in hand.
+    /// Deactivates hand colliders when holding item in hand to avoid unwanted collisions.
+    /// Hands become rigid after delay.
     /// </summary>
     class HandDeActivation: MonoBehaviour
     {
+        /// <summary>
+        /// Characters left hand
+        /// </summary>
         [SerializeField]
         [Tooltip("Left hand")]
         GameObject _leftHand;
 
+        /// <summary>
+        /// Characters right hand
+        /// </summary>
         [SerializeField]
         [Tooltip("Right hand")]
         GameObject _rightHand;
@@ -73,6 +79,10 @@ namespace Assets.Scripts.Interaction
             
         }
 
+        /// <summary>
+        /// Hands become active after 2 seconds.
+        /// </summary>
+        /// <returns></returns>
         IEnumerator ReleaseDelay()
         {
             yield return new WaitForSeconds(2f);

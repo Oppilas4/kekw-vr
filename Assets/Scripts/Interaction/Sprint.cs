@@ -6,14 +6,20 @@ using UnityEngine.XR.Interaction.Toolkit.Inputs;
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// Character sprint ability
+    /// Character sprint ability. Character is able to sprint when sprint button is held.
     /// </summary>
     class Sprint: MonoBehaviour
     {
+        /// <summary>
+        /// Dynamic move provider where that handles moving.
+        /// </summary>
         [SerializeField]
         [Tooltip("Movement provider script")]
         DynamicMoveProvider _dynamicMoveProvider;
 
+        /// <summary>
+        /// Sprint speed
+        /// </summary>
         [SerializeField]
         [Tooltip("Sprint speed")]
         float _sprintSpeed = 3f;
