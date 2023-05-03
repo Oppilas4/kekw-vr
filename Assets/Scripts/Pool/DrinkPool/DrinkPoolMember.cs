@@ -2,10 +2,10 @@
 using System.Collections;
 using Kekw.Interaction;
 
-namespace Kekw.Pool
+namespace Kekw.Pool.Drink
 {
     /// <summary>
-    /// Behaviour of drinks
+    /// Behaviour of drinks that belong to drinks pool.
     /// </summary>
     class DrinkPoolMember: APoolMember
     {
@@ -22,6 +22,10 @@ namespace Kekw.Pool
             }
         }
 
+        /// <summary>
+        /// Delay returning to pool.
+        /// </summary>
+        /// <returns></returns>
         IEnumerator Delay()
         {
             // 5 second timer.

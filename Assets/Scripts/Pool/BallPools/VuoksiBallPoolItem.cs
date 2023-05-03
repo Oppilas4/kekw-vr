@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using UnityEngine;
 
 
-namespace Kekw.Pool
+namespace Kekw.Pool.Ball
 {
     /// <summary>
     /// Queueus new ball from pool to basket if hitting the floor.

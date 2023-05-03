@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Kekw.Pool
+namespace Kekw.Pool.Drink
 {
     /// <summary>
     /// Provides event for drink spawning.
