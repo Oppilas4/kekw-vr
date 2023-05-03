@@ -1,6 +1,4 @@
-﻿using System;
-using Kekw.Manager;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Kekw.Interaction.PingPong
 {
@@ -11,6 +9,9 @@ namespace Kekw.Interaction.PingPong
     {
         PingPongManager _missionManager;
 
+        /// <summary>
+        /// Audio to play when collision enters. OPTIONAL.
+        /// </summary>
         [SerializeField]
         [Tooltip("Play hit audio if assigned ")]
         AudioSource _BallHitAudio;
@@ -24,6 +25,10 @@ namespace Kekw.Interaction.PingPong
             Destroy(this.gameObject);
         }
 
+        /// <summary>
+        /// Set mission manager on spawn.
+        /// </summary>
+        /// <param name="missionManager">PingPongManager that controls game cycles.</param>
         public void SetMissionManager(PingPongManager missionManager) => _missionManager = missionManager;
 
         private void OnCollisionEnter(Collision collision)

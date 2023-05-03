@@ -2,12 +2,21 @@
 
 namespace Kekw.Interaction.PingPong
 {
+    /// <summary>
+    /// Ping pong game opponent ball hitting.
+    /// </summary>
     class PingPongRoboHit:MonoBehaviour
     {
+        /// <summary>
+        /// Forward force
+        /// </summary>
         [SerializeField]
         [Tooltip("Forward hit force")]
         private float _forceForward = .25f;
 
+        /// <summary>
+        /// Force to apply on Y up axis
+        /// </summary>
         [SerializeField]
         [Tooltip("Upward hit force")]
         private float _forceUp = .25f;

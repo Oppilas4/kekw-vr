@@ -1,14 +1,19 @@
 ﻿using Kekw.Manager;
-using System;
 using UnityEngine;
 
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// Eatable item uses this component
+    /// Eatable item uses this component.<br></br><br></br>
+    /// Eatabe items consists of multiple meshes some are full and some are "eaten".
+    /// Component toggles between these meshes and finally destroys object if meshes end.
+    /// Object is also destroyed if it hits the floor tag collider.
     /// </summary>
     class Edible: MonoBehaviour, ISpawnAble
     {
+        /// <summary>
+        /// Array of eating stage meshes. 0 element is full mesh and n is final bit.
+        /// </summary>
         [SerializeField]
         [Tooltip("meshes for different eating stages [0-n]. 0 Is full mesh, n is final eating bit.")]
         GameObject[] _eatingStages;
@@ -45,7 +50,7 @@ namespace Kekw.Interaction
         }
         
         /// <summary>
-        /// Destroy food when it hits floor
+        /// Destroy food when it hits floor.
         /// </summary>
         public void DestroyOnFloor()
         {

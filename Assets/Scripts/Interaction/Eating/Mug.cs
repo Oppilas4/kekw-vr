@@ -1,26 +1,37 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Kekw.Manager;
 
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// Fillable mug
+    /// Coffee mug. Can be filled and emptied.
     /// </summary>
     class Mug : MonoBehaviour, ISpawnAble, IDestroyable
     {
+        /// <summary>
+        /// Game object that represents liquid inside mug.
+        /// </summary>
         [SerializeField]
         [Tooltip("Mug filling mesh")]
         GameObject _mugFilling;
 
+        /// <summary>
+        /// <seealso cref="Vatupassi"/>
+        /// </summary>
         [SerializeField]
         [Tooltip("Vatupassi gameobject")]
         Vatupassi _vatupassi;
 
+        /// <summary>
+        /// How fast the mug fills.
+        /// </summary>
         [SerializeField]
         [Tooltip("Filling speed")]
         float _speed = 1;
 
+        /// <summary>
+        /// Scale for filling, when gameobject is considered to be full.
+        /// </summary>
         [SerializeField]
         [Tooltip("Max fill scale (1-100)")]
         float _maxFillScale;
@@ -78,10 +89,20 @@ namespace Kekw.Interaction
             _mugFilling.transform.localScale = new Vector3(_maxFillScale * .01f, _maxFillScale * .01f, _fillPercentage * .01f);
         }
 
+        /// <summary>
+        /// Mug knows to start filling it self.
+        /// </summary>
         public void StartFill() => _filling = true;
 
+        /// <summary>
+        /// Mug should stop filling it self.
+        /// </summary>
         public void StopFill() => _filling = false;
 
+        /// <summary>
+        /// <seealso cref="ISpawnAble"/>
+        /// </summary>
+        /// <param name="simpleSpawn"></param>
         public void SetSpawner(SimpleSpawn simpleSpawn) => _spawner = simpleSpawn;
 
 

@@ -5,10 +5,14 @@ using UnityEngine.VFX;
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// Coffee pan trigger
+    /// Coffee pan behaviour.
+    /// When coffee pan is picked up and detects mug it starts to play pouring VFX.
     /// </summary>
     class Coffee: MonoBehaviour, ISpawnAble, IDestroyable
     {
+        /// <summary>
+        /// Vfx effect to play when mug is detected.
+        /// </summary>
         [SerializeField]
         [Tooltip("Coffee flow")]
         VisualEffect _vfxEffect;

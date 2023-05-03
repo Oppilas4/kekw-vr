@@ -5,22 +5,34 @@ using System.Collections.Generic;
 namespace Kekw.Interaction.PingPong
 {
     /// <summary>
-    /// Mannages ping pong gameplay
+    /// Mannages ping pong gameplay and game cycles.
     /// </summary>
     public class PingPongManager : MonoBehaviour, IMissionManager, IIngameButtonLogic
     {
+        /// <summary>
+        /// Paddle spawn point.
+        /// </summary>
         [SerializeField]
         [Tooltip("Paddle spawn point")]
         PingPongSpawner _paddleSpawn;
 
+        /// <summary>
+        /// Ball spawn point.
+        /// </summary>
         [SerializeField]
         [Tooltip("Ball spawn point")]
         PingPongSpawner _ballSpawn;
         
+        /// <summary>
+        /// Opponent robo animator.
+        /// </summary>
         [SerializeField]
         [Tooltip("Robo animator")]
         PingPongRoboAnimator _pingPongRoboAnimator;
 
+        /// <summary>
+        /// Gameover audio clip.
+        /// </summary>
         [SerializeField]
         [Tooltip("GAme over audio")]
         AudioSource _gameOver;
@@ -77,6 +89,9 @@ namespace Kekw.Interaction.PingPong
         /// </summary>
         public void OnMissionSuccess() => throw new System.Exception("Method is not needed in ping pong game");
 
+        /// <summary>
+        /// <seealso cref="IIngameButtonLogic"/>
+        /// </summary>
         public void TriggerAction() => OnMissionStart();
     } 
 }

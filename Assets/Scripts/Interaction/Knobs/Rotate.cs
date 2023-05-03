@@ -4,7 +4,9 @@ using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
 namespace Kekw.Interaction
 {
-
+    /// <summary>
+    /// Enum representing axis in world.
+    /// </summary>
     public enum RotateArounxAxis
     {
         X,
@@ -13,18 +15,27 @@ namespace Kekw.Interaction
     }
 
     /// <summary>
-    /// Rotates knob
+    /// Rotates make esteregg mission knobs.
     /// </summary>
     class Rotate: MonoBehaviour
     {
+        /// <summary>
+        /// Rotation speed multiplier
+        /// </summary>
         [SerializeField]
         [Tooltip("Rotation speed multiplier")]
         float _speed = 1f;
 
+        /// <summary>
+        /// Axis to rotate around
+        /// </summary>
         [SerializeField]
         [Tooltip("Rotation axis in local space")]
         RotateArounxAxis _around;
 
+        /// <summary>
+        /// Audio play while rotating
+        /// </summary>
         [SerializeField]
         [Tooltip("Rotating source")]
         AudioSource _rotatingAudio;
@@ -86,7 +97,7 @@ namespace Kekw.Interaction
         }
 
         /// <summary>
-        /// Called from xr grab interactable when pick up is pressed
+        /// Called from xr grab interactable when pick up is pressed.
         /// </summary>
         public void OnKnobSelected()
         {
@@ -96,7 +107,7 @@ namespace Kekw.Interaction
         }
 
         /// <summary>
-        /// Called from xr grab interactable when pick up is pressed
+        /// Called from xr grab interactable when pick up is released.
         /// </summary>
         public void OnKnobReleased()
         {

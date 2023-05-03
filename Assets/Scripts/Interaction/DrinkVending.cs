@@ -1,31 +1,46 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using Kekw.Pool;
 
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// Drink vending machine
+    /// Drink vending machine.<br></br><br></br>
+    /// Machine uses drink pool that must be in scene in advance. Can only spawn one drink at the time.
     /// </summary>
     class DrinkVending: MonoBehaviour
     {
+        /// <summary>
+        /// Component that spawns drinks.
+        /// </summary>
         [SerializeField]
         [Tooltip("Drink spawner")]
         DrinkSpawner _drinkSpawner;
 
+        /// <summary>
+        /// Button can be interacted material
+        /// </summary>
         [SerializeField]
         [Tooltip("Button available material")]
         Material _available;
 
+        /// <summary>
+        /// Button cannot be interacted material
+        /// </summary>
         [SerializeField]
         [Tooltip("Button not available")]
         Material _disabled;
 
+        /// <summary>
+        /// Audio when button is pressed
+        /// </summary>
         [SerializeField]
         [Tooltip("Button press audio")]
         AudioSource _buttonPressAudio;
 
+        /// <summary>
+        /// Drink sliding inside machine audio.
+        /// </summary>
         [SerializeField]
         [Tooltip("Drink coming audio")]
         AudioSource _drinkComingAudio;
@@ -59,6 +74,11 @@ namespace Kekw.Interaction
             }
         }
 
+        /// <summary>
+        /// Spawn drink after work audio <seealso cref="_drinkComingAudio"/> is played.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         IEnumerator WaitAudio(float time)
         {
             yield return new WaitForSeconds(time);

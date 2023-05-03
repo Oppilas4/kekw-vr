@@ -4,18 +4,27 @@ using System.Collections;
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// Info droplets tell player info about school
+    /// Info droplets tell player info about school.
     /// </summary>
     class InfoDroplet: MonoBehaviour
     {
+        /// <summary>
+        /// Audio that this object plays
+        /// </summary>
         [SerializeField]
         [Tooltip("Audio that this droplet plays")]
         AudioSource _audioSource;
 
+        /// <summary>
+        /// objects animator
+        /// </summary>
         [SerializeField]
         [Tooltip("Animator for this droplet")]
         Animator _animator;
 
+        /// <summary>
+        /// Audio delay to wait animation finishing.
+        /// </summary>
         [SerializeField]
         [Tooltip("Audio play delay")]
         float _delay = 1f;

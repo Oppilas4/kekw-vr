@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -10,10 +8,16 @@ namespace Kekw.Interaction
     /// </summary>
     public class Vatupassi : MonoBehaviour
     {
+        /// <summary>
+        /// Visual effect to play when pouring.
+        /// </summary>
         [SerializeField]
         [Tooltip("Vfx effect to activate")]
         GameObject _visualEffect;
 
+        /// <summary>
+        /// Where the vfx comes out 
+        /// </summary>
         [SerializeField]
         [Tooltip("'Barrel' where stuff flows out")]
         GameObject _barrel;
@@ -23,6 +27,9 @@ namespace Kekw.Interaction
 
         GameObject _trackedEffect;
 
+        /// <summary>
+        /// To detect if this thing is pouring or not.
+        /// </summary>
         public bool IsPouring { get; set; }
 
         private void Awake()
@@ -31,6 +38,9 @@ namespace Kekw.Interaction
            _bottomMarker = this.transform.GetChild(1);
         }
 
+        /// <summary>
+        /// Destroy tracked pouring vfx effect.
+        /// </summary>
         public void DestroyTrackedVFX()
         {
             Destroy(_trackedEffect);

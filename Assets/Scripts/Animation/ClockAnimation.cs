@@ -1,19 +1,31 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Kekw.Animation
 {
+    /// <summary>
+    /// Animates clock time indicator arms.
+    /// Sets clock to current time and counts from there.
+    /// </summary>
     public class ClockAnimation : MonoBehaviour
     {
+        /// <summary>
+        /// Hour pointer model
+        /// </summary>
         [SerializeField]
         Transform hourHands;
+
+        /// <summary>
+        /// Minute pointer model
+        /// </summary>
         [SerializeField]
         Transform minuteHands;
+
+        /// <summary>
+        /// Clock rotation direction
+        /// </summary>
         [SerializeField]
         float minuteRevertor, hourRevertor;
-
 
 
         // Update is called once per frame

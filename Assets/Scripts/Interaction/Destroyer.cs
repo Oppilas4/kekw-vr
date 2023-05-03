@@ -2,6 +2,11 @@
 
 namespace Kekw.Interaction
 {
+    /// <summary>
+    /// Destroy game objects if they hit fool or killplane.
+    /// Detection happens with tags 'Floor' and 'KillPlane'.<br><br></br></br>
+    /// This gameobject should also contain script that implements <seealso cref="IDestroyable"/> interface that handles actual destroying.
+    /// </summary>
     class Destroyer: MonoBehaviour
     {
         private bool _isDestroyed = false;

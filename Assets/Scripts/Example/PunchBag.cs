@@ -1,11 +1,10 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using Kekw.Interaction;
 
 namespace Kekw.Example
 {
     /// <summary>
-    /// Simple example of haptic feedback sending.
+    /// Punchbag haptic example.
     /// </summary>
     class PunchBag: MonoBehaviour
     {
