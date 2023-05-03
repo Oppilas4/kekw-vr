@@ -3,7 +3,8 @@ using UnityEngine;
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// In game button that works with slapping/pushing.
+    /// Ingame button that works with slapping/pushing.
+    /// Relies to <seealso cref="IIngameButtonLogic"/>.
     /// </summary>
     public class IngameButton : MonoBehaviour
     {

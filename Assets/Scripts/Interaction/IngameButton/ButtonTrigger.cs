@@ -1,10 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Kekw.Interaction
 {
     /// <summary>
-    /// Ingame button base collision detection.
+    /// Ingame button base, collision detection against top part of button.
     /// </summary>
     class ButtonTrigger: MonoBehaviour
     {

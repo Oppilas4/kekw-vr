@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
-using Kekw.Interaction;
 
 namespace Kekw.Interaction.Igbuttontest
 {
     /// <summary>
-    /// Simple test case for ButtonTestScene
+    /// Simple test case for ButtonTestScene.
+    /// Should not be used in game.
     /// </summary>
     class IGButtonTest : MonoBehaviour, IIngameButtonLogic
     {

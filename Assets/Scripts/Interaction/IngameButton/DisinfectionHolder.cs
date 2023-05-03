@@ -1,15 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Kekw.Interaction
 {
+    /// <summary>
+    /// Hand sanitizer bottle thingy behaviour.<br></br><br></br>
+    /// Instantiates vfx effect when button is pressed.
+    /// </summary>
     public class DisinfectionHolder : MonoBehaviour, IIngameButtonLogic
     {
+        /// <summary>
+        /// Vfx to play
+        /// </summary>
         [SerializeField]
         [Tooltip("VFX effect to Instantiate when button is pressed")]
         GameObject _disinfectionVFX;
 
+        /// <summary>
+        /// Gameobject where the vfx "flows" out.
+        /// </summary>
         [SerializeField]
         [Tooltip("Barrel where stuff flows out")]
         GameObject _barrel;
