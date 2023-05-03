@@ -6,7 +6,7 @@ namespace Kekw.Interaction
     /// <summary>
     /// Info droplets tell player info about school.
     /// </summary>
-    class InfoDroplet: MonoBehaviour
+    public class InfoDroplet : MonoBehaviour
     {
         /// <summary>
         /// Audio that this object plays

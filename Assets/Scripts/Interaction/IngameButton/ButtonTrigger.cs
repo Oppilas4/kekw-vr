@@ -5,7 +5,7 @@ namespace Kekw.Interaction
     /// <summary>
     /// Ingame button base, collision detection against top part of button.
     /// </summary>
-    class ButtonTrigger: MonoBehaviour
+    public class ButtonTrigger: MonoBehaviour
     {
         // Master script in parent.
         IngameButton ingameButton;

@@ -1,13 +1,15 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts.Optimization
+namespace Kekw.Optimization
 {
     /// <summary>
     /// Sets application target framerate on android builds
     /// </summary>
     public class FramerateTargeter : MonoBehaviour
     {
+        /// <summary>
+        /// Requested framerate, default is 90.
+        /// </summary>
         [SerializeField] int _requestedFrameRate = 90;
 
         // Use this for initialization

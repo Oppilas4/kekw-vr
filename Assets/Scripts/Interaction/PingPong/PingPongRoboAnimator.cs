@@ -5,7 +5,7 @@ namespace Kekw.Interaction.PingPong
     /// <summary>
     /// Animates ping pong opponent robot based on _triggerName string.
     /// </summary>
-    class PingPongRoboAnimator: MonoBehaviour
+    public class PingPongRoboAnimator : MonoBehaviour
     {
         /// <summary>
         /// Trigger to trigger in animator.

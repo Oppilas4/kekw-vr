@@ -14,7 +14,7 @@ namespace Kekw.Interaction
     /// <summary>
     /// Kinda edible what we are intetracting with.
     /// </summary>
-    class EdibleType: MonoBehaviour
+    public class EdibleType: MonoBehaviour
     {
         /// <summary>
         /// What type of edible current gameobject is.

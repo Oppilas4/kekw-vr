@@ -6,7 +6,7 @@ namespace Kekw.Interaction
     /// <summary>
     /// Knobs hit this collider and when knob is detected sends signal to <seealso cref="IMissionManager"/>.
     /// </summary>
-    class KnobCorrect: MonoBehaviour
+    public class KnobCorrect: MonoBehaviour
     {
         /// <summary>
         /// Gameobject that contains mission manager relative to this mission.<br></br>

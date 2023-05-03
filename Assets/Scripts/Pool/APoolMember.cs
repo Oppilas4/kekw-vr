@@ -3,11 +3,13 @@ using UnityEngine;
 namespace Kekw.Pool
 {
     /// <summary>
-    /// Pool memeber base class.
+    /// Pool memeber abstract base class.
     /// </summary>
     public abstract class APoolMember : MonoBehaviour
     {
-
+        /// <summary>
+        /// Pool this object belongs to
+        /// </summary>
         protected APool _ownerPool;
 
         /// <summary>

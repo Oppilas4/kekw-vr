@@ -9,7 +9,7 @@ namespace Kekw.Interaction
     /// Plays correct sounds and vfx effect based on collider that hits mouth.
     /// Relies heavily to <seealso cref="EdibleType"/>.
     /// </summary>
-    class Mouth: MonoBehaviour
+    public class Mouth: MonoBehaviour
     {
         /// <summary>
         /// Biting vfx effect

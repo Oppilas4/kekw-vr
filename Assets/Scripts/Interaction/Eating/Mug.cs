@@ -6,7 +6,7 @@ namespace Kekw.Interaction
     /// <summary>
     /// Coffee mug. Can be filled and emptied.
     /// </summary>
-    class Mug : MonoBehaviour, ISpawnAble, IDestroyable
+    public class Mug : MonoBehaviour, ISpawnAble, IDestroyable
     {
         /// <summary>
         /// Game object that represents liquid inside mug.

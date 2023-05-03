@@ -8,10 +8,16 @@ namespace Kekw.Pool
     /// </summary>
     public abstract class APool : MonoBehaviour
     {
+        /// <summary>
+        /// Base prefab that fills the pool.
+        /// </summary>
         [SerializeField]
         [Tooltip("Pool object prefab, must implement IPoolMember interface.")]
         protected GameObject _prefab;
 
+        /// <summary>
+        /// How large is this pool.
+        /// </summary>
         [SerializeField]
         [Tooltip("Pool size")]
         protected int _size;

@@ -5,7 +5,7 @@ namespace Kekw.Interaction
     /// <summary>
     /// Vuoksi hoop ball detector.
     /// </summary>
-    class VuoksiHoop: MonoBehaviour
+    public class VuoksiHoop : MonoBehaviour
     {
         /// <summary>
         /// Sound to play when ball scores.

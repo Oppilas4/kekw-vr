@@ -1,16 +1,22 @@
 ﻿using UnityEngine;
 
-namespace Kekw.Pool
+namespace Kekw.Pool.Drink
 {
     /// <summary>
-    /// Spawns drink on scene start.
+    /// Spawns drink from pool on scene start.
     /// </summary>
-    class DrinkSpawner: MonoBehaviour
+    public class DrinkSpawner : MonoBehaviour
     {
+        /// <summary>
+        /// Should this spawn on start?
+        /// </summary>
         [SerializeField]
         [Tooltip("Spawn at start")]
         bool _spawnAtStart = true;
 
+        /// <summary>
+        /// Should this spawn new item if old is destroyed.
+        /// </summary>
         [SerializeField]
         [Tooltip("Spawn new on destroy")]
         bool _spawnOnDestroy = true;

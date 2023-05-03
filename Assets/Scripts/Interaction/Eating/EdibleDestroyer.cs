@@ -5,7 +5,7 @@ namespace Kekw.Interaction
     /// <summary>
     /// Destroys edible when it hits floor. Very similar to <seealso cref="Destroyer"/>.
     /// </summary>
-    class EdibleDestroyer: MonoBehaviour
+    public class EdibleDestroyer: MonoBehaviour
     {
         private void OnCollisionEnter(Collision collision)
         {

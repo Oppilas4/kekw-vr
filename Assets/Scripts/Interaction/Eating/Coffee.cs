@@ -8,7 +8,7 @@ namespace Kekw.Interaction
     /// Coffee pan behaviour.
     /// When coffee pan is picked up and detects mug it starts to play pouring VFX.
     /// </summary>
-    class Coffee: MonoBehaviour, ISpawnAble, IDestroyable
+    public class Coffee: MonoBehaviour, ISpawnAble, IDestroyable
     {
         /// <summary>
         /// Vfx effect to play when mug is detected.

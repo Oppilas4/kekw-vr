@@ -5,10 +5,14 @@ using Kekw.Common;
 namespace Kekw.VuoksiBotti
 {
     /// <summary>
-    /// Handles bot moving and routing.
+    /// Handles bot moving and routing.<br><br></br></br>
+    /// Uses new navigation components inside unity.
     /// </summary>
     public class Mover : MonoBehaviour, IPause
     {
+        /// <summary>
+        /// Baked navigation mesh data.
+        /// </summary>
         [SerializeField]
         [Tooltip("Baked navmesh plane data(nav mesh data) where we want random navigation points to occur.")]
         NavMeshData[] _navMeshDatas;

@@ -5,7 +5,7 @@ namespace Kekw.Interaction.Football
     /// <summary>
     /// Resets ball in football game.
     /// </summary>
-    class BallReset: MonoBehaviour, IIngameButtonLogic
+    public class BallReset: MonoBehaviour, IIngameButtonLogic
     {
         Vector3 _orgPosition;
         Rigidbody _rb;

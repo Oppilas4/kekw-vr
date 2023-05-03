@@ -6,7 +6,7 @@ namespace Kekw.Interaction.Football
     /// Simulates kick, negates velocity
     /// TODO contains bug where ball velocity infinitly rises.
     /// </summary>
-    class Kick: MonoBehaviour
+    public class Kick: MonoBehaviour
     {
         private void OnCollisionEnter(Collision collision)
         {

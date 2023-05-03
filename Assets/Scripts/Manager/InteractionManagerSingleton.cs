@@ -6,7 +6,7 @@ namespace Kekw.Manager
     /// Keep xr interaction manager alive. 
     /// Simple singleton does not destroy copies.
     /// </summary>
-    class InteractionManagerSingleton: MonoBehaviour
+    public class InteractionManagerSingleton : MonoBehaviour
     {
         private void Awake()
         {

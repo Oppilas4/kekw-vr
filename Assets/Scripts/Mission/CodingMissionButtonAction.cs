@@ -8,10 +8,16 @@ namespace Kekw.Mission
     /// </summary>
     public class CodingMissionButtonAction : MonoBehaviour, IIngameButtonLogic
     {
+        /// <summary>
+        /// Will this button start mission?
+        /// </summary>
         [SerializeField]
         [Tooltip("Is this the mission start button?")]
         bool _missionStartButton;
 
+        /// <summary>
+        /// Coding mission manager
+        /// </summary>
         [SerializeField]
         [Tooltip("Actual mission manager")]
         CodingMissionManager _codingMission;

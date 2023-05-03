@@ -1,14 +1,22 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Kekw.Pool
+namespace Kekw.Pool.Ball
 {
-    class BallPool: APool
+    /// <summary>
+    /// Vuoksi hoop related pool.
+    /// </summary>
+    public class BallPool : APool
     {
+        /// <summary>
+        /// Secondary item to spawn
+        /// </summary>
         [SerializeField]
         [Tooltip("Secondary item")]
         GameObject _secondaryPoolItem;
 
+        /// <summary>
+        /// How many balls to spawn in beginning.
+        /// </summary>
         [SerializeField]
         [Tooltip("Number of items to queue at start")]
         int _numOfItemsAtStart;

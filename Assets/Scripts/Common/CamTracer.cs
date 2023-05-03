@@ -5,7 +5,7 @@ namespace Kekw.Common
     /// <summary>
     /// Rotates object towards main camera around y axis.
     /// </summary>
-    class CamTracer: MonoBehaviour
+    public class CamTracer: MonoBehaviour
     {
         private void Update()
         {

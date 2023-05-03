@@ -8,10 +8,13 @@ namespace Kekw.VuoksiBotti
     /// Robots boombox audio player.
     /// </summary>
     [RequireComponent(typeof(AudioSource))]
-    class BoomBox : MonoBehaviour, IPause
+    public class BoomBox : MonoBehaviour, IPause
     {
         AudioSource _audioSource;
 
+        /// <summary>
+        /// Songs to play
+        /// </summary>
         [SerializeField]
         [Tooltip("Audio playlist")]
         AudioClip[] _audioClips;
