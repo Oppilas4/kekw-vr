@@ -3,7 +3,7 @@
 namespace Kekw.Interaction.Football
 {
     /// <summary>
-    /// Sends stick haptic when stick is touched... <--- ^_- nice<br></br><br></br>
+    /// Sends stick haptic when stick is touched... 
     /// </summary>
     public class StickHaptic: MonoBehaviour
     {
