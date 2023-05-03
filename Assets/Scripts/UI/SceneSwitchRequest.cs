@@ -6,7 +6,7 @@ namespace Kekw.UI
     /// <summary>
     /// Component can be hooked to button to request scene switch from <seealso cref="SceneSwitcher"/>
     /// </summary>
-    class SceneSwitchRequest:MonoBehaviour
+    public class SceneSwitchRequest :MonoBehaviour
     {
         /// <summary>
         /// Future scene name

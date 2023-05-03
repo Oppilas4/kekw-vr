@@ -9,7 +9,7 @@ namespace Kekw.Interaction
     /// Drink vending machine.<br></br><br></br>
     /// Machine uses drink pool that must be in scene in advance. Can only spawn one drink at the time.
     /// </summary>
-    class DrinkVending: MonoBehaviour
+    public class DrinkVending : MonoBehaviour
     {
         /// <summary>
         /// Component that spawns drinks.

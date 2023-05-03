@@ -7,7 +7,7 @@ namespace Kekw.Interaction
     /// <seealso cref="Destroyer"/>
     /// <see cref="Mug"/>
     /// </summary>
-    interface IDestroyable
+    public interface IDestroyable
     {
         public void OnDestroyRequested();
     }

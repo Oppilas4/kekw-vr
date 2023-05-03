@@ -8,7 +8,7 @@ namespace Kekw.Interaction
     /// <summary>
     /// Character sprint ability. Character is able to sprint when sprint button is held.
     /// </summary>
-    class Sprint: MonoBehaviour
+    public class Sprint : MonoBehaviour
     {
         /// <summary>
         /// Dynamic move provider where that handles moving.

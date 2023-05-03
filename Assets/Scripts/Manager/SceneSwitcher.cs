@@ -7,7 +7,7 @@ namespace Kekw.Manager
     /// <summary>
     /// Scene switching with transition animations.
     /// </summary>
-    class SceneSwitcher: MonoBehaviour
+    public class SceneSwitcher : MonoBehaviour
     {
         /// <summary>
         /// Animation speed

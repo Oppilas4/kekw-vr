@@ -9,7 +9,7 @@ namespace Assets.Scripts.Interaction
     /// Deactivates hand colliders when holding item in hand to avoid unwanted collisions.
     /// Hands become rigid after delay.
     /// </summary>
-    class HandDeActivation: MonoBehaviour
+    public class HandDeActivation : MonoBehaviour
     {
         /// <summary>
         /// Characters left hand

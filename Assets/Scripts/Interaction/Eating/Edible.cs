@@ -9,7 +9,7 @@ namespace Kekw.Interaction
     /// Component toggles between these meshes and finally destroys object if meshes end.
     /// Object is also destroyed if it hits the floor tag collider.
     /// </summary>
-    class Edible: MonoBehaviour, ISpawnAble
+    public class Edible: MonoBehaviour, ISpawnAble
     {
         /// <summary>
         /// Array of eating stage meshes. 0 element is full mesh and n is final bit.

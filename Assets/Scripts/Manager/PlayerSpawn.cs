@@ -5,7 +5,7 @@ namespace Kekw.Manager
     /// <summary>
     /// Spawn point for player.
     /// </summary>
-    class PlayerSpawn: MonoBehaviour
+    public class PlayerSpawn : MonoBehaviour
     {
         /// <summary>
         /// Player prefab to spawn.

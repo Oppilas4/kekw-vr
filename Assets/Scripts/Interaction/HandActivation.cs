@@ -9,7 +9,7 @@ namespace Kekw.Interaction
     /// Hand activation control. Provides event where state changes can be listened.
     /// </summary>
     [Obsolete("Class is deprecated, hand colliders are active all the time.", true)]
-    class HandActivation: MonoBehaviour
+    public class HandActivation : MonoBehaviour
     {
         /// <summary>
         /// Event type

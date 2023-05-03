@@ -7,7 +7,7 @@ namespace Kekw.VuoksiBotti
     /// <summary>
     /// Handles input action switching and bot human interface.
     /// </summary>
-    class BotInteractionDetector: MonoBehaviour
+    public class BotInteractionDetector : MonoBehaviour
     {
         /// <summary>
         /// Bots boombox

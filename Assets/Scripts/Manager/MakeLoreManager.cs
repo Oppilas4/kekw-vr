@@ -5,7 +5,7 @@ namespace Kekw.Manager
     /// <summary>
     /// Manages transition to make scene.
     /// </summary>
-    class MakeLoreManager: MonoBehaviour
+    public class MakeLoreManager : MonoBehaviour
     {
         /// <summary>
         /// Background audio source

@@ -8,7 +8,7 @@ namespace Kekw.Interaction.Football
     /// Limits movement with raycasts.
     /// IMPORTANT! Uses global axis instead of local axis.
     /// </summary>
-    class Stopper: MonoBehaviour
+    public class Stopper: MonoBehaviour
     {
         /// <summary>
         /// What rigidbody this script should stop.

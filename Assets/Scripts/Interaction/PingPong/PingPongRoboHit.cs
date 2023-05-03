@@ -5,7 +5,7 @@ namespace Kekw.Interaction.PingPong
     /// <summary>
     /// Ping pong game opponent ball hitting.
     /// </summary>
-    class PingPongRoboHit:MonoBehaviour
+    public class PingPongRoboHit :MonoBehaviour
     {
         /// <summary>
         /// Forward force

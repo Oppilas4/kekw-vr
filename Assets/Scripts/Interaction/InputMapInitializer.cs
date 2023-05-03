@@ -7,7 +7,7 @@ namespace Kekw.Interaction
     /// <summary>
     /// Disables bot interaction map at the beginning of the play.
     /// </summary>
-    class InputMapInitializer: MonoBehaviour
+    public class InputMapInitializer : MonoBehaviour
     {
         InputActionManager _inputActionManager;
 

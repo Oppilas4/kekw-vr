@@ -7,7 +7,7 @@ namespace Kekw.VuoksiBotti
     /// <summary>
     /// Vuoksi GBT robots talk chip.
     /// </summary>
-    class Talk: MonoBehaviour, IPause
+    public class Talk : MonoBehaviour, IPause
     {
         /// <summary>
         /// Bots animation manager

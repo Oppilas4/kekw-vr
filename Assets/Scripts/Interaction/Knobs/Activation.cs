@@ -5,7 +5,7 @@ namespace Kekw.Interaction
     /// <summary>
     /// Activates not active gameobject when collision enters.
     /// </summary>
-    class Activation:MonoBehaviour
+    public class Activation:MonoBehaviour
     {
         /// <summary>
         /// Gameobject or hirachy that is hidden.

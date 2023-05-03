@@ -8,7 +8,7 @@ namespace Kekw.VuoksiBotti
     /// <summary>
     /// VUoksi botti animation manager.
     /// </summary>
-    class AnimationManager : MonoBehaviour, IPause
+    public class AnimationManager : MonoBehaviour, IPause
     {
         /// <summary>
         /// Helper struct to identify animation layers

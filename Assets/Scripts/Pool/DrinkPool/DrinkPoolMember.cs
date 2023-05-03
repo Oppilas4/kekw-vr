@@ -7,7 +7,7 @@ namespace Kekw.Pool.Drink
     /// <summary>
     /// Behaviour of drinks that belong to drinks pool.
     /// </summary>
-    class DrinkPoolMember: APoolMember
+    public class DrinkPoolMember : APoolMember
     {
         Coroutine _destroyDelay;
 

@@ -5,7 +5,7 @@ namespace Kekw.Interaction.Football
     /// <summary>
     /// Sends stick haptic when stick is touched... <--- ^_- nice<br></br><br></br>
     /// </summary>
-    class StickHaptic: MonoBehaviour
+    public class StickHaptic: MonoBehaviour
     {
         LeftHapticBroker _leftHapticBroker;
         RightHapticBroker _rightHapticBroker;

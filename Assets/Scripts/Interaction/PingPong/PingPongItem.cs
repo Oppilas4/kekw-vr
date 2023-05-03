@@ -5,7 +5,7 @@ namespace Kekw.Interaction.PingPong
     /// <summary>
     /// Item inside ping pong game. Like baddle and ball.
     /// </summary>
-    class PingPongItem : MonoBehaviour, IDestroyable
+    public class PingPongItem : MonoBehaviour, IDestroyable
     {
         PingPongManager _missionManager;
 

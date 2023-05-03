@@ -8,7 +8,7 @@ namespace Kekw.Manager
     /// <summary>
     /// Simple singleton that survives scene changes.
     /// </summary>
-    class PlayerSingleton: MonoBehaviour
+    public class PlayerSingleton : MonoBehaviour
     {
         /// <summary>
         /// Teleportation provider.

@@ -5,7 +5,7 @@ namespace Kekw.Manager
     /// <summary>
     /// Instantiates given object at awake or via Spawn method.
     /// </summary>
-    class SimpleSpawn: MonoBehaviour
+    public class SimpleSpawn : MonoBehaviour
     {
         [SerializeField]
         [Tooltip("Object to spawn")]

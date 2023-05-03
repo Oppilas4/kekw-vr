@@ -6,7 +6,7 @@ namespace Kekw.Interaction
     /// <summary>
     /// Detecs player entering to teleport area.
     /// </summary>
-    class TeleportTrigger: MonoBehaviour
+    public class TeleportTrigger : MonoBehaviour
     {
         /// <summary>
         /// What activates when player enters trigger.

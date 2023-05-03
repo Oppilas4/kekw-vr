@@ -4,7 +4,7 @@ namespace Kekw.Mission
     /// <summary>
     /// Interface that all mission managers implement.
     /// </summary>
-    interface IMissionManager
+    public interface IMissionManager
     {
         /// <summary>
         /// Mission managers must provide OnMIssionStart method. What happens on mission start?

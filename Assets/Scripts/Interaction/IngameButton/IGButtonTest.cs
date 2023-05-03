@@ -6,7 +6,7 @@ namespace Kekw.Interaction.Igbuttontest
     /// Simple test case for ButtonTestScene.
     /// Should not be used in game.
     /// </summary>
-    class IGButtonTest : MonoBehaviour, IIngameButtonLogic
+    public class IGButtonTest : MonoBehaviour, IIngameButtonLogic
     {
         public void TriggerAction()
         {

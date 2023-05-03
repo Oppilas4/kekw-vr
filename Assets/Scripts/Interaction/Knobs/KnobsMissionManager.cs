@@ -7,7 +7,7 @@ namespace Kekw.Interaction
     /// <summary>
     /// Make easter egg scene mission manager.
     /// </summary>
-    class KnobsMissionManager :MonoBehaviour,  IMissionManager
+    public class KnobsMissionManager :MonoBehaviour,  IMissionManager
     {
         /// <summary>
         /// Num of knobs

@@ -5,7 +5,7 @@ namespace Kekw.Pool.Drink
     /// <summary>
     /// Pool for all the drinks for 'random' spawning.
     /// </summary>
-    class DrinkPool: APool
+    public class DrinkPool : APool
     {
         /// <summary>
         /// Array of possible items inside pool.

@@ -4,7 +4,7 @@ namespace Kekw.Common
     /// <summary>
     /// Pausing interface
     /// </summary>
-    interface IPause
+    public interface IPause
     {
         /// <summary>
         /// Pause gameobject.

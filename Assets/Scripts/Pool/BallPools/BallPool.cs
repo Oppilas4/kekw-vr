@@ -5,7 +5,7 @@ namespace Kekw.Pool.Ball
     /// <summary>
     /// Vuoksi hoop related pool.
     /// </summary>
-    class BallPool: APool
+    public class BallPool : APool
     {
         /// <summary>
         /// Secondary item to spawn

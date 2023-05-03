@@ -5,7 +5,7 @@ namespace Kekw.Pool.Drink
     /// <summary>
     /// Spawns drink from pool on scene start.
     /// </summary>
-    class DrinkSpawner: MonoBehaviour
+    public class DrinkSpawner : MonoBehaviour
     {
         /// <summary>
         /// Should this spawn on start?

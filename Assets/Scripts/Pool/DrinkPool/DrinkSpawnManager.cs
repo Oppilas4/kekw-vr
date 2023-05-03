@@ -5,7 +5,7 @@ namespace Kekw.Pool.Drink
     /// <summary>
     /// Provides event for drink spawning.
     /// </summary>
-    class DrinkSpawnManager: MonoBehaviour
+    public class DrinkSpawnManager : MonoBehaviour
     {
         /// <summary>
         /// Event type

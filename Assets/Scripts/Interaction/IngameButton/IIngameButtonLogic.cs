@@ -3,7 +3,7 @@
     /// <summary>
     /// Ingame button target script will implement this interface.
     /// </summary>
-    interface IIngameButtonLogic
+    public interface IIngameButtonLogic
     {
         /// <summary>
         /// Action to trigger when button fires.

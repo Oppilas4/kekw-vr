@@ -17,7 +17,7 @@ namespace Kekw.Interaction
     /// <summary>
     /// Rotates make esteregg mission knobs.
     /// </summary>
-    class Rotate: MonoBehaviour
+    public class Rotate : MonoBehaviour
     {
         /// <summary>
         /// Rotation speed multiplier

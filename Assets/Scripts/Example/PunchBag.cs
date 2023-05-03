@@ -6,7 +6,7 @@ namespace Kekw.Example
     /// <summary>
     /// Punchbag haptic example.
     /// </summary>
-    class PunchBag: MonoBehaviour
+    public class PunchBag: MonoBehaviour
     {
         LeftHapticBroker _leftHapticBroker;
         RightHapticBroker _rightHapticBroker;

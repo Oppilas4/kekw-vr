@@ -7,7 +7,7 @@ namespace Kekw.Pool.Ball
     /// <summary>
     /// Queueus new ball from pool to basket if hitting the floor.
     /// </summary>
-    class VuoksiBallPoolItem: APoolMember
+    public class VuoksiBallPoolItem : APoolMember
     {
         Coroutine _delay;
 
