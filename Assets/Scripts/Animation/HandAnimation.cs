@@ -20,10 +20,18 @@ namespace Kekw.Animation
     /// </summary>
     public class HandAnimation : MonoBehaviour
     {
+        /// <summary>
+        /// Hand color in punch mode.
+        /// OBSOLE. Hands are in punch mode by default.
+        /// </summary>
+        [Obsolete]
         [SerializeField]
         [Tooltip("Hand color when in 'punch mode'")]
         Color _color;
 
+        /// <summary>
+        /// Is the current hand left or right.
+        /// </summary>
         [SerializeField]
         [Tooltip("Which hand this is")]
         Hand hand;
@@ -95,6 +103,7 @@ namespace Kekw.Animation
 
         /// <summary>
         /// Cancel teleport action.
+        /// Reverts from teleport animation to idle animation.
         /// </summary>
         /// <param name="obj"></param>
         private void TeleportModeActionCanceled(InputAction.CallbackContext context)
@@ -128,6 +137,7 @@ namespace Kekw.Animation
 
         /// <summary>
         /// Callback for event defined in <seealso cref="HandActivation"/>
+        /// Deprecated should not be used!
         /// </summary>
         /// <param name="handsActiveState"></param>
         [Obsolete("Method is deprecated, hand colliders are active all the time", true)]
@@ -154,7 +164,8 @@ namespace Kekw.Animation
         }
 
         /// <summary>
-        /// Called from grip button performed
+        /// Called from grip button performed.
+        /// Plays grip animation on player hands.
         /// </summary>
         /// <param name="context"></param>
         private void OnItemReleased(InputAction.CallbackContext context)
@@ -167,7 +178,8 @@ namespace Kekw.Animation
         }
 
         /// <summary>
-        /// Called from grip button performed
+        /// Called from grip button performed.
+        /// Plays idle animation on player hands.
         /// </summary>
         /// <param name="context"></param>
         private void OnItemHeld(InputAction.CallbackContext context)
