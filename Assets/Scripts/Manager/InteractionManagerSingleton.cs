@@ -8,6 +8,7 @@ namespace Kekw.Manager
     /// </summary>
     public class InteractionManagerSingleton : MonoBehaviour
     {
+        // Singleton instance
         private static InteractionManagerSingleton _Instance;
 
         private void Awake()
