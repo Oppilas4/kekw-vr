@@ -4,13 +4,23 @@ namespace Kekw.Manager
 {
     /// <summary>
     /// Keep xr interaction manager alive. 
-    /// Simple singleton does not destroy copies.
+    /// Simple singleton does destroy duplicate instances.
     /// </summary>
     public class InteractionManagerSingleton : MonoBehaviour
     {
+        private static InteractionManagerSingleton _Instance;
+
         private void Awake()
         {
-            DontDestroyOnLoad(this.gameObject);
+            if(_Instance != null || _Instance != this)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                _Instance = this;
+                DontDestroyOnLoad(this.gameObject);
+            }
         }
     }
 }
