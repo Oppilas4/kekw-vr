@@ -8,11 +8,12 @@ namespace Kekw.Manager
     /// </summary>
     public class InteractionManagerSingleton : MonoBehaviour
     {
+        // Singleton instance
         private static InteractionManagerSingleton _Instance;
 
         private void Awake()
         {
-            if(_Instance != null || _Instance != this)
+            if(_Instance != null && _Instance != this)
             {
                 Destroy(this.gameObject);
             }
