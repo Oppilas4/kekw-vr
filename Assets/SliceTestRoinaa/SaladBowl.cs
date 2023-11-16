@@ -3,12 +3,13 @@ using System.Collections.Generic;
 
 public class SaladBowl : MonoBehaviour
 {
-    //This script calculates the size of the pieces placed on the bowl and gives negative score accordingly.
-
     public float thresholdSize = 0.05f; // Adjust as needed
     public float negativeScore = 10.0f;
 
     private List<GameObject> piecesInsideBowl = new List<GameObject>();
+
+    // List of valid vegetable names
+    public List<string> validVegetableNames = new List<string>();
 
     float CalculatePieceSize(GameObject piece)
     {
@@ -44,7 +45,8 @@ public class SaladBowl : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("VegetablePiece"))
+        // Check if the piece has any of the valid vegetable names as tags
+        if (IsValidVegetablePiece(other.gameObject))
         {
             piecesInsideBowl.Add(other.gameObject);
         }
@@ -52,10 +54,23 @@ public class SaladBowl : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("VegetablePiece"))
+        if (IsValidVegetablePiece(other.gameObject))
         {
             piecesInsideBowl.Remove(other.gameObject);
         }
+    }
+
+    bool IsValidVegetablePiece(GameObject piece)
+    {
+        // Check if the piece has any of the valid vegetable names as tags
+        foreach (string validName in validVegetableNames)
+        {
+            if (piece.CompareTag(validName))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     void Update()
