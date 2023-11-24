@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class SaladBowl : MonoBehaviour
 {
@@ -73,8 +74,21 @@ public class SaladBowl : MonoBehaviour
         return false;
     }
 
-    void Update()
+    void OnEnable()
     {
+        // Subscribe to the _calculateDish event when the script is enabled
+        FindObjectOfType<CompletedDishArea>()._calculateDish.AddListener(OnCalculateDish);
+    }
+
+    void OnDisable()
+    {
+        // Unsubscribe from the _calculateDish event when the script is disabled to prevent memory leaks
+        FindObjectOfType<CompletedDishArea>()._calculateDish.RemoveListener(OnCalculateDish);
+    }
+
+    void OnCalculateDish()
+    {
+        // Method to be executed when the _calculateDish event happens
         foreach (var piece in piecesInsideBowl)
         {
             float pieceSize = CalculatePieceSize(piece);
