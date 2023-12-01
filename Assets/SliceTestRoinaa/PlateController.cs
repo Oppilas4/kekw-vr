@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.XR.Interaction.Toolkit;
+
 
 public class PlateController : MonoBehaviour
 {
@@ -17,6 +19,13 @@ public class PlateController : MonoBehaviour
         {
             // Wait for the specified delay before parenting
             yield return new WaitForSeconds(delayBeforeParenting);
+
+            // Remove XRGrabInteractable script if it exists
+            XRGrabInteractable grabInteractable = other.GetComponent<XRGrabInteractable>();
+            if (grabInteractable != null)
+            {
+                Destroy(grabInteractable);
+            }
 
             Destroy(GetComponentInChildren<Rigidbody>());
 

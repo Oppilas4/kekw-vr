@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.Events;
 
 public class SaladBowl : MonoBehaviour
 {
     public float thresholdSize = 0.05f; // Adjust as needed
-    public float negativeScore = 10.0f;
+    public float missingComponentDeduction = 33f; // Deduction for each missing component
+    public float oversizedPieceDeduction = 0.1f; // Deduction per oversized piece
+    public float totalAvailableSpace = 100f; // Adjust as needed
 
     private List<GameObject> piecesInsideBowl = new List<GameObject>();
 
@@ -88,17 +89,71 @@ public class SaladBowl : MonoBehaviour
 
     void OnCalculateDish()
     {
-        // Method to be executed when the _calculateDish event happens
+        float baseScore = 100;
+        float dishScore = 100;
+        int cucumberCount = 0;
+        int tomatoCount = 0;
+        int lettuceCount = 0;
+        float totalPieceSize = 0f;
+
         foreach (var piece in piecesInsideBowl)
         {
             float pieceSize = CalculatePieceSize(piece);
-            Debug.Log(pieceSize);
+            totalPieceSize += pieceSize;
+
             if (pieceSize > thresholdSize)
             {
-                // Deduct points from the player's score
-                // You should have a scoring system in place to update the score here
-                Debug.Log("Piece size exceeded the threshold! Deducting points...");
+                // Deduct points for oversized pieces
+                float oversizedDeduction = Mathf.Clamp01((pieceSize - thresholdSize) / thresholdSize) * oversizedPieceDeduction;
+                dishScore -= (baseScore * oversizedDeduction);
             }
+
+            // Count the components
+            if (piece.CompareTag("Cucumber")) cucumberCount++;
+            else if (piece.CompareTag("Tomato")) tomatoCount++;
+            else if (piece.CompareTag("Lettuce")) lettuceCount++;
         }
+
+        // Calculate the ratio of each component
+        float cucumberRatio = piecesInsideBowl.Count > 0 ? (float)cucumberCount / piecesInsideBowl.Count : 0f;
+        float tomatoRatio = piecesInsideBowl.Count > 0 ? (float)tomatoCount / piecesInsideBowl.Count : 0f;
+        float lettuceRatio = piecesInsideBowl.Count > 0 ? (float)lettuceCount / piecesInsideBowl.Count : 0f;
+
+        // Deduct points for missing components
+        if (cucumberRatio == 0f)
+        {
+            dishScore -= missingComponentDeduction;
+        }
+
+        if (tomatoRatio == 0f)
+        {
+            dishScore -= missingComponentDeduction;
+        }
+
+        if (lettuceRatio == 0f)
+        {
+            dishScore -= missingComponentDeduction;
+        }
+
+        // Calculate unused space
+        float unusedSpaceRatio = 1 - (totalPieceSize / totalAvailableSpace);
+
+        // Initialize unusedSpaceDeduction with a low value for a casual game
+        float unusedSpaceDeduction = Mathf.Clamp01(unusedSpaceRatio) * 0.5f; // Adjust the value as needed
+
+        // Deduct points based on the unused space ratio
+        dishScore = dishScore * unusedSpaceDeduction;
+        /*
+        Debug.Log("totalPieceSize: " + totalPieceSize);
+        Debug.Log("totalAvailableSpace: " + totalAvailableSpace);
+        Debug.Log("unusedSpaceRatio: " + unusedSpaceRatio);
+        Debug.Log("unusedSpaceDeduction: " + unusedSpaceDeduction);
+        */
+
+        // Update the game manager with the calculated score
+        DishScoreManager.Instance.UpdateScore(dishScore);
+
     }
+
+
 }
