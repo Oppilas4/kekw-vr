@@ -8,6 +8,7 @@ public class CompletedDishArea : MonoBehaviour
     public UnityEvent _calculateDish = new UnityEvent();
 
     public static GameObject currentDish; // Store the current dish in the serving area
+    public string ticketDishName; // Store the current order
 
     private void OnEnable()
     {
@@ -29,6 +30,7 @@ public class CompletedDishArea : MonoBehaviour
     public void ClearCurrentDish()
     {
         currentDish = null;
+        ticketDishName = null;
     }
 
     private void OnOrderReady()
@@ -57,6 +59,11 @@ public class CompletedDishArea : MonoBehaviour
             else if (collider.CompareTag("OrderTicket"))
             {
                 ticketCount++;
+                OrderTicket orderTicket = collider.GetComponent<OrderTicket>();
+                if (orderTicket != null)
+                {
+                    ticketDishName = orderTicket.dishNameText.text;
+                }
             }
         }
 

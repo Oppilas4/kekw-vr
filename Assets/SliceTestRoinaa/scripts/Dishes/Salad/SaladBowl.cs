@@ -9,6 +9,7 @@ public class SaladBowl : MonoBehaviour
     public float totalAvailableSpace = 100f; // Adjust as needed
 
     private List<GameObject> piecesInsideBowl = new List<GameObject>();
+    private List<GameObject> invalidIngredients = new List<GameObject>();
 
     // List of valid vegetable names
     public List<string> validVegetableNames = new List<string>();
@@ -51,6 +52,10 @@ public class SaladBowl : MonoBehaviour
         if (IsValidVegetablePiece(other.gameObject))
         {
             piecesInsideBowl.Add(other.gameObject);
+        }
+        else
+        {
+            invalidIngredients.Add(other.gameObject);
         }
     }
 
@@ -146,6 +151,11 @@ public class SaladBowl : MonoBehaviour
 
             // Deduct points based on the unused space ratio
             dishScore = dishScore * unusedSpaceDeduction;
+
+            if (invalidIngredients.Count > 0)
+            {
+                dishScore = dishScore * 0.5f;
+            }
             /*
             Debug.Log("totalPieceSize: " + totalPieceSize);
             Debug.Log("totalAvailableSpace: " + totalAvailableSpace);
