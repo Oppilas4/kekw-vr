@@ -7,6 +7,7 @@ public class Wire : MonoBehaviour
     LineRenderer wire;
     public GameObject start, end;
     public int lenght = 0;
+    public int WireVoltage = 5;
 
     void Start()
     {
