@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.XR.Interaction.Toolkit;
+using Unity.VisualScripting;
 
 public class PlateController : MonoBehaviour
 {
@@ -9,9 +10,7 @@ public class PlateController : MonoBehaviour
     private List<GameObject> vegetablePiecesOnPlate = new List<GameObject>();
 
     public float delayBeforeParenting = 0.5f; // Adjust the delay time as needed
-
-    public string _dishName;
-
+    
     private IEnumerator OnTriggerEnter(Collider other)
     {
         VegetableController vegetableController = other.GetComponent<VegetableController>();
@@ -35,8 +34,6 @@ public class PlateController : MonoBehaviour
 
             // Add the sliced vegetable to the list
             vegetablePiecesOnPlate.Add(other.gameObject);
-
-            CheckForDish();
         }
     }
 
@@ -52,22 +49,6 @@ public class PlateController : MonoBehaviour
         vegetablePiecesOnPlate.Clear();
     }
 
-    private void CheckForDish()
-    {
-        if (ContainsIngredient("lettuce") || ContainsIngredient("cucumber") || ContainsIngredient("tomato"))
-        {
-            Debug.Log("Salad created!");
-            _dishName = "salad";
-            // Handle the salad completion logic
-        }
-
-        else if (ContainsIngredient("steak"))
-        {
-            Debug.Log("Steak created");
-            _dishName = "steak";
-        }
-    }
-
     // Helper function to check if a specific ingredient is on the plate
     private bool ContainsIngredient(string ingredientName)
     {
@@ -80,11 +61,6 @@ public class PlateController : MonoBehaviour
             }
         }
         return false;
-    }
-
-    public string ReturnDishName()
-    {
-        return _dishName;
     }
     
 }

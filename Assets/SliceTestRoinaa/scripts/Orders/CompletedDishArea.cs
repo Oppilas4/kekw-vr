@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static OrderManager;
 
 public class CompletedDishArea : MonoBehaviour
 {
     public UnityEvent _calculateDish = new UnityEvent();
+    public UnityEvent<string> _sendSteakTemperature = new UnityEvent<string>();
 
     public static GameObject currentDish; // Store the current dish in the serving area
     public string ticketDishName; // Store the current order
+    private string steakTemperature;
 
     private void OnEnable()
     {
@@ -31,6 +34,7 @@ public class CompletedDishArea : MonoBehaviour
     {
         currentDish = null;
         ticketDishName = null;
+        steakTemperature = null;
     }
 
     private void OnOrderReady()
@@ -63,6 +67,7 @@ public class CompletedDishArea : MonoBehaviour
                 if (orderTicket != null)
                 {
                     ticketDishName = orderTicket.dishNameText.text;
+                    steakTemperature = orderTicket.steakTemperatureText.text;
                 }
             }
         }
@@ -73,6 +78,11 @@ public class CompletedDishArea : MonoBehaviour
 
             SetCurrentDish(foundDish); // Set the current dish
             _calculateDish.Invoke(); // Trigger the _calculateDish event
+            if (ticketDishName == "Dish: Steak")
+            {
+                _sendSteakTemperature.Invoke(steakTemperature);
+            }
+
             ClearCurrentDish(); // Clear the current dish after calculations
         }
         else if (ticketCount > 1)
