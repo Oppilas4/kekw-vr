@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using static OrderManager;
@@ -8,10 +9,12 @@ public class CompletedDishArea : MonoBehaviour
 {
     public UnityEvent _calculateDish = new UnityEvent();
     public UnityEvent<string> _sendSteakTemperature = new UnityEvent<string>();
+    public UnityEvent<int> _completeOrder = new UnityEvent<int>();
 
     public static GameObject currentDish; // Store the current dish in the serving area
     public string ticketDishName; // Store the current order
     private string steakTemperature;
+    private int orderID;
 
     private void OnEnable()
     {
@@ -68,6 +71,23 @@ public class CompletedDishArea : MonoBehaviour
                 {
                     ticketDishName = orderTicket.dishNameText.text;
                     steakTemperature = orderTicket.steakTemperatureText.text;
+                    string orderIDText = orderTicket.orderNumberText.text;
+                    string[] splitText = orderIDText.Split('#');
+                    if (splitText.Length == 2)
+                    {
+                        if (int.TryParse(splitText[1], out int orderNumber))
+                        {
+                            orderID = orderNumber;
+                        }
+                        else
+                        {
+                            Debug.LogError("Error parsing order number");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("Unexpected orderID format");
+                    }
                 }
             }
         }
@@ -78,6 +98,7 @@ public class CompletedDishArea : MonoBehaviour
 
             SetCurrentDish(foundDish); // Set the current dish
             _calculateDish.Invoke(); // Trigger the _calculateDish event
+            _completeOrder.Invoke(orderID);
             if (ticketDishName == "Dish: Steak")
             {
                 _sendSteakTemperature.Invoke(steakTemperature);

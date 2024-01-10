@@ -50,18 +50,19 @@ public class SteakController : MonoBehaviour
     {
         if (!isCooking)
         {
-            // Determine the orientation of the steak
-            float dotProduct = Vector3.Dot(transform.up, Vector3.up);
-            float threshold = 0.99f; // Adjust the threshold as needed
+            // Determine the orientation of the steak using local up vector
+            float dotProductUp = Vector3.Dot(transform.up, Vector3.up);
+            float dotProductDown = Vector3.Dot(transform.up, Vector3.down);
+            float threshold = 0.1f; // Adjust the threshold as needed
 
-            if (dotProduct > threshold)
+            if (dotProductUp > threshold)
             {
                 Debug.Log("Steak is right-side-up");
                 steakOrientation = "upRight";
                 isCooking = true;
                 cookingCoroutine = StartCoroutine(CookSteakRoutine(bottomHalfCookTime));
             }
-            else if (dotProduct < -threshold)
+            else if (dotProductDown > threshold)
             {
                 Debug.Log("Steak is upside-down");
                 steakOrientation = "upsideDown";
@@ -70,10 +71,11 @@ public class SteakController : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Unexpected orientation. Dot Product: " + dotProduct);
+                Debug.LogWarning("Unexpected orientation. Dot Product Up: " + dotProductUp + ", Dot Product Down: " + dotProductDown);
             }
         }
     }
+
 
     public void StopCooking()
     {
@@ -198,42 +200,45 @@ public class SteakController : MonoBehaviour
 
     public void OnCalculateDish(string temperature)
     {
-        try
+        if (CompletedDishArea.currentDish == transform.parent.parent.gameObject)
         {
-            // Split the string on the colon and take the second part, trim whitespace
-            string tempStatus = temperature.Split(':')[1].Trim();
-
-            Debug.Log("Temperature status received: " + tempStatus);
-
-            // Convert the trimmed temperature status to the corresponding CookingStage
-            CookingStage desiredStage;
-            if (string.Equals(tempStatus, "Raw", StringComparison.OrdinalIgnoreCase))
+            try
             {
-                desiredStage = CookingStage.Raw;
-            }
-            else if (string.Equals(tempStatus, "Medium", StringComparison.OrdinalIgnoreCase))
-            {
-                desiredStage = CookingStage.Medium;
-            }
-            else if (string.Equals(tempStatus, "WellDone", StringComparison.OrdinalIgnoreCase))
-            {
-                desiredStage = CookingStage.WellDone;
-            }
-            else
-            {
-                throw new ArgumentException($"Invalid temperature status: {tempStatus}");
-            }
+                // Split the string on the colon and take the second part, trim whitespace
+                string tempStatus = temperature.Split(':')[1].Trim();
 
-            Debug.Log("Desired Cooking Stage: " + desiredStage);
-            // Calculate the score based on the desired stage and the actual stage of each side of the steak
-            int score = CalculateScore(desiredStage, topHalfCookTime.CurrentStage, bottomHalfCookTime.CurrentStage);
+                Debug.Log("Temperature status received: " + tempStatus);
 
-            // Display the score
-            Debug.Log($"Score: {score}");
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"Error in OnCalculateDish: {ex}");
+                // Convert the trimmed temperature status to the corresponding CookingStage
+                CookingStage desiredStage;
+                if (string.Equals(tempStatus, "Raw", StringComparison.OrdinalIgnoreCase))
+                {
+                    desiredStage = CookingStage.Raw;
+                }
+                else if (string.Equals(tempStatus, "Medium", StringComparison.OrdinalIgnoreCase))
+                {
+                    desiredStage = CookingStage.Medium;
+                }
+                else if (string.Equals(tempStatus, "WellDone", StringComparison.OrdinalIgnoreCase))
+                {
+                    desiredStage = CookingStage.WellDone;
+                }
+                else
+                {
+                    throw new ArgumentException($"Invalid temperature status: {tempStatus}");
+                }
+
+                Debug.Log("Desired Cooking Stage: " + desiredStage);
+                // Calculate the score based on the desired stage and the actual stage of each side of the steak
+                int score = CalculateScore(desiredStage, topHalfCookTime.CurrentStage, bottomHalfCookTime.CurrentStage);
+
+                // Display the score
+                Debug.Log($"Score: {score}");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error in OnCalculateDish: {ex}");
+            }
         }
     }
 

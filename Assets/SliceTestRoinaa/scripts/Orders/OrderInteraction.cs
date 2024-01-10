@@ -16,6 +16,18 @@ public class OrderInteraction : MonoBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        // Subscribe to the _calculateDish event when the script is enabled
+        FindObjectOfType<CompletedDishArea>()._completeOrder.AddListener(CompleteOrder);
+    }
+
+    void OnDisable()
+    {
+        // Unsubscribe from the _calculateDish event when the script is disabled to prevent memory leaks
+        FindObjectOfType<CompletedDishArea>()._completeOrder.RemoveListener(CompleteOrder);
+    }
+
     public void CreateCustomer()
     {
         GameObject customerObject = Instantiate(customerPrefab);

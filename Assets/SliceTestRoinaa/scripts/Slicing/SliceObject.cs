@@ -27,10 +27,6 @@ public class SliceObject : MonoBehaviour
                 Slice(target);
                 StartCoroutine(StartCooldown());
             }
-            else
-            {
-                Debug.Log("Object cannot be sliced as it does not have VegetableController script.");
-            }
         }
     }
 
