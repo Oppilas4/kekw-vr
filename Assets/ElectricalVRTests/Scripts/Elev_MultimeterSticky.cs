@@ -5,17 +5,7 @@ using UnityEngine;
 public class Elev_MultimeterSticky : MonoBehaviour
 {
     public Elec_Multimeter multimeterDad;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int SitckyVoltage = 0;
     public void EqualVoltages(int VoltageStick)
     {
         if (multimeterDad.VoltageMusltimeter == VoltageStick)

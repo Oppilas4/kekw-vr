@@ -243,6 +243,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &118831430
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +364,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &129446592
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,6 +710,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &168714998
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,6 +855,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!114 &168715004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -867,8 +871,8 @@ MonoBehaviour:
   bulb: {fileID: 7943583445150852194}
   OutputVoltage: 6
   wireEnd: {fileID: 0}
-  multimeter: {fileID: 0}
-  multimeterSticky: {fileID: 0}
+  multimeter: {fileID: 3469287837345569730}
+  multimeterSticky: {fileID: 3469287836792129108}
 --- !u!1 &184398207
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,6 +993,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &201461057
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,6 +1114,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &203616205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1499,6 +1505,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &341341242
 GameObject:
   m_ObjectHideFlags: 0
@@ -1619,6 +1626,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &345361935
 GameObject:
   m_ObjectHideFlags: 0
@@ -1832,6 +1840,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &487942102
 GameObject:
   m_ObjectHideFlags: 0
@@ -2124,6 +2133,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &522201725
 GameObject:
   m_ObjectHideFlags: 0
@@ -2244,6 +2254,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &531294495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2624,6 +2635,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &543559530
 GameObject:
   m_ObjectHideFlags: 0
@@ -2744,6 +2756,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &558040091
 GameObject:
   m_ObjectHideFlags: 0
@@ -3309,6 +3322,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &701070302
 GameObject:
   m_ObjectHideFlags: 0
@@ -3429,6 +3443,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &709074433
 GameObject:
   m_ObjectHideFlags: 0
@@ -3664,6 +3679,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &739480127
 GameObject:
   m_ObjectHideFlags: 0
@@ -3784,6 +3800,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &815985561
 GameObject:
   m_ObjectHideFlags: 0
@@ -3966,6 +3983,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &878759696
 GameObject:
   m_ObjectHideFlags: 0
@@ -4048,6 +4066,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Spawned_Nodes: []
   ourGridTest: {fileID: 0}
+  latestPluggedIn: {fileID: 0}
+  SearchDistanceBetweenNodes: 1
 --- !u!1 &901887543
 GameObject:
   m_ObjectHideFlags: 0
@@ -4358,6 +4378,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &982552518
 GameObject:
   m_ObjectHideFlags: 0
@@ -4606,6 +4627,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &1014590499
 GameObject:
   m_ObjectHideFlags: 0
@@ -4980,6 +5002,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &1046225733
 GameObject:
   m_ObjectHideFlags: 0
@@ -5228,6 +5251,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &1120969172
 GameObject:
   m_ObjectHideFlags: 0
@@ -5476,6 +5500,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &1191960466
 GameObject:
   m_ObjectHideFlags: 0
@@ -6072,6 +6097,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &1385376440
 GameObject:
   m_ObjectHideFlags: 0
@@ -6314,6 +6340,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!114 &1397170348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6618,6 +6645,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &1495373950
 GameObject:
   m_ObjectHideFlags: 0
@@ -6930,6 +6958,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &1609891932
 GameObject:
   m_ObjectHideFlags: 0
@@ -7112,6 +7141,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &1713405488
 GameObject:
   m_ObjectHideFlags: 0
@@ -7232,6 +7262,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &1772330302
 GameObject:
   m_ObjectHideFlags: 0
@@ -7383,6 +7414,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &1797534238
 GameObject:
   m_ObjectHideFlags: 0
@@ -7728,6 +7760,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &1846789303
 GameObject:
   m_ObjectHideFlags: 0
@@ -7848,6 +7881,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &1876711550
 GameObject:
   m_ObjectHideFlags: 0
@@ -7969,6 +8003,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!114 &1876711555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8183,6 +8218,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &1927792981
 GameObject:
   m_ObjectHideFlags: 0
@@ -8485,6 +8521,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &1995182154
 GameObject:
   m_ObjectHideFlags: 0
@@ -8605,6 +8642,7 @@ MonoBehaviour:
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
   occupied: 0
+  currentlyTriggeredBy: {fileID: 0}
 --- !u!1 &2047240678
 GameObject:
   m_ObjectHideFlags: 0
@@ -13957,6 +13995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multimeterDad: {fileID: 3469287837345569730}
+  SitckyVoltage: 0
 --- !u!33 &3469287837345569728
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -13980,6 +14019,7 @@ MonoBehaviour:
   start: {fileID: 1772330302}
   end: {fileID: 1046225733}
   VoltageMusltimeter: 0
+  StickyVoltage: 0
   VoltageText: {fileID: 487942104}
 --- !u!65 &3469287837345569731
 BoxCollider:

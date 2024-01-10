@@ -43,12 +43,23 @@ public class Elec_StartOutlet : MonoBehaviour
         else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
         {
             multimeterSticky = other.gameObject.GetComponent<Elev_MultimeterSticky>();
-            multimeterSticky.EqualVoltages(OutputVoltage);
+            multimeter.StickyVoltage = OutputVoltage;
         }
     }
     public void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.GetComponent<Elec_WireEnds>() != null)
+        {
             wireEnd = null;
+        }
+        else if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
+        {
             multimeter.VoltageMusltimeter = 0;
+        }
+        else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
+        {
+            multimeterSticky.Chill();
+            multimeter.StickyVoltage = 0;
+        }
     }
 }
