@@ -5,7 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Elec_LightBulb : MonoBehaviour
 {
-    ParticleSystem LightParticle;
+    public ParticleSystem LightParticle;
     public Light BulbLight;
     // Start is called before the first frame update
     void Start()
@@ -14,9 +14,14 @@ public class Elec_LightBulb : MonoBehaviour
         LightParticle.Stop();
         BulbLight.enabled = false;
     }
-    public void PuzzleComplete()
+    public void BulbEnablee()
     {
         LightParticle.Play();
         BulbLight.enabled=true;
+    }
+    public void BulbDisable()
+    {
+        LightParticle.Stop();
+        BulbLight.enabled = false;
     }
 }

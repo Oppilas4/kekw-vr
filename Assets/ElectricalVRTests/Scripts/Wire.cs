@@ -6,19 +6,19 @@ public class Wire : MonoBehaviour
 {
     LineRenderer wire;
     public GameObject start, end;
-    public int lenght = 0;
-    public int WireVoltage = 5;
+    public Elec_WireEnds WireEnd1,WireEnd2;
+    public int WireVoltage = 0;
 
     void Start()
     {
         wire = GetComponent<LineRenderer>();
-        wire.positionCount = lenght;
+        wire.positionCount = 2;
     }
 
     // Update is called once per frame
     void Update()
     {
-       wire.SetPosition(0, start.transform.position);
+        wire.SetPosition(0, start.transform.position);
         wire.SetPosition(1, end.transform.position);
     }
 }
