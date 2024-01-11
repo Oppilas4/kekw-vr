@@ -5,12 +5,13 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Elec_LightBulb : MonoBehaviour
 {
-    public ParticleSystem LightParticle;
-    public Light BulbLight;
+    ParticleSystem LightParticle;
+    Light BulbLight;
     // Start is called before the first frame update
     void Start()
     {
         LightParticle = GetComponentInChildren<ParticleSystem>();
+        BulbLight = GetComponentInChildren<Light>();
         LightParticle.Stop();
         BulbLight.enabled = false;
     }

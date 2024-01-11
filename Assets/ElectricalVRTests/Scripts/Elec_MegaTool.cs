@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Elec_MegaTool : MonoBehaviour
 {
+    public GameObject EndPrefab;
+    public GameObject SpawnPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +17,9 @@ public class Elec_MegaTool : MonoBehaviour
     void Update()
     {
         
+    }
+    public void MakeWireEnd()
+    {
+        Instantiate(EndPrefab, SpawnPos.transform.position, SpawnPos.transform.rotation,SpawnPos.transform);
     }
 }
