@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -34,12 +35,16 @@ public class StoveDial : MonoBehaviour
 
     private void GrabbedBy(SelectEnterEventArgs arg0)
     {
-        interactor = GetComponent<XRGrabInteractable>().selectingInteractor;
-        interactor.GetComponent<XRDirectInteractor>().hideControllerOnSelect = true;
-
-        shouldGetHandRotation = true;
-        startAngle = 0f;
+        interactor = GetComponent<XRGrabInteractable>().interactorsSelecting.FirstOrDefault() as XRBaseInteractor;
+        if (interactor != null)
+        {
+            shouldGetHandRotation = true;
+            startAngle = 0f;
+        }
     }
+
+
+
 
     void Update()
     {

@@ -134,7 +134,6 @@ public class SteakController : MonoBehaviour
 
     void ChangeMaterial()
     {
-        Debug.Log("Changing material");
 
         switch (currentCookingStage)
         {
