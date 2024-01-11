@@ -16,13 +16,16 @@ public class Elec_GridNode : MonoBehaviour
     public Collider currentlyTriggeredBy;
     public XRSocketInteractor ourXRSocketInteractor;
     public Elec_Voltage ourVoltage;
+    public int currentVoltage = 0;
     public int StartWithVoltage = 0;
     public bool LockVoltage = false;
-    public List<int> ReceivedVoltagesATM;
+    public Dictionary<GameObject,int> ReceivedVoltagesATM;
 
     private void Awake()
     {
         ourVoltage = new Elec_Voltage(StartWithVoltage);
+        currentVoltage = StartWithVoltage;
+        ReceivedVoltagesATM = new Dictionary<GameObject,int>();
     }
 
 
@@ -131,15 +134,19 @@ public class Elec_GridNode : MonoBehaviour
         IVoltage foundIVoltage;
         if (ref_interactable.gameObject.TryGetComponent<IVoltage>(out foundIVoltage))
         {
-            StartCoroutine(DelayOneFrame(foundIVoltage));
+            if (ReceivedVoltagesATM.ContainsKey(ref_interactable.gameObject) == false) ReceivedVoltagesATM.Add(ref_interactable.gameObject, foundIVoltage.Voltage_Send());
+            SetNeighbourAvailability(true);
+            UpdateVoltage();
         }
     }
-    IEnumerator DelayOneFrame(IVoltage foundIVoltage)
+    public void SomethingExits(XRBaseInteractable ref_interactable)
     {
-        yield return null;
-        ReceivedVoltagesATM.Add(foundIVoltage.Voltage_Send());
-        SetNeighbourAvailability(true);
-        UpdateVoltage();
+        IVoltage foundIVoltage;
+        if (ref_interactable.gameObject.TryGetComponent<IVoltage>(out foundIVoltage))
+        {
+            if(ReceivedVoltagesATM.ContainsKey(ref_interactable.gameObject)) ReceivedVoltagesATM.Remove(ref_interactable.gameObject);
+            UpdateVoltage();
+        }
     }
 
     public void SetNeighbourAvailability(bool locked)
@@ -153,60 +160,65 @@ public class Elec_GridNode : MonoBehaviour
     public void UpdateAvailability(bool state)
     {
         Available = state;
-        ourXRSocketInteractor.allowSelect = Available;
     }
 
-    public void SomethingExits(XRBaseInteractable ref_interactable)
-    {
-        IVoltage foundIVoltage;
-        if (ref_interactable.gameObject.TryGetComponent<IVoltage>(out foundIVoltage))
-        {
-            ReceivedVoltagesATM.Remove(foundIVoltage.Voltage_Send());
-            UpdateVoltage();
-        }
-    }
 
-    public void TakeNeighbourVoltage(int VoltageToReceive)
+
+    public void TakeNeighbourVoltage(GameObject toReceiveFrom, int VoltageToReceive)
     {
         //if (Available == false) return;
-        ReceivedVoltagesATM.Add(VoltageToReceive);
+        if(ReceivedVoltagesATM.ContainsKey(toReceiveFrom) == false) ReceivedVoltagesATM.Add(toReceiveFrom,VoltageToReceive);
         UpdateVoltageFromNeighbour();
     }
-    public void RemoveNeighbourVoltage(int VoltageToReceive)
+    public void RemoveNeighbourVoltage(GameObject RemoveFrom)
     {
-        ReceivedVoltagesATM.Remove(VoltageToReceive);
+        if(ReceivedVoltagesATM.ContainsKey(RemoveFrom))ReceivedVoltagesATM.Remove(RemoveFrom);
         UpdateVoltage();
     }
     public void UpdateVoltage()
     {
         if (!Available) return;
         int highestvoltage = 0;
-        foreach (int foundVoltage in ReceivedVoltagesATM)
+
+        if (ReceivedVoltagesATM.Count == 0) highestvoltage = 0;
+        else
         {
-            if (foundVoltage > highestvoltage)
+            foreach (KeyValuePair<GameObject, int> foundValuePair in ReceivedVoltagesATM)
             {
-                highestvoltage = foundVoltage;
+                if (foundValuePair.Value > highestvoltage) { highestvoltage = foundValuePair.Value; }
             }
-           if(LockVoltage == false) ourVoltage.voltage = highestvoltage;
-            UpdateAvailability(false);
-            neighbour_up?.TakeNeighbourVoltage(ourVoltage.voltage);
-            neighbour_down?.TakeNeighbourVoltage(ourVoltage.voltage);
-            neighbour_left?.TakeNeighbourVoltage(ourVoltage.voltage);
-            neighbour_right?.TakeNeighbourVoltage(ourVoltage.voltage);
         }
+        if (LockVoltage == false)
+        {
+            ourVoltage.voltage = highestvoltage;
+
+        }
+        UpdateAvailability(false);
+            neighbour_up?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
+            neighbour_down?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
+            neighbour_left?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
+            neighbour_right?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
+        currentVoltage = ourVoltage.voltage;
     }
 
     public void UpdateVoltageFromNeighbour()
     {
         int highestvoltage = 0;
-        foreach (int foundVoltage in ReceivedVoltagesATM)
+
+        foreach (KeyValuePair<GameObject, int> foundValuePair in ReceivedVoltagesATM)
         {
-            if (foundVoltage > highestvoltage)
-            {
-                highestvoltage = foundVoltage;
+            if (foundValuePair.Value > highestvoltage)
+            
+            { 
+                highestvoltage = foundValuePair.Value; 
             }
-            if (LockVoltage == false) ourVoltage.voltage = highestvoltage;
-            UpdateAvailability(true);
         }
+        if (LockVoltage == false)
+        {
+            ourVoltage.voltage = highestvoltage;
+        }
+
+       UpdateAvailability(true);
+        currentVoltage = ourVoltage.voltage;
     }
 }
