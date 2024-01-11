@@ -8,13 +8,13 @@ public class Elec_Light_switch : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log("Triggered");
-        if (other.tag == "Player" && animator.GetBool("on/off") == false )
+        if (!animator.GetBool("TurnedOn"))
         {
-            animator.SetBool("on/off", true);
+            animator.SetBool("TurnedOn", true);
         }
-        if (other.tag == "Player" && animator.GetBool("on/off") == true)
+        if (animator.GetBool("TurnedOn"))
         {
-            animator.SetBool("on/off", false);
+            animator.SetBool("TurnedOn", false);
         }
         Debug.Log("Triggered");
     }
