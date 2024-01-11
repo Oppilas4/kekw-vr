@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Elec_Light_switch : MonoBehaviour
 {
-    public Animator animator;
+    Animator animator;
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log("Triggered");
-        if (!animator.GetBool("TurnedOn"))
+        if (animator.GetBool("TurnedOn"))
         {
             animator.SetBool("TurnedOn", true);
         }
-        if (animator.GetBool("TurnedOn"))
+        if (!animator.GetBool("TurnedOn"))
         {
             animator.SetBool("TurnedOn", false);
         }
