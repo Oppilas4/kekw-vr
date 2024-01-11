@@ -11,6 +11,8 @@ public class Elec_FinishOutlet : MonoBehaviour
     public Elec_LightBulb bulb;
     public int OutputVoltage = 5;
     public Elec_WireEnds wireEnd;
+    public Elec_Multimeter multimeter;
+    public Elev_MultimeterSticky multimeterSticky;
     private void Start()
     {
     }
@@ -34,9 +36,31 @@ public class Elec_FinishOutlet : MonoBehaviour
         {
             wireEnd = other.gameObject.GetComponent<Elec_WireEnds>();
         }
+        else if(other.gameObject.GetComponent<Elec_Multimeter>() != null) 
+        {
+            multimeter = other.gameObject.GetComponent<Elec_Multimeter>();
+            multimeter.VoltageMusltimeter = OutputVoltage;
+        }
+        else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
+        {
+            multimeterSticky = other.gameObject.GetComponent <Elev_MultimeterSticky>();
+            multimeter.StickyVoltage = OutputVoltage;
+        }
     }
     public void OnTriggerExit(Collider other)
     {
-            wireEnd = null;   
+        if (other.gameObject.GetComponent<Elec_WireEnds>() != null)
+        {
+            wireEnd = null;
+        }
+        else if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
+        {
+            multimeter.VoltageMusltimeter = 0;
+        }
+        else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
+        {
+            multimeterSticky.Chill();
+            multimeter.StickyVoltage = 0;
+        }
     }
 }

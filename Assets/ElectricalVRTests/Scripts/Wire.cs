@@ -6,7 +6,6 @@ public class Wire : MonoBehaviour
 {
     LineRenderer wire;
     public GameObject start, end;
-    public Elec_WireEnds WireEnd1,WireEnd2;
     public int WireVoltage = 0;
 
     void Start()
