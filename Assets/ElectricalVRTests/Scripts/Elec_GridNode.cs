@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using UnityEngine.XR.Interaction.Toolkit;
 public class Elec_GridNode : MonoBehaviour
 {
 
@@ -14,6 +14,8 @@ public class Elec_GridNode : MonoBehaviour
     public ElecGridNodEManager ourManager;
     public bool occupied = false;
     public Collider currentlyTriggeredBy;
+    public XRSocketInteractor ourXRSocketInteractor;
+
     public bool isOccupied()
     {
         return occupied;
@@ -129,16 +131,6 @@ public class Elec_GridNode : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (occupied) return;
-        Elec_WireEnds _test;
-        if (other.TryGetComponent<Elec_WireEnds>(out _test) == true)
-        {
-            currentlyTriggeredBy = other;
-            ourManager.crossReferenceThisNode(this);
-        }
-    }
 
     public void Plug(bool _state)
     {
@@ -149,5 +141,25 @@ public class Elec_GridNode : MonoBehaviour
         }
     }
 
+
+    private void Start()
+    {
+        if (ourXRSocketInteractor == null) { 
+            ourXRSocketInteractor = GetComponent<XRSocketInteractor>();
+        }
+        ourXRSocketInteractor.onSelectEntered.AddListener(SomethingEnters);
+        ourXRSocketInteractor.onHoverExited.AddListener(SomethingExits);
+    }
+
+    public void SomethingEnters(XRBaseInteractable ref_interactable)
+    {
+        print("Something enters");
+        print(ref_interactable.gameObject.name);
+    }
+
+    public void SomethingExits(XRBaseInteractable ref_interactable)
+    {
+        print("something exits");
+    }
 
 }
