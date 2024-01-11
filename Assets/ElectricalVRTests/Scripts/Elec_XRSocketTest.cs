@@ -7,7 +7,7 @@ public class Elec_XRSocketTest : MonoBehaviour
 {
     // Start is called before the first frame update
     public XRBaseInteractor interactor;
-    public XRSocketInteractor socket;
+    public GameObject SelectedOne;
     void Start()
     {
         interactor.allowSelect = false;
@@ -16,7 +16,7 @@ public class Elec_XRSocketTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        SelectedOne = interactor.selectTarget.gameObject;
     }
     private void OnTriggerEnter(Collider other)
     {

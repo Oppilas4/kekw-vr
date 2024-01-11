@@ -20,6 +20,6 @@ public class Elec_MegaTool : MonoBehaviour
     }
     public void MakeWireEnd()
     {
-        Instantiate(EndPrefab, SpawnPos.transform.position, SpawnPos.transform.rotation,SpawnPos.transform);
+        Instantiate(EndPrefab, SpawnPos.transform.position, SpawnPos.transform.rotation);
     }
 }
