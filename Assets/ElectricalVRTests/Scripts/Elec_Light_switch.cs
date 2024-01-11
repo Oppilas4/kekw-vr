@@ -5,19 +5,17 @@ using UnityEngine;
 public class Elec_Light_switch : MonoBehaviour
 {
     public Animator animator;
-    public bool is_on = false;
-   
     public void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && is_on == false)
+        Debug.Log("Triggered");
+        if (!animator.GetBool("TurnedOn"))
         {
-            animator.SetTrigger("On");
-            is_on = true;
+            animator.SetBool("TurnedOn", true);
         }
-        if (other.tag == "Player" && is_on != false)
+        if (animator.GetBool("TurnedOn"))
         {
-            animator.SetTrigger("Off");
-            is_on = false;
+            animator.SetBool("TurnedOn", false);
         }
+        Debug.Log("Triggered");
     }
 }

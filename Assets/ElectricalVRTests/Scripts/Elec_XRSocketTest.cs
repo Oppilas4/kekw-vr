@@ -16,7 +16,7 @@ public class Elec_XRSocketTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //SelectedOne = interactor.selectTarget.gameObject;
+        if(SelectedOne != null) SelectedOne = interactor.selectTarget.gameObject;
     }
     private void OnTriggerEnter(Collider other)
     {
