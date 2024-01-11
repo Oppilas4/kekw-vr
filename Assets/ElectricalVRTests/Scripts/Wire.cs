@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wire : MonoBehaviour
+public class Wire : MonoBehaviour, IVoltage
 {
     LineRenderer wire;
     public GameObject start, end;
-    public int WireVoltage = 0;
+    public Elec_Voltage WireVoltage;
+    public int startVoltage = 0;
 
+    private void Awake()
+    {
+        WireVoltage = new Elec_Voltage(startVoltage);
+    }
     void Start()
     {
         wire = GetComponent<LineRenderer>();
@@ -19,5 +24,15 @@ public class Wire : MonoBehaviour
     {
         wire.SetPosition(0, start.transform.position);
         wire.SetPosition(1, end.transform.position);
+    }
+
+    public void Voltage_Receive(int newVoltage)
+    {
+        WireVoltage.voltage = newVoltage;
+    }
+
+    public int Voltage_Send()
+    {
+        return WireVoltage.voltage;
     }
 }

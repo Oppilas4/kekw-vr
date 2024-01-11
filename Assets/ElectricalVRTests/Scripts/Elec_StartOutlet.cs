@@ -8,24 +8,26 @@ using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 public class Elec_StartOutlet : MonoBehaviour
 {
-    public int OutputVoltage = 5;
+    public Elec_GridNode ourNode;
     public Elec_WireEnds wireEnd;
     public Wire MainWire;
     public Elec_Multimeter multimeter;
     public Elev_MultimeterSticky multimeterSticky;
     private void Start()
     {
+        ourNode = GetComponent<Elec_GridNode>();
     }
     public void WireConnected()
     {
         Debug.Log("WireConnected to start called");
+        if (MainWire == null) return;
         MainWire = wireEnd.MainestWire;
-        MainWire.WireVoltage = OutputVoltage;
+        MainWire.WireVoltage.voltage = ourNode.ourVoltage.voltage;
     }
     public void WireDisconnected()
     {
-        wireEnd.WireEndVolt = 0;
-        MainWire.WireVoltage = 0;
+        if(wireEnd) wireEnd.WireEndVolt.voltage = 0;
+        if(MainWire) MainWire.WireVoltage.voltage = 0;
         MainWire = null;
         wireEnd = null;
     }
@@ -38,12 +40,12 @@ public class Elec_StartOutlet : MonoBehaviour
         else if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
         {
             multimeter = other.gameObject.GetComponent<Elec_Multimeter>();
-            multimeter.VoltageMusltimeter = OutputVoltage;
+            multimeter.VoltageMusltimeter = ourNode.ourVoltage.voltage;
         }
         else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
         {
             multimeterSticky = other.gameObject.GetComponent<Elev_MultimeterSticky>();
-            multimeter.StickyVoltage = OutputVoltage;
+            multimeter.StickyVoltage = ourNode.ourVoltage.voltage;
         }
     }
     public void OnTriggerExit(Collider other)
