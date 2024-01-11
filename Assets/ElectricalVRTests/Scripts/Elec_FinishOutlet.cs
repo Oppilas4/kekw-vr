@@ -9,17 +9,18 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Elec_FinishOutlet : MonoBehaviour
 {
     public Elec_LightBulb bulb;
-    public int OutputVoltage = 5;
+    public Elec_GridNode ourGridNode;
     public Elec_WireEnds wireEnd;
     public Elec_Multimeter multimeter;
     public Elev_MultimeterSticky multimeterSticky;
     private void Start()
     {
+        ourGridNode= GetComponent<Elec_GridNode>();
     }
     public void WireConnected()
     {
         Debug.Log("WireConnected called");
-        if (wireEnd.WireEndVolt == OutputVoltage)
+        if (wireEnd.WireEndVolt.voltage == ourGridNode.ourVoltage.voltage)
         {
             bulb.BulbEnablee();
             Debug.Log("Bulb was lit on");
@@ -39,12 +40,12 @@ public class Elec_FinishOutlet : MonoBehaviour
         else if(other.gameObject.GetComponent<Elec_Multimeter>() != null) 
         {
             multimeter = other.gameObject.GetComponent<Elec_Multimeter>();
-            multimeter.VoltageMusltimeter = OutputVoltage;
+            multimeter.VoltageMusltimeter = ourGridNode.ourVoltage.voltage;
         }
         else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
         {
             multimeterSticky = other.gameObject.GetComponent <Elev_MultimeterSticky>();
-            multimeter.StickyVoltage = OutputVoltage;
+            multimeter.StickyVoltage = ourGridNode.ourVoltage.voltage;
         }
     }
     public void OnTriggerExit(Collider other)

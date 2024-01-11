@@ -13,46 +13,44 @@ public class ElecGridNodEManager : MonoBehaviour
         StartCoroutine(SetupRoutine());
     }
 
-    public bool crossReferenceThisNode(Elec_GridNode _toTest)
-    {
-        if (latestPluggedIn)
-        {
-            if (latestPluggedIn.isThisNodeUseable(_toTest))
-            {
-                latestPluggedIn = _toTest;
-                _toTest.Plug(true);
-                return true;
-            }
-            else return false;
-        }
-        else
-        {
-            latestPluggedIn = _toTest;
-            _toTest.Plug(true);
-            return true;
-        }
-    }
-
     IEnumerator SetupRoutine()
     {
         yield return null;
         ourGridTest = GetComponent<ElecGridTes>();
+
         if (ourGridTest != null)
         {
-            foreach (Transform foundChild in ourGridTest.transform)
+            if (ourGridTest.enabled == false)
             {
-                Elec_GridNode foundGridNode = foundChild.GetComponent<Elec_GridNode>();
-                if (foundGridNode != null)
-                {
-                    Spawned_Nodes.Add(foundGridNode);
-                }
+                    foreach (Transform foundChild in transform)
+                    {
+                        Elec_GridNode foundGridNode = foundChild.GetComponent<Elec_GridNode>();
+                        if (foundGridNode != null)
+                        {
+                            Spawned_Nodes.Add(foundGridNode);
+                        }
+                    }
+                    yield return null;
+                    foreach (Elec_GridNode foundNode in Spawned_Nodes)
+                    {
+                        foundNode.SetupNode(SearchDistanceBetweenNodes, this);
+                    }
             }
-            yield return null;
-            foreach (Elec_GridNode foundNode in Spawned_Nodes)
-            {
-                foundNode.SetupNode(ourGridTest.gridSpacing, this);
-            }
-        }
+                else {
+                        foreach (Transform foundChild in ourGridTest.transform)
+                        {
+                            Elec_GridNode foundGridNode = foundChild.GetComponent<Elec_GridNode>();
+                            if (foundGridNode != null)
+                            {
+                                Spawned_Nodes.Add(foundGridNode);
+                            }
+                        }
+                        yield return null;
+                        foreach (Elec_GridNode foundNode in Spawned_Nodes)
+                        {
+                            foundNode.SetupNode(ourGridTest.gridSpacing, this);
+                        }
+                    } }
         else
         {
             foreach (Transform foundChild in transform)
