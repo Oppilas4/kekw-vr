@@ -6,20 +6,16 @@ public class Elec_MegaTool : MonoBehaviour
 {
     public GameObject EndPrefab;
     public GameObject SpawnPos;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    GameObject WirePiece;
     public void MakeWireEnd()
     {
-        Instantiate(EndPrefab, SpawnPos.transform.position, SpawnPos.transform.rotation);
+       WirePiece = Instantiate(EndPrefab, SpawnPos.transform.position, SpawnPos.transform.rotation,SpawnPos.transform);
+       
+    }
+    public void WireUnconnect()
+    {
+        WirePiece.GetComponent<Rigidbody>().useGravity = true;
+        WirePiece.GetComponent<Rigidbody>().isKinematic = false;
+        WirePiece.transform.parent = null;
     }
 }
