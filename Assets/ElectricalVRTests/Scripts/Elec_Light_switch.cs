@@ -4,22 +4,27 @@ using UnityEngine;
 
 public class Elec_Light_switch : MonoBehaviour
 {
-    Animator animator;
+    public GameObject offObject;
+    bool IsOn = false;
     private void Start()
     {
-        animator = GetComponent<Animator>();
+
     }
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Triggered");
-        if (animator.GetBool("TurnedOn"))
-        {
-            animator.SetBool("TurnedOn", true);
-        }
-        if (!animator.GetBool("TurnedOn"))
-        {
-            animator.SetBool("TurnedOn", false);
-        }
-        Debug.Log("Triggered");
+            if (other.tag == "LeftHand" || other.tag == "RightHand")
+            {
+                Debug.Log("Player tagged object has entered");
+                if (!IsOn)
+                {
+                    gameObject.SetActive(false);
+                    offObject.SetActive(true);
+                }
+                else
+                {
+                    gameObject.SetActive(true);
+                    offObject.SetActive(false);
+                }
+            }
     }
 }
