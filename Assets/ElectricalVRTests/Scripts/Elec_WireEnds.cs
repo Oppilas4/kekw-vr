@@ -12,7 +12,6 @@ public class Elec_WireEnds : MonoBehaviour, IVoltage
     // Start is called before the first frame update
     void Start()
     {
-        MainestWire = GameObject.Find("WirePrototype").GetComponent<Wire>();
     }
 
     // Update is called once per frame
