@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Elec_Light_switch : MonoBehaviour
 {
     public GameObject offObject;
     bool IsOn = false;
+    public UnityEvent WharaDo;
     private void Start()
     {
 
