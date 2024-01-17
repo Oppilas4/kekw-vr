@@ -125,7 +125,7 @@ public class Elec_GridNode : MonoBehaviour
             ourXRSocketInteractor = GetComponent<XRSocketInteractor>();
         }
         ourXRSocketInteractor.onSelectEntered.AddListener(SomethingEnters);
-        ourXRSocketInteractor.onHoverExited.AddListener(SomethingExits);
+        ourXRSocketInteractor.onSelectExited.AddListener(SomethingExits);
         UpdateAvailability(Available);
     }
 
