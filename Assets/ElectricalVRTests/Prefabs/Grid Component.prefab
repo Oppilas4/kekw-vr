@@ -120,8 +120,12 @@ MonoBehaviour:
   neighbour_left: {fileID: 0}
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
-  occupied: 0
+  Available: 0
   currentlyTriggeredBy: {fileID: 0}
+  ourXRSocketInteractor: {fileID: 0}
+  currentVoltage: 0
+  StartWithVoltage: 0
+  LockVoltage: 0
 --- !u!1 &5872386878505198110
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,14 +149,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5872386878505198110}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: -0.048}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5872386877806122122}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &7349096870710637624
 GameObject:
   m_ObjectHideFlags: 0

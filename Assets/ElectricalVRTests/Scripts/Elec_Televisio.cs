@@ -8,16 +8,15 @@ public class Elec_Televisio : MonoBehaviour
     VideoPlayer player;
     public List<VideoClip> clipList;
     public VideoClip Static;
-    AudioSource audioSource;
     public int channelID = 0;
     public bool PluggedIn = false;
+    public float staticShowsFor = 0.1f;
+    private bool ChangingClip = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         player = GetComponent<VideoPlayer>();
-        player.SetTargetAudioSource(0,audioSource);
-        
     }
     public void PluggedIN()
     {
@@ -38,9 +37,21 @@ public class Elec_Televisio : MonoBehaviour
             if (channelID >= clipList.Count)
             {
                 channelID = 0;
+                return;
             }
-            player.clip = clipList[channelID];
-            channelID++;
+            if(ChangingClip) StopCoroutine(ChangeClip(clipList[channelID]));
+            StartCoroutine(ChangeClip(clipList[channelID]));
+            
         }     
+    }
+
+    IEnumerator ChangeClip(VideoClip nextClip)
+    {
+        ChangingClip = true;
+        player.clip= Static;
+        yield return new WaitForSeconds(staticShowsFor);
+        player.clip = clipList[channelID];
+        ChangingClip = false;
+        channelID++;
     }
 }
