@@ -8,12 +8,16 @@ public class Elec_Televisio : MonoBehaviour
     VideoPlayer player;
     public List<VideoClip> clipList;
     public VideoClip Static;
+    AudioSource audioSource;
     public int channelID = 0;
     public bool PluggedIn = false;
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         player = GetComponent<VideoPlayer>();
+        player.SetTargetAudioSource(0,audioSource);
+        
     }
     public void PluggedIN()
     {
