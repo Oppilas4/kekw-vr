@@ -8,13 +8,15 @@ public class Elec_MegaTool : MonoBehaviour
     public GameObject SpawnPos;
     GameObject WirePiece;
     public Elec_ToolWireRenderer ToolWireREnderer;
+    AudioSource StaplerAudio;
     public void MakeWireEnd()
     {
        WirePiece = Instantiate(EndPrefab, SpawnPos.transform.position, SpawnPos.transform.rotation,SpawnPos.transform);
-       
+       StaplerAudio = GetComponent<AudioSource>();
     }
     public void WireUnconnect()
     {
+        StaplerAudio.Play();
         WirePiece.GetComponent<Rigidbody>().useGravity = true;
         WirePiece.GetComponent<Rigidbody>().isKinematic = false;
         ToolWireREnderer.WireComponents.Add(WirePiece);

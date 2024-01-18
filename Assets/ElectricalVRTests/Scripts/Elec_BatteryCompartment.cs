@@ -5,16 +5,15 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Elec_BatteryCompartment : MonoBehaviour
 {
-    Elec_TVremote PapaRemote;
+    public Elec_TVremote PapaRemote;
     bool Occupied = false;
-    XRBaseInteractable interactable;
-    private void Start()
+    void Start()
     {
-        PapaRemote = gameObject.transform.parent.GetComponent<Elec_TVremote>();
+        PapaRemote = gameObject.GetComponentInParent<Elec_TVremote>();
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<XRBaseInteractable>() != null)
+        if (other.gameObject.GetComponent<XRBaseInteractable>() != null && !Occupied)
         {
             other.gameObject.GetComponent<XRBaseInteractable>().enabled = false;
         }
@@ -25,8 +24,9 @@ public class Elec_BatteryCompartment : MonoBehaviour
             other.gameObject.transform.parent = gameObject.transform;
             other.gameObject.transform.position = gameObject.transform.position;
             other.gameObject.transform.rotation = gameObject.transform.rotation;
+            PapaRemote.Batteries++;
             Occupied = true;
         }
-        PapaRemote.Batteries++;
+        
     }
 }

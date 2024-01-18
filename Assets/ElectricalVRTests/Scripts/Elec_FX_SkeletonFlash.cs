@@ -9,6 +9,7 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
     public List<Renderer> SkellyRenderers;
     public int HowManyFlashes = 8;
     public float timeBetweenFlashes = 0.2f;
+    AudioSource FlashSound;
     //Hello Henri!If you seeing this then you have to clean up quite some stuff here
     private void Start()
     {
@@ -16,9 +17,11 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
         SkellyRenderers.Add(GameObject.Find("Bone_mesh.019").GetComponent<Renderer>());
         NormalRenderers.Add(GameObject.Find("asdMesh.002").GetComponent<Renderer>());
         NormalRenderers.Add(GameObject.Find("asdMesh.001").GetComponent<Renderer>());
+        FlashSound = GetComponent<AudioSource>();
     }
     public void Flash()
     {
+        FlashSound.Play();
         StopAllCoroutines();
         StartCoroutine(FlashSkellyHands());
     }

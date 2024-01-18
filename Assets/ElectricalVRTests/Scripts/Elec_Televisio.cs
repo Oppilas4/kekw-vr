@@ -7,6 +7,7 @@ public class Elec_Televisio : MonoBehaviour
 {
     VideoPlayer player;
     public List<VideoClip> clipList;
+    public VideoClip Static;
     public int channelID = 0;
     public bool PluggedIn = false;
     // Start is called before the first frame update
@@ -18,6 +19,7 @@ public class Elec_Televisio : MonoBehaviour
     {
         player.enabled = true;
         PluggedIn=true;
+        player.clip= Static;
     }
     public void Unplugged()
     {
