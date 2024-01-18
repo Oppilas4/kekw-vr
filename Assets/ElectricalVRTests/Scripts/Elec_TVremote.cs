@@ -25,9 +25,9 @@ public class Elec_TVremote : MonoBehaviour
     }
     public void SecretToyGunMethod(GameObject projectile)
     {
-        if (Batteries == 1)
+        if (Batteries > 0)
         {
-            GameObject bulletz = Instantiate(projectile, spawnpoint.transform.position + spawnpoint.transform.forward, gameObject.transform.rotation);
+            GameObject bulletz = Instantiate(projectile, spawnpoint.transform.position, gameObject.transform.rotation);
             Rigidbody rb = bulletz.GetComponent<Rigidbody>();
             if (rb != null)
 
@@ -35,6 +35,5 @@ public class Elec_TVremote : MonoBehaviour
                 rb.AddForce(spawnpoint.transform.forward * throwForce, ForceMode.VelocityChange);
             }
         }
-
     }
 }
