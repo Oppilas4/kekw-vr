@@ -1,3 +1,4 @@
+using Oculus.Interaction;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,12 +20,10 @@ public class Elec_BatteryCompartment : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<XRBaseInteractable>() != null && !Occupied)
-        {
-            other.gameObject.GetComponent<XRBaseInteractable>().enabled = false;
-        }
+        
         if (other.tag == "Battery" && !Occupied)
-        {
+        {          
+            other.gameObject.GetComponent<XRBaseInteractable>().enabled = false;
             battery = other.gameObject;
             other.enabled = false;
             other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
@@ -37,8 +36,24 @@ public class Elec_BatteryCompartment : MonoBehaviour
     }
     private void Update()
     {
-        selected = PapaInteractable.isSelected;
-        if(selected && Input.GetButtonDown("XRI_Right_PrimaryButton") && battery != null )
+        if (PapaInteractable.isSelected)
+        {
+            var interactor = PapaInteractable.interactorsSelecting[0];
+            if (interactor.transform.gameObject.tag == "LeftHand" && Input.GetButtonDown("XRI_Left_PrimaryButton"))
+            {           
+                EjectBattery();
+            }
+            if (interactor.transform.gameObject.tag == "RightHand" && Input.GetButtonDown("XRI_Right_PrimaryButton"))
+            {               
+                EjectBattery();
+            }
+        }
+
+    }
+    void EjectBattery()
+    {
+        
+        if(battery != null )
         {
             battery.transform.parent = null;
             battery.GetComponent<Collider>().enabled = true;

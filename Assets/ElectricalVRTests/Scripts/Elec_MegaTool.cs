@@ -14,6 +14,7 @@ public class Elec_MegaTool : MonoBehaviour
     AudioSource StaplerAudio;
     Animator Animator;
     XRBaseInteractable Stapler;
+    bool HasShoten;
     private void Start()
     {
         Stapler = GetComponent<XRBaseInteractable>();
@@ -23,31 +24,37 @@ public class Elec_MegaTool : MonoBehaviour
     }
     public void MakeWireEnd()
     {
-        WirePiece = Instantiate(EndPrefab, SpawnPos.transform.position, SpawnPos.transform.rotation);
-        if(WirePiece.GetComponent<Rigidbody>() != null ) 
+        if (!HasShoten) 
         {
-            WirePiece.GetComponent<Rigidbody>().AddForce(-SpawnPos.transform.forward * shootingForce, ForceMode.Impulse);
-        }   
-        StaplerAudio.Play();
-        ToolWireREnderer.WireComponents.Add(WirePiece);
+            WirePiece = Instantiate(EndPrefab, SpawnPos.transform.position, SpawnPos.transform.rotation);
+            if (WirePiece.GetComponent<Rigidbody>() != null)
+            {
+                WirePiece.GetComponent<Rigidbody>().AddForce(-SpawnPos.transform.forward * shootingForce, ForceMode.Impulse);
+            }
+            StaplerAudio.Play();
+            ToolWireREnderer.WireComponents.Add(WirePiece);
+            HasShoten = true;
+        }
     }
     private void Update()
     {
-        Debug.Log("Interactors Selecting" + Stapler.interactorsSelecting.Count);
         if (Stapler.isSelected)
         {
             var interactor = Stapler.interactorsSelecting[0];
             Debug.Log(interactor.ToString());
             if (interactor.transform.gameObject.tag == "LeftHand")
             {
-                Animator.Play("Cube_001|Down", 0, Input.GetAxis("XRI_Left_Trigger"));
+                Animator.Play("Cube_001_Down", 0, Input.GetAxis("XRI_Left_Trigger"));
             }
             if (interactor.transform.gameObject.tag == "RightHand")
             {
-                Animator.Play("Cube_001|Down", 0, Input.GetAxis("XRI_Right_Trigger"));
-            }
-           
+                Animator.Play("Cube_001_Down", 0, Input.GetAxis("XRI_Right_Trigger"));
+            }           
         }
 
+    }
+    void HasShotenSetFalse()
+    {
+        HasShoten = false;
     }
 }

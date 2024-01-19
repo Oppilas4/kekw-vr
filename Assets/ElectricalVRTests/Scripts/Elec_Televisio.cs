@@ -17,6 +17,7 @@ public class Elec_Televisio : MonoBehaviour
     void Start()
     {
         player = GetComponent<VideoPlayer>();
+        player.SetTargetAudioSource(0,GetComponent<AudioSource>());
     }
     public void PluggedIN()
     {

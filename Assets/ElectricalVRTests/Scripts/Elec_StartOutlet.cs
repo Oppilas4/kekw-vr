@@ -45,7 +45,7 @@ public class Elec_StartOutlet : MonoBehaviour
         else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
         {
             multimeterSticky = other.gameObject.GetComponent<Elev_MultimeterSticky>();
-            multimeter.StickyVoltage = ourNode.ourVoltage.voltage;
+            if(multimeter != null) { multimeter.StickyVoltage = ourNode.ourVoltage.voltage; }  
         }
     }
     public void OnTriggerExit(Collider other)
@@ -60,7 +60,6 @@ public class Elec_StartOutlet : MonoBehaviour
         }
         else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
         {
-            multimeterSticky.Chill();
             multimeter.StickyVoltage = 0;
         }
     }

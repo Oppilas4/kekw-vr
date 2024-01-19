@@ -10,6 +10,7 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
     public int HowManyFlashes = 8;
     public float timeBetweenFlashes = 0.2f;
     AudioSource FlashSound;
+    public AudioClip FlashSoundClip;
     //Hello Henri!If you seeing this then you have to clean up quite some stuff here
     private void Start()
     {
@@ -21,7 +22,7 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
     }
     public void Flash()
     {
-        FlashSound.Play();
+        FlashSound.PlayOneShot(FlashSoundClip);
         StopAllCoroutines();
         StartCoroutine(FlashSkellyHands());
     }
@@ -52,6 +53,12 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
             yield return new WaitForSeconds(Mathf.Abs(timeBetweenFlashes));
         }
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "LeftHand" || other.tag == "RightHand")
+        {
+            Flash();
+        }
+    }
 
 }

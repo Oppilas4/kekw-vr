@@ -36,6 +36,10 @@ public class Elec_Multimeter : MonoBehaviour
                 VoltageText.color = Color.red;
             }
         }
-
+        else
+        {
+            VoltageText.color= Color.white;
+        }
+        
     }
 }

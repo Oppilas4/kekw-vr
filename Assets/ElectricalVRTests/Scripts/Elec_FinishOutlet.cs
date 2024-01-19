@@ -60,7 +60,6 @@ public class Elec_FinishOutlet : MonoBehaviour
         }
         else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
         {
-            multimeterSticky.Chill();
             multimeter.StickyVoltage = 0;
         }
     }
