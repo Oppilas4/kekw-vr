@@ -110,6 +110,7 @@ MonoBehaviour:
   Static: {fileID: 32900000, guid: 090f31d0445c733458646d4ef22c2890, type: 3}
   channelID: 0
   PluggedIn: 0
+  staticShowsFor: 0.1
 --- !u!328 &3294063514554531935
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -770,6 +771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PapaRemote: {fileID: 0}
+  ejectionPort: {fileID: 0}
 --- !u!65 &2131257846845567343
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1056,6 +1058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PapaRemote: {fileID: 0}
+  ejectionPort: {fileID: 0}
 --- !u!65 &2131257847758879166
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1084,6 +1087,7 @@ GameObject:
   - component: {fileID: 5372216680082306596}
   - component: {fileID: 5372216680082306594}
   - component: {fileID: 5372216680082306595}
+  - component: {fileID: 80303739925791839}
   m_Layer: 0
   m_Name: elec_socket_prefab (1)
   m_TagString: Untagged
@@ -1396,6 +1400,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &80303739925791839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5372216680082306599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e1a9ebc8b404804ea128a29a7029636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NormalRenderers: []
+  SkellyRenderers: []
+  HowManyFlashes: 12
+  timeBetweenFlashes: 0.05
+  FlashSoundClip: {fileID: 8300000, guid: 4f8cb586e7e125c40a03ec144ac574d0, type: 3}
 --- !u!1 &5825362741495320051
 GameObject:
   m_ObjectHideFlags: 0
