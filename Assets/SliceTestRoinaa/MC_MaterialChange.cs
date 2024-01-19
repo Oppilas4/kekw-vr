@@ -2,64 +2,54 @@ using UnityEngine;
 
 public class MC_MaterialChange : MonoBehaviour
 {
-    public GameObject objectWithRay; // The object shooting the ray
     public Material newMaterial; // The new material to apply
-    private float rayLength = 10f; // Length of the ray
 
-    private MeshRenderer _renderer;
-    private MeshFilter filter;
-    private Mesh mesh;
-    private Material[] materials;
-
-    void Start()
+    void OnTriggerEnter(Collider other)
     {
-        // Ensure the object has a MeshRenderer and MeshFilter
-        _renderer = objectWithRay.GetComponent<MeshRenderer>();
-        filter = objectWithRay.GetComponent<MeshFilter>();
-        mesh = filter.sharedMesh;
-        materials = _renderer.materials;
-    }
-
-    void Update()
-    {
-        // Cast a ray from the object's position towards its forward direction
-        Ray ray = new Ray(objectWithRay.transform.position, objectWithRay.transform.forward);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, rayLength))
+        // Check if the collider's GameObject has the tag "Potato"
+        if (other.CompareTag("Potato"))
         {
-            // Check if the hit object has the "Potato" tag
-            if (hit.collider.gameObject.tag == "Potato")
-            {
-                // Get the submesh index of the hit triangle
-                int triangleIndex = hit.triangleIndex;
-                int subMeshIndex = GetSubMeshIndex(mesh, triangleIndex);
+            // Shoot a ray from the current object's position towards the other object
+            Ray ray = new Ray(transform.position, other.transform.position - transform.position);
 
-                // Change the material of the hit submesh
-                materials[subMeshIndex] = newMaterial;
-                _renderer.materials = materials;
+            // Check if the ray hits something
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                // Check if the hit object is the Potato
+                if (hit.collider.CompareTag("Potato"))
+                {
+                    // Get the MeshFilter component from the hit object
+                    MeshFilter meshFilter = hit.collider.GetComponent<MeshFilter>();
+
+                    if (meshFilter != null)
+                    {
+                        // Get the mesh from the MeshFilter
+                        Mesh mesh = meshFilter.mesh;
+
+                        // Get the triangle indices of the hit face
+                        int[] triangleIndices = new int[] { hit.triangleIndex * 3, hit.triangleIndex * 3 + 1, hit.triangleIndex * 3 + 2 };
+
+                        // Assign the new material to the specified face
+                        AssignMaterialToFace(mesh, triangleIndices, newMaterial);
+                    }
+                }
             }
         }
     }
 
-    public static int GetSubMeshIndex(Mesh mesh, int triangleIndex)
+    void AssignMaterialToFace(Mesh mesh, int[] faceVertices, Material material)
     {
-        if (!mesh.isReadable) return 0;
+        // Create an array of colors (materials) for each vertex in the face
+        Color[] colors = new Color[mesh.vertices.Length];
 
-        var triangleCounter = 0;
-        for (var subMeshIndex = 0; subMeshIndex < mesh.subMeshCount; subMeshIndex++)
+        // Set the new material for the specified face vertices
+        foreach (int vertexIndex in faceVertices)
         {
-            var indexCount = mesh.GetSubMesh(subMeshIndex).indexCount;
-            triangleCounter += indexCount / 3;
-            if (triangleIndex < triangleCounter) return subMeshIndex;
+            colors[vertexIndex] = material.color; // Assuming you're changing the color
         }
 
-        return 0;
-    }
-
-    void OnDrawGizmos()
-    {
-        // Draw the ray
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(objectWithRay.transform.position, objectWithRay.transform.forward * rayLength);
+        // Assign the modified colors array to the mesh
+        mesh.colors = colors;
     }
 }

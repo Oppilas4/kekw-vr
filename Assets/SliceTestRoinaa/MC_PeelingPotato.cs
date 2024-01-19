@@ -6,6 +6,8 @@ public class MC_PeelingPotato : MonoBehaviour
 {
     public GameObject decalPrefab; // Assign the decal prefab in Inspector
 
+    public Transform rayPointObject; // Assign the empty GameObject in Inspector
+
     private void OnTriggerEnter(Collider other)
     {
         // Check if the collider has the "Potato" tag
@@ -14,9 +16,12 @@ public class MC_PeelingPotato : MonoBehaviour
             // Get the position where the raycast hits
             Vector3 hitPoint = other.ClosestPointOnBounds(transform.position);
 
+            // Use the position of the assigned empty GameObject as the raycast starting point
+            Vector3 rayPoint = rayPointObject.position;
+
             // Shoot a raycast from the object towards the hit point
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, hitPoint - transform.position, out hit))
+            if (Physics.Raycast(rayPoint, Vector3.down, out hit))
             {
                 // Check if the raycast hits an object with the tag "Potato"
                 if (hit.collider.CompareTag("Potato"))
@@ -41,5 +46,12 @@ public class MC_PeelingPotato : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        // Draw a red ray in the Scene view to visualize the raycast
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(rayPointObject.position, rayPointObject.position + Vector3.down * 10f);
     }
 }
