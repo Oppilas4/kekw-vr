@@ -19,12 +19,14 @@ public class Elec_GridNode : MonoBehaviour
     public int StartWithVoltage = 0;
     public bool LockVoltage = false;
     public Dictionary<GameObject,int> ReceivedVoltagesATM;
+    private bool currentAvailability = false;
 
     private void Awake()
     {
         ourVoltage = new Elec_Voltage(StartWithVoltage);
         currentVoltage = StartWithVoltage;
         ReceivedVoltagesATM = new Dictionary<GameObject,int>();
+        currentAvailability = ourXRSocketInteractor.socketActive;
     }
     public Elec_GridNode returnNode(direction toRetrieve)
     {
@@ -129,6 +131,13 @@ public class Elec_GridNode : MonoBehaviour
             UpdateVoltage(true);
         }
     }
+
+    private void Update()
+    {
+        if (currentVoltage > 0) UpdateAvailability(true);
+        else UpdateAvailability(false);
+    }
+
     public void SomethingExits(XRBaseInteractable ref_interactable)
     {
         IVoltage foundIVoltage;
@@ -140,7 +149,9 @@ public class Elec_GridNode : MonoBehaviour
     }
     public void UpdateAvailability(bool state)
     {
+        if (state == currentAvailability) return;
         ourXRSocketInteractor.socketActive = state;
+        currentAvailability = state;
     }
 
     public void TakeNeighbourVoltage(GameObject toReceiveFrom, int VoltageToReceive)
@@ -182,7 +193,5 @@ public class Elec_GridNode : MonoBehaviour
             neighbour_right?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
         }
         currentVoltage = ourVoltage.voltage;
-
-        ourManager.UpdateAvailability();
     }
 }
