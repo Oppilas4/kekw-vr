@@ -10,7 +10,6 @@ public class Elec_BatteryCompartment : MonoBehaviour
     bool Occupied = false;
     GameObject battery;
     XRBaseInteractable PapaInteractable;
-    bool selected = false;
     public Transform ejectionPort;
     void Start()
     {
