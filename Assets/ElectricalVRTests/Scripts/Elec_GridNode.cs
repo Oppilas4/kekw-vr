@@ -26,6 +26,7 @@ public class Elec_GridNode : MonoBehaviour
         ourVoltage = new Elec_Voltage(StartWithVoltage);
         currentVoltage = StartWithVoltage;
         ReceivedVoltagesATM = new Dictionary<GameObject,int>();
+        if (ourXRSocketInteractor == null) ourXRSocketInteractor = GetComponent<XRSocketInteractor>();
         currentAvailability = ourXRSocketInteractor.socketActive;
     }
     public Elec_GridNode returnNode(direction toRetrieve)
