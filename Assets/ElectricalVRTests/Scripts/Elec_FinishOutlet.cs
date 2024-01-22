@@ -6,30 +6,57 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.Events;
+
 public class Elec_FinishOutlet : MonoBehaviour
 {
-    public Elec_LightBulb bulb;
+    public UnityEvent OnFinish;
+    private bool hasFinished = false;
+
     public Elec_GridNode ourGridNode;
     public Elec_WireEnds wireEnd;
     public Elec_Multimeter multimeter;
     public Elev_MultimeterSticky multimeterSticky;
+
+    public int goalVoltage = 5;
+
     private void Start()
     {
         ourGridNode= GetComponent<Elec_GridNode>();
     }
+
+    private void Update()
+    {
+        if (ourGridNode)
+        {
+            if (hasFinished == false)
+            {
+                if (ourGridNode.currentVoltage == goalVoltage)
+                {
+                    OnFinish.Invoke();
+                    hasFinished = true;
+                }
+            }
+            else
+            {
+                if (ourGridNode.currentVoltage != goalVoltage) hasFinished = false;
+            }
+        }
+    }
+
     public void WireConnected()
     {
         Debug.Log("WireConnected called");
         if (wireEnd.WireEndVolt.voltage == ourGridNode.ourVoltage.voltage)
         {
-            bulb.BulbEnablee();
+            //OnFinish.BulbEnablee();
             Debug.Log("Bulb was lit on");
         }
     }
     public void WireDisconnected()
     {
         wireEnd = null;
-        bulb.BulbDisable();
+       // OnFinish.BulbDisable();
     }
     public void OnTriggerEnter(Collider other)
     {
