@@ -21,6 +21,8 @@ public class Elec_GridNode : MonoBehaviour
     public Dictionary<GameObject,int> ReceivedVoltagesATM;
     private bool currentAvailability = false;
 
+    public int goalVoltage = 0;
+
     private void Awake()
     {
         ourVoltage = new Elec_Voltage(StartWithVoltage);
