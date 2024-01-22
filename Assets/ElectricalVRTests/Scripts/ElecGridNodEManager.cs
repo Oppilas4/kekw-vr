@@ -70,4 +70,13 @@ public class ElecGridNodEManager : MonoBehaviour
 
 
     }
+
+    public void UpdateAvailability()
+    {
+        foreach (Elec_GridNode foundNode in Spawned_Nodes)
+        {
+            if (foundNode.currentVoltage > 0) foundNode.UpdateAvailability(true);
+            else foundNode.UpdateAvailability(false);
+        }
+    }
 }
