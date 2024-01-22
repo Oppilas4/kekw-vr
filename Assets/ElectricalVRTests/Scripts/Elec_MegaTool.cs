@@ -6,6 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Elec_MegaTool : MonoBehaviour
 {
+    public bool IsFullAuto = false;
     public GameObject EndPrefab;
     public GameObject SpawnPos;
     public float shootingForce = 10;
@@ -33,7 +34,7 @@ public class Elec_MegaTool : MonoBehaviour
             }
             StaplerAudio.Play();
             ToolWireREnderer.WireComponents.Add(WirePiece);
-            HasShoten = true;
+            if(!IsFullAuto) HasShoten = true; 
         }
     }
     private void Update()
@@ -56,5 +57,9 @@ public class Elec_MegaTool : MonoBehaviour
     void HasShotenSetFalse()
     {
         HasShoten = false;
+    }
+    public void TurnOnFullAuto()
+    {
+        IsFullAuto = true;
     }
 }

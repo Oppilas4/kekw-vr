@@ -33,7 +33,7 @@ public class Elec_FinishOutlet : MonoBehaviour
             {
                 if (ourGridNode.currentVoltage == goalVoltage)
                 {
-                    if (ourGridNode.currentAvailability == false)
+                    if (GetComponent<XRSocketInteractor>().hasSelection == true)
                     {
                         OnFinish.Invoke();
                         hasFinished = true;
