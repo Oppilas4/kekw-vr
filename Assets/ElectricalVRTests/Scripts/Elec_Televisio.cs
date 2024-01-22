@@ -21,7 +21,7 @@ public class Elec_Televisio : MonoBehaviour
     }
     public void PluggedIN()
     {
-        player.isLooping = false;
+        player.isLooping = true;
         player.enabled = true;
         PluggedIn=true;
         player.clip= Static;
