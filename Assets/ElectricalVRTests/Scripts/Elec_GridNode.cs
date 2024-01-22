@@ -19,7 +19,7 @@ public class Elec_GridNode : MonoBehaviour
     public int StartWithVoltage = 0;
     public bool LockVoltage = false;
     public Dictionary<GameObject,int> ReceivedVoltagesATM;
-    private bool currentAvailability = false;
+    public bool currentAvailability = false;
 
     public int goalVoltage = 0;
 

@@ -33,8 +33,11 @@ public class Elec_FinishOutlet : MonoBehaviour
             {
                 if (ourGridNode.currentVoltage == goalVoltage)
                 {
-                    OnFinish.Invoke();
-                    hasFinished = true;
+                    if (ourGridNode.currentAvailability == false)
+                    {
+                        OnFinish.Invoke();
+                        hasFinished = true;
+                    }
                 }
             }
             else
