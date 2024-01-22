@@ -126,7 +126,7 @@ public class Elec_GridNode : MonoBehaviour
         if (ref_interactable.gameObject.TryGetComponent<IVoltage>(out foundIVoltage))
         {
             if (ReceivedVoltagesATM.ContainsKey(ref_interactable.gameObject) == false) ReceivedVoltagesATM.Add(ref_interactable.gameObject, foundIVoltage.Voltage_Send());
-            UpdateVoltage_Starter();
+            UpdateVoltage(true);
         }
     }
     public void SomethingExits(XRBaseInteractable ref_interactable)
@@ -135,7 +135,7 @@ public class Elec_GridNode : MonoBehaviour
         if (ref_interactable.gameObject.TryGetComponent<IVoltage>(out foundIVoltage))
         {
             if(ReceivedVoltagesATM.ContainsKey(ref_interactable.gameObject)) ReceivedVoltagesATM.Remove(ref_interactable.gameObject);
-            UpdateVoltage_Starter();
+            UpdateVoltage(true);
         }
     }
     public void UpdateAvailability(bool state)
