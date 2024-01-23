@@ -2907,6 +2907,7 @@ GameObject:
   - component: {fileID: 380307345}
   - component: {fileID: 380307344}
   - component: {fileID: 380307343}
+  - component: {fileID: 380307346}
   m_Layer: 19
   m_Name: Grid Component(Clone) (11)
   m_TagString: Untagged
@@ -2954,7 +2955,7 @@ MonoBehaviour:
   StartWithVoltage: 0
   LockVoltage: 0
   currentAvailability: 0
-  goalVoltage: 0
+  goalVoltage: 7
 --- !u!114 &380307344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3022,6 +3023,38 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &380307346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380307341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8afd0cf75e29c44aae343e4178b2cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnFinish:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1479154853}
+        m_TargetAssemblyTypeName: Elec_LightBulb, Assembly-CSharp
+        m_MethodName: BulbEnablee
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  ourGridNode: {fileID: 0}
+  wireEnd: {fileID: 0}
+  multimeter: {fileID: 0}
+  multimeterSticky: {fileID: 0}
+  goalVoltage: 7
 --- !u!1 &393734496
 GameObject:
   m_ObjectHideFlags: 0
@@ -3942,6 +3975,81 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.45352876, y: 4.0863514, z: 0.5937861}
     m_Extent: {x: 0.29164422, y: 0.27280283, z: 0.28862154}
   m_DirtyAABB: 0
+--- !u!1001 &528317378
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1495373951}
+    m_Modifications:
+    - target: {fileID: 2569747227250036129, guid: fe72da3b733a2864ebef204332d9f186,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569747227250036129, guid: fe72da3b733a2864ebef204332d9f186,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.1040001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569747227250036129, guid: fe72da3b733a2864ebef204332d9f186,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0480001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569747227250036129, guid: fe72da3b733a2864ebef204332d9f186,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.05799961
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569747227250036129, guid: fe72da3b733a2864ebef204332d9f186,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569747227250036129, guid: fe72da3b733a2864ebef204332d9f186,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569747227250036129, guid: fe72da3b733a2864ebef204332d9f186,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569747227250036129, guid: fe72da3b733a2864ebef204332d9f186,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569747227250036129, guid: fe72da3b733a2864ebef204332d9f186,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569747227250036129, guid: fe72da3b733a2864ebef204332d9f186,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569747227250036129, guid: fe72da3b733a2864ebef204332d9f186,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2945991668638734107, guid: fe72da3b733a2864ebef204332d9f186,
+        type: 3}
+      propertyPath: m_Name
+      value: Elec_WorkingBulb (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fe72da3b733a2864ebef204332d9f186, type: 3}
+--- !u!4 &528317379 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2569747227250036129, guid: fe72da3b733a2864ebef204332d9f186,
+    type: 3}
+  m_PrefabInstance: {fileID: 528317378}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &531994478
 GameObject:
   m_ObjectHideFlags: 0
@@ -10414,6 +10522,18 @@ Transform:
   m_Father: {fileID: 666667274}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1479154853 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1442920899216376327, guid: fe72da3b733a2864ebef204332d9f186,
+    type: 3}
+  m_PrefabInstance: {fileID: 528317378}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52a7b3d46cd540e41bb34d805b1b4bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1482220685
 GameObject:
   m_ObjectHideFlags: 0
@@ -10607,6 +10727,7 @@ Transform:
   - {fileID: 878759697}
   - {fileID: 8512686774285845655}
   - {fileID: 6454393406413925316}
+  - {fileID: 528317379}
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13825,6 +13946,7 @@ GameObject:
   - component: {fileID: 1837614080}
   - component: {fileID: 1837614079}
   - component: {fileID: 1837614078}
+  - component: {fileID: 1837614081}
   m_Layer: 19
   m_Name: Grid Component(Clone)
   m_TagString: Untagged
@@ -13868,9 +13990,9 @@ MonoBehaviour:
   ourManager: {fileID: 878759699}
   currentlyTriggeredBy: {fileID: 0}
   ourXRSocketInteractor: {fileID: 0}
-  currentVoltage: 0
-  StartWithVoltage: 0
-  LockVoltage: 0
+  currentVoltage: 7
+  StartWithVoltage: 7
+  LockVoltage: 1
   currentAvailability: 0
   goalVoltage: 0
 --- !u!114 &1837614079
@@ -13940,6 +14062,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1837614081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837614076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d27f086b24aabf4bb43ac138b9619e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ourNode: {fileID: 0}
+  wireEnd: {fileID: 0}
+  MainWire: {fileID: 0}
+  multimeter: {fileID: 0}
+  multimeterSticky: {fileID: 0}
 --- !u!1 &1841541888
 GameObject:
   m_ObjectHideFlags: 0
@@ -15953,8 +16092,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.8927164, y: 1, z: 2.7348607}
-  m_Center: {x: 0.25, y: 0.49, z: -0.17380811}
+  m_Size: {x: 1.8896667, y: 6.4204826, z: 2.7348607}
+  m_Center: {x: 0.1322199, y: 3.2002416, z: -0.17380811}
 --- !u!114 &919132147899466576
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,9 +5,15 @@ using UnityEngine;
 public class Elec_ToolWireRenderer : MonoBehaviour
 {
     public List<GameObject> WireComponents = new List<GameObject>();
-    public LineRenderer WireRenderer;
+    LineRenderer WireRenderer;
+    public Color ColorOfTheWire;
+    public Material Lego;
     void Start()
     {       
+       WireRenderer = GetComponent<LineRenderer>();
+       WireRenderer.material = Lego;
+       WireRenderer.startColor = ColorOfTheWire;
+       WireRenderer.endColor = ColorOfTheWire;
        
     }
 
