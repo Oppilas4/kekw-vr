@@ -12,6 +12,8 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
     public float timeBetweenFlashes = 0.2f;
     AudioSource FlashSound;
     public AudioClip FlashSoundClip;
+    GameObject Player;
+    public GameObject DeathPosition;
     //Hello Henri!If you seeing this then you have to clean up quite some stuff here
     private void Start()
     {
@@ -19,13 +21,15 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
         SkellyRenderers.Add(GameObject.Find("Bone_mesh.019").GetComponent<Renderer>());
         NormalRenderers.Add(GameObject.Find("asdMesh.002").GetComponent<Renderer>());
         NormalRenderers.Add(GameObject.Find("asdMesh.001").GetComponent<Renderer>());
-        FlashSound = GetComponent<AudioSource>();
+        FlashSound = GameObject.Find("EatingSound").GetComponent<AudioSource>();
+        Player = GameObject.Find("XrCharacterSetupWithHands(Clone)");
     }
     public void Flash()
     {
         FlashSound.PlayOneShot(FlashSoundClip);
         StopAllCoroutines();
         StartCoroutine(FlashSkellyHands());
+        Player.transform.position = DeathPosition.transform.position;
     }
 
     IEnumerator FlashSkellyHands()
