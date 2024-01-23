@@ -23,7 +23,15 @@ public class CustomerController : MonoBehaviour
     // Call this function when the customer places an order
     public void PlaceOrder()
     {
-        orderManager.GenerateRandomOrder(customer);
-        Debug.Log($"Customer {customer.customerId} placed an order: {customer.currentOrder.dishName} - Expiration Time: {customer.currentOrder.expirationTime}");
+        if (customer.currentOrder == null)
+        {
+            orderManager.GenerateRandomOrder(customer);
+            Debug.Log($"Customer {customer.customerId} placed an order: {customer.currentOrder.dishName} - Expiration Time: {customer.currentOrder.expirationTime}");
+        }
+        else
+        {
+            Debug.Log($"Customer {customer.customerId} already has an order.");
+        }
     }
+
 }

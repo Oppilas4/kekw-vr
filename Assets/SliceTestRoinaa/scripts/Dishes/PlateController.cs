@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.XR.Interaction.Toolkit;
-
+using Unity.VisualScripting;
 
 public class PlateController : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public class PlateController : MonoBehaviour
     private List<GameObject> vegetablePiecesOnPlate = new List<GameObject>();
 
     public float delayBeforeParenting = 0.5f; // Adjust the delay time as needed
-
+    
     private IEnumerator OnTriggerEnter(Collider other)
     {
         VegetableController vegetableController = other.GetComponent<VegetableController>();
@@ -32,8 +32,6 @@ public class PlateController : MonoBehaviour
             // Parent the sliced vegetable to the plate
             other.transform.parent = transform;
 
-            
-
             // Add the sliced vegetable to the list
             vegetablePiecesOnPlate.Add(other.gameObject);
         }
@@ -50,4 +48,19 @@ public class PlateController : MonoBehaviour
         // Clear the list
         vegetablePiecesOnPlate.Clear();
     }
+
+    // Helper function to check if a specific ingredient is on the plate
+    private bool ContainsIngredient(string ingredientName)
+    {
+        foreach (var vegetable in vegetablePiecesOnPlate)
+        {
+            VegetableController vegetableController = vegetable.GetComponent<VegetableController>();
+            if (vegetableController != null && vegetableController.GetVegetableName() == ingredientName)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }

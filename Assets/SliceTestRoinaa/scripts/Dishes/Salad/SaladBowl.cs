@@ -9,6 +9,7 @@ public class SaladBowl : MonoBehaviour
     public float totalAvailableSpace = 100f; // Adjust as needed
 
     private List<GameObject> piecesInsideBowl = new List<GameObject>();
+    private List<GameObject> invalidIngredients = new List<GameObject>();
 
     // List of valid vegetable names
     public List<string> validVegetableNames = new List<string>();
@@ -52,6 +53,10 @@ public class SaladBowl : MonoBehaviour
         {
             piecesInsideBowl.Add(other.gameObject);
         }
+        else
+        {
+            invalidIngredients.Add(other.gameObject);
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -89,70 +94,78 @@ public class SaladBowl : MonoBehaviour
 
     void OnCalculateDish()
     {
-        float baseScore = 100;
-        float dishScore = 100;
-        int cucumberCount = 0;
-        int tomatoCount = 0;
-        int lettuceCount = 0;
-        float totalPieceSize = 0f;
-
-        foreach (var piece in piecesInsideBowl)
+        // Check if the current dish in the serving area is the same as the one triggering the calculations
+        if (CompletedDishArea.currentDish == transform.parent.gameObject)
         {
-            float pieceSize = CalculatePieceSize(piece);
-            totalPieceSize += pieceSize;
+            float baseScore = 100;
+            float dishScore = 100;
+            int cucumberCount = 0;
+            int tomatoCount = 0;
+            int lettuceCount = 0;
+            float totalPieceSize = 0f;
 
-            if (pieceSize > thresholdSize)
+            foreach (var piece in piecesInsideBowl)
             {
-                // Deduct points for oversized pieces
-                float oversizedDeduction = Mathf.Clamp01((pieceSize - thresholdSize) / thresholdSize) * oversizedPieceDeduction;
-                dishScore -= (baseScore * oversizedDeduction);
+                float pieceSize = CalculatePieceSize(piece);
+                totalPieceSize += pieceSize;
+
+                if (pieceSize > thresholdSize)
+                {
+                    // Deduct points for oversized pieces
+                    float oversizedDeduction = Mathf.Clamp01((pieceSize - thresholdSize) / thresholdSize) * oversizedPieceDeduction;
+                    dishScore -= (baseScore * oversizedDeduction);
+                }
+
+                // Count the components
+                if (piece.CompareTag("Cucumber")) cucumberCount++;
+                else if (piece.CompareTag("Tomato")) tomatoCount++;
+                else if (piece.CompareTag("Lettuce")) lettuceCount++;
             }
 
-            // Count the components
-            if (piece.CompareTag("Cucumber")) cucumberCount++;
-            else if (piece.CompareTag("Tomato")) tomatoCount++;
-            else if (piece.CompareTag("Lettuce")) lettuceCount++;
+            // Calculate the ratio of each component
+            float cucumberRatio = piecesInsideBowl.Count > 0 ? (float)cucumberCount / piecesInsideBowl.Count : 0f;
+            float tomatoRatio = piecesInsideBowl.Count > 0 ? (float)tomatoCount / piecesInsideBowl.Count : 0f;
+            float lettuceRatio = piecesInsideBowl.Count > 0 ? (float)lettuceCount / piecesInsideBowl.Count : 0f;
+
+            // Deduct points for missing components
+            if (cucumberRatio == 0f)
+            {
+                dishScore -= missingComponentDeduction;
+            }
+
+            if (tomatoRatio == 0f)
+            {
+                dishScore -= missingComponentDeduction;
+            }
+
+            if (lettuceRatio == 0f)
+            {
+                dishScore -= missingComponentDeduction;
+            }
+
+            // Calculate unused space
+            float unusedSpaceRatio = 1 - (totalPieceSize / totalAvailableSpace);
+
+            // Initialize unusedSpaceDeduction with a low value for a casual game
+            float unusedSpaceDeduction = Mathf.Clamp01(unusedSpaceRatio) * 0.5f; // Adjust the value as needed
+
+            // Deduct points based on the unused space ratio
+            dishScore = dishScore * unusedSpaceDeduction;
+
+            if (invalidIngredients.Count > 0)
+            {
+                dishScore = dishScore * 0.5f;
+            }
+            /*
+            Debug.Log("totalPieceSize: " + totalPieceSize);
+            Debug.Log("totalAvailableSpace: " + totalAvailableSpace);
+            Debug.Log("unusedSpaceRatio: " + unusedSpaceRatio);
+            Debug.Log("unusedSpaceDeduction: " + unusedSpaceDeduction);
+            */
+
+            // Update the game manager with the calculated score
+            DishScoreManager.Instance.UpdateScore(dishScore);
         }
-
-        // Calculate the ratio of each component
-        float cucumberRatio = piecesInsideBowl.Count > 0 ? (float)cucumberCount / piecesInsideBowl.Count : 0f;
-        float tomatoRatio = piecesInsideBowl.Count > 0 ? (float)tomatoCount / piecesInsideBowl.Count : 0f;
-        float lettuceRatio = piecesInsideBowl.Count > 0 ? (float)lettuceCount / piecesInsideBowl.Count : 0f;
-
-        // Deduct points for missing components
-        if (cucumberRatio == 0f)
-        {
-            dishScore -= missingComponentDeduction;
-        }
-
-        if (tomatoRatio == 0f)
-        {
-            dishScore -= missingComponentDeduction;
-        }
-
-        if (lettuceRatio == 0f)
-        {
-            dishScore -= missingComponentDeduction;
-        }
-
-        // Calculate unused space
-        float unusedSpaceRatio = 1 - (totalPieceSize / totalAvailableSpace);
-
-        // Initialize unusedSpaceDeduction with a low value for a casual game
-        float unusedSpaceDeduction = Mathf.Clamp01(unusedSpaceRatio) * 0.5f; // Adjust the value as needed
-
-        // Deduct points based on the unused space ratio
-        dishScore = dishScore * unusedSpaceDeduction;
-        /*
-        Debug.Log("totalPieceSize: " + totalPieceSize);
-        Debug.Log("totalAvailableSpace: " + totalAvailableSpace);
-        Debug.Log("unusedSpaceRatio: " + unusedSpaceRatio);
-        Debug.Log("unusedSpaceDeduction: " + unusedSpaceDeduction);
-        */
-
-        // Update the game manager with the calculated score
-        DishScoreManager.Instance.UpdateScore(dishScore);
-
     }
 
 

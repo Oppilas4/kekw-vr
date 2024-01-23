@@ -11,14 +11,27 @@ public class OrderManager : MonoBehaviour
 
     private List<Order> activeOrders = new List<Order>();
 
+    public enum SteakTemperature
+    {
+        Raw,
+        Medium,
+        WellDone
+    }
+
     public void GenerateRandomOrder(Customer customer)
     {
         Order newOrder = new Order
         {
             orderId = Random.Range(1000, 9999),
             dishName = availableDishes[Random.Range(0, availableDishes.Count)],
-            expirationTime = Time.time + 5f // 60 seconds expiration time (adjust as needed)
+            expirationTime = Time.time + 60f // 60 seconds expiration time (adjust as needed)
         };
+
+        // Assign a random temperature to the steak if the dish is a steak
+        if (newOrder.dishName == "Steak")
+        {
+            newOrder.steakTemperature = (SteakTemperature)Random.Range(0, 3); // 0-2 corresponds to Raw, Medium, WellDone
+        }
 
         // Assign the order to the customer
         customer.currentOrder = newOrder;
@@ -38,8 +51,8 @@ public class OrderManager : MonoBehaviour
         // Get the OrderTicket component
         OrderTicket orderTicket = orderTicketObject.GetComponent<OrderTicket>();
 
-        // Set order information on the ticket
-        orderTicket.SetOrderInfo(order.orderId, order.dishName);
+        // Pass the steak temperature to the order ticket
+        orderTicket.SetOrderInfo(order.orderId, order.dishName, order.steakTemperature);
     }
 
     private void CheckOrderStatus()

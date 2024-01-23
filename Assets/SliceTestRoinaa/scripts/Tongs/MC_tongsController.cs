@@ -1,0 +1,132 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.InputSystem;
+using UnityEngine.Animations;
+
+public class MC_tongsController : MonoBehaviour
+{
+    private XRGrabInteractable grabbable;
+    public InputActionProperty rightTriggerValue;
+    public InputActionProperty leftTriggerValue;
+    private Animator tongsAnimator;
+    public float grabDistance = 0.1f; // Adjust the distance to your needs
+    private XRGrabInteractable grabbedObject;
+    public Transform grabLocation;
+    void Start()
+    {
+        grabbable = GetComponent<XRGrabInteractable>();
+        tongsAnimator = GetComponent<Animator>();
+    }
+
+    void Update()
+    {
+        // Check if the tongs are being grabbed and either the right or left triggerValue property is valid
+        if (grabbable.isSelected)
+        {
+            float triggerAmount = 0f;
+
+            var interactor = grabbable.interactorsSelecting[0];
+
+            if (interactor != null)
+            {
+                // Check the tag of the interactor's game object
+                if (interactor.transform.gameObject.tag == "RightHand" && rightTriggerValue != null && rightTriggerValue.action != null)
+                {
+                    // Check if the right-hand trigger is pressed
+                    triggerAmount = rightTriggerValue.action.ReadValue<float>();
+                }
+                else if (interactor.transform.gameObject.tag == "LeftHand" && leftTriggerValue != null && leftTriggerValue.action != null)
+                {
+                    // Check if the left-hand trigger is pressed
+                    triggerAmount = leftTriggerValue.action.ReadValue<float>();
+                }
+            }
+
+            // Set the "Close" parameter of the Animator based on the trigger input
+            tongsAnimator.SetFloat("Close", triggerAmount);
+
+            // Check for grabbing objects
+            if (triggerAmount > 0f)
+            {
+                GrabObject();
+            }
+            else
+            {
+                // Release the grabbed object if trigger is not pressed
+                ReleaseObject();
+            }
+        }
+    }
+
+    void GrabObject()
+    {
+        if (grabbedObject == null)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(grabLocation.position, transform.up, out hit, grabDistance))
+            {
+                XRGrabInteractable interactable = hit.collider.GetComponent<XRGrabInteractable>();
+                if (interactable != null)
+                {
+                    // Grab the interactable using the XRGrabInteractable's Grab method
+                    grabbedObject = interactable;
+
+                    // Add a Parent Constraint component to the grabbed object
+                    ParentConstraint parentConstraint = grabbedObject.gameObject.AddComponent<ParentConstraint>();
+                    // Add the grab location as the source of the constraint
+                    ConstraintSource constraintSource = new ConstraintSource();
+                    constraintSource.sourceTransform = grabLocation;
+                    constraintSource.weight = 1;
+                    parentConstraint.AddSource(constraintSource);
+                    parentConstraint.constraintActive = true;
+
+                    // Enable the constraint
+                    parentConstraint.enabled = true;
+                }
+            }
+        }
+    }
+
+
+
+    void ReleaseObject()
+    {
+        if (grabbedObject != null)
+        {
+            // Get the ParentConstraint from the grabbed object
+            ParentConstraint parentConstraint = grabbedObject.gameObject.GetComponent<ParentConstraint>();
+
+            // If the ParentConstraint exists, remove it
+            if (parentConstraint != null)
+            {
+                Destroy(parentConstraint);
+            }
+
+            // Reset the parent of the grabbed object.
+            grabbedObject.transform.parent = null;
+
+            // Reset the rigidbody's velocity to zero
+            Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.velocity = Vector3.zero;
+            }
+
+            grabbedObject = null;
+        }
+    }
+
+
+
+
+
+
+    // Visualize the raycast in the Scene view
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(grabLocation.position, transform.up * grabDistance);
+    }
+}

@@ -1,11 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using static OrderManager;
 
 public class CompletedDishArea : MonoBehaviour
 {
     public UnityEvent _calculateDish = new UnityEvent();
+    public UnityEvent<string> _sendSteakTemperature = new UnityEvent<string>();
+    public UnityEvent<int> _completeOrder = new UnityEvent<int>();
+
+    public static GameObject currentDish; // Store the current dish in the serving area
+    public string ticketDishName; // Store the current order
+    private string steakTemperature;
+    private int orderID;
 
     private void OnEnable()
     {
@@ -19,25 +28,93 @@ public class CompletedDishArea : MonoBehaviour
         FindObjectOfType<OrderBell>()._orderReady.RemoveListener(OnOrderReady);
     }
 
+    public void SetCurrentDish(GameObject dish)
+    {
+        currentDish = dish;
+    }
+
+    public void ClearCurrentDish()
+    {
+        currentDish = null;
+        ticketDishName = null;
+        steakTemperature = null;
+    }
+
     private void OnOrderReady()
     {
         // Method to be executed when the _orderReady event happens
-        CheckForDish();
+        CheckForDishAndTicket();
     }
 
-    public void CheckForDish()
+    public void CheckForDishAndTicket()
     {
-        Collider[] colliders = Physics.OverlapBox(transform.position, transform.localScale / 2, transform.rotation);
+        BoxCollider boxCollider = GetComponent<BoxCollider>();
+
+        Vector3 colliderSize = boxCollider.size;
+
+        Collider[] colliders = Physics.OverlapBox(transform.position, colliderSize, transform.rotation);
+
+        GameObject foundDish = null;
+        int ticketCount = 0;
 
         foreach (Collider collider in colliders)
         {
             if (collider.CompareTag("Dish"))
             {
-                Debug.Log("dishDetected");
-                // Trigger the _calculateDish event if a dish is found
-                _calculateDish.Invoke();
-                return; // No need to continue checking once a dish is found
+                foundDish = collider.gameObject;
             }
+            else if (collider.CompareTag("OrderTicket"))
+            {
+                ticketCount++;
+                OrderTicket orderTicket = collider.GetComponent<OrderTicket>();
+                if (orderTicket != null)
+                {
+                    ticketDishName = orderTicket.dishNameText.text;
+                    steakTemperature = orderTicket.steakTemperatureText.text;
+                    string orderIDText = orderTicket.orderNumberText.text;
+                    string[] splitText = orderIDText.Split('#');
+                    if (splitText.Length == 2)
+                    {
+                        if (int.TryParse(splitText[1], out int orderNumber))
+                        {
+                            orderID = orderNumber;
+                        }
+                        else
+                        {
+                            Debug.LogError("Error parsing order number");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("Unexpected orderID format");
+                    }
+                }
+            }
+        }
+
+        if (ticketCount == 1 && foundDish != null)
+        {
+            Debug.Log("Dish and Order Ticket detected in the serving area");
+
+            SetCurrentDish(foundDish); // Set the current dish
+            _calculateDish.Invoke(); // Trigger the _calculateDish event
+            _completeOrder.Invoke(orderID);
+            if (ticketDishName == "Dish: Steak")
+            {
+                _sendSteakTemperature.Invoke(steakTemperature);
+            }
+
+            ClearCurrentDish(); // Clear the current dish after calculations
+        }
+        else if (ticketCount > 1)
+        {
+            Debug.Log("Error: Multiple Order Tickets in the serving area");
+            // Display your error message here
+        }
+        else
+        {
+            Debug.Log("Either Dish or Order Ticket is missing in the serving area");
+            // Display your error message here
         }
     }
 }
