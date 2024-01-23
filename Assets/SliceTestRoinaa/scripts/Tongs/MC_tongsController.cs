@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
+using UnityEngine.Animations;
 
 public class MC_tongsController : MonoBehaviour
 {
@@ -64,7 +65,7 @@ public class MC_tongsController : MonoBehaviour
         if (grabbedObject == null)
         {
             RaycastHit hit;
-            if (Physics.Raycast(grabLocation.position, transform.forward, out hit, grabDistance))
+            if (Physics.Raycast(grabLocation.position, transform.up, out hit, grabDistance))
             {
                 XRGrabInteractable interactable = hit.collider.GetComponent<XRGrabInteractable>();
                 if (interactable != null)
@@ -72,27 +73,46 @@ public class MC_tongsController : MonoBehaviour
                     // Grab the interactable using the XRGrabInteractable's Grab method
                     grabbedObject = interactable;
 
-                    // Set the attach point to the grabLocation.position
-                    grabbedObject.attachTransform = grabLocation;
+                    // Add a Parent Constraint component to the grabbed object
+                    ParentConstraint parentConstraint = grabbedObject.gameObject.AddComponent<ParentConstraint>();
+                    // Add the grab location as the source of the constraint
+                    ConstraintSource constraintSource = new ConstraintSource();
+                    constraintSource.sourceTransform = grabLocation;
+                    constraintSource.weight = 1;
+                    parentConstraint.AddSource(constraintSource);
+                    parentConstraint.constraintActive = true;
 
-                    // Set the object as a child of the grab location
-                    grabbedObject.transform.parent = grabLocation;
-
-                    
-                    
+                    // Enable the constraint
+                    parentConstraint.enabled = true;
                 }
             }
         }
     }
 
 
+
     void ReleaseObject()
     {
         if (grabbedObject != null)
         {
+            // Get the ParentConstraint from the grabbed object
+            ParentConstraint parentConstraint = grabbedObject.gameObject.GetComponent<ParentConstraint>();
+
+            // If the ParentConstraint exists, remove it
+            if (parentConstraint != null)
+            {
+                Destroy(parentConstraint);
+            }
+
             // Reset the parent of the grabbed object.
             grabbedObject.transform.parent = null;
-            
+
+            // Reset the rigidbody's velocity to zero
+            Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.velocity = Vector3.zero;
+            }
 
             grabbedObject = null;
         }
@@ -101,10 +121,12 @@ public class MC_tongsController : MonoBehaviour
 
 
 
+
+
     // Visualize the raycast in the Scene view
     void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawRay(grabLocation.position, transform.forward * grabDistance);
+        Gizmos.DrawRay(grabLocation.position, transform.up * grabDistance);
     }
 }
