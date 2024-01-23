@@ -1,0 +1,28 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Elec_ToolWireRenderer : MonoBehaviour
+{
+    public List<GameObject> WireComponents = new List<GameObject>();
+    LineRenderer WireRenderer;
+    public Color ColorOfTheWire;
+    public Material Lego;
+    void Start()
+    {       
+       WireRenderer = GetComponent<LineRenderer>();
+       WireRenderer.material = Lego;
+       WireRenderer.startColor = ColorOfTheWire;
+       WireRenderer.endColor = ColorOfTheWire;
+       
+    }
+
+    void Update()
+    {
+        WireRenderer.positionCount = WireComponents.Count;
+        for (int i = 0; i < WireComponents.Count; i++)
+        { 
+            WireRenderer.SetPosition(i, WireComponents[i].transform.position);
+        }
+    }
+}
