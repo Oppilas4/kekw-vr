@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Elec_FX_SkeletonFlash : MonoBehaviour
 {
@@ -55,10 +56,14 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "LeftHand" || other.tag == "RightHand")
+        if (other.tag == "ScrewDriver" || other.GetComponent<Elec_Multimeter>() != null || other.GetComponent<Elev_MultimeterSticky>() != null)
         {
-            Flash();
+            if (other.gameObject.GetComponent<XRGrabInteractable>().isSelected)
+            {
+                Flash();
+            }          
         }
+        
     }
 
 }

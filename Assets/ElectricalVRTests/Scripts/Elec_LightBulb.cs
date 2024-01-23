@@ -6,23 +6,25 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Elec_LightBulb : MonoBehaviour
 {
     ParticleSystem LightParticle;
-    Light BulbLight;
+    public Material EmissionGreen;
+    Material Glass;
+    MeshRenderer LightMesh;
     // Start is called before the first frame update
     void Start()
     {
+        LightMesh = GetComponent<MeshRenderer>();
         LightParticle = GetComponentInChildren<ParticleSystem>();
-        BulbLight = GetComponentInChildren<Light>();
+        Glass = LightMesh.material;
         LightParticle.Stop();
-        BulbLight.enabled = false;
     }
     public void BulbEnablee()
     {
+        LightMesh.material = EmissionGreen;
         LightParticle.Play();
-        BulbLight.enabled=true;
     }
     public void BulbDisable()
     {
+        LightMesh.material = Glass;
         LightParticle.Stop();
-        BulbLight.enabled = false;
     }
 }
