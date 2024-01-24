@@ -38,6 +38,7 @@ public class Elec_MegaTool : MonoBehaviour
             }
             StaplerAudio.Play();
             CurrentWire.WireComponents.Add(WirePiece);
+            WirePiece.GetComponent<Elec_StapleMakeStick>().SpoolItIsON = CurrentWire;
             if(!IsFullAuto) HasShoten = true; 
         }
     }
@@ -46,7 +47,6 @@ public class Elec_MegaTool : MonoBehaviour
         if (Stapler.isSelected)
         {
             var interactor = Stapler.interactorsSelecting[0];
-            Debug.Log(interactor.ToString());
             if (interactor.transform.gameObject.tag == "RightHand" && Input.GetButtonDown("XRI_Right_PrimaryButton") || interactor.transform.gameObject.tag == "LeftHand" && Input.GetButtonDown("XRI_Left_PrimaryButton"))
             {
                 SwitchWire();
