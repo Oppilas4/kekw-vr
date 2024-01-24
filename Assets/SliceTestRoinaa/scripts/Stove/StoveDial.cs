@@ -7,6 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class StoveDial : MonoBehaviour
 {
     [SerializeField] Transform linkedDial;
+    [SerializeField] private Axis rotationAxis = Axis.Z;
     [SerializeField] private int snapRotationAmount = 25;
     [SerializeField] private float angleTolerance;
 
@@ -25,6 +26,12 @@ public class StoveDial : MonoBehaviour
     {
         grabInteractor.selectEntered.RemoveListener(GrabbedBy);
         grabInteractor.selectExited.RemoveListener(GrabEnd);
+    }
+    public enum Axis
+    {
+        X,
+        Y,
+        Z
     }
 
     private void GrabEnd(SelectExitEventArgs arg0)
@@ -122,21 +129,56 @@ public class StoveDial : MonoBehaviour
 
     private void RotateDialClockwise()
     {
-        linkedDial.localEulerAngles = new Vector3(linkedDial.localEulerAngles.x,
-                                                  linkedDial.localEulerAngles.y,
-                                                  linkedDial.localEulerAngles.z + snapRotationAmount);
+        switch ((int)rotationAxis)
+        {
+            case 0:
+                linkedDial.localEulerAngles = new Vector3(linkedDial.localEulerAngles.x + snapRotationAmount,
+                                                          linkedDial.localEulerAngles.y,
+                                                          linkedDial.localEulerAngles.z);
+                break;
+            case 1:
+                linkedDial.localEulerAngles = new Vector3(linkedDial.localEulerAngles.x,
+                                                          linkedDial.localEulerAngles.y + snapRotationAmount,
+                                                          linkedDial.localEulerAngles.z);
+                break;
+            case 2:
+            default:
+                linkedDial.localEulerAngles = new Vector3(linkedDial.localEulerAngles.x,
+                                                          linkedDial.localEulerAngles.y,
+                                                          linkedDial.localEulerAngles.z + snapRotationAmount);
+                break;
+        }
 
         if (TryGetComponent<IDial>(out IDial dial))
-            dial.DialChanged(linkedDial.localEulerAngles.z);
+            dial.DialChanged(linkedDial.localEulerAngles[(int)rotationAxis]);
     }
 
     private void RotateDialAntiClockwise()
     {
-        linkedDial.localEulerAngles = new Vector3(linkedDial.localEulerAngles.x,
-                                                  linkedDial.localEulerAngles.y,
-                                                  linkedDial.localEulerAngles.z - snapRotationAmount);
+        switch ((int)rotationAxis)
+        {
+            case 0:
+                linkedDial.localEulerAngles = new Vector3(linkedDial.localEulerAngles.x - snapRotationAmount,
+                                                          linkedDial.localEulerAngles.y,
+                                                          linkedDial.localEulerAngles.z);
+                break;
+            case 1:
+                linkedDial.localEulerAngles = new Vector3(linkedDial.localEulerAngles.x,
+                                                          linkedDial.localEulerAngles.y - snapRotationAmount,
+                                                          linkedDial.localEulerAngles.z);
+                break;
+            case 2:
+            default:
+                linkedDial.localEulerAngles = new Vector3(linkedDial.localEulerAngles.x,
+                                                          linkedDial.localEulerAngles.y,
+                                                          linkedDial.localEulerAngles.z - snapRotationAmount);
+                break;
+        }
 
         if (TryGetComponent<IDial>(out IDial dial))
-            dial.DialChanged(linkedDial.localEulerAngles.z);
+            dial.DialChanged(linkedDial.localEulerAngles[(int)rotationAxis]);
     }
+
+
+
 }
