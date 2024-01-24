@@ -22,4 +22,9 @@ public class FlameController : MonoBehaviour, IDial
         var emission = flameParticles.emission;
         emission.enabled = isOn;
     }
+
+    public bool GetIsOn()
+    {
+        return isOn;
+    }
 }

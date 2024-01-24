@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 
 public class StoveController : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class StoveController : MonoBehaviour
     public bool isPanHot = false;
     private float panHeat = 5f;
     private bool isCoroutineRunning = false; // Flag to check if the coroutine is running
+    private MC_BurnerHelper currentBurnerHelper;
 
     IEnumerator panHeatCoroutine()
     {
@@ -57,9 +59,8 @@ public class StoveController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Burner"))
         {
-            // Check the parent for FlameController
-            FlameController flameController = other.transform.parent.GetComponent<FlameController>();
-            if (flameController != null && flameController.isOn)
+            currentBurnerHelper = other.GetComponent<MC_BurnerHelper>();
+            if (currentBurnerHelper != null && currentBurnerHelper.isBurnerOn())
             {
                 isPanHot = true;
 
@@ -75,13 +76,40 @@ public class StoveController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Burner"))
         {
-            // Check the parent for FlameController
-            FlameController flameController = other.transform.parent.GetComponent<FlameController>();
-            if (flameController != null && !isCoroutineRunning)
+            currentBurnerHelper = null;
+
+            if (!isCoroutineRunning)
             {
                 panHeat = 5f;
                 StartCoroutine(panHeatCoroutine());
             }
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Burner"))
+        {
+            // Check if the burner is on and the pan is on a cold burner
+            if (currentBurnerHelper != null && currentBurnerHelper.isBurnerOn() && !isPanHot)
+            {
+                isPanHot = true;
+
+                if (currentSteak != null)
+                {
+                    currentSteak.StartCooking();
+                }
+            }
+            else if (currentBurnerHelper != null && !currentBurnerHelper.isBurnerOn() && isPanHot)
+            {
+                // Burner is off, cool down the pan
+                if (!isCoroutineRunning)
+                {
+                    panHeat = 5f;
+                    StartCoroutine(panHeatCoroutine());
+                }
+            }
+        }
+    }
+
 }
