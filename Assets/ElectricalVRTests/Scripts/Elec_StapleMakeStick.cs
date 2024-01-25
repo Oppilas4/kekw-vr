@@ -36,7 +36,6 @@ public class Elec_StapleMakeStick : MonoBehaviour, IVoltage
     {
         yield return null;
         Vector3[] newPos = new Vector3[SpoolItIsON.WireRenderer.positionCount];
-        Debug.Log(ListID);
         yield return new WaitForSeconds(KillAfter); 
         if (!GetComponent<XRBaseInteractable>().isSelected && ListID >= 0)
         {
