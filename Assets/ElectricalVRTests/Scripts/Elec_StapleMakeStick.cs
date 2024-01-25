@@ -6,25 +6,23 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Elec_StapleMakeStick : MonoBehaviour, IVoltage
 {
-
-    public Elec_Voltage WireEndVolt;
-    public int startVoltage = 5;
+    public int currentVoltage = 0;
     public int KillAfter = 2;
     public Elec_ToolWireRenderer SpoolItIsON;
     public int ListID;
 
     private void Awake()
     {
-        WireEndVolt = new Elec_Voltage(startVoltage);
         StartCoroutine(DestroyUnused());
     }
     public void Voltage_Receive(int newVoltage)
     {
-        WireEndVolt.voltage = newVoltage;
+        currentVoltage = newVoltage;
+        SpoolItIsON.Voltage_Receive(currentVoltage);
     }
     public int Voltage_Send()
     {
-        return WireEndVolt.voltage;
+        return currentVoltage;
     }
     private void OnCollisionEnter(Collision collision)
     {

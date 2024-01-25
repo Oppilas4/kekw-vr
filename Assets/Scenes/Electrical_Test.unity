@@ -3077,7 +3077,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   ourGridNode: {fileID: 0}
-  wireEnd: {fileID: 0}
   multimeter: {fileID: 0}
   goalVoltage: 7
 --- !u!1 &386921878
@@ -5337,7 +5336,7 @@ GameObject:
   - component: {fileID: 709074434}
   - component: {fileID: 709074436}
   m_Layer: 0
-  m_Name: Directional Light
+  m_Name: HereComesTheSun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5477,7 +5476,7 @@ Transform:
   - {fileID: 1151634107}
   - {fileID: 393734497}
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 19.103, y: 0, z: 0}
 --- !u!114 &751851560
 MonoBehaviour:
@@ -6889,37 +6888,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 981456903}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &982552518
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 982552519}
-  m_Layer: 0
-  m_Name: Test
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &982552519
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 982552518}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.935, y: 2.48, z: 3.309}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 21
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &984585093
 GameObject:
   m_ObjectHideFlags: 0
@@ -8731,7 +8699,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   ourGridNode: {fileID: 0}
-  wireEnd: {fileID: 0}
   multimeter: {fileID: 3469287837345569730}
   goalVoltage: 5
 --- !u!1 &1248736697
@@ -12911,8 +12878,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ourNode: {fileID: 0}
-  wireEnd: {fileID: 0}
-  MainWire: {fileID: 0}
   multimeter: {fileID: 0}
 --- !u!1 &1876311148
 GameObject:
@@ -13416,8 +13381,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ourNode: {fileID: 0}
-  wireEnd: {fileID: 0}
-  MainWire: {fileID: 0}
   multimeter: {fileID: 0}
 --- !u!1 &2003339609
 GameObject:
@@ -17500,21 +17463,11 @@ PrefabInstance:
       propertyPath: m_InteractionManager
       value: 
       objectReference: {fileID: 1889943167}
-    - target: {fileID: 2602549948706696158, guid: 1828f5012f07d844a944e7738dc9f0b4,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3589610742041054153, guid: 1828f5012f07d844a944e7738dc9f0b4,
         type: 3}
       propertyPath: DeathPosition
       value: 
       objectReference: {fileID: 939805530}
-    - target: {fileID: 4919430185622320338, guid: 1828f5012f07d844a944e7738dc9f0b4,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6943229919281235710, guid: 1828f5012f07d844a944e7738dc9f0b4,
         type: 3}
       propertyPath: m_RootOrder
@@ -17574,26 +17527,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TV kit
-      objectReference: {fileID: 0}
-    - target: {fileID: 7598784502443678483, guid: 1828f5012f07d844a944e7738dc9f0b4,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.0608
-      objectReference: {fileID: 0}
-    - target: {fileID: 7598784502443678484, guid: 1828f5012f07d844a944e7738dc9f0b4,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7598784502443678484, guid: 1828f5012f07d844a944e7738dc9f0b4,
-        type: 3}
-      propertyPath: startDelay.scalar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8889666444893744211, guid: 1828f5012f07d844a944e7738dc9f0b4,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1828f5012f07d844a944e7738dc9f0b4, type: 3}

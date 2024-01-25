@@ -9,7 +9,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Elec_StartOutlet : MonoBehaviour
 {
     public Elec_GridNode ourNode;
-    public Wire MainWire;
     public Elec_Multimeter multimeter;
     private void Start()
     {

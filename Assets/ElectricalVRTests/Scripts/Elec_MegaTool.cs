@@ -40,6 +40,7 @@ public class Elec_MegaTool : MonoBehaviour
             CurrentWire.WireComponents.Add(WirePiece);
             WirePiece.GetComponent<Elec_StapleMakeStick>().ListID = CurrentWire.WireComponents.Count - 1;
             WirePiece.GetComponent<Elec_StapleMakeStick>().SpoolItIsON = CurrentWire;
+            WirePiece.GetComponent<Elec_StapleMakeStick>().currentVoltage = CurrentWire.Voltage_Send();
             if (!IsFullAuto) HasShoten = true; 
         }
     }

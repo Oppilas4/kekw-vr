@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Elec_Televisio : MonoBehaviour
 {
     VideoPlayer player;
     public List<VideoClip> clipList;
-    public VideoClip Static, NananaNA;
+    public VideoClip Static, NananaNA,Broken;
     public int channelID = 0;
     public bool PluggedIn = false;
     public float staticShowsFor = 0.1f;
     private bool ChangingClip = false;
+    bool brokey = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,21 +23,27 @@ public class Elec_Televisio : MonoBehaviour
     }
     public void PluggedIN()
     {
-        player.isLooping = true;
-        player.enabled = true;
-        PluggedIn=true;
-        player.clip= Static;
+        if (!brokey)
+        {   
+            player.isLooping = true;
+            player.enabled = true;
+            PluggedIn=true;
+            player.clip= Static;
+        }
     }
     public void Unplugged()
     {
-        player.clip = NananaNA;
-        player.isLooping = false;
-        PluggedIn = false;    
+        if (!brokey)
+        {
+            player.clip = NananaNA;
+            player.isLooping = false;
+            PluggedIn = false;
+        }
     }
     public void SwitchChannel()
     {
         
-        if (PluggedIn)
+        if (PluggedIn && !brokey)
         {
             if (channelID >= clipList.Count)
             {
@@ -56,5 +64,13 @@ public class Elec_Televisio : MonoBehaviour
         player.clip = clipList[channelID];
         ChangingClip = false;
         channelID++;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            player.clip = Broken;
+            brokey = true;
+        }
     }
 }

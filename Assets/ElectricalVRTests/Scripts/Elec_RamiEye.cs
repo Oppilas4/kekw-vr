@@ -15,6 +15,8 @@ public class Elec_RamiEye : MonoBehaviour
     Animator Animator;
     public AudioSource GuitarSource;
     public AudioClip GuitarLoop,GuitarStart;
+
+    [Obsolete]
     void Start()
     
     {
@@ -28,9 +30,10 @@ public class Elec_RamiEye : MonoBehaviour
     private void MyLittleDancer(XRBaseInteractable arg0)
     {
         arg0.GetComponent<Collider>().isTrigger = false;
-        Animator.SetTrigger("Dance");
+        Animator.SetBool("Shredding",false);
         GuitarSource.loop = false;
         GuitarSource.Stop();
+        GuitarSource.enabled = false;
     }
 
     void Update()
@@ -60,8 +63,9 @@ public class Elec_RamiEye : MonoBehaviour
     {
        if (other.tag == "Guitar")
         {
+            GuitarSource.enabled = true;
             other.GetComponent<Collider>().isTrigger = true;
-            Animator.SetTrigger("Shred");
+            Animator.SetBool("Shredding",true);
             GuitarSource.PlayOneShot(GuitarStart);
             StartCoroutine(WaitTillStartEnds(GuitarLoop));
         }

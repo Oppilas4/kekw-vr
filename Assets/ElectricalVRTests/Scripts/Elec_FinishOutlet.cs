@@ -6,22 +6,25 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.Events;
 
 public class Elec_FinishOutlet : MonoBehaviour
 {
     public UnityEvent OnFinish;
     private bool hasFinished = false;
-
+    XRBaseInteractor interactor;
     public Elec_GridNode ourGridNode;
     public Elec_Multimeter multimeter;
 
     public int goalVoltage = 5;
+    bool GoalReached = false;
 
+    [Obsolete]
     private void Start()
     {
         multimeter = GameObject.FindObjectOfType<Elec_Multimeter>();
         ourGridNode= GetComponent<Elec_GridNode>();
+        interactor = GetComponent<XRBaseInteractor>();
+        interactor.onSelectEntered.AddListener(ReceiveVoltageFromCable);
     }
 
     private void Update()
@@ -30,13 +33,15 @@ public class Elec_FinishOutlet : MonoBehaviour
         {
             if (hasFinished == false)
             {
-                if (ourGridNode.currentVoltage == goalVoltage)
+                if (ourGridNode.currentVoltage == goalVoltage && GoalReached)
                 {
-                    if (GetComponent<XRSocketInteractor>().hasSelection == true)
-                    {
-                        OnFinish.Invoke();
-                        hasFinished = true;
-                    }
+                    OnFinish.Invoke();
+                    hasFinished = true;
+                }
+                else if (GoalReached)
+                {
+                    OnFinish.Invoke();
+                    hasFinished = true;
                 }
             }
             else
@@ -67,4 +72,12 @@ public class Elec_FinishOutlet : MonoBehaviour
             multimeter.StickyVoltage = 0;
         }
     }
+    void ReceiveVoltageFromCable(XRBaseInteractable Staple)
+    {
+        if (Staple.GetComponent<Elec_StapleMakeStick>().SpoolItIsON.Voltage_Send() == goalVoltage)
+        {
+            GoalReached = true;
+        }   
+    }
+
 }
