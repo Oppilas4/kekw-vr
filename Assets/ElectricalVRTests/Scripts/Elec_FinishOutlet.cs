@@ -14,14 +14,13 @@ public class Elec_FinishOutlet : MonoBehaviour
     private bool hasFinished = false;
 
     public Elec_GridNode ourGridNode;
-    public Elec_WireEnds wireEnd;
     public Elec_Multimeter multimeter;
-    public Elev_MultimeterSticky multimeterSticky;
 
     public int goalVoltage = 5;
 
     private void Start()
     {
+        multimeter = GameObject.FindObjectOfType<Elec_Multimeter>();
         ourGridNode= GetComponent<Elec_GridNode>();
     }
 
@@ -46,49 +45,24 @@ public class Elec_FinishOutlet : MonoBehaviour
             }
         }
     }
-
-    public void WireConnected()
-    {
-        Debug.Log("WireConnected called");
-        if (wireEnd.WireEndVolt.voltage == ourGridNode.ourVoltage.voltage)
-        {
-            //OnFinish.BulbEnablee();
-            Debug.Log("Bulb was lit on");
+    public void OnTriggerStay(Collider other)
+    {   
+        if(other.gameObject.GetComponent<Elec_Multimeter>() != null) 
+        {         
+            multimeter.VoltageMusltimeter = goalVoltage;
         }
-    }
-    public void WireDisconnected()
-    {
-        wireEnd = null;
-       // OnFinish.BulbDisable();
-    }
-    public void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.GetComponent<Elec_WireEnds>() != null) 
+        else if (other.tag == "StickyMultiMeter")
         {
-            wireEnd = other.gameObject.GetComponent<Elec_WireEnds>();
-        }
-        else if(other.gameObject.GetComponent<Elec_Multimeter>() != null) 
-        {
-            multimeter = other.gameObject.GetComponent<Elec_Multimeter>();
-            multimeter.VoltageMusltimeter = ourGridNode.ourVoltage.voltage;
-        }
-        else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
-        {
-            multimeterSticky = other.gameObject.GetComponent <Elev_MultimeterSticky>();
-            multimeter.StickyVoltage = ourGridNode.ourVoltage.voltage;
+            if (multimeter != null) { multimeter.StickyVoltage = goalVoltage; }
         }
     }
     public void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.GetComponent<Elec_WireEnds>() != null)
-        {
-            wireEnd = null;
-        }
-        else if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
+       if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
         {
             multimeter.VoltageMusltimeter = 0;
         }
-        else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
+        else if (other.tag == "StickyMultiMeter")
         {
             multimeter.StickyVoltage = 0;
         }

@@ -15,7 +15,7 @@ public class Elec_MegaTool : MonoBehaviour
     AudioSource StaplerAudio;
     Animator Animator;
     XRBaseInteractable Stapler;
-    int spoolID = 0;
+    int spoolID = 1;
     public List<Elec_ToolWireRenderer> WireSpools = new List<Elec_ToolWireRenderer>();
     Elec_ToolWireRenderer CurrentWire;
     bool HasShoten;
@@ -38,8 +38,9 @@ public class Elec_MegaTool : MonoBehaviour
             }
             StaplerAudio.Play();
             CurrentWire.WireComponents.Add(WirePiece);
+            WirePiece.GetComponent<Elec_StapleMakeStick>().ListID = CurrentWire.WireComponents.Count - 1;
             WirePiece.GetComponent<Elec_StapleMakeStick>().SpoolItIsON = CurrentWire;
-            if(!IsFullAuto) HasShoten = true; 
+            if (!IsFullAuto) HasShoten = true; 
         }
     }
     private void Update()
