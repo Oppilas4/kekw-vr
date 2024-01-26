@@ -141,6 +141,7 @@ public class Elec_GridNode : MonoBehaviour
             if (ReceivedVoltagesATM.ContainsKey(ref_interactable.gameObject) == false) ReceivedVoltagesATM.Add(ref_interactable.gameObject, foundIVoltage.Voltage_Send());
             UpdateVoltage(true);
         }
+        ourManager.PluggingNode(this); //26.1 to disable previous neighbour nodes
     }
 
     private void Update()
@@ -178,6 +179,24 @@ public class Elec_GridNode : MonoBehaviour
     {
         if(ReceivedVoltagesATM.ContainsKey(RemoveFrom))ReceivedVoltagesATM.Remove(RemoveFrom);
         UpdateVoltage(true);
+    }
+
+    public void RemoveVoltageFromNeighbours()
+    {
+        neighbour_up?.RemoveVoltage();
+        neighbour_down?.RemoveVoltage();
+        neighbour_left?.RemoveVoltage();
+        neighbour_right?.RemoveVoltage();
+    }
+
+    public void RemoveVoltage()
+    {
+        if (ourManager.PluggedNodes.Contains(this)) return;
+        else
+        {
+            ReceivedVoltagesATM.Clear();
+            UpdateVoltage(false);
+        }    
     }
     public void UpdateVoltage(bool SendToNeighbours)
     {
