@@ -18,7 +18,7 @@ public class MC_FaucetController : MonoBehaviour, IDial
         emission.rateOverTime = Mathf.Lerp(0, maxFlowRate, flowRate);
 
         // Enable or disable the water particles based on the flow rate
-        bool isWaterOn = flowRate > 0.02f;
+        isWaterOn = flowRate > 0.02f;
         emission.enabled = isWaterOn;
     }
     public bool GetIsWaterOn()

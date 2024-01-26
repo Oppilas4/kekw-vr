@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MC_LiquidWobble : MonoBehaviour
 {
-    Renderer rend;
+    [SerializeField] private Renderer rend;
     Vector3 lastPos;
     Vector3 velocity;
     Vector3 lastRot;
@@ -19,11 +19,6 @@ public class MC_LiquidWobble : MonoBehaviour
     float pulse;
     float time = 0.5f;
 
-    // Use this for initialization
-    void Start()
-    {
-        rend = GetComponent<Renderer>();
-    }
     private void Update()
     {
         time += Time.deltaTime;
