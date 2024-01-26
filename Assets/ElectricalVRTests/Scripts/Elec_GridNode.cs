@@ -134,7 +134,7 @@ public class Elec_GridNode : MonoBehaviour
         IVoltage foundIVoltage;
         if (ref_interactable.gameObject.TryGetComponent<IVoltage>(out foundIVoltage))
         {
-            if (LockVoltage)
+            if (LockVoltage && ref_interactable.GetComponent<IVoltage>().Voltage_Send() == 0 )
             {
                 ref_interactable.GetComponent<IVoltage>().Voltage_Receive(currentVoltage);
             }       

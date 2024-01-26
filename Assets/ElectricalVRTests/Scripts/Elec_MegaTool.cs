@@ -15,7 +15,7 @@ public class Elec_MegaTool : MonoBehaviour
     AudioSource StaplerAudio;
     Animator Animator;
     XRBaseInteractable Stapler;
-    int spoolID = 1;
+    int spoolID = 0;
     public List<Elec_ToolWireRenderer> WireSpools = new List<Elec_ToolWireRenderer>();
     Elec_ToolWireRenderer CurrentWire;
     bool HasShoten;
@@ -68,18 +68,21 @@ public class Elec_MegaTool : MonoBehaviour
     public void SwitchWire()
     {
         Debug.Log("Switched Wire Color");
-        if(spoolID >= WireSpools.Count) 
+        Debug.Log(WireSpools.Count);
+        Debug.Log("Before" + spoolID);
+        if (spoolID == WireSpools.Count -1) 
         { 
             spoolID = 0;
             CurrentWire = WireSpools[spoolID];
-            spoolID++;
             return;
         }           
-            CurrentWire = WireSpools[spoolID];
-            spoolID++;        
-        Debug.Log(spoolID.ToString());
+        else
+        {
+            spoolID++;
+            CurrentWire = WireSpools[spoolID];       
+        }
+        Debug.Log("After" + spoolID);
     }
-
     void HasShotenSetFalse()
     {
         HasShoten = false;

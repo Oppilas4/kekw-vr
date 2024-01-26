@@ -77,6 +77,9 @@ public class Elec_FinishOutlet : MonoBehaviour
         if (Staple.GetComponent<Elec_StapleMakeStick>().SpoolItIsON.Voltage_Send() == goalVoltage)
         {
             GoalReached = true;
+            Staple.GetComponent<Elec_StapleMakeStick>().SpoolItIsON.DisableWireSafely();
+            LineRenderer temp = Staple.GetComponent<Elec_StapleMakeStick>().SpoolItIsON.GetComponent<LineRenderer>();
+            temp.SetPosition(temp.positionCount - 1,interactor.attachTransform.transform.position);
         }   
     }
 
