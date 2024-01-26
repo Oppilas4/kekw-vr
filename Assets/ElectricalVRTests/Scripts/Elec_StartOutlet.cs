@@ -9,56 +9,30 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Elec_StartOutlet : MonoBehaviour
 {
     public Elec_GridNode ourNode;
-    public Elec_WireEnds wireEnd;
-    public Wire MainWire;
     public Elec_Multimeter multimeter;
-    public Elev_MultimeterSticky multimeterSticky;
     private void Start()
     {
+        multimeter = GameObject.FindObjectOfType<Elec_Multimeter>();
         ourNode = GetComponent<Elec_GridNode>();
     }
-    public void WireConnected()
-    {
-        Debug.Log("WireConnected to start called");
-        if (MainWire == null) return;
-        MainWire = wireEnd.MainestWire;
-        MainWire.WireVoltage.voltage = ourNode.ourVoltage.voltage;
-    }
-    public void WireDisconnected()
-    {
-        if(wireEnd) wireEnd.WireEndVolt.voltage = 0;
-        if(MainWire) MainWire.WireVoltage.voltage = 0;
-        MainWire = null;
-        wireEnd = null;
-    }
-    public void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.GetComponent<Elec_WireEnds>() != null) 
+    public void OnTriggerStay(Collider other)
+    {     
+        if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
         {
-            wireEnd = other.gameObject.GetComponent<Elec_WireEnds>();
-        }
-        else if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
-        {
-            multimeter = other.gameObject.GetComponent<Elec_Multimeter>();
             multimeter.VoltageMusltimeter = ourNode.ourVoltage.voltage;
         }
-        else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
+        else if (other.tag == "StickyMultiMeter")
         {
-            multimeterSticky = other.gameObject.GetComponent<Elev_MultimeterSticky>();
             if(multimeter != null) { multimeter.StickyVoltage = ourNode.ourVoltage.voltage; }  
         }
     }
     public void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.GetComponent<Elec_WireEnds>() != null)
-        {
-            wireEnd = null;
-        }
-        else if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
+    {      
+         if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
         {
             multimeter.VoltageMusltimeter = 0;
         }
-        else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
+        else if (other.tag == "StickyMultiMeter")
         {
             multimeter.StickyVoltage = 0;
         }

@@ -20,6 +20,7 @@ public class Elec_GridNode : MonoBehaviour
     public bool LockVoltage = false;
     public Dictionary<GameObject,int> ReceivedVoltagesATM;
     public bool currentAvailability = false;
+    bool IsSelecting = false;
 
     public int goalVoltage = 0;
 
@@ -116,6 +117,8 @@ public class Elec_GridNode : MonoBehaviour
                 break;
         }
     }
+
+    [System.Obsolete]
     private void Start()
     {
         if (ourXRSocketInteractor == null)
@@ -127,9 +130,14 @@ public class Elec_GridNode : MonoBehaviour
     }
     public void SomethingEnters(XRBaseInteractable ref_interactable)
     {
+        IsSelecting = true;
         IVoltage foundIVoltage;
         if (ref_interactable.gameObject.TryGetComponent<IVoltage>(out foundIVoltage))
         {
+            if (LockVoltage)
+            {
+                ref_interactable.GetComponent<IVoltage>().Voltage_Receive(currentVoltage);
+            }       
             if (ReceivedVoltagesATM.ContainsKey(ref_interactable.gameObject) == false) ReceivedVoltagesATM.Add(ref_interactable.gameObject, foundIVoltage.Voltage_Send());
             UpdateVoltage(true);
         }
@@ -159,12 +167,12 @@ public class Elec_GridNode : MonoBehaviour
 
     public void TakeNeighbourVoltage(GameObject toReceiveFrom, int VoltageToReceive)
     {
-        if(ReceivedVoltagesATM.ContainsKey(toReceiveFrom) == false) ReceivedVoltagesATM.Add(toReceiveFrom,VoltageToReceive);
-        else
-        {
-            if (ReceivedVoltagesATM[toReceiveFrom] < VoltageToReceive) ReceivedVoltagesATM[toReceiveFrom] = VoltageToReceive;
-        }
-        UpdateVoltage(false);
+            if (ReceivedVoltagesATM.ContainsKey(toReceiveFrom) == false) ReceivedVoltagesATM.Add(toReceiveFrom,VoltageToReceive);
+            else
+            {
+                if (ReceivedVoltagesATM[toReceiveFrom] < VoltageToReceive) ReceivedVoltagesATM[toReceiveFrom] = VoltageToReceive;
+            }
+            UpdateVoltage(false); 
     }
     public void RemoveNeighbourVoltage(GameObject RemoveFrom)
     {

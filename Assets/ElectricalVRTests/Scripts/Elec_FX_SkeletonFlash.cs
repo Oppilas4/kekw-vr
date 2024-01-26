@@ -14,7 +14,7 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
     public AudioClip FlashSoundClip;
     GameObject Player;
     public GameObject DeathPosition;
-    //Hello Henri!If you seeing this then you have to clean up quite some stuff here
+    public ParticleSystem LHand, RHand;
     private void Start()
     {
         SkellyRenderers.Add(GameObject.Find("Bone_mesh.039").GetComponent<Renderer>());
@@ -22,10 +22,12 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
         NormalRenderers.Add(GameObject.Find("asdMesh.002").GetComponent<Renderer>());
         NormalRenderers.Add(GameObject.Find("asdMesh.001").GetComponent<Renderer>());
         FlashSound = GameObject.Find("EatingSound").GetComponent<AudioSource>();
-        Player = GameObject.Find("XrCharacterSetupWithHands(Clone)");
+        Player = GameObject.Find("XR Origin");
     }
     public void Flash()
     {
+        LHand.Play();
+        RHand.Play();
         FlashSound.PlayOneShot(FlashSoundClip);
         StopAllCoroutines();
         StartCoroutine(FlashSkellyHands());
@@ -43,6 +45,8 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
             foreach(Renderer foundRenderer in SkellyRenderers)
             {
                 foundRenderer.enabled = true;
+                LHand.transform.position = GameObject.FindWithTag("LeftHand").transform.position;
+                RHand.transform.position = GameObject.FindWithTag("RightHand").transform.position;    
             }
             yield return null;
             yield return new WaitForSeconds(Mathf.Abs(timeBetweenFlashes));
@@ -57,10 +61,12 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
             yield return null;
             yield return new WaitForSeconds(Mathf.Abs(timeBetweenFlashes));
         }
+        LHand.Stop();
+        RHand.Stop();
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "ScrewDriver" || other.GetComponent<Elec_Multimeter>() != null || other.GetComponent<Elev_MultimeterSticky>() != null)
+        if (other.tag == "ScrewDriver" || other.GetComponent<Elec_Multimeter>() != null || other.tag == "StickyMultiMeter")
         {
             if (other.gameObject.GetComponent<XRGrabInteractable>().isSelected)
             {
