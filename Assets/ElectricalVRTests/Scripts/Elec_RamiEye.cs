@@ -29,7 +29,7 @@ public class Elec_RamiEye : MonoBehaviour
 
     private void MyLittleDancer(XRBaseInteractable arg0)
     {
-        arg0.GetComponent<Collider>().isTrigger = false;
+        if (arg0.GetComponent<Collider>() != null) { arg0.GetComponent<Collider>().isTrigger = false; }   
         Animator.SetBool("Shredding",false);
         GuitarSource.loop = false;
         GuitarSource.Stop();
