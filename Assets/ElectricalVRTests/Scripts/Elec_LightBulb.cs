@@ -16,6 +16,7 @@ public class Elec_LightBulb : MonoBehaviour
     public float NeededVoltage = 5;
     bool Broken = false;
     public int TimeToDestroy = 5;
+    public ParticleSystem shards;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +46,7 @@ public class Elec_LightBulb : MonoBehaviour
         if(!Broken)
         {
             LightMesh.material = Glass;
-            LightParticle.Stop();
+            if(!Sandbox) LightParticle.Stop();
         }
         
     }
@@ -63,11 +64,12 @@ public class Elec_LightBulb : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        if (collision.gameObject.tag == "Floor" && !Broken)
         {
             LightMesh.material = Nothing;
             Broken = true;
             AudioSource.Play();
+            shards.Play();
             StartCoroutine(DestroyAfterTime(TimeToDestroy));
         }
     }
