@@ -20,11 +20,12 @@ public class Elec_BatteryBox : MonoBehaviour
     
     private void SetVoltage(XRBaseInteractor arg0)
     {
-        arg0.GetComponent<Elec_SandNode>().currentVoltage = Voltage;
+        if (arg0.gameObject.GetComponent<Elec_SandNode>() != null && BatteriesIn == 2) arg0.GetComponent<Elec_SandNode>().currentVoltage = Voltage;
     }
     void DeleteVoltage(XRBaseInteractor arg0) 
     {
-        arg0.GetComponent<Elec_SandNode>().currentVoltage = 0;
+        if(arg0.gameObject.GetComponent<Elec_SandNode>() != null) arg0.GetComponent<Elec_SandNode>().currentVoltage = 0;
+
     }
 
     // Update is called once per frame
@@ -34,7 +35,7 @@ public class Elec_BatteryBox : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Battery" && !Occupied)
+        if (other.tag == "Battery" && BatteriesIn < 2)
         {
             other.gameObject.GetComponent<XRBaseInteractable>().enabled = false;
             battery = other.gameObject;
@@ -43,7 +44,6 @@ public class Elec_BatteryBox : MonoBehaviour
             other.gameObject.transform.parent = BatteryPositions[BatteriesIn].transform;
             other.gameObject.transform.position = BatteryPositions[BatteriesIn].transform.position;
             other.gameObject.transform.rotation = BatteryPositions[BatteriesIn].transform.rotation;
-            Occupied = true;
             BatteriesIn++;
         }
     }
