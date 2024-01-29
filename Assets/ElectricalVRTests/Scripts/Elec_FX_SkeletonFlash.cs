@@ -69,11 +69,10 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
         if (other.tag == "ScrewDriver" || other.GetComponent<Elec_Multimeter>() != null || other.tag == "StickyMultiMeter")
         {
             if (other.gameObject.GetComponent<XRGrabInteractable>().isSelected)
-            {
+            {            
                 Flash();
             }          
         }
         
     }
-
 }

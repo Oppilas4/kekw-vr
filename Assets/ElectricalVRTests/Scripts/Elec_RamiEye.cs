@@ -67,14 +67,18 @@ public class Elec_RamiEye : MonoBehaviour
             other.GetComponent<Collider>().isTrigger = true;
             Animator.SetBool("Shredding",true);
             GuitarSource.PlayOneShot(GuitarStart);
-            StartCoroutine(WaitTillStartEnds(GuitarLoop));
+            StartCoroutine(WaitTillStartEnds());
         }
     }
-    private IEnumerator WaitTillStartEnds(AudioClip Loop)
+    private IEnumerator WaitTillStartEnds()
     {
         yield return new WaitUntil(() => GuitarSource.isPlaying == false);
+        Animator.SetTrigger("Yeap");
+    }
+    public void GoodGuitar()
+    {
         GuitarSource.loop = true;
-        GuitarSource.clip = Loop;
+        GuitarSource.clip = GuitarLoop;
         GuitarSource.Play();
     }
 }

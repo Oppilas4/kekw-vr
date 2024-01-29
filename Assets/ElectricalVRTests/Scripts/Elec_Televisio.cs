@@ -26,7 +26,6 @@ public class Elec_Televisio : MonoBehaviour
         if (!brokey)
         {   
             player.isLooping = true;
-            player.enabled = true;
             PluggedIn=true;
             player.clip= Static;
         }
@@ -70,6 +69,7 @@ public class Elec_Televisio : MonoBehaviour
         if (collision.gameObject.tag == "Floor")
         {
             player.clip = Broken;
+            player.targetMaterialRenderer.gameObject.SetActive(true);
             brokey = true;
         }
     }

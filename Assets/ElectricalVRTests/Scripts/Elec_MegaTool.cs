@@ -67,9 +67,7 @@ public class Elec_MegaTool : MonoBehaviour
     }
     public void SwitchWire()
     {
-        Debug.Log("Switched Wire Color");
         Debug.Log(WireSpools.Count);
-        Debug.Log("Before" + spoolID);
         if (spoolID == WireSpools.Count -1) 
         { 
             spoolID = 0;
@@ -81,7 +79,6 @@ public class Elec_MegaTool : MonoBehaviour
             spoolID++;
             CurrentWire = WireSpools[spoolID];       
         }
-        Debug.Log("After" + spoolID);
     }
     void HasShotenSetFalse()
     {
