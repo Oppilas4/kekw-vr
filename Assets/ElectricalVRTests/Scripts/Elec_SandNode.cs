@@ -20,7 +20,6 @@ public class Elec_SandNode : MonoBehaviour
     public bool LockVoltage = false;
     public Dictionary<GameObject,int> ReceivedVoltagesATM;
     public bool currentAvailability = false;
-    bool IsSelecting = false;
 
     public int goalVoltage = 0;
 
@@ -130,7 +129,6 @@ public class Elec_SandNode : MonoBehaviour
     }
     public void SomethingEnters(XRBaseInteractable ref_interactable)
     {
-        IsSelecting = true;
         IVoltage foundIVoltage;
         if (ref_interactable.gameObject.TryGetComponent<IVoltage>(out foundIVoltage))
         {
@@ -146,7 +144,6 @@ public class Elec_SandNode : MonoBehaviour
 
     private void Update()
     {
-     
     }
 
     public void SomethingExits(XRBaseInteractable ref_interactable)
@@ -156,13 +153,11 @@ public class Elec_SandNode : MonoBehaviour
         {
             if(ReceivedVoltagesATM.ContainsKey(ref_interactable.gameObject)) ReceivedVoltagesATM.Remove(ref_interactable.gameObject);
             UpdateVoltage(true);
+            RemoveNeighbourVoltage(neighbour_up.gameObject);
+            RemoveNeighbourVoltage(neighbour_down.gameObject);
+            RemoveNeighbourVoltage(neighbour_left.gameObject);
+            RemoveNeighbourVoltage(neighbour_right.gameObject);
         }
-    }
-    public void UpdateAvailability(bool state)
-    {
-        if (state == currentAvailability) return;
-        ourXRSocketInteractor.socketActive = state;
-        currentAvailability = state;
     }
 
     public void TakeNeighbourVoltage(GameObject toReceiveFrom, int VoltageToReceive)
@@ -176,6 +171,7 @@ public class Elec_SandNode : MonoBehaviour
     }
     public void RemoveNeighbourVoltage(GameObject RemoveFrom)
     {
+        if(RemoveFrom == null) return;
         if(ReceivedVoltagesATM.ContainsKey(RemoveFrom))ReceivedVoltagesATM.Remove(RemoveFrom);
         UpdateVoltage(true);
     }

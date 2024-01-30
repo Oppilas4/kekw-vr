@@ -17,15 +17,19 @@ public class Elec_MegaTool : MonoBehaviour
     XRBaseInteractable Stapler;
     int spoolID = 0;
     public List<Elec_ToolWireRenderer> WireSpools = new List<Elec_ToolWireRenderer>();
+    public List<Elec_ToolWireRenderer> WireSpoolsSaved;
     Elec_ToolWireRenderer CurrentWire;
     bool HasShoten;
+    XRBaseInteractor InteractorSelecting;
     private void Start()
     {
         CurrentWire = WireSpools[spoolID];
         Stapler = GetComponent<XRBaseInteractable>();
         Animator = GetComponent<Animator>();
         Animator.speed = 0;
-        StaplerAudio = GetComponent<AudioSource>(); 
+        StaplerAudio = GetComponent<AudioSource>();
+        Stapler.onSelectEntered.AddListener(OnSelected);
+        Stapler.onSelectExited.AddListener(OnDeselected);
     }
     public void MakeWireEnd()
     {
@@ -46,29 +50,34 @@ public class Elec_MegaTool : MonoBehaviour
     }
     private void Update()
     {
-        if (Stapler.isSelected)
-        {
-            var interactor = Stapler.interactorsSelecting[0];
-            if (interactor.transform.gameObject.tag == "RightHand" && Input.GetButtonDown("XRI_Right_PrimaryButton") || interactor.transform.gameObject.tag == "LeftHand" && Input.GetButtonDown("XRI_Left_PrimaryButton"))
+        if (InteractorSelecting != null)
+        {         
+            if (InteractorSelecting.transform.gameObject.tag == "RightHand" && Input.GetButtonDown("XRI_Right_PrimaryButton") || InteractorSelecting.transform.gameObject.tag == "LeftHand" && Input.GetButtonDown("XRI_Left_PrimaryButton"))
             {
                 SwitchWire();
             }
-            else if (interactor.transform.gameObject.tag == "LeftHand")
+            else if (InteractorSelecting.transform.gameObject.tag == "LeftHand")
             {
                 Animator.Play("Cube_001_Down", 0, Input.GetAxis("XRI_Left_Trigger"));
             }
-            else if (interactor.transform.gameObject.tag == "RightHand")
+            else if (InteractorSelecting.transform.gameObject.tag == "RightHand")
             {
                 Animator.Play("Cube_001_Down", 0, Input.GetAxis("XRI_Right_Trigger"));
             }
            
         }
-
+    }
+    private void OnSelected(XRBaseInteractor interactor)
+    {
+        InteractorSelecting = interactor;
+    }
+    private void OnDeselected(XRBaseInteractor interactor)
+    {
+        InteractorSelecting = null;
     }
     public void SwitchWire()
     {
-        Debug.Log(WireSpools.Count);
-        if (spoolID == WireSpools.Count -1) 
+        if (spoolID == WireSpools.Count -1 || spoolID == WireSpools.Count) 
         { 
             spoolID = 0;
             CurrentWire = WireSpools[spoolID];
@@ -77,8 +86,12 @@ public class Elec_MegaTool : MonoBehaviour
         else
         {
             spoolID++;
-            CurrentWire = WireSpools[spoolID];       
+            CurrentWire = WireSpools[spoolID];          
         }
+    }
+    public void ResetWireList()
+    {
+        WireSpools = WireSpoolsSaved;
     }
     void HasShotenSetFalse()
     {

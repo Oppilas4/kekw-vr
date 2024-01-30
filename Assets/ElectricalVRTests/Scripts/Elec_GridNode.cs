@@ -20,7 +20,8 @@ public class Elec_GridNode : MonoBehaviour
     public bool LockVoltage = false;
     public Dictionary<GameObject,int> ReceivedVoltagesATM;
     public bool currentAvailability = false;
-    bool IsSelecting = false;
+    public Material Available, Unavailabele;
+    Renderer ChildrenMaterial;
 
     public int goalVoltage = 0;
 
@@ -31,6 +32,8 @@ public class Elec_GridNode : MonoBehaviour
         ReceivedVoltagesATM = new Dictionary<GameObject,int>();
         if (ourXRSocketInteractor == null) ourXRSocketInteractor = GetComponent<XRSocketInteractor>();
         currentAvailability = ourXRSocketInteractor.socketActive;
+        ChildrenMaterial = GetComponentInChildren<Renderer>();
+        if (!currentAvailability) ChildrenMaterial.material.color = Color.red;
     }
     public Elec_GridNode returnNode(direction toRetrieve)
     {
@@ -130,7 +133,6 @@ public class Elec_GridNode : MonoBehaviour
     }
     public void SomethingEnters(XRBaseInteractable ref_interactable)
     {
-        IsSelecting = true;
         IVoltage foundIVoltage;
         if (ref_interactable.gameObject.TryGetComponent<IVoltage>(out foundIVoltage))
         {
@@ -158,12 +160,17 @@ public class Elec_GridNode : MonoBehaviour
             if(ReceivedVoltagesATM.ContainsKey(ref_interactable.gameObject)) ReceivedVoltagesATM.Remove(ref_interactable.gameObject);
             UpdateVoltage(true);
         }
+        ref_interactable.GetComponent<Rigidbody>().isKinematic = false;
+            
     }
     public void UpdateAvailability(bool state)
     {
         if (state == currentAvailability) return;
         ourXRSocketInteractor.socketActive = state;
         currentAvailability = state;
+        if(state) ChildrenMaterial.material.color = Color.green;
+        if(!state) ChildrenMaterial.material.color = Color.red;
+
     }
 
     public void TakeNeighbourVoltage(GameObject toReceiveFrom, int VoltageToReceive)
@@ -215,7 +222,7 @@ public class Elec_GridNode : MonoBehaviour
             ourVoltage.voltage = highestvoltage;
 
         }
-        if(SendToNeighbours)
+        if(SendToNeighbours && goalVoltage == 0)
         {
             neighbour_up?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
             neighbour_down?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
@@ -223,5 +230,13 @@ public class Elec_GridNode : MonoBehaviour
             neighbour_right?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
         }
         currentVoltage = ourVoltage.voltage;
+    }
+    public IEnumerator DisableTempor()
+    {
+        ourXRSocketInteractor.enabled = false;
+        ReceivedVoltagesATM.Clear();
+        UpdateVoltage(false);
+        yield return new WaitForSeconds(5);
+        ourXRSocketInteractor.enabled = true;
     }
 }

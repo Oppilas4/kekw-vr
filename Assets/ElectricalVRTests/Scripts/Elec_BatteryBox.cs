@@ -1,11 +1,11 @@
+using SerializableCallback;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class Elec_BatteryBox : MonoBehaviour
+public class Elec_BatteryBox : MonoBehaviour, IVoltage 
 {
     GameObject battery;
-    bool Occupied = false;
     XRBaseInteractable ThisInteractable;
     public List<Transform> BatteryPositions = new List<Transform>();
     int BatteriesIn = 0;
@@ -14,18 +14,11 @@ public class Elec_BatteryBox : MonoBehaviour
     void Start()
     {
         ThisInteractable = GetComponent<XRBaseInteractable>();
-        ThisInteractable.onSelectEntered.AddListener(SetVoltage);
         ThisInteractable.onSelectExited.AddListener(DeleteVoltage);
-    }
-    
-    private void SetVoltage(XRBaseInteractor arg0)
-    {
-        if (arg0.gameObject.GetComponent<Elec_SandNode>() != null && BatteriesIn == 2) arg0.GetComponent<Elec_SandNode>().currentVoltage = Voltage;
     }
     void DeleteVoltage(XRBaseInteractor arg0) 
     {
         if(arg0.gameObject.GetComponent<Elec_SandNode>() != null) arg0.GetComponent<Elec_SandNode>().currentVoltage = 0;
-
     }
 
     // Update is called once per frame
@@ -47,5 +40,15 @@ public class Elec_BatteryBox : MonoBehaviour
             BatteriesIn++;
         }
     }
-    
+
+    public void Voltage_Receive(int newVoltage)
+    {
+        
+    }
+
+    public int Voltage_Send()
+    {
+        if (BatteriesIn == 2) return Voltage;
+        else return 0;
+    }
 }

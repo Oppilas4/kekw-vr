@@ -10,11 +10,6 @@ public class Elec_StapleMakeStick : MonoBehaviour, IVoltage
     public int KillAfter = 2;
     public Elec_ToolWireRenderer SpoolItIsON;
     public int ListID;
-
-    private void Awake()
-    {
-        StartCoroutine(DestroyUnused());
-    }
     public void Voltage_Receive(int newVoltage)
     {
         currentVoltage = newVoltage;
@@ -26,26 +21,37 @@ public class Elec_StapleMakeStick : MonoBehaviour, IVoltage
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer != 13)
+        if (collision.gameObject.layer != 13  && collision.gameObject.layer != 19 )
         {
             Rigidbody rb = GetComponent<Rigidbody>();
             rb.isKinematic = true;
+            StartCoroutine(DestroyUnused());
         }
     }
     public IEnumerator DestroyUnused()
     {
         yield return null;
-        Vector3[] newPos = new Vector3[SpoolItIsON.WireRenderer.positionCount];
-        yield return new WaitForSeconds(KillAfter); 
+        KillAfter = KillAfter + SpoolItIsON.WireComponents.Count / 10;
+        yield return new WaitForSeconds(KillAfter);
+        if (gameObject != null) DestroySafely();
+        
+    }
+    public void DestroySafely()
+    {
         if (!GetComponent<XRBaseInteractable>().isSelected && ListID >= 0)
         {
+            FindYourselfInWorld();
             SpoolItIsON.WireComponents.RemoveAt(ListID);
             foreach (GameObject Staple in SpoolItIsON.WireComponents)
             {
-                Staple.GetComponent<Elec_StapleMakeStick>().ListID--;
+                Staple.GetComponent<Elec_StapleMakeStick>().FindYourselfInWorld();
             }
             Destroy(gameObject);
         }
+    }
+    public void FindYourselfInWorld()
+    {
+        ListID = SpoolItIsON.WireComponents.IndexOf(gameObject);
     }
 
 }

@@ -17,6 +17,7 @@ public class Elec_LightBulb : MonoBehaviour
     bool Broken = false;
     public int TimeToDestroy = 5;
     public ParticleSystem shards;
+    Elec_SandNode ThisNode;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,12 +33,19 @@ public class Elec_LightBulb : MonoBehaviour
         LightParticle.Stop();
         AudioSource = GetComponent<AudioSource>();
     }
+    private void Update()
+    {
+        if (ThisNode != null && ThisNode.currentVoltage == NeededVoltage)
+        {
+            BulbEnablee();
+        }
+    }
     public void BulbEnablee()
     {
         if(!Broken) 
         {
             LightMesh.material = EmissionGreen;
-            LightParticle.Play(); 
+            if(!Sandbox) LightParticle.Play();
         }
         
     }
@@ -52,11 +60,7 @@ public class Elec_LightBulb : MonoBehaviour
     }
     public void CheckVoltage(XRBaseInteractor Interactor)
     {
-        Elec_SandNode ThisNode = Interactor.GetComponent<Elec_SandNode>();
-        if (ThisNode != null && ThisNode.currentVoltage == NeededVoltage ) 
-        {
-            BulbEnablee();
-        }
+        ThisNode = Interactor.GetComponent<Elec_SandNode>();        
     }
     void DisableBulbXR(XRBaseInteractor Interactor)
     {
