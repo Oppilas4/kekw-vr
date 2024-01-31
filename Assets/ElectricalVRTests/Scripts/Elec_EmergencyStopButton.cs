@@ -9,7 +9,7 @@ public class Elec_EmergencyStopButton : MonoBehaviour
     public Transform target;
     public UnityEvent Reached;
     private bool wasReached = false;
-    void FixedUpdate()
+    void Update()
     {
         float distance = Vector3.Distance(transform.position, target.transform.position);
         if (distance < threshold && !wasReached)

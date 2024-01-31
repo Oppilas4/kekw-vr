@@ -12,6 +12,8 @@ public class Elec_BatteryCompartment : MonoBehaviour
     XRBaseInteractable PapaInteractable;
     public Transform ejectionPort;
     XRBaseInteractor interactor;
+
+    [System.Obsolete]
     void Start()
     {
         PapaRemote = gameObject.GetComponentInParent<Elec_TVremote>();

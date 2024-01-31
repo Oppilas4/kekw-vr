@@ -21,6 +21,8 @@ public class Elec_MegaTool : MonoBehaviour
     Elec_ToolWireRenderer CurrentWire;
     bool HasShoten;
     XRBaseInteractor InteractorSelecting;
+
+    [System.Obsolete]
     private void Start()
     {
         CurrentWire = WireSpools[spoolID];

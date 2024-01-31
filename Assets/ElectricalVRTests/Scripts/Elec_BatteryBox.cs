@@ -9,8 +9,9 @@ public class Elec_BatteryBox : MonoBehaviour, IVoltage
     XRBaseInteractable ThisInteractable;
     public List<Transform> BatteryPositions = new List<Transform>();
     int BatteriesIn = 0;
-    public int Voltage = 5; 
-    // Start is called before the first frame update
+    public int Voltage = 5;
+
+    [System.Obsolete]
     void Start()
     {
         ThisInteractable = GetComponent<XRBaseInteractable>();
@@ -20,8 +21,6 @@ public class Elec_BatteryBox : MonoBehaviour, IVoltage
     {
         if(arg0.gameObject.GetComponent<Elec_SandNode>() != null) arg0.GetComponent<Elec_SandNode>().currentVoltage = 0;
     }
-
-    // Update is called once per frame
     void Update()
     {
         

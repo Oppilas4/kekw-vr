@@ -25,6 +25,7 @@ public class Elec_FinishOutlet : MonoBehaviour
         ourGridNode= GetComponent<Elec_GridNode>();
         interactor = GetComponent<XRBaseInteractor>();
         interactor.onSelectEntered.AddListener(ReceiveVoltageFromCable);
+        interactor.onSelectExited.AddListener(UnconnectedWire);
     }
 
     private void Update()
@@ -49,6 +50,7 @@ public class Elec_FinishOutlet : MonoBehaviour
                 if (ourGridNode.currentVoltage != goalVoltage) hasFinished = false;
             }
         }
+        
     }
     public void OnTriggerStay(Collider other)
     {   
@@ -81,6 +83,10 @@ public class Elec_FinishOutlet : MonoBehaviour
             LineRenderer temp = Staple.GetComponent<Elec_StapleMakeStick>().SpoolItIsON.GetComponent<LineRenderer>();
             temp.SetPosition(temp.positionCount - 1,interactor.attachTransform.transform.position);
         }   
+    }
+    void UnconnectedWire(XRBaseInteractable Staple)
+    {
+        GoalReached = false;
     }
 
 }

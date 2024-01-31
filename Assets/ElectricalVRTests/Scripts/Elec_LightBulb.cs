@@ -8,7 +8,7 @@ public class Elec_LightBulb : MonoBehaviour
 {
     ParticleSystem LightParticle;
     public Material EmissionGreen;
-    Material Glass;
+    public Material Glass;
     MeshRenderer LightMesh;
     AudioSource AudioSource;
     public Material Nothing;
@@ -18,7 +18,9 @@ public class Elec_LightBulb : MonoBehaviour
     public int TimeToDestroy = 5;
     public ParticleSystem shards;
     Elec_SandNode ThisNode;
+
     // Start is called before the first frame update
+    [System.Obsolete]
     void Start()
     {
         if (Sandbox)
@@ -29,7 +31,6 @@ public class Elec_LightBulb : MonoBehaviour
         }
         LightMesh = GetComponent<MeshRenderer>();
         LightParticle = GetComponentInChildren<ParticleSystem>();
-        Glass = LightMesh.material;
         LightParticle.Stop();
         AudioSource = GetComponent<AudioSource>();
     }
