@@ -17,7 +17,7 @@ public class Elec_MegaTool : MonoBehaviour
     XRBaseInteractable Stapler;
     int spoolID = 0;
     public List<Elec_ToolWireRenderer> WireSpools = new List<Elec_ToolWireRenderer>();
-    public List<Elec_ToolWireRenderer> WireSpoolsSaved;
+    List<Elec_ToolWireRenderer> WireSpoolsSaved;
     Elec_ToolWireRenderer CurrentWire;
     bool HasShoten;
     XRBaseInteractor InteractorSelecting;
@@ -32,6 +32,7 @@ public class Elec_MegaTool : MonoBehaviour
         StaplerAudio = GetComponent<AudioSource>();
         Stapler.onSelectEntered.AddListener(OnSelected);
         Stapler.onSelectExited.AddListener(OnDeselected);
+        WireSpoolsSaved = new List<Elec_ToolWireRenderer>(WireSpools);
     }
     public void MakeWireEnd()
     {
@@ -93,13 +94,7 @@ public class Elec_MegaTool : MonoBehaviour
     }
     public void ResetWireList()
     {
-        foreach(var wire in WireSpoolsSaved) 
-        {
-            if (!WireSpools.Contains(wire))
-            {
-                WireSpools.Add(wire);
-            }
-        }
+        WireSpools = WireSpoolsSaved;
     }
     void HasShotenSetFalse()
     {
