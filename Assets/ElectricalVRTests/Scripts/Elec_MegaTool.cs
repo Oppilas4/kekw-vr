@@ -100,6 +100,7 @@ public class Elec_MegaTool : MonoBehaviour
     {
         HasShoten = false;
     }
+    [ContextMenu("Fortnite balls")]
     public void TurnOnFullAuto()
     {
         IsFullAuto = true;

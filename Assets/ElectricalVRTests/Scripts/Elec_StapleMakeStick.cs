@@ -34,17 +34,24 @@ public class Elec_StapleMakeStick : MonoBehaviour, IVoltage
         KillAfter = KillAfter + SpoolItIsON.WireComponents.Count / 10;
         yield return new WaitForSeconds(KillAfter);
         if (gameObject != null) DestroySafely();
-    }
-    void Update() 
-    {
-        ListID = SpoolItIsON.WireComponents.IndexOf(gameObject);
+        
     }
     public void DestroySafely()
     {
         if (!GetComponent<XRBaseInteractable>().isSelected && ListID >= 0)
         {
-            SpoolItIsON.WireComponents.RemoveAt(ListID);
+            FindYourselfInWorld();
+            if(ListID >= 0) { SpoolItIsON.WireComponents.RemoveAt(ListID); }
+            foreach (GameObject Staple in SpoolItIsON.WireComponents)
+            {
+                Staple.GetComponent<Elec_StapleMakeStick>().FindYourselfInWorld();
+            }
             Destroy(gameObject);
         }
     }
+    public void FindYourselfInWorld()
+    {
+        ListID = SpoolItIsON.WireComponents.IndexOf(gameObject);
+    }
+
 }
