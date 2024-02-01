@@ -25,6 +25,9 @@ public class Elec_GridNode : MonoBehaviour
 
     public int goalVoltage = 0;
 
+
+    private int resetVoltage = 0;
+
     private void Awake()
     {
         ourVoltage = new Elec_Voltage(StartWithVoltage);
@@ -34,6 +37,8 @@ public class Elec_GridNode : MonoBehaviour
         currentAvailability = ourXRSocketInteractor.socketActive;
         ChildrenMaterial = GetComponentInChildren<Renderer>();
         if (!currentAvailability) ChildrenMaterial.material.color = Color.red;
+        resetVoltage = currentVoltage;
+
     }
     public Elec_GridNode returnNode(direction toRetrieve)
     {
@@ -58,6 +63,13 @@ public class Elec_GridNode : MonoBehaviour
         searchForNode(distancetoNode, direction.down);
         searchForNode(distancetoNode, direction.left);
         searchForNode(distancetoNode, direction.right);
+    }
+
+    public void reset()
+    {
+        ReceivedVoltagesATM.Clear();
+        currentVoltage = resetVoltage;
+        ourVoltage.voltage = resetVoltage;
     }
     private void searchForNode(float distancetoNode, direction setDirection)
     {

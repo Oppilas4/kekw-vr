@@ -86,4 +86,14 @@ public class ElecGridNodEManager : MonoBehaviour
         if (toUseAsRemoveSource != null) toUseAsRemoveSource.RemoveVoltageFromNeighbours();
     }
 
+
+    public void Reset()
+    {
+        foreach (Elec_GridNode ourNodes in Spawned_Nodes)
+        {
+            ourNodes.reset();
+        }
+        
+    }
+
 }
