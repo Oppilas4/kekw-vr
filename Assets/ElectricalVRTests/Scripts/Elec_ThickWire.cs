@@ -11,8 +11,9 @@ public class Elec_ThickWire : MonoBehaviour
     public GameObject WirePiecePrefab,Endprefab;
     private void Start()
     {
-        lineRenderer = gameObject.AddComponent<LineRenderer>();
+        lineRenderer = gameObject.GetComponent<LineRenderer>();
         lineRenderer.positionCount = WireLenght;
+        lineRenderer.SetPosition(0,gameObject.transform.position);
         for (int i = 0; i < WireLenght; i++)
         {
             if (lines.Count == 0)
@@ -22,7 +23,7 @@ public class Elec_ThickWire : MonoBehaviour
             }
             else if (i == WireLenght - 1)
             {
-                lines.Add(Instantiate(Endprefab, gameObject.transform.position + -gameObject.transform.up, gameObject.transform.rotation, gameObject.transform));
+                lines.Add(Instantiate(Endprefab, lines[i - 1].transform.position + -lines[i - 1].transform.up, gameObject.transform.rotation, gameObject.transform));
                 lines[WireLenght-1].GetComponent<ConfigurableJoint>().connectedBody = lines[i - 1].GetComponent<Rigidbody>();
             }
             else
@@ -31,6 +32,13 @@ public class Elec_ThickWire : MonoBehaviour
                 lines.Add(wirepiece);
                 wirepiece.GetComponent<ConfigurableJoint>().connectedBody = lines[i - 1].GetComponent<Rigidbody>();
             }           
+        }
+    }
+    private void Update()
+    {
+        for (int i = 0; i < lines.Count; i++)
+        {
+            if (lines[i] != null) { lineRenderer.SetPosition(i, lines[i].transform.position); }
         }
     }
 }
