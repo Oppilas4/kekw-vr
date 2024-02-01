@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Elec_PuzzleReset : MonoBehaviour
@@ -17,7 +18,9 @@ public class Elec_PuzzleReset : MonoBehaviour
             node.StartCoroutine(node.DisableTempor());
             if (!node.LockVoltage)
             {
+                node.RemoveVoltageFromNeighbours();
                 node.currentVoltage = 0;
+                node.currentAvailability = false;
             }
         }
         foreach (Elec_ToolWireRenderer Spool in Stapler.WireSpools) 

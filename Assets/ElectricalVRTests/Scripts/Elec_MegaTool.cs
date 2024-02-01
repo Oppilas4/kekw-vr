@@ -93,7 +93,13 @@ public class Elec_MegaTool : MonoBehaviour
     }
     public void ResetWireList()
     {
-        WireSpools = WireSpoolsSaved;
+        foreach(var wire in WireSpoolsSaved) 
+        {
+            if (!WireSpools.Contains(wire))
+            {
+                WireSpools.Add(wire);
+            }
+        }
     }
     void HasShotenSetFalse()
     {
