@@ -65,7 +65,7 @@ public class Elec_GridNode : MonoBehaviour
         ReceivedVoltagesATM.Clear();
         currentVoltage = resetVoltage;
         ourVoltage.voltage = resetVoltage;
-            if (LockVoltage)
+        ourManager.PluggedNodes.Remove(this);
             {
                 StartCoroutine(DisableTempor());
             }
@@ -219,7 +219,6 @@ public class Elec_GridNode : MonoBehaviour
     public void UpdateVoltage(bool SendToNeighbours)
     {
         int highestvoltage = 0;
-
         if (ReceivedVoltagesATM.Count == 0) highestvoltage = 0;
         else
         {
@@ -235,6 +234,7 @@ public class Elec_GridNode : MonoBehaviour
         }
         if(SendToNeighbours && goalVoltage == 0)
         {
+
             neighbour_up?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
             neighbour_down?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
             neighbour_left?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
@@ -245,8 +245,6 @@ public class Elec_GridNode : MonoBehaviour
     public IEnumerator DisableTempor()
     {
         ourXRSocketInteractor.enabled = false;
-        ReceivedVoltagesATM.Clear();
-        UpdateVoltage(false);
         yield return new WaitForSeconds(3);
         ourXRSocketInteractor.enabled = true;
     }

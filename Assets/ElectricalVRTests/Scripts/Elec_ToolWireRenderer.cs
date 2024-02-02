@@ -41,8 +41,8 @@ public class Elec_ToolWireRenderer : MonoBehaviour , IVoltage
     }
     public void DisableWireSafely()
     {
-        ThisStapler.SwitchWire();
         ThisStapler.WireSpools.Remove(this);
+        ThisStapler.SwitchWire();     
         voltage = 0;
     }
 }

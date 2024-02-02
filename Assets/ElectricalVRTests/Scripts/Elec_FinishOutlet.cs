@@ -16,8 +16,7 @@ public class Elec_FinishOutlet : MonoBehaviour
     public Elec_Multimeter multimeter;
 
     public int goalVoltage = 5;
-    bool GoalReached = false;
-
+    public bool GoalReached = false;
     [Obsolete]
     private void Start()
     {
