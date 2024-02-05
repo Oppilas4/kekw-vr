@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 public class Elec_GridNode : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class Elec_GridNode : MonoBehaviour
     Renderer ChildrenMaterial;
     public int goalVoltage = 0;
     private int resetVoltage = 0;
+    public bool ElectricityIsOn = false;
+    public UnityEvent Electricute;
     private void Awake()
     {
         ourVoltage = new Elec_Voltage(StartWithVoltage);
@@ -144,6 +147,10 @@ public class Elec_GridNode : MonoBehaviour
     }
     public void SomethingEnters(XRBaseInteractable ref_interactable)
     {
+        if (ElectricityIsOn)
+        {
+            Electricute.Invoke();
+        }
         IVoltage foundIVoltage;
         if (ref_interactable.gameObject.TryGetComponent<IVoltage>(out foundIVoltage))
         {

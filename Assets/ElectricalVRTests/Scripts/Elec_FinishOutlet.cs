@@ -53,14 +53,18 @@ public class Elec_FinishOutlet : MonoBehaviour
     }
     public void OnTriggerStay(Collider other)
     {   
-        if(other.gameObject.GetComponent<Elec_Multimeter>() != null) 
-        {         
-            multimeter.VoltageMusltimeter = goalVoltage;
-        }
-        else if (other.tag == "StickyMultiMeter")
+        if (ourGridNode.ElectricityIsOn)
         {
-            if (multimeter != null) { multimeter.StickyVoltage = goalVoltage; }
+            if(other.gameObject.GetComponent<Elec_Multimeter>() != null) 
+            {         
+                multimeter.VoltageMusltimeter = goalVoltage;
+            }
+            else if (other.tag == "StickyMultiMeter")
+            {
+                if (multimeter != null) { multimeter.StickyVoltage = goalVoltage; }
+            }
         }
+   
     }
     public void OnTriggerExit(Collider other)
     {

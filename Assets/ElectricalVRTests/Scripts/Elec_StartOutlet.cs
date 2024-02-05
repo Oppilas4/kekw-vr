@@ -17,14 +17,18 @@ public class Elec_StartOutlet : MonoBehaviour
     }
     public void OnTriggerStay(Collider other)
     {     
-        if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
+        if(ourNode.ElectricityIsOn) 
         {
-            multimeter.VoltageMusltimeter = ourNode.ourVoltage.voltage;
+            if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
+            {
+                multimeter.VoltageMusltimeter = ourNode.ourVoltage.voltage;
+            }
+            else if (other.tag == "StickyMultiMeter")
+            {
+                if(multimeter != null) { multimeter.StickyVoltage = ourNode.ourVoltage.voltage; }  
+            }
         }
-        else if (other.tag == "StickyMultiMeter")
-        {
-            if(multimeter != null) { multimeter.StickyVoltage = ourNode.ourVoltage.voltage; }  
-        }
+
     }
     public void OnTriggerExit(Collider other)
     {      
