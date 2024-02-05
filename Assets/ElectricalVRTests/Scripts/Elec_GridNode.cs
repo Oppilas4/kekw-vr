@@ -20,14 +20,9 @@ public class Elec_GridNode : MonoBehaviour
     public bool LockVoltage = false;
     public Dictionary<GameObject,int> ReceivedVoltagesATM;
     public bool currentAvailability = false;
-    public Material Available, Unavailabele;
     Renderer ChildrenMaterial;
-
     public int goalVoltage = 0;
-
-
     private int resetVoltage = 0;
-
     private void Awake()
     {
         ourVoltage = new Elec_Voltage(StartWithVoltage);
@@ -70,6 +65,10 @@ public class Elec_GridNode : MonoBehaviour
         ReceivedVoltagesATM.Clear();
         currentVoltage = resetVoltage;
         ourVoltage.voltage = resetVoltage;
+        ourManager.PluggedNodes.Remove(this);
+            {
+                StartCoroutine(DisableTempor());
+            }
     }
     private void searchForNode(float distancetoNode, direction setDirection)
     {
@@ -220,7 +219,6 @@ public class Elec_GridNode : MonoBehaviour
     public void UpdateVoltage(bool SendToNeighbours)
     {
         int highestvoltage = 0;
-
         if (ReceivedVoltagesATM.Count == 0) highestvoltage = 0;
         else
         {
@@ -236,6 +234,7 @@ public class Elec_GridNode : MonoBehaviour
         }
         if(SendToNeighbours && goalVoltage == 0)
         {
+
             neighbour_up?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
             neighbour_down?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
             neighbour_left?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
@@ -246,9 +245,7 @@ public class Elec_GridNode : MonoBehaviour
     public IEnumerator DisableTempor()
     {
         ourXRSocketInteractor.enabled = false;
-        ReceivedVoltagesATM.Clear();
-        UpdateVoltage(false);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         ourXRSocketInteractor.enabled = true;
     }
 }

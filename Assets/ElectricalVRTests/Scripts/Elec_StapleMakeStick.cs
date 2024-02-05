@@ -41,7 +41,7 @@ public class Elec_StapleMakeStick : MonoBehaviour, IVoltage
         if (!GetComponent<XRBaseInteractable>().isSelected && ListID >= 0)
         {
             FindYourselfInWorld();
-            SpoolItIsON.WireComponents.RemoveAt(ListID);
+            if(ListID >= 0) { SpoolItIsON.WireComponents.RemoveAt(ListID); }
             foreach (GameObject Staple in SpoolItIsON.WireComponents)
             {
                 Staple.GetComponent<Elec_StapleMakeStick>().FindYourselfInWorld();

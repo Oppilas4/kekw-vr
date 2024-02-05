@@ -14,8 +14,10 @@ public class Elec_SandItem : MonoBehaviour
     [Obsolete]
     private void Start()
     {
+        gameObject.SetActive(true);
         interactor = GetComponent<XRBaseInteractor>();
         interactor.onSelectExited.AddListener(SpawnItem);
+        Instantiate(WhatToSpawn, transform.position, transform.rotation);
     }
 
     private void SpawnItem(XRBaseInteractable arg0)

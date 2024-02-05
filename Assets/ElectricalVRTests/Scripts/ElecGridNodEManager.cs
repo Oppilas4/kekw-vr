@@ -9,12 +9,10 @@ public class ElecGridNodEManager : MonoBehaviour
     public Elec_GridNode latestPluggedIn;
     public float SearchDistanceBetweenNodes = 1;
     public List<Elec_GridNode> PluggedNodes;
-
     private void Start()
     {
         StartCoroutine(SetupRoutine());
     }
-
     IEnumerator SetupRoutine()
     {
         yield return null;
@@ -70,9 +68,6 @@ public class ElecGridNodEManager : MonoBehaviour
             }
         }
     }
-
-
-
     //26.1 to disable previous neighbour nodes
     public void PluggingNode(Elec_GridNode toPlug)
     {
@@ -85,15 +80,11 @@ public class ElecGridNodEManager : MonoBehaviour
         yield return null;
         if (toUseAsRemoveSource != null) toUseAsRemoveSource.RemoveVoltageFromNeighbours();
     }
-
-
     public void Reset()
     {
         foreach (Elec_GridNode ourNodes in Spawned_Nodes)
         {
             ourNodes.reset();
-        }
-        
+        }       
     }
-
 }

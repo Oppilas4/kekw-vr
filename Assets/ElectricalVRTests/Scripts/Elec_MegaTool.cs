@@ -17,12 +17,17 @@ public class Elec_MegaTool : MonoBehaviour
     XRBaseInteractable Stapler;
     int spoolID = 0;
     public List<Elec_ToolWireRenderer> WireSpools = new List<Elec_ToolWireRenderer>();
-    public List<Elec_ToolWireRenderer> WireSpoolsSaved;
+    List<Elec_ToolWireRenderer> WireSpoolsSaved;
     Elec_ToolWireRenderer CurrentWire;
     bool HasShoten;
     XRBaseInteractor InteractorSelecting;
 
     [System.Obsolete]
+
+    private void Awake()
+    {
+        WireSpoolsSaved = new List<Elec_ToolWireRenderer>(WireSpools);
+    }
     private void Start()
     {
         CurrentWire = WireSpools[spoolID];
@@ -32,6 +37,7 @@ public class Elec_MegaTool : MonoBehaviour
         StaplerAudio = GetComponent<AudioSource>();
         Stapler.onSelectEntered.AddListener(OnSelected);
         Stapler.onSelectExited.AddListener(OnDeselected);
+       
     }
     public void MakeWireEnd()
     {
@@ -93,12 +99,13 @@ public class Elec_MegaTool : MonoBehaviour
     }
     public void ResetWireList()
     {
-        WireSpools = WireSpoolsSaved;
+        WireSpools = new List<Elec_ToolWireRenderer>(WireSpoolsSaved);
     }
     void HasShotenSetFalse()
     {
         HasShoten = false;
     }
+    [ContextMenu("Fortnite balls")]
     public void TurnOnFullAuto()
     {
         IsFullAuto = true;
