@@ -16,6 +16,7 @@ public class Elec_SithShocker : MonoBehaviour
     [Obsolete]
     void Start()
     {
+        GetComponent<MeshRenderer>().materials[0].color = Color.black;
         interactable = GetComponent<XRBaseInteractable>();
         interactable.onSelectEntered.AddListener(TookTheWireEnd);
         interactable.onSelectExited.AddListener(LmaoYouDied);

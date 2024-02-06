@@ -10,6 +10,7 @@ public class Elec_ThickWire : MonoBehaviour
     public int WireLenght;
     public GameObject WirePiecePrefab,Endprefab;
     public float inbetweenSpace = 1.5f;
+    public Quaternion ASS;//mad here 
     private void Start()
     {
         lineRenderer = gameObject.GetComponent<LineRenderer>();
@@ -26,7 +27,7 @@ public class Elec_ThickWire : MonoBehaviour
             }
             else if (i == WireLenght - 1)
             {
-                lines.Add(Instantiate(Endprefab, lines[i - 1].transform.position + offset, gameObject.transform.rotation, gameObject.transform));
+                lines.Add(Instantiate(Endprefab, lines[i - 1].transform.position + offset,ASS, gameObject.transform));
                 lines[WireLenght-1].GetComponent<ConfigurableJoint>().connectedBody = lines[i - 1].GetComponent<Rigidbody>();
             }
             else
