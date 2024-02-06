@@ -154,9 +154,9 @@ public class Elec_GridNode : MonoBehaviour
         IVoltage foundIVoltage;
         if (ref_interactable.gameObject.TryGetComponent<IVoltage>(out foundIVoltage))
         {
-            if (LockVoltage && ref_interactable.GetComponent<IVoltage>().Voltage_Send() == 0 )
+            if (LockVoltage)
             {
-                ref_interactable.GetComponent<IVoltage>().Voltage_Receive(currentVoltage);
+                ref_interactable.GetComponent<IVoltage>().Voltage_Receive(currentVoltage);    
             }       
             if (ReceivedVoltagesATM.ContainsKey(ref_interactable.gameObject) == false) ReceivedVoltagesATM.Add(ref_interactable.gameObject, foundIVoltage.Voltage_Send());
             UpdateVoltage(true);

@@ -11,7 +11,7 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
     public int HowManyFlashes = 8;
     public float timeBetweenFlashes = 0.2f;
     AudioSource FlashSound;
-    public AudioClip FlashSoundClip,A;
+    public AudioClip FlashSoundClip;
     GameObject Player;
     public GameObject DeathPosition;
     public ParticleSystem LHand, RHand;
@@ -26,13 +26,13 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
     }
     public void Flash()
     {
-        FlashSound.PlayOneShot(A);
         LHand.Play();
         RHand.Play();
         FlashSound.PlayOneShot(FlashSoundClip);
         StopAllCoroutines();
         StartCoroutine(FlashSkellyHands());
         Player.transform.position = DeathPosition.transform.position;
+        Player.transform.rotation = DeathPosition.transform.rotation;
     }
     IEnumerator FlashSkellyHands()
     {
