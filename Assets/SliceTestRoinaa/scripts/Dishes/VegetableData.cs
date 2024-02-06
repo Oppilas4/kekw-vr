@@ -4,6 +4,7 @@ using UnityEngine;
 public class VegetableData : ScriptableObject
 {
     public string vegetableName;
+    public bool isCooked = false;
 
     // Constructor that takes a string argument
     public VegetableData(string name)

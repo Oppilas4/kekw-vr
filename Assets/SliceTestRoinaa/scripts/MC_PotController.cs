@@ -7,7 +7,7 @@ public class MC_PotController : MonoBehaviour
     public string waterSourceTag = "WaterSource";
     public GameObject waterObject; // Reference to the water object
     public ParticleSystem boilingParticles; // Reference to the boiling particle system
-    private bool isPotFilled = false;
+    public bool isPotFilled = false;
     private bool isPotOnWater = false;
     private bool isPotOnBurner = false;
 
@@ -85,6 +85,10 @@ public class MC_PotController : MonoBehaviour
 
             // Set the pour effect position
             pourEffect.transform.position = pourPosition;
+
+            float yRotation = pourPosition.y - lowestPosition.y;
+            float zRotation = pourPosition.z - lowestPosition.z;
+            pourEffect.transform.rotation = Quaternion.Euler(0f, yRotation, zRotation);
 
             pourEffect.SendEvent("Pour");
             isPouring = true;
