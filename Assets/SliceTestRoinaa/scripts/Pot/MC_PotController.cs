@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class MC_PotController : MonoBehaviour
+public class MC_PotController : MonoBehaviour, IHotObject
 {
     public string waterSourceTag = "WaterSource";
     public GameObject waterObject; // Reference to the water object
@@ -30,6 +30,27 @@ public class MC_PotController : MonoBehaviour
         // Get the renderer component from the water object
         waterRenderer = waterObject.GetComponent<Renderer>();
         pourEffect.SendEvent("Stop");
+        boilingParticles.Stop();
+    }
+
+    private void OnEnable()
+    {
+        HotObjectManager.RegisterHotObject(this);
+    }
+
+    private void OnDisable()
+    {
+        HotObjectManager.UnregisterHotObject(this);
+    }
+
+    public void SetHot(bool isHot)
+    {
+        // Implement logic to set the hot state of the pot
+    }
+
+    public bool IsHot()
+    {
+        return boilingParticles.isPlaying;
     }
 
     private void Update()
@@ -212,7 +233,6 @@ public class MC_PotController : MonoBehaviour
         boilingParticlesEmissionRate = Mathf.MoveTowards(boilingParticlesEmissionRate, 20f, Time.deltaTime * 5f);
         var emission = boilingParticles.emission;
         emission.rateOverTime = boilingParticlesEmissionRate;
-
         // Here is where you can start the cooking process of potatoes
         // Add your code to cook potatoes based on the boiling water
     }
