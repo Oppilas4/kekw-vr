@@ -38,7 +38,7 @@ public class Elec_StapleMakeStick : MonoBehaviour, IVoltage
     }
     public void DestroySafely()
     {
-        if (!GetComponent<XRBaseInteractable>().isSelected && ListID >= 0)
+        if (ListID >= 0)
         {
             FindYourselfInWorld();
             if(ListID >= 0) { SpoolItIsON.WireComponents.RemoveAt(ListID); }

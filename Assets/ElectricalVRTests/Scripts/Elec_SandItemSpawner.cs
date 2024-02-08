@@ -16,6 +16,6 @@ public class Elec_SandItemSpawner : MonoBehaviour
 
     public void SpawnItem()
     {      
-        Instantiate(WhatToSpawn, transform.position, transform.rotation);
+        GameObject TempItem = Instantiate(WhatToSpawn, transform.position, transform.rotation);
     }
 }

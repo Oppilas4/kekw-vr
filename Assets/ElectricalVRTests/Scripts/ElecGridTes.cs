@@ -21,7 +21,7 @@ public class ElecGridTes : MonoBehaviour
         {
             for( int j = 0; j < gridWidght; j++ ) 
             {
-             Vector3 spawnPoint = new Vector3( i * gridSpacing , j * gridSpacing, 0  )+ gridOrigin;
+             Vector3 spawnPoint = new Vector3( 0, j * gridSpacing, -i * gridSpacing) + gridOrigin;
                 Instantiate(gridComponent,spawnPoint,originRot,gameObject.transform);
             }
         }
