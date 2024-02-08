@@ -12,6 +12,7 @@ public class ElecGridNodEManager : MonoBehaviour
     public Elec_GridNode latestPluggedIn;
     public float SearchDistanceBetweenNodes = 1;
     public List<Elec_GridNode> PluggedNodes;
+    public AudioSource PopSound;
     public AudioSource Completed;
     public int LinesCompleted = 0;
     public int LinesToComplete = 0;
@@ -20,7 +21,6 @@ public class ElecGridNodEManager : MonoBehaviour
     Elec_GridNode LastNode;
     private void Start()
     {
-        Completed = GetComponent<AudioSource>();
         StartCoroutine(SetupRoutine());        
     }
     private void Update()

@@ -271,7 +271,8 @@ public class Elec_GridNode : MonoBehaviour
     IEnumerator Explode(float time)
     {
         yield return new WaitForSeconds(time / 3);
-        ourManager.Completed.PlayOneShot(Pop);
+        ourManager.PopSound.pitch = UnityEngine.Random.Range(0.75f, 1.25f);
+        ourManager.PopSound.PlayOneShot(Pop);
         Confetti.Play();
         ourXRSocketInteractor.enabled = false;
         yield return new WaitForSeconds(0.2f);
