@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 
-public class StoveController : MonoBehaviour
+public class StoveController : MonoBehaviour, IHotObject
 {
     public string steakTag = "Steak";
     private SteakController currentSteak;
@@ -10,6 +10,26 @@ public class StoveController : MonoBehaviour
     private float panHeat = 5f;
     private bool isCoroutineRunning = false; // Flag to check if the coroutine is running
     private MC_BurnerHelper currentBurnerHelper;
+
+    private void OnEnable()
+    {
+        HotObjectManager.RegisterHotObject(this);
+    }
+
+    private void OnDisable()
+    {
+        HotObjectManager.UnregisterHotObject(this);
+    }
+
+    public void SetHot(bool isHot)
+    {
+        // Implement logic to set the hot state of the pot
+    }
+
+    public bool IsHot()
+    {
+        return isPanHot;
+    }
 
     IEnumerator panHeatCoroutine()
     {

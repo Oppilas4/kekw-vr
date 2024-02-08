@@ -30,11 +30,11 @@ public class VegetableController : MonoBehaviour
     }
 
     // You can use this method to retrieve the vegetable name
-    public string GetVegetableName()
+    public VegetableData GetVegetableData()
     {
         if (vegetableData != null)
         {
-            return vegetableData.vegetableName;
+            return vegetableData;
         }
         else
         {

@@ -8,7 +8,11 @@ public class FlameController : MonoBehaviour, IDial
     public bool isOn = false;
     [SerializeField] ParticleSystem flameParticles;
 
-    //create event for disabling the collider
+    void Start()
+    {
+        var emission = flameParticles.emission;
+        emission.enabled = isOn;
+    }
 
     public void DialChanged(float dialValue)
     {

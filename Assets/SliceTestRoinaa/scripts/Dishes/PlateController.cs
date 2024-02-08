@@ -55,7 +55,7 @@ public class PlateController : MonoBehaviour
         foreach (var vegetable in vegetablePiecesOnPlate)
         {
             VegetableController vegetableController = vegetable.GetComponent<VegetableController>();
-            if (vegetableController != null && vegetableController.GetVegetableName() == ingredientName)
+            if (vegetableController != null && vegetableController.GetVegetableData().vegetableName == ingredientName)
             {
                 return true;
             }

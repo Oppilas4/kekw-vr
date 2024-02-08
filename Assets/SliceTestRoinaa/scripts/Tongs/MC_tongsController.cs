@@ -3,31 +3,65 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
-using UnityEngine.Animations;
 
 public class MC_tongsController : MonoBehaviour
 {
-    private XRGrabInteractable grabbable;
     public InputActionProperty rightTriggerValue;
     public InputActionProperty leftTriggerValue;
     private Animator tongsAnimator;
     public float grabDistance = 0.11f; // Adjust the distance to your needs
     private XRGrabInteractable grabbedObject;
     public Transform grabLocation;
+
+    private XRGrabInteractable grabInteractor => GetComponent<XRGrabInteractable>();
+    private bool isGrabbed = false;
+
+    void OnEnable()
+    {
+        grabInteractor.selectEntered.AddListener(OnGrabStart);
+        grabInteractor.selectExited.AddListener(OnGrabEnd);
+    }
+
+    void OnDisable()
+    {
+        grabInteractor.selectEntered.RemoveListener(OnGrabStart);
+        grabInteractor.selectExited.RemoveListener(OnGrabEnd);
+    }
+
+    // Callback when the tongs are grabbed
+    private void OnGrabStart(SelectEnterEventArgs args)
+    {
+        isGrabbed = true;
+        // Perform any setup needed when the tongs are grabbed
+    }
+
+    // Callback when the tongs are released
+    private void OnGrabEnd(SelectExitEventArgs args)
+    {
+        isGrabbed = false;
+
+        // Check if there is an object currently being held
+        if (grabbedObject != null)
+        {
+            // Release the object by setting its parent to null and resetting its Rigidbody
+            ReleaseObject();
+            tongsAnimator.SetFloat("Close", 0f);
+        }
+    }
+
     void Start()
     {
-        grabbable = GetComponent<XRGrabInteractable>();
         tongsAnimator = GetComponent<Animator>();
     }
 
     void Update()
     {
         // Check if the tongs are being grabbed and either the right or left triggerValue property is valid
-        if (grabbable.isSelected)
+        if (isGrabbed)
         {
             float triggerAmount = 0f;
 
-            var interactor = grabbable.interactorsSelecting[0];
+            var interactor = grabInteractor.interactorsSelecting[0];
 
             if (interactor != null)
             {
@@ -97,10 +131,6 @@ public class MC_tongsController : MonoBehaviour
             }
         }
     }
-
-
-
-
 
     void ReleaseObject()
     {

@@ -25,30 +25,18 @@ public class MC_HandCollision : MonoBehaviour
         // Check if the collided object has the specified tag
         if (collision.gameObject.CompareTag("Pan"))
         {
-            // Call the ChangeStepScale method in the MC_HandEffectController script
-            if (handEffectController != null)
-            {
-                handEffectController.ChangeStepScale(rend, 0.4f, 1f);
-            }
-            else
-            {
-                Debug.LogError("MC_HandEffectController script not found on the hand object!");
-            }
-        }
-
-        if (collision.gameObject.CompareTag("Pot"))
-        {
             IHotObject hotObject = collision.gameObject.GetComponent<IHotObject>();
             if (hotObject != null && HotObjectManager.IsObjectHot(hotObject))
             {
                 handEffectController.ChangeStepScale(rend, 0.4f, 1f);
             }
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Pot"))
+        if (other.gameObject.CompareTag("Pot") || other.gameObject.CompareTag("Burner"))
         {
             IHotObject hotObject = other.gameObject.GetComponent<IHotObject>();
             if (hotObject != null && HotObjectManager.IsObjectHot(hotObject))
