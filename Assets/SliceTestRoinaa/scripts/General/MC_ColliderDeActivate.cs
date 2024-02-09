@@ -36,12 +36,12 @@ public class MC_ColliderDeActivate : MonoBehaviour
     private void OnLidAttached(SelectEnterEventArgs args)
     {
         // When the lid is attached, disable its collider
-        lidCollider.enabled = false;
+        lidCollider.isTrigger = true;
     }
 
     private void OnLidDetached(SelectExitEventArgs args)
     {
         // When the lid is detached, re-enable its collider
-        lidCollider.enabled = true;
+        lidCollider.isTrigger = false;
     }
 }
