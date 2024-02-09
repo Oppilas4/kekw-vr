@@ -1,5 +1,8 @@
 using UnityEngine;
+using UnityEngine.Events;
 
+[System.Serializable]
+public class BooleanEvent : UnityEvent<bool> { }
 public class MC_FaucetController : MonoBehaviour, IDial
 {
     public bool isWaterOn = false;
@@ -7,6 +10,8 @@ public class MC_FaucetController : MonoBehaviour, IDial
     [SerializeField] ParticleSystem waterParticles;
     private float minFlowRate = 0f;
     private float maxFlowRate = 40f;
+
+    public BooleanEvent OnWaterStatusChanged;
 
     public void DialChanged(float dialValue)
     {
@@ -17,8 +22,13 @@ public class MC_FaucetController : MonoBehaviour, IDial
         var emission = waterParticles.emission;
         emission.rateOverTime = Mathf.Lerp(0, maxFlowRate, flowRate);
 
+        bool wasWaterOn = isWaterOn;
         // Enable or disable the water particles based on the flow rate
         isWaterOn = flowRate > 0.02f;
+        if (wasWaterOn != isWaterOn)
+        {
+            OnWaterStatusChanged?.Invoke(isWaterOn); // Invoke the event with the new status
+        }
         emission.enabled = isWaterOn;
     }
     public bool GetIsWaterOn()

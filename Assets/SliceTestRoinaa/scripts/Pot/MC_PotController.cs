@@ -4,6 +4,9 @@ using UnityEngine.VFX;
 
 public class MC_PotController : MonoBehaviour, IHotObject
 {
+    public delegate void PotWaterStatusChangedHandler(bool isPotOnWater);
+    public static event PotWaterStatusChangedHandler OnPotWaterStatusChanged;
+
     public string waterSourceTag = "WaterSource";
     public GameObject waterObject; // Reference to the water object
     public ParticleSystem boilingParticles; // Reference to the boiling particle system
@@ -159,6 +162,7 @@ public class MC_PotController : MonoBehaviour, IHotObject
             if (currentFaucetController != null && currentFaucetController.isWaterOn())
             {
                 isPotOnWater = true;
+                NotifyPotWaterStatusChanged();
             }
         }
 
@@ -178,6 +182,7 @@ public class MC_PotController : MonoBehaviour, IHotObject
         if (currentFaucetController != null && currentFaucetController.isWaterOn())
         {
             isPotOnWater = true;
+            NotifyPotWaterStatusChanged();
         }
 
         if (currentBurnerController != null && currentBurnerController.isBurnerOn())
@@ -205,6 +210,7 @@ public class MC_PotController : MonoBehaviour, IHotObject
         if (other.CompareTag(waterSourceTag))
         {
             isPotOnWater = false;
+            NotifyPotWaterStatusChanged();
             currentFaucetController = null;
         }
     }
@@ -247,6 +253,11 @@ public class MC_PotController : MonoBehaviour, IHotObject
         {
             boilingParticles.Stop();
         }
+    }
+
+    private void NotifyPotWaterStatusChanged()
+    {
+        OnPotWaterStatusChanged?.Invoke(isPotOnWater);
     }
 
     private void OnDrawGizmos()

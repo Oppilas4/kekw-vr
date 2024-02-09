@@ -3,8 +3,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class CustomGrabRange : XRGrabInteractable
 {
-    [SerializeField] private float customGrabRange = 0.5f;
-    
+    [SerializeField] private float customGrabRange = 0.5f;    
     // Override the OnSelectEntered method
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
