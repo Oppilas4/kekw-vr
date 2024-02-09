@@ -21,7 +21,7 @@ public class Elec_DeathItself : MonoBehaviour
     private void Update()
     {
         RaycastHit Seen;
-        if (Physics.Raycast(Camera.transform.position, Camera.transform.forward, out Seen, 500))
+        if (Physics.Raycast(Camera.transform.position, Camera.transform.forward, out Seen, 1000))
         {
             if (Seen.transform.GetComponent<Elec_DeathItself>())
             {
