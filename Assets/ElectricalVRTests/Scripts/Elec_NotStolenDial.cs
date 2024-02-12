@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class Elec_NotStolenDial : MonoBehaviour
@@ -20,6 +21,8 @@ public class Elec_NotStolenDial : MonoBehaviour
     private bool shouldGetHandRotation = false;
     private Quaternion originalRotation;  // New class variable to store the original rotation
     private XRGrabInteractable grabInteractor => GetComponent<XRGrabInteractable>();
+
+    public UnityEvent OnReachedAngle;
 
     private void OnEnable()
     {
@@ -140,6 +143,7 @@ public class Elec_NotStolenDial : MonoBehaviour
         {
             float clampedAngle = Mathf.Clamp(linkedDial.localEulerAngles[(int)rotationAxis] + snapRotationAmount, 0f, maxRotationAngle);
             linkedDial.localEulerAngles = GetEulerAnglesWithAxis(clampedAngle);
+            OnReachedAngle.Invoke();
         }
         else
         {
@@ -171,8 +175,6 @@ public class Elec_NotStolenDial : MonoBehaviour
             linkedDial.localEulerAngles = GetEulerAnglesWithAxis(newAngle);
         }
     }
-
-
     // Helper method to construct Vector3 with updated axis value
     private Vector3 GetEulerAnglesWithAxis(float updatedValue)
     {
