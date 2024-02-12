@@ -22,8 +22,6 @@ public class Elec_NotStolenDial : MonoBehaviour
     private Quaternion originalRotation;  // New class variable to store the original rotation
     private XRGrabInteractable grabInteractor => GetComponent<XRGrabInteractable>();
 
-    public UnityEvent OnReachedAngle;
-
     private void OnEnable()
     {
         grabInteractor.selectEntered.AddListener(GrabbedBy);
@@ -42,13 +40,11 @@ public class Elec_NotStolenDial : MonoBehaviour
         Y,
         Z
     }
-
     private void GrabEnd(SelectExitEventArgs arg0)
     {
         shouldGetHandRotation = false;
         requiresStartAngle = true;
     }
-
     private void GrabbedBy(SelectEnterEventArgs arg0)
     {
         interactor = GetComponent<XRGrabInteractable>().interactorsSelecting.FirstOrDefault() as XRBaseInteractor;
@@ -58,10 +54,6 @@ public class Elec_NotStolenDial : MonoBehaviour
             startAngle = 0f;
         }
     }
-
-
-
-
     void Update()
     {
         if (shouldGetHandRotation)
@@ -70,7 +62,6 @@ public class Elec_NotStolenDial : MonoBehaviour
             GetRotationDistance(rotationAngle);
         }
     }
-
     public float GetInteractorRotation() => interactor.GetComponent<Transform>().eulerAngles.z;
 
     #region TheMath!
@@ -133,9 +124,7 @@ public class Elec_NotStolenDial : MonoBehaviour
         }
     }
     #endregion
-
     private float CheckAngle(float currentAngle, float startAngle) => (360f - currentAngle) + startAngle;
-
     private void RotateDialClockwise()
     {
         // Check for rotation limit
@@ -143,14 +132,15 @@ public class Elec_NotStolenDial : MonoBehaviour
         {
             float clampedAngle = Mathf.Clamp(linkedDial.localEulerAngles[(int)rotationAxis] + snapRotationAmount, 0f, maxRotationAngle);
             linkedDial.localEulerAngles = GetEulerAnglesWithAxis(clampedAngle);
-            OnReachedAngle.Invoke();
         }
         else
         {
             linkedDial.localEulerAngles = GetEulerAnglesWithAxis(linkedDial.localEulerAngles[(int)rotationAxis] + snapRotationAmount);
         }
-    }
 
+        if (TryGetComponent<IElecDial>(out IElecDial dial))
+            dial.DialChanged(linkedDial.localEulerAngles[(int)rotationAxis]);
+    }
     private void RotateDialAntiClockwise()
     {
         // Check for rotation limit
@@ -174,6 +164,8 @@ public class Elec_NotStolenDial : MonoBehaviour
 
             linkedDial.localEulerAngles = GetEulerAnglesWithAxis(newAngle);
         }
+        if (TryGetComponent<IElecDial>(out IElecDial dial))
+            dial.DialChanged(linkedDial.localEulerAngles[(int)rotationAxis]);
     }
     // Helper method to construct Vector3 with updated axis value
     private Vector3 GetEulerAnglesWithAxis(float updatedValue)
@@ -182,7 +174,4 @@ public class Elec_NotStolenDial : MonoBehaviour
         eulerAngles[(int)rotationAxis] = updatedValue;
         return eulerAngles;
     }
-
-
-
 }
