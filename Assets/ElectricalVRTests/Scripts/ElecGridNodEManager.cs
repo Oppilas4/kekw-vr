@@ -129,7 +129,16 @@ public class ElecGridNodEManager : MonoBehaviour
             LinesCompleted = 0;
             foreach (Elec_GridNode ourNodes in Spawned_Nodes)
             {
+                ourNodes.NodesResetting = true;
+            }
+
+            foreach (Elec_GridNode ourNodes in Spawned_Nodes)
+            {
                 ourNodes.Reset();
+            }
+            foreach (Elec_GridNode ourNodes in Spawned_Nodes)
+            {
+                ourNodes.NodesResetting = false;
             }
         }
                   

@@ -29,18 +29,19 @@ public class Elec_GridNode : MonoBehaviour
     public bool ElectricityIsOn = false;
     public UnityEvent Electricute;
     public AudioClip Pop;
+    public bool NodesResetting = false;
     ParticleSystem Confetti;
     private void Awake()
     {
         ourVoltage = new Elec_Voltage(StartWithVoltage);
         currentVoltage = StartWithVoltage;
+        resetVoltage = StartWithVoltage;
         ReceivedVoltagesATM = new Dictionary<GameObject,int>();
         if (ourXRSocketInteractor == null) ourXRSocketInteractor = GetComponent<XRSocketInteractor>();
         currentAvailability = ourXRSocketInteractor.socketActive;
         ChildrenMaterial = GetComponentInChildren<MeshRenderer>();
         if (!currentAvailability && GetComponent<Elec_FinishOutlet>() == null) ChildrenMaterial.material.color = Color.red;
         else if(GetComponent<Elec_FinishOutlet>() != null) ChildrenMaterial.material.color = Color.blue;
-        resetVoltage = currentVoltage;
         Confetti = GetComponent<ParticleSystem>();
     }
     public Elec_GridNode returnNode(direction toRetrieve)
@@ -71,26 +72,15 @@ public class Elec_GridNode : MonoBehaviour
     [ContextMenu("DEBUG_RESET")]
     public void Reset()
     {
-        gameObject.SetActive(true);
         gameObject.GetNamedChild("Plane").SetActive(true);
+        ourManager.PluggedNodes.Remove(this);
+
         ReceivedVoltagesATM.Clear();
         currentVoltage = resetVoltage;
         ourVoltage.voltage = resetVoltage;
-        ourManager.PluggedNodes.Remove(this);
-
-        StartCoroutine(ResetWaitOneFrame());
-    }
-
-    IEnumerator ResetWaitOneFrame()
-    {
-        yield return null;
-        gameObject.GetNamedChild("Plane").SetActive(true);
-        ReceivedVoltagesATM.Clear();
-        currentVoltage = resetVoltage;
-        ourVoltage.voltage = resetVoltage;
-        ourManager.PluggedNodes.Remove(this);
         if (gameObject != null) StartCoroutine(DisableTempor());
     }
+
     private void searchForNode(float distancetoNode, direction setDirection)
     {
         Vector3 searchPosition = transform.localPosition;
@@ -249,6 +239,7 @@ public class Elec_GridNode : MonoBehaviour
     }
     public void UpdateVoltage(bool SendToNeighbours)
     {
+        if (NodesResetting) return;
         int highestvoltage = 0;
         if (ReceivedVoltagesATM.Count == 0) highestvoltage = 0;
         else
