@@ -24,7 +24,7 @@ public class Elec_GridNode : MonoBehaviour
     public Dictionary<GameObject,int> ReceivedVoltagesATM;
     public bool currentAvailability = false;
     Renderer ChildrenMaterial;
-    public int goalVoltage = 0;
+    public int goalVoltage = 0; //Elec_FinishOutlet checks this value
     private int resetVoltage = 0;
     public bool ElectricityIsOn = false;
     public UnityEvent Electricute;
@@ -68,15 +68,22 @@ public class Elec_GridNode : MonoBehaviour
         searchForNode(distancetoNode, direction.right);
     }
 
+    [ContextMenu("DEBUG_RESET")]
     public void Reset()
     {
+        StartCoroutine(ResetWaitOneFrame());
+    }
+
+    IEnumerator ResetWaitOneFrame()
+    {
+        yield return null;
         gameObject.SetActive(true);
-        gameObject.GetNamedChild("Plane").SetActive(true);      
+        gameObject.GetNamedChild("Plane").SetActive(true);
         ReceivedVoltagesATM.Clear();
         currentVoltage = resetVoltage;
         ourVoltage.voltage = resetVoltage;
         ourManager.PluggedNodes.Remove(this);
-        if(gameObject != null) StartCoroutine(DisableTempor());
+        if (gameObject != null) StartCoroutine(DisableTempor());
     }
     private void searchForNode(float distancetoNode, direction setDirection)
     {
@@ -169,7 +176,7 @@ public class Elec_GridNode : MonoBehaviour
         ourManager.PluggingNode(this); //26.1 to disable previous neighbour nodes
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (currentVoltage > 0) UpdateAvailability(true);
         else UpdateAvailability(false);

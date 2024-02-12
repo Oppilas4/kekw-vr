@@ -118,6 +118,8 @@ public class ElecGridNodEManager : MonoBehaviour
             Reset();
         }
     }
+    [ContextMenu("DEBUG_RESET")]
+
     public void Reset()
     {
         if (!Exploding)
