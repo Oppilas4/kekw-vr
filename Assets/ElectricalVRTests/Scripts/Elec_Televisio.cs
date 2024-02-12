@@ -14,6 +14,7 @@ public class Elec_Televisio : MonoBehaviour
     public float staticShowsFor = 0.1f;
     private bool ChangingClip = false;
     bool brokey = false;
+    public AudioClip Break;
 
     // Start is called before the first frame update
     void Start()
@@ -66,11 +67,12 @@ public class Elec_Televisio : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        if (collision.gameObject.tag == "Floor" && !brokey)
         {
             player.clip = Broken;
             player.targetMaterialRenderer.gameObject.SetActive(true);
             brokey = true;
+            GetComponent<AudioSource>().PlayOneShot(Break);
         }
     }
 }
