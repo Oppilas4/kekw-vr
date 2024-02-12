@@ -225,6 +225,7 @@ public class Elec_GridNode : MonoBehaviour
 
     public void RemoveVoltageFromNeighbours()
     {
+        if (goalVoltage != 0) return;
         neighbour_up?.RemoveVoltage();
         neighbour_down?.RemoveVoltage();
         neighbour_left?.RemoveVoltage();
