@@ -32,8 +32,8 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(FlashSkellyHands());
         Player.transform.position = DeathPosition.transform.position;
+        Player.transform.rotation = DeathPosition.transform.rotation;
     }
-
     IEnumerator FlashSkellyHands()
     {
         for (int i = 0; i < HowManyFlashes; i++)

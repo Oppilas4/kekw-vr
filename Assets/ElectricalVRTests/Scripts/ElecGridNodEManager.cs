@@ -1,20 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class ElecGridNodEManager : MonoBehaviour
 {
+    public UnityEvent ResetStuff;
     public List<Elec_GridNode> Spawned_Nodes;
     public ElecGridTes ourGridTest;
     public Elec_GridNode latestPluggedIn;
     public float SearchDistanceBetweenNodes = 1;
     public List<Elec_GridNode> PluggedNodes;
-
+    public AudioSource PopSound;
+    public AudioSource Completed;
+    public int LinesCompleted = 0;
+    public int LinesToComplete = 0;
+    public bool finished = false;
+    public bool Exploding = false;
+    Elec_GridNode LastNode;
     private void Start()
     {
-        StartCoroutine(SetupRoutine());
+        StartCoroutine(SetupRoutine());        
     }
-
+    private void Update()
+    {
+        if (Exploding && LastNode.gameObject.activeSelf == false)
+        {
+            Exploding = false;
+        }
+        if (LinesCompleted == LinesToComplete && !finished)
+        {
+            finished = true;
+            Completed.Play();
+            Elec_MegaTool Megan = FindObjectOfType<Elec_MegaTool>();
+            Megan.ResetWireList();
+            Explosives();
+        }
+    }
+    void SetTheLastNode()
+    {
+        LastNode = Spawned_Nodes[Spawned_Nodes.Count - 1];
+    }
     IEnumerator SetupRoutine()
     {
         yield return null;
@@ -69,10 +96,8 @@ public class ElecGridNodEManager : MonoBehaviour
                 foundNode.SetupNode(SearchDistanceBetweenNodes, this);
             }
         }
+        SetTheLastNode();
     }
-
-
-
     //26.1 to disable previous neighbour nodes
     public void PluggingNode(Elec_GridNode toPlug)
     {
@@ -85,15 +110,34 @@ public class ElecGridNodEManager : MonoBehaviour
         yield return null;
         if (toUseAsRemoveSource != null) toUseAsRemoveSource.RemoveVoltageFromNeighbours();
     }
-
-
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            finished = false;
+            Reset();
+        }
+    }
     public void Reset()
     {
-        foreach (Elec_GridNode ourNodes in Spawned_Nodes)
+        if (!Exploding)
         {
-            ourNodes.reset();
+            finished = false;
+            ResetStuff.Invoke();
+            LinesCompleted = 0;
+            foreach (Elec_GridNode ourNodes in Spawned_Nodes)
+            {
+                ourNodes.Reset();
+            }
         }
-        
+                  
     }
-
+    public void Explosives()
+    {
+        Exploding = true;
+        for(int i = 0; i < Spawned_Nodes.Count; i++)
+        {
+            Spawned_Nodes[i].StartExlosive(i);
+        }
+    }
 }

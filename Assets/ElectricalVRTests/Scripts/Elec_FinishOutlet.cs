@@ -16,8 +16,7 @@ public class Elec_FinishOutlet : MonoBehaviour
     public Elec_Multimeter multimeter;
 
     public int goalVoltage = 5;
-    bool GoalReached = false;
-
+    public bool GoalReached = false;
     [Obsolete]
     private void Start()
     {
@@ -30,8 +29,6 @@ public class Elec_FinishOutlet : MonoBehaviour
 
     private void Update()
     {
-        if (ourGridNode)
-        {
             if (hasFinished == false)
             {
                 if (ourGridNode.currentVoltage == goalVoltage && GoalReached)
@@ -48,20 +45,22 @@ public class Elec_FinishOutlet : MonoBehaviour
             else
             {
                 if (ourGridNode.currentVoltage != goalVoltage) hasFinished = false;
-            }
-        }
-        
+            }   
     }
     public void OnTriggerStay(Collider other)
     {   
-        if(other.gameObject.GetComponent<Elec_Multimeter>() != null) 
-        {         
-            multimeter.VoltageMusltimeter = goalVoltage;
-        }
-        else if (other.tag == "StickyMultiMeter")
+        if (ourGridNode.ElectricityIsOn)
         {
-            if (multimeter != null) { multimeter.StickyVoltage = goalVoltage; }
+            if(other.gameObject.GetComponent<Elec_Multimeter>() != null) 
+            {         
+                multimeter.VoltageMusltimeter = goalVoltage;
+            }
+            else if (other.tag == "StickyMultiMeter")
+            {
+                if (multimeter != null) { multimeter.StickyVoltage = goalVoltage; }
+            }
         }
+   
     }
     public void OnTriggerExit(Collider other)
     {
@@ -82,6 +81,7 @@ public class Elec_FinishOutlet : MonoBehaviour
             Staple.GetComponent<Elec_StapleMakeStick>().SpoolItIsON.DisableWireSafely();
             LineRenderer temp = Staple.GetComponent<Elec_StapleMakeStick>().SpoolItIsON.GetComponent<LineRenderer>();
             temp.SetPosition(temp.positionCount - 1,interactor.attachTransform.transform.position);
+            ourGridNode.ourManager.LinesCompleted++;
         }   
     }
     void UnconnectedWire(XRBaseInteractable Staple)
