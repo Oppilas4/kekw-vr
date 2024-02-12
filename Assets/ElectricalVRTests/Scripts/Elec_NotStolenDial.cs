@@ -22,6 +22,7 @@ public class Elec_NotStolenDial : MonoBehaviour
     private Quaternion originalRotation;  // New class variable to store the original rotation
     private XRGrabInteractable grabInteractor => GetComponent<XRGrabInteractable>();
 
+    public AudioClip Click;
     private void OnEnable()
     {
         grabInteractor.selectEntered.AddListener(GrabbedBy);
@@ -127,6 +128,7 @@ public class Elec_NotStolenDial : MonoBehaviour
     private float CheckAngle(float currentAngle, float startAngle) => (360f - currentAngle) + startAngle;
     private void RotateDialClockwise()
     {
+        GetComponent<AudioSource>().PlayOneShot(Click);
         // Check for rotation limit
         if (limitRotation)
         {
@@ -143,7 +145,7 @@ public class Elec_NotStolenDial : MonoBehaviour
     }
     private void RotateDialAntiClockwise()
     {
-        // Check for rotation limit
+        GetComponent<AudioSource>().PlayOneShot(Click);
         if (limitRotation)
         {
             float clampedAngle = Mathf.Clamp(linkedDial.localEulerAngles[(int)rotationAxis] - snapRotationAmount, 0f, maxRotationAngle);
