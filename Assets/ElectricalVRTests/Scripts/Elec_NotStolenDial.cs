@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class Elec_NotStolenDial : MonoBehaviour
@@ -39,13 +40,11 @@ public class Elec_NotStolenDial : MonoBehaviour
         Y,
         Z
     }
-
     private void GrabEnd(SelectExitEventArgs arg0)
     {
         shouldGetHandRotation = false;
         requiresStartAngle = true;
     }
-
     private void GrabbedBy(SelectEnterEventArgs arg0)
     {
         interactor = GetComponent<XRGrabInteractable>().interactorsSelecting.FirstOrDefault() as XRBaseInteractor;
@@ -55,10 +54,6 @@ public class Elec_NotStolenDial : MonoBehaviour
             startAngle = 0f;
         }
     }
-
-
-
-
     void Update()
     {
         if (shouldGetHandRotation)
@@ -67,7 +62,6 @@ public class Elec_NotStolenDial : MonoBehaviour
             GetRotationDistance(rotationAngle);
         }
     }
-
     public float GetInteractorRotation() => interactor.GetComponent<Transform>().eulerAngles.z;
 
     #region TheMath!
@@ -130,9 +124,7 @@ public class Elec_NotStolenDial : MonoBehaviour
         }
     }
     #endregion
-
     private float CheckAngle(float currentAngle, float startAngle) => (360f - currentAngle) + startAngle;
-
     private void RotateDialClockwise()
     {
         // Check for rotation limit
@@ -145,8 +137,10 @@ public class Elec_NotStolenDial : MonoBehaviour
         {
             linkedDial.localEulerAngles = GetEulerAnglesWithAxis(linkedDial.localEulerAngles[(int)rotationAxis] + snapRotationAmount);
         }
-    }
 
+        if (TryGetComponent<IElecDial>(out IElecDial dial))
+            dial.DialChanged(linkedDial.localEulerAngles[(int)rotationAxis]);
+    }
     private void RotateDialAntiClockwise()
     {
         // Check for rotation limit
@@ -170,9 +164,9 @@ public class Elec_NotStolenDial : MonoBehaviour
 
             linkedDial.localEulerAngles = GetEulerAnglesWithAxis(newAngle);
         }
+        if (TryGetComponent<IElecDial>(out IElecDial dial))
+            dial.DialChanged(linkedDial.localEulerAngles[(int)rotationAxis]);
     }
-
-
     // Helper method to construct Vector3 with updated axis value
     private Vector3 GetEulerAnglesWithAxis(float updatedValue)
     {
@@ -180,7 +174,4 @@ public class Elec_NotStolenDial : MonoBehaviour
         eulerAngles[(int)rotationAxis] = updatedValue;
         return eulerAngles;
     }
-
-
-
 }
