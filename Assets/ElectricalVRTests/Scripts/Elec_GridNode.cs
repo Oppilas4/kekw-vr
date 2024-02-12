@@ -71,13 +71,19 @@ public class Elec_GridNode : MonoBehaviour
     [ContextMenu("DEBUG_RESET")]
     public void Reset()
     {
+        gameObject.SetActive(true);
+        gameObject.GetNamedChild("Plane").SetActive(true);
+        ReceivedVoltagesATM.Clear();
+        currentVoltage = resetVoltage;
+        ourVoltage.voltage = resetVoltage;
+        ourManager.PluggedNodes.Remove(this);
+
         StartCoroutine(ResetWaitOneFrame());
     }
 
     IEnumerator ResetWaitOneFrame()
     {
         yield return null;
-        gameObject.SetActive(true);
         gameObject.GetNamedChild("Plane").SetActive(true);
         ReceivedVoltagesATM.Clear();
         currentVoltage = resetVoltage;
