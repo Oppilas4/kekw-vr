@@ -151,4 +151,18 @@ public class ElecGridNodEManager : MonoBehaviour
             Spawned_Nodes[i].StartExlosive(i);
         }
     }
+    public void ElectricityTurnOn()
+    {
+        foreach (Elec_GridNode node in Spawned_Nodes)
+        {
+            node.ElectricityIsOn = true;
+        }
+    }
+    public void ElectricityTurnOff()
+    {
+        foreach (Elec_GridNode node in Spawned_Nodes)
+        {
+            node.ElectricityIsOn = false;
+        }
+    }
 }

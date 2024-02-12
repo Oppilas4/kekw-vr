@@ -1,11 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Elec_DialAngleReciever : MonoBehaviour, IElecDial
 {
-    void IElecDial.DialChanged(float dialvalue)
+    public UnityEvent OnReachedAngle;
+    public UnityEvent OnZeroDegree;
+    public void DialChanged(float dialvalue)
     {
-        throw new System.NotImplementedException();
+        if (dialvalue == 90)
+        {
+            OnReachedAngle.Invoke();
+        }
+        else if (dialvalue == 0)
+        {
+            OnZeroDegree.Invoke();
+        }
     }
 }
