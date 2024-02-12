@@ -72,13 +72,14 @@ public class Elec_GridNode : MonoBehaviour
     [ContextMenu("DEBUG_RESET")]
     public void Reset()
     {
+        gameObject.SetActive(true);
         gameObject.GetNamedChild("Plane").SetActive(true);
         ourManager.PluggedNodes.Remove(this);
 
         ReceivedVoltagesATM.Clear();
         currentVoltage = resetVoltage;
         ourVoltage.voltage = resetVoltage;
-        if (gameObject != null) StartCoroutine(DisableTempor());
+        if (gameObject.activeSelf) StartCoroutine(DisableTempor());
     }
 
     private void searchForNode(float distancetoNode, direction setDirection)
