@@ -11,6 +11,7 @@ public class Elec_CatAI : MonoBehaviour
     public Transform LaserPointerEnd;
     Animator animator;
     float Speed;
+    public Transform Paws;
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
@@ -33,7 +34,7 @@ public class Elec_CatAI : MonoBehaviour
             agent.speed = 2f;
             agent.stoppingDistance = 1f;
             agent.SetDestination(LaserPointerEnd.position);
-            if (Vector3.Distance(transform.position, LaserPointerEnd.position) < 0.5)
+            if (Vector3.Distance(Paws.position, LaserPointerEnd.position) < 0.25)
             {
                 animator.SetBool("CatchBool", true);
             }
