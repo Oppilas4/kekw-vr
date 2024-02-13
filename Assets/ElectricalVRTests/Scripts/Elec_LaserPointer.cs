@@ -10,7 +10,7 @@ public class Elec_LaserPointer : MonoBehaviour
     public bool HandHeld = false;
      void Start()
     {
-        Point.GetComponent<MeshRenderer>().material.color = Color.red;
+        Point.GetComponent<MeshRenderer>().materials[0].color = Color.red;
         lineRenderer = GetComponent<LineRenderer>();
         if (HandHeld)
         {
