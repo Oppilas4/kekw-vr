@@ -26,15 +26,16 @@ public class Elec_CatAI : MonoBehaviour
             agent.speed = 1.0f;
             agent.stoppingDistance = 2f;
             agent.SetDestination(Player.position);
+            animator.SetBool("CatchBool", false);
         }
         else if (FelineIncstinctON)
         {
             agent.speed = 2f;
-            agent.stoppingDistance = 0.5f;
+            agent.stoppingDistance = 1f;
             agent.SetDestination(LaserPointerEnd.position);
-            if(transform.position ==  LaserPointerEnd.position) 
+            if (Vector3.Distance(transform.position, LaserPointerEnd.position) < 0.5)
             {
-                animator.SetTrigger("Catch");
+                animator.SetBool("CatchBool", true);
             }
         }       
     }
