@@ -8,7 +8,7 @@ public class Elec_LaserPointer : MonoBehaviour
     public LineRenderer lineRenderer;
     public GameObject Point;
     public bool HandHeld = false;
-    Elec_CatAI Kissa;
+    public Elec_CatAI Kissa;
      void Start()
     {
         Kissa = GameObject.FindAnyObjectByType<Elec_CatAI>();
