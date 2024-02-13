@@ -8,8 +8,10 @@ public class Elec_LaserPointer : MonoBehaviour
     public LineRenderer lineRenderer;
     public GameObject Point;
     public bool HandHeld = false;
+    Elec_CatAI Kissa;
      void Start()
     {
+        Kissa = GameObject.FindAnyObjectByType<Elec_CatAI>();
         Point.GetComponent<MeshRenderer>().materials[0].color = Color.red;
         lineRenderer = GetComponent<LineRenderer>();
         if (HandHeld)
@@ -22,11 +24,13 @@ public class Elec_LaserPointer : MonoBehaviour
     {
         if(lineRenderer.enabled) 
         {
+            Kissa.FelineIncstinctON = false;
             lineRenderer.enabled = false;
             Point.SetActive(false);
         }
         else if(!lineRenderer.enabled) 
         {
+            Kissa.FelineIncstinctON = true;
             lineRenderer.enabled = true;
             Point.SetActive(true);
         }

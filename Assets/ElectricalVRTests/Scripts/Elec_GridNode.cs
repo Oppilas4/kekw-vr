@@ -276,12 +276,12 @@ public class Elec_GridNode : MonoBehaviour
     }
     IEnumerator Explode(float time)
     {
-        yield return new WaitForSeconds(time / 3);
+        yield return new WaitForSeconds(time / ourManager.Spawned_Nodes.Count);
         ourManager.PopSound.pitch = UnityEngine.Random.Range(0.75f, 1.25f);
         ourManager.PopSound.PlayOneShot(Pop);
         Confetti.Play();
         ourXRSocketInteractor.enabled = false;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(1f);
         gameObject.SetActive(false);
     }
 }
