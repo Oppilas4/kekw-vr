@@ -20,7 +20,6 @@ public class Elec_CatAI : MonoBehaviour
     private void Update()
     {
         Speed = agent.velocity.magnitude;
-        Debug.Log(Speed);
         animator.SetFloat("Speed",Speed);
         if (!FelineIncstinctON)
         {
@@ -33,7 +32,10 @@ public class Elec_CatAI : MonoBehaviour
             agent.speed = 2f;
             agent.stoppingDistance = 0.5f;
             agent.SetDestination(LaserPointerEnd.position);
-        }
-        
+            if(transform.position ==  LaserPointerEnd.position) 
+            {
+                animator.SetTrigger("Catch");
+            }
+        }       
     }
 }
