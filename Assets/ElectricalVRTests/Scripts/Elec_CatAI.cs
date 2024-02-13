@@ -9,13 +9,18 @@ public class Elec_CatAI : MonoBehaviour
     public Transform Player;
     public bool FelineIncstinctON;
     public Transform LaserPointerEnd;
+    Animator animator;
+    float Speed;
     private void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
         Player = GameObject.Find("XR Origin").GetComponent<Transform>();
     }
     private void Update()
     {
+        Speed = agent.velocity.magnitude;
+        animator.SetFloat("Speed",Speed);
         if (!FelineIncstinctON)
         {
             agent.speed = 1.0f;
@@ -27,7 +32,10 @@ public class Elec_CatAI : MonoBehaviour
             agent.speed = 2f;
             agent.stoppingDistance = 0.5f;
             agent.SetDestination(LaserPointerEnd.position);
-        }
-
+            if(transform.position ==  LaserPointerEnd.position) 
+            {
+                animator.SetTrigger("Catch");
+            }
+        }       
     }
 }
