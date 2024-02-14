@@ -12,7 +12,7 @@ public class Elec_CatAI : MonoBehaviour
     Animator animator;
     float Speed;
     public Transform Paws;
-    public GameObject RamiPos;
+    public GameObject RamiPos,Head;
 
     public Vector3 walkPoint;
     public bool walkPointSet,FelineIncstinctON, RamiOn,RoutineGoing;
@@ -34,6 +34,7 @@ public class Elec_CatAI : MonoBehaviour
         }
         else if (!FelineIncstinctON)
         {
+            Head.transform.LookAt(Player);
             agent.speed = 1.0f;
             agent.stoppingDistance = 2f;
             agent.SetDestination(Player.position);
@@ -41,6 +42,7 @@ public class Elec_CatAI : MonoBehaviour
         }
         else if (FelineIncstinctON)
         {
+            Head.transform.LookAt(LaserPointerEnd);
             agent.speed = 2f;
             agent.stoppingDistance = 1f;
             agent.SetDestination(LaserPointerEnd.position);
