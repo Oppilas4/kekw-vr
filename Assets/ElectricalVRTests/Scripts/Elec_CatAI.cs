@@ -35,7 +35,6 @@ public class Elec_CatAI : MonoBehaviour
         }
         else if (!FelineIncstinctON)
         {
-            Head.transform.LookAt(MainCamera.transform,Vector3.forward);
             agent.speed = 1.0f;
             agent.stoppingDistance = 2f;
             agent.SetDestination(Player.position);
@@ -43,7 +42,6 @@ public class Elec_CatAI : MonoBehaviour
         }
         else if (FelineIncstinctON)
         {
-            Head.transform.LookAt(LaserPointerEnd);
             agent.speed = 2f;
             agent.stoppingDistance = 1f;
             agent.SetDestination(LaserPointerEnd.position);
