@@ -12,7 +12,7 @@ public class Elec_CatAI : MonoBehaviour
     Animator animator;
     float Speed;
     public Transform Paws;
-    public GameObject RamiPos,Head;
+    public GameObject RamiPos, Head,MainCamera;
 
     public Vector3 walkPoint;
     public bool walkPointSet,FelineIncstinctON, RamiOn,RoutineGoing;
@@ -20,6 +20,7 @@ public class Elec_CatAI : MonoBehaviour
     public LayerMask whatIsGround;
     private void Start()
     {
+        MainCamera = GameObject.Find("Main Camera");
         animator = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
         Player = GameObject.Find("XR Origin").GetComponent<Transform>();
@@ -34,7 +35,7 @@ public class Elec_CatAI : MonoBehaviour
         }
         else if (!FelineIncstinctON)
         {
-            Head.transform.LookAt(Player);
+            Head.transform.LookAt(MainCamera.transform,Vector3.forward);
             agent.speed = 1.0f;
             agent.stoppingDistance = 2f;
             agent.SetDestination(Player.position);
