@@ -11,11 +11,15 @@ public class Elec_BatteryCompartment : MonoBehaviour
     GameObject battery;
     XRBaseInteractable PapaInteractable;
     public Transform ejectionPort;
+    XRBaseInteractor interactor;
+
+    [System.Obsolete]
     void Start()
     {
         PapaRemote = gameObject.GetComponentInParent<Elec_TVremote>();
         PapaInteractable = PapaRemote.GetComponent<XRBaseInteractable>();
-        
+        PapaInteractable.onSelectEntered.AddListener(GetHand);
+        PapaInteractable.onSelectExited.AddListener(HandIsNull);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -35,9 +39,8 @@ public class Elec_BatteryCompartment : MonoBehaviour
     }
     private void Update()
     {
-        if (PapaInteractable.isSelected)
+        if (interactor != null)
         {
-            var interactor = PapaInteractable.interactorsSelecting[0];
             if (interactor.transform.gameObject.tag == "LeftHand" && Input.GetButtonDown("XRI_Left_PrimaryButton"))
             {           
                 EjectBattery();
@@ -63,5 +66,13 @@ public class Elec_BatteryCompartment : MonoBehaviour
             Occupied = false;
             PapaRemote.Batteries--;
         }
+    }
+    void GetHand(XRBaseInteractor SelectingInteractor)
+    {
+        interactor = SelectingInteractor;
+    }
+    void HandIsNull(XRBaseInteractor SelectingInteractor)
+    {
+        interactor = null;
     }
 }
