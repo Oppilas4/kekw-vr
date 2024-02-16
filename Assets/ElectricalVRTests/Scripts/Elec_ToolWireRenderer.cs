@@ -2,12 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Elec_ToolWireRenderer : MonoBehaviour
+public class Elec_ToolWireRenderer : MonoBehaviour , IVoltage
 {
     public List<GameObject> WireComponents = new List<GameObject>();
-    LineRenderer WireRenderer;
+    public LineRenderer WireRenderer;
     public Color ColorOfTheWire;
     public Material Lego;
+    public Elec_MegaTool ThisStapler;
+    public int voltage;
+    public bool ReadyToBEDestroyed = false;
+
+    public void Voltage_Receive(int newVoltage)
+    {
+       voltage = newVoltage;
+    }
+
+    public int Voltage_Send()
+    {
+        return voltage;
+    }
+
     void Start()
     {       
        WireRenderer = GetComponent<LineRenderer>();
@@ -21,8 +35,14 @@ public class Elec_ToolWireRenderer : MonoBehaviour
     {
         WireRenderer.positionCount = WireComponents.Count;
         for (int i = 0; i < WireComponents.Count; i++)
-        { 
-            WireRenderer.SetPosition(i, WireComponents[i].transform.position);
+        {
+            if (WireComponents[i] != null) { WireRenderer.SetPosition(i, WireComponents[i].transform.position); }          
         }
+    }
+    public void DisableWireSafely()
+    {
+        ThisStapler.WireSpools.Remove(this);
+        ThisStapler.SwitchWire();     
+        voltage = 0;
     }
 }

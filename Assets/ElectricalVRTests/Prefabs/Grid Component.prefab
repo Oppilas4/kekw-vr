@@ -120,12 +120,15 @@ MonoBehaviour:
   neighbour_left: {fileID: 0}
   neighbour_right: {fileID: 0}
   ourManager: {fileID: 0}
-  Available: 0
   currentlyTriggeredBy: {fileID: 0}
   ourXRSocketInteractor: {fileID: 0}
   currentVoltage: 0
   StartWithVoltage: 0
   LockVoltage: 0
+  currentAvailability: 0
+  Available: {fileID: 2100000, guid: be0fca9667ff9d94e8a9d6602f853cd9, type: 2}
+  Unavailabele: {fileID: 2100000, guid: d391f31f634fc9e45986043b0e4a3b70, type: 2}
+  goalVoltage: 0
 --- !u!1 &5872386878505198110
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,7 +222,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 5a8e1148a84f2824a8c3b1693237e234, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

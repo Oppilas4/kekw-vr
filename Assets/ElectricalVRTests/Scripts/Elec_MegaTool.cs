@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,15 +18,26 @@ public class Elec_MegaTool : MonoBehaviour
     XRBaseInteractable Stapler;
     int spoolID = 0;
     public List<Elec_ToolWireRenderer> WireSpools = new List<Elec_ToolWireRenderer>();
+    List<Elec_ToolWireRenderer> WireSpoolsSaved;
     Elec_ToolWireRenderer CurrentWire;
     bool HasShoten;
+    XRBaseInteractor InteractorSelecting;
+
+    private void Awake()
+    {
+        WireSpoolsSaved = new List<Elec_ToolWireRenderer>(WireSpools);
+    }
+    [Obsolete]
     private void Start()
     {
         CurrentWire = WireSpools[spoolID];
         Stapler = GetComponent<XRBaseInteractable>();
         Animator = GetComponent<Animator>();
         Animator.speed = 0;
-        StaplerAudio = GetComponent<AudioSource>(); 
+        StaplerAudio = GetComponent<AudioSource>();
+        Stapler.onSelectEntered.AddListener(OnSelected);
+        Stapler.onSelectExited.AddListener(OnDeselected);
+       
     }
     public void MakeWireEnd()
     {
@@ -38,50 +50,62 @@ public class Elec_MegaTool : MonoBehaviour
             }
             StaplerAudio.Play();
             CurrentWire.WireComponents.Add(WirePiece);
-            if(!IsFullAuto) HasShoten = true; 
+            WirePiece.GetComponent<Elec_StapleMakeStick>().ListID = CurrentWire.WireComponents.Count - 1;
+            WirePiece.GetComponent<Elec_StapleMakeStick>().SpoolItIsON = CurrentWire;
+            WirePiece.GetComponent<Elec_StapleMakeStick>().currentVoltage = CurrentWire.Voltage_Send();
+            if (!IsFullAuto) HasShoten = true; 
         }
     }
     private void Update()
     {
-        if (Stapler.isSelected)
-        {
-            var interactor = Stapler.interactorsSelecting[0];
-            Debug.Log(interactor.ToString());
-            if (interactor.transform.gameObject.tag == "RightHand" && Input.GetButtonDown("XRI_Right_PrimaryButton") || interactor.transform.gameObject.tag == "LeftHand" && Input.GetButtonDown("XRI_Left_PrimaryButton"))
+        if (InteractorSelecting != null)
+        {         
+            if (InteractorSelecting.transform.gameObject.tag == "RightHand" && Input.GetButtonDown("XRI_Right_PrimaryButton") || InteractorSelecting.transform.gameObject.tag == "LeftHand" && Input.GetButtonDown("XRI_Left_PrimaryButton"))
             {
                 SwitchWire();
             }
-            else if (interactor.transform.gameObject.tag == "LeftHand")
+            else if (InteractorSelecting.transform.gameObject.tag == "LeftHand")
             {
                 Animator.Play("Cube_001_Down", 0, Input.GetAxis("XRI_Left_Trigger"));
             }
-            else if (interactor.transform.gameObject.tag == "RightHand")
+            else if (InteractorSelecting.transform.gameObject.tag == "RightHand")
             {
                 Animator.Play("Cube_001_Down", 0, Input.GetAxis("XRI_Right_Trigger"));
             }
            
         }
-
+    }
+    private void OnSelected(XRBaseInteractor interactor)
+    {
+        InteractorSelecting = interactor;
+    }
+    private void OnDeselected(XRBaseInteractor interactor)
+    {
+        InteractorSelecting = null;
     }
     public void SwitchWire()
     {
-        Debug.Log("Switched Wire Color");
-        if(spoolID >= WireSpools.Count) 
+        if (spoolID == WireSpools.Count -1 || spoolID == WireSpools.Count) 
         { 
             spoolID = 0;
             CurrentWire = WireSpools[spoolID];
-            spoolID++;
             return;
         }           
-            CurrentWire = WireSpools[spoolID];
-            spoolID++;        
-        Debug.Log(spoolID.ToString());
+        else
+        {
+            spoolID++;
+            CurrentWire = WireSpools[spoolID];          
+        }
     }
-
+    public void ResetWireList()
+    {
+        WireSpools = new List<Elec_ToolWireRenderer>(WireSpoolsSaved);
+    }
     void HasShotenSetFalse()
     {
         HasShoten = false;
     }
+    [ContextMenu("Fortnite balls")]
     public void TurnOnFullAuto()
     {
         IsFullAuto = true;

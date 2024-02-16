@@ -6,91 +6,87 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.Events;
 
 public class Elec_FinishOutlet : MonoBehaviour
 {
     public UnityEvent OnFinish;
     private bool hasFinished = false;
-
+    XRBaseInteractor interactor;
     public Elec_GridNode ourGridNode;
-    public Elec_WireEnds wireEnd;
     public Elec_Multimeter multimeter;
-    public Elev_MultimeterSticky multimeterSticky;
 
     public int goalVoltage = 5;
-
+    public bool GoalReached = false;
+    [Obsolete]
     private void Start()
     {
+        multimeter = GameObject.FindObjectOfType<Elec_Multimeter>();
         ourGridNode= GetComponent<Elec_GridNode>();
+        interactor = GetComponent<XRBaseInteractor>();
+        interactor.onSelectEntered.AddListener(ReceiveVoltageFromCable);
+        interactor.onSelectExited.AddListener(UnconnectedWire);
     }
 
     private void Update()
     {
-        if (ourGridNode)
-        {
             if (hasFinished == false)
             {
-                if (ourGridNode.currentVoltage == goalVoltage)
+                if (ourGridNode.currentVoltage == goalVoltage && GoalReached)
                 {
-                    if (GetComponent<XRSocketInteractor>().hasSelection == true)
-                    {
-                        OnFinish.Invoke();
-                        hasFinished = true;
-                    }
+                    OnFinish.Invoke();
+                    hasFinished = true;
+                }
+                else if (GoalReached)
+                {
+                    OnFinish.Invoke();
+                    hasFinished = true;
                 }
             }
             else
             {
                 if (ourGridNode.currentVoltage != goalVoltage) hasFinished = false;
+            }   
+    }
+    public void OnTriggerStay(Collider other)
+    {   
+        if (ourGridNode.ElectricityIsOn)
+        {
+            if(other.gameObject.GetComponent<Elec_Multimeter>() != null) 
+            {         
+                multimeter.VoltageMusltimeter = goalVoltage;
+            }
+            else if (other.tag == "StickyMultiMeter")
+            {
+                if (multimeter != null) { multimeter.StickyVoltage = goalVoltage; }
             }
         }
-    }
-
-    public void WireConnected()
-    {
-        Debug.Log("WireConnected called");
-        if (wireEnd.WireEndVolt.voltage == ourGridNode.ourVoltage.voltage)
-        {
-            //OnFinish.BulbEnablee();
-            Debug.Log("Bulb was lit on");
-        }
-    }
-    public void WireDisconnected()
-    {
-        wireEnd = null;
-       // OnFinish.BulbDisable();
-    }
-    public void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.GetComponent<Elec_WireEnds>() != null) 
-        {
-            wireEnd = other.gameObject.GetComponent<Elec_WireEnds>();
-        }
-        else if(other.gameObject.GetComponent<Elec_Multimeter>() != null) 
-        {
-            multimeter = other.gameObject.GetComponent<Elec_Multimeter>();
-            multimeter.VoltageMusltimeter = ourGridNode.ourVoltage.voltage;
-        }
-        else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
-        {
-            multimeterSticky = other.gameObject.GetComponent <Elev_MultimeterSticky>();
-            multimeter.StickyVoltage = ourGridNode.ourVoltage.voltage;
-        }
+   
     }
     public void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.GetComponent<Elec_WireEnds>() != null)
-        {
-            wireEnd = null;
-        }
-        else if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
+       if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
         {
             multimeter.VoltageMusltimeter = 0;
         }
-        else if (other.gameObject.GetComponent<Elev_MultimeterSticky>() != null)
+        else if (other.tag == "StickyMultiMeter")
         {
             multimeter.StickyVoltage = 0;
         }
     }
+    void ReceiveVoltageFromCable(XRBaseInteractable Staple)
+    {
+        if (Staple.GetComponent<Elec_StapleMakeStick>().SpoolItIsON.Voltage_Send() == goalVoltage)
+        {
+            GoalReached = true;
+            Staple.GetComponent<Elec_StapleMakeStick>().SpoolItIsON.DisableWireSafely();
+            LineRenderer temp = Staple.GetComponent<Elec_StapleMakeStick>().SpoolItIsON.GetComponent<LineRenderer>();
+            temp.SetPosition(temp.positionCount - 1,interactor.attachTransform.transform.position);
+            ourGridNode.ourManager.LinesCompleted++;
+        }   
+    }
+    void UnconnectedWire(XRBaseInteractable Staple)
+    {
+        GoalReached = false;
+    }
+
 }

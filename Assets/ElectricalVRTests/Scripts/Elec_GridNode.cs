@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Unity.XR.CoreUtils;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 public class Elec_GridNode : MonoBehaviour
 {
@@ -20,16 +23,26 @@ public class Elec_GridNode : MonoBehaviour
     public bool LockVoltage = false;
     public Dictionary<GameObject,int> ReceivedVoltagesATM;
     public bool currentAvailability = false;
-
-    public int goalVoltage = 0;
-
+    Renderer ChildrenMaterial;
+    public int goalVoltage = 0; //Elec_FinishOutlet checks this value
+    private int resetVoltage = 0;
+    public bool ElectricityIsOn = false;
+    public UnityEvent Electricute;
+    public AudioClip Pop;
+    public bool NodesResetting = false;
+    ParticleSystem Confetti;
     private void Awake()
     {
         ourVoltage = new Elec_Voltage(StartWithVoltage);
         currentVoltage = StartWithVoltage;
+        resetVoltage = StartWithVoltage;
         ReceivedVoltagesATM = new Dictionary<GameObject,int>();
         if (ourXRSocketInteractor == null) ourXRSocketInteractor = GetComponent<XRSocketInteractor>();
         currentAvailability = ourXRSocketInteractor.socketActive;
+        ChildrenMaterial = GetComponentInChildren<MeshRenderer>();
+        if (!currentAvailability && GetComponent<Elec_FinishOutlet>() == null) ChildrenMaterial.material.color = Color.red;
+        else if(GetComponent<Elec_FinishOutlet>() != null) ChildrenMaterial.material.color = Color.blue;
+        Confetti = GetComponent<ParticleSystem>();
     }
     public Elec_GridNode returnNode(direction toRetrieve)
     {
@@ -55,6 +68,20 @@ public class Elec_GridNode : MonoBehaviour
         searchForNode(distancetoNode, direction.left);
         searchForNode(distancetoNode, direction.right);
     }
+
+    [ContextMenu("DEBUG_RESET")]
+    public void Reset()
+    {
+        gameObject.SetActive(true);
+        gameObject.GetNamedChild("Plane").SetActive(true);
+        ourManager.PluggedNodes.Remove(this);
+
+        ReceivedVoltagesATM.Clear();
+        currentVoltage = resetVoltage;
+        ourVoltage.voltage = resetVoltage;
+        if (gameObject.activeSelf) StartCoroutine(DisableTempor());
+    }
+
     private void searchForNode(float distancetoNode, direction setDirection)
     {
         Vector3 searchPosition = transform.localPosition;
@@ -116,6 +143,8 @@ public class Elec_GridNode : MonoBehaviour
                 break;
         }
     }
+
+    [System.Obsolete]
     private void Start()
     {
         if (ourXRSocketInteractor == null)
@@ -127,15 +156,24 @@ public class Elec_GridNode : MonoBehaviour
     }
     public void SomethingEnters(XRBaseInteractable ref_interactable)
     {
+        if (ElectricityIsOn)
+        {
+            Electricute.Invoke();
+        }
         IVoltage foundIVoltage;
         if (ref_interactable.gameObject.TryGetComponent<IVoltage>(out foundIVoltage))
         {
+            if (LockVoltage)
+            {
+                ref_interactable.GetComponent<IVoltage>().Voltage_Receive(currentVoltage);    
+            }       
             if (ReceivedVoltagesATM.ContainsKey(ref_interactable.gameObject) == false) ReceivedVoltagesATM.Add(ref_interactable.gameObject, foundIVoltage.Voltage_Send());
             UpdateVoltage(true);
         }
+        ourManager.PluggingNode(this); //26.1 to disable previous neighbour nodes
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (currentVoltage > 0) UpdateAvailability(true);
         else UpdateAvailability(false);
@@ -149,32 +187,61 @@ public class Elec_GridNode : MonoBehaviour
             if(ReceivedVoltagesATM.ContainsKey(ref_interactable.gameObject)) ReceivedVoltagesATM.Remove(ref_interactable.gameObject);
             UpdateVoltage(true);
         }
+        ref_interactable.GetComponent<Rigidbody>().isKinematic = false;
+            
     }
     public void UpdateAvailability(bool state)
     {
         if (state == currentAvailability) return;
         ourXRSocketInteractor.socketActive = state;
         currentAvailability = state;
+        if (ChildrenMaterial != null)
+        {
+            if (GetComponent<Elec_FinishOutlet>()) ChildrenMaterial.material.color = Color.blue;
+            else if (state) ChildrenMaterial.material.color = Color.green;
+            else if (!state) ChildrenMaterial.material.color = Color.red;
+        }
+        
+
     }
 
     public void TakeNeighbourVoltage(GameObject toReceiveFrom, int VoltageToReceive)
     {
-        if(ReceivedVoltagesATM.ContainsKey(toReceiveFrom) == false) ReceivedVoltagesATM.Add(toReceiveFrom,VoltageToReceive);
-        else
-        {
-            if (ReceivedVoltagesATM[toReceiveFrom] < VoltageToReceive) ReceivedVoltagesATM[toReceiveFrom] = VoltageToReceive;
-        }
-        UpdateVoltage(false);
+            if (ReceivedVoltagesATM.ContainsKey(toReceiveFrom) == false) ReceivedVoltagesATM.Add(toReceiveFrom,VoltageToReceive);
+            else
+            {
+                if (ReceivedVoltagesATM[toReceiveFrom] < VoltageToReceive) ReceivedVoltagesATM[toReceiveFrom] = VoltageToReceive;
+            }
+            UpdateVoltage(false); 
     }
     public void RemoveNeighbourVoltage(GameObject RemoveFrom)
     {
         if(ReceivedVoltagesATM.ContainsKey(RemoveFrom))ReceivedVoltagesATM.Remove(RemoveFrom);
         UpdateVoltage(true);
     }
+
+    public void RemoveVoltageFromNeighbours()
+    {
+        if (goalVoltage != 0) return;
+        neighbour_up?.RemoveVoltage();
+        neighbour_down?.RemoveVoltage();
+        neighbour_left?.RemoveVoltage();
+        neighbour_right?.RemoveVoltage();
+    }
+
+    public void RemoveVoltage()
+    {
+        if (ourManager.PluggedNodes.Contains(this)) return;
+        else
+        {
+            ReceivedVoltagesATM.Clear();
+            UpdateVoltage(false);
+        }    
+    }
     public void UpdateVoltage(bool SendToNeighbours)
     {
+        if (NodesResetting) return;
         int highestvoltage = 0;
-
         if (ReceivedVoltagesATM.Count == 0) highestvoltage = 0;
         else
         {
@@ -188,13 +255,33 @@ public class Elec_GridNode : MonoBehaviour
             ourVoltage.voltage = highestvoltage;
 
         }
-        if(SendToNeighbours)
+        if(SendToNeighbours && goalVoltage == 0)
         {
-            neighbour_up?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
-            neighbour_down?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
-            neighbour_left?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
-            neighbour_right?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
+                neighbour_up?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
+                neighbour_down?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
+                neighbour_left?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);
+                neighbour_right?.TakeNeighbourVoltage(gameObject, ourVoltage.voltage);    
         }
         currentVoltage = ourVoltage.voltage;
+    }
+    public IEnumerator DisableTempor()
+    {
+        ourXRSocketInteractor.enabled = false;
+        yield return new WaitForSeconds(3);
+        ourXRSocketInteractor.enabled = true;
+    }
+    public void StartExlosive(int time)
+    {
+        StartCoroutine(Explode(time));
+    }
+    IEnumerator Explode(float time)
+    {
+        yield return new WaitForSeconds(time / ourManager.Spawned_Nodes.Count);
+        ourManager.PopSound.pitch = UnityEngine.Random.Range(0.75f, 1.25f);
+        ourManager.PopSound.PlayOneShot(Pop);
+        Confetti.Play();
+        ourXRSocketInteractor.enabled = false;
+        yield return new WaitForSeconds(1f);
+        gameObject.SetActive(false);
     }
 }
