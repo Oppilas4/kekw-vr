@@ -7,24 +7,37 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class StoveDial : MonoBehaviour
 {
     [SerializeField] Transform linkedDial;
+    [SerializeField] private Axis rotationAxis = Axis.Z;
     [SerializeField] private int snapRotationAmount = 25;
     [SerializeField] private float angleTolerance;
+    [SerializeField] private bool limitRotation = false;  // New field for enabling/disabling rotation limitation
+    [SerializeField] private float maxRotationAngle = 90f;  // New field for rotation limit
+    [SerializeField] private bool restrictAntiClockwise = false;  // New field for restricting anticlockwise rotation
 
     private XRBaseInteractor interactor;
     private float startAngle;
     private bool requiresStartAngle = true;
     private bool shouldGetHandRotation = false;
+    private Quaternion originalRotation;  // New class variable to store the original rotation
     private XRGrabInteractable grabInteractor => GetComponent<XRGrabInteractable>();
 
     private void OnEnable()
     {
         grabInteractor.selectEntered.AddListener(GrabbedBy);
         grabInteractor.selectExited.AddListener(GrabEnd);
+
+        originalRotation = linkedDial.localRotation;
     }
     private void OnDisable()
     {
         grabInteractor.selectEntered.RemoveListener(GrabbedBy);
         grabInteractor.selectExited.RemoveListener(GrabEnd);
+    }
+    public enum Axis
+    {
+        X,
+        Y,
+        Z
     }
 
     private void GrabEnd(SelectExitEventArgs arg0)
@@ -122,21 +135,58 @@ public class StoveDial : MonoBehaviour
 
     private void RotateDialClockwise()
     {
-        linkedDial.localEulerAngles = new Vector3(linkedDial.localEulerAngles.x,
-                                                  linkedDial.localEulerAngles.y,
-                                                  linkedDial.localEulerAngles.z + snapRotationAmount);
+        // Check for rotation limit
+        if (limitRotation)
+        {
+            float clampedAngle = Mathf.Clamp(linkedDial.localEulerAngles[(int)rotationAxis] + snapRotationAmount, 0f, maxRotationAngle);
+            linkedDial.localEulerAngles = GetEulerAnglesWithAxis(clampedAngle);
+        }
+        else
+        {
+            linkedDial.localEulerAngles = GetEulerAnglesWithAxis(linkedDial.localEulerAngles[(int)rotationAxis] + snapRotationAmount);
+        }
 
         if (TryGetComponent<IDial>(out IDial dial))
-            dial.DialChanged(linkedDial.localEulerAngles.z);
+            dial.DialChanged(linkedDial.localEulerAngles[(int)rotationAxis]);
     }
 
     private void RotateDialAntiClockwise()
     {
-        linkedDial.localEulerAngles = new Vector3(linkedDial.localEulerAngles.x,
-                                                  linkedDial.localEulerAngles.y,
-                                                  linkedDial.localEulerAngles.z - snapRotationAmount);
+        // Check for rotation limit
+        if (limitRotation)
+        {
+            float clampedAngle = Mathf.Clamp(linkedDial.localEulerAngles[(int)rotationAxis] - snapRotationAmount, 0f, maxRotationAngle);
+
+            // Check for restricting anticlockwise rotation
+            if (restrictAntiClockwise && clampedAngle > linkedDial.localEulerAngles[(int)rotationAxis])
+                clampedAngle = linkedDial.localEulerAngles[(int)rotationAxis];
+
+            linkedDial.localEulerAngles = GetEulerAnglesWithAxis(clampedAngle);
+        }
+        else
+        {
+            float newAngle = linkedDial.localEulerAngles[(int)rotationAxis] - snapRotationAmount;
+
+            // Check for restricting anticlockwise rotation
+            if (restrictAntiClockwise && newAngle > linkedDial.localEulerAngles[(int)rotationAxis])
+                newAngle = linkedDial.localEulerAngles[(int)rotationAxis];
+
+            linkedDial.localEulerAngles = GetEulerAnglesWithAxis(newAngle);
+        }
 
         if (TryGetComponent<IDial>(out IDial dial))
-            dial.DialChanged(linkedDial.localEulerAngles.z);
+            dial.DialChanged(linkedDial.localEulerAngles[(int)rotationAxis]);
     }
+
+
+    // Helper method to construct Vector3 with updated axis value
+    private Vector3 GetEulerAnglesWithAxis(float updatedValue)
+    {
+        Vector3 eulerAngles = linkedDial.localEulerAngles;
+        eulerAngles[(int)rotationAxis] = updatedValue;
+        return eulerAngles;
+    }
+
+
+
 }

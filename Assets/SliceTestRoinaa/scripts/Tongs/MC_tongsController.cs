@@ -3,31 +3,65 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
-using UnityEngine.Animations;
 
 public class MC_tongsController : MonoBehaviour
 {
-    private XRGrabInteractable grabbable;
     public InputActionProperty rightTriggerValue;
     public InputActionProperty leftTriggerValue;
     private Animator tongsAnimator;
-    public float grabDistance = 0.1f; // Adjust the distance to your needs
+    public float grabDistance = 0.11f; // Adjust the distance to your needs
     private XRGrabInteractable grabbedObject;
     public Transform grabLocation;
+
+    private XRGrabInteractable grabInteractor => GetComponent<XRGrabInteractable>();
+    private bool isGrabbed = false;
+
+    void OnEnable()
+    {
+        grabInteractor.selectEntered.AddListener(OnGrabStart);
+        grabInteractor.selectExited.AddListener(OnGrabEnd);
+    }
+
+    void OnDisable()
+    {
+        grabInteractor.selectEntered.RemoveListener(OnGrabStart);
+        grabInteractor.selectExited.RemoveListener(OnGrabEnd);
+    }
+
+    // Callback when the tongs are grabbed
+    private void OnGrabStart(SelectEnterEventArgs args)
+    {
+        isGrabbed = true;
+        // Perform any setup needed when the tongs are grabbed
+    }
+
+    // Callback when the tongs are released
+    private void OnGrabEnd(SelectExitEventArgs args)
+    {
+        isGrabbed = false;
+
+        // Check if there is an object currently being held
+        if (grabbedObject != null)
+        {
+            // Release the object by setting its parent to null and resetting its Rigidbody
+            ReleaseObject();
+            tongsAnimator.SetFloat("Close", 0f);
+        }
+    }
+
     void Start()
     {
-        grabbable = GetComponent<XRGrabInteractable>();
         tongsAnimator = GetComponent<Animator>();
     }
 
     void Update()
     {
         // Check if the tongs are being grabbed and either the right or left triggerValue property is valid
-        if (grabbable.isSelected)
+        if (isGrabbed)
         {
             float triggerAmount = 0f;
 
-            var interactor = grabbable.interactorsSelecting[0];
+            var interactor = grabInteractor.interactorsSelecting[0];
 
             if (interactor != null)
             {
@@ -44,8 +78,18 @@ public class MC_tongsController : MonoBehaviour
                 }
             }
 
-            // Set the "Close" parameter of the Animator based on the trigger input
-            tongsAnimator.SetFloat("Close", triggerAmount);
+            if (grabbedObject != null)
+            {
+                if (triggerAmount <= 0.5f)
+                {
+                    tongsAnimator.SetFloat("Close", triggerAmount);
+                }
+            }
+            else
+            {
+                // Set the "Close" parameter of the Animator based on the trigger input
+                tongsAnimator.SetFloat("Close", triggerAmount);
+            }
 
             // Check for grabbing objects
             if (triggerAmount > 0f)
@@ -73,37 +117,25 @@ public class MC_tongsController : MonoBehaviour
                     // Grab the interactable using the XRGrabInteractable's Grab method
                     grabbedObject = interactable;
 
-                    // Add a Parent Constraint component to the grabbed object
-                    ParentConstraint parentConstraint = grabbedObject.gameObject.AddComponent<ParentConstraint>();
-                    // Add the grab location as the source of the constraint
-                    ConstraintSource constraintSource = new ConstraintSource();
-                    constraintSource.sourceTransform = grabLocation;
-                    constraintSource.weight = 1;
-                    parentConstraint.AddSource(constraintSource);
-                    parentConstraint.constraintActive = true;
+                    // Get the Rigidbody of the grabbed object
+                    Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        // Set the Rigidbody to kinematic to prevent physics interactions while grabbed
+                        rb.isKinematic = true;
+                    }
 
-                    // Enable the constraint
-                    parentConstraint.enabled = true;
+                    // Parent the grabbed object to the tongs
+                    grabbedObject.transform.parent = transform;
                 }
             }
         }
     }
 
-
-
     void ReleaseObject()
     {
         if (grabbedObject != null)
         {
-            // Get the ParentConstraint from the grabbed object
-            ParentConstraint parentConstraint = grabbedObject.gameObject.GetComponent<ParentConstraint>();
-
-            // If the ParentConstraint exists, remove it
-            if (parentConstraint != null)
-            {
-                Destroy(parentConstraint);
-            }
-
             // Reset the parent of the grabbed object.
             grabbedObject.transform.parent = null;
 
@@ -111,17 +143,13 @@ public class MC_tongsController : MonoBehaviour
             Rigidbody rb = grabbedObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
+                rb.isKinematic = false;
                 rb.velocity = Vector3.zero;
             }
 
             grabbedObject = null;
         }
     }
-
-
-
-
-
 
     // Visualize the raycast in the Scene view
     void OnDrawGizmos()

@@ -40,11 +40,12 @@ public class SliceObject : MonoBehaviour
 
         if (hull != null)
         {
-            GameObject upperHull = hull.CreateUpperHull(target);
             VegetableController vegetableController = GetVegetableController(target);
+            Material insideMaterial = vegetableController.vegetableData.insideMaterial;
+            GameObject upperHull = hull.CreateUpperHull(target, insideMaterial);
             SetupSlicedComponent(upperHull, vegetableController);
 
-            GameObject lowerHull = hull.CreateLowerHull(target);
+            GameObject lowerHull = hull.CreateLowerHull(target, insideMaterial);
             SetupSlicedComponent(lowerHull, vegetableController);
 
             Destroy(target);
@@ -81,14 +82,9 @@ public class SliceObject : MonoBehaviour
             // Add the vegetableController to the sliced object
             VegetableController slicedVegetableController = slicedObject.AddComponent<VegetableController>();
 
-            // Use the existing GetVegetableName method to set the vegetable name
-            string vegetableName = vegetableController.GetVegetableName();
+            slicedVegetableController.vegetableData = vegetableController.vegetableData;
 
-            // Instantiate a new VegetableData using ScriptableObject.CreateInstance
-            slicedVegetableController.vegetableData = ScriptableObject.CreateInstance<VegetableData>();
-            slicedVegetableController.vegetableData.vegetableName = vegetableName;
-
-            slicedObject.tag = vegetableName;
+            slicedObject.tag = slicedVegetableController.vegetableData.vegetableName;
         }
     }
 
