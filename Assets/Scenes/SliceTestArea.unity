@@ -626,6 +626,7 @@ GameObject:
   - component: {fileID: 61344524}
   - component: {fileID: 61344523}
   - component: {fileID: 61344525}
+  - component: {fileID: 61344526}
   m_Layer: 13
   m_Name: LidTrigger
   m_TagString: Untagged
@@ -646,6 +647,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2059679302}
+  - {fileID: 221004324}
   m_Father: {fileID: 543450653636506908}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -697,7 +699,7 @@ MonoBehaviour:
   m_OnSelectExited:
     m_PersistentCalls:
       m_Calls: []
-  m_ShowInteractableHoverMeshes: 1
+  m_ShowInteractableHoverMeshes: 0
   m_InteractableHoverMeshMaterial: {fileID: 0}
   m_InteractableCantHoverMeshMaterial: {fileID: 0}
   m_SocketActive: 1
@@ -714,8 +716,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.2865184, y: 0.04465568, z: 0.28373203}
-  m_Center: {x: 0, y: 0.24263734, z: -0.02339153}
+  m_Size: {x: 0.2865184, y: 0.05046743, z: 0.23563091}
+  m_Center: {x: 0, y: 0.23407352, z: 0.0006590262}
 --- !u!114 &61344525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -729,6 +731,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lidCollider: {fileID: 8197709018808441022}
+--- !u!114 &61344526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61344521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc2779e588cccb44db41e008e3ea1923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightHandAttachTransform: {fileID: 2059679302}
+  leftHandAttachTransform: {fileID: 221004324}
+  grabInteractable: {fileID: 8197709018808441023}
 --- !u!1 &76959606
 GameObject:
   m_ObjectHideFlags: 0
@@ -1334,6 +1351,37 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.047804847, y: 0.23602846, z: 0.005183891}
   m_Center: {x: 0.023622902, y: 0.11806069, z: 0.1306571}
+--- !u!1 &221004323
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 221004324}
+  m_Layer: 13
+  m_Name: LSocketAttachPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &221004324
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221004323}
+  m_LocalRotation: {x: 0.23413819, y: -0.1015129, z: -0.6145744, w: 0.7464401}
+  m_LocalPosition: {x: 0.034299944, y: 0.2787, z: -0.016199945}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 61344522}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 12.989, y: -26.8, z: -82.039}
 --- !u!1 &228554020
 GameObject:
   m_ObjectHideFlags: 0
@@ -7947,6 +7995,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWaterOn: 0
   waterParticles: {fileID: 613748208}
+  OnWaterStatusChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &594751981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18208,7 +18259,7 @@ MonoBehaviour:
   m_OnSelectExited:
     m_PersistentCalls:
       m_Calls: []
-  m_ShowInteractableHoverMeshes: 1
+  m_ShowInteractableHoverMeshes: 0
   m_InteractableHoverMeshMaterial: {fileID: 0}
   m_InteractableCantHoverMeshMaterial: {fileID: 0}
   m_SocketActive: 1
@@ -19550,7 +19601,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2059679302}
   m_Layer: 13
-  m_Name: AttachTransform
+  m_Name: RSocketAttachPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19563,14 +19614,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2059679301}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2633, z: 0}
+  m_LocalRotation: {x: 0.6943788, y: 0.37626263, z: -0.017416427, w: 0.61315674}
+  m_LocalPosition: {x: 0.0086, y: 0.2748, z: 0.0062}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 61344522}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 59.841, y: 119.51, z: 85.997}
 --- !u!1001 &2066325475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20222,6 +20273,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450653405163686}
+  - component: {fileID: 919132149483530781}
   m_Layer: 0
   m_Name: Sink (1)
   m_TagString: Untagged
@@ -20229,6 +20281,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &919132149483530781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149483530780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 099404039a18b6048853997bbbabbf2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterObject: {fileID: 7433795186616946837}
+  waterRenderer: {fileID: 0}
+  socket: {fileID: 1810466170}
+  plug: {fileID: 8853694800578249575}
+  maxWaterLevel: 1
+  waterFillSpeed: 0.1
+  waterDrainSpeed: 0.1
 --- !u!23 &1646625734729062259
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -21313,8 +21384,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7433795186616946837}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0.026116, y: -0.002, z: 0.012489}
-  m_LocalScale: {x: 97.24863, y: 97.24862, z: 97.24862}
+  m_LocalPosition: {x: -0.013, y: -0.0011, z: 0.007}
+  m_LocalScale: {x: 98.67459, y: 98.67458, z: 98.67458}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 543450653405163686}
@@ -21369,8 +21440,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.29772002, y: 0.035997987, z: 0.3023128}
-  m_Center: {x: 0.00091392547, y: 0.25252476, z: 0.000672102}
+  m_Size: {x: 0.29772002, y: 0.06577939, z: 0.3023128}
+  m_Center: {x: 0.000913918, y: 0.2674155, z: 0.000672102}
 --- !u!114 &8197709018808441023
 MonoBehaviour:
   m_ObjectHideFlags: 0
