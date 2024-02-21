@@ -23,6 +23,19 @@ namespace EzySlice {
 
         public GameObject CreateUpperHull(GameObject original, Material crossSectionMat) {
             GameObject newObject = CreateUpperHull();
+            if (original.TryGetComponent(out Cloth cloth))
+            {
+                newObject.AddComponent<SkinnedMeshRenderer>();
+                var otherCloth = newObject.AddComponent<Cloth>();
+                ComponentExtensions.GetCopyOf(cloth, otherCloth);
+                otherCloth.coefficients = cloth.coefficients;
+                foreach (var item in cloth.coefficients)
+                {
+                    Debug.Log(item);
+                }
+                otherCloth.enabled = false;
+                otherCloth.enabled = true;
+            }
 
             if (newObject != null) {
                 newObject.transform.localPosition = original.transform.localPosition;
@@ -60,8 +73,26 @@ namespace EzySlice {
             return CreateLowerHull(original, null);
         }
 
+        void CopyComponent(Component original, GameObject destination)
+        {
+            System.Type type = original.GetType();
+            Component copy = destination.AddComponent(type);
+            // Copied fields can be restricted with BindingFlags
+            System.Reflection.FieldInfo[] fields = type.GetFields();
+            Debug.Log(fields.Length);
+
+            foreach (System.Reflection.FieldInfo field in fields)
+            {
+                Debug.Log(field);
+                field.SetValue(copy, field.GetValue(original));
+            }
+        }
+
         public GameObject CreateLowerHull(GameObject original, Material crossSectionMat) {
             GameObject newObject = CreateLowerHull();
+            newObject.AddComponent<SkinnedMeshRenderer>();
+            newObject.AddComponent<Cloth>();
+            
 
             if (newObject != null) {
                 newObject.transform.localPosition = original.transform.localPosition;
