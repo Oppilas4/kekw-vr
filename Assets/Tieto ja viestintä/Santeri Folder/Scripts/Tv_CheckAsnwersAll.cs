@@ -142,4 +142,10 @@ public class Tv_CheckAsnwersAll : MonoBehaviour
             }
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
+
 }

@@ -5,23 +5,30 @@ using UnityEngine;
 public class Jami_Laser_Lifetime : MonoBehaviour
 {
     public float lifetime = 3f;
-    // Start is called before the first frame update
+    Tv_EnemySpawner spawner;
+    bool somali;
     void Start()
     {
+        somali = false;
         Destroy(this.gameObject, lifetime);
+        spawner = GameObject.Find("EnemySpawner").GetComponent<Tv_EnemySpawner>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Jami_Enemy"))
-           
+    {      
         {
-            Destroy(collision.gameObject);
+            if (!somali)
+            {
+                if (collision.gameObject.CompareTag("Jami_Enemy"))
+
+                {
+                    spawner.KillEnemy();
+                    Destroy(collision.gameObject);
+                    Destroy(gameObject);
+                    somali = true;
+                }
+            }
+
         }
     }
 }
