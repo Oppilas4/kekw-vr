@@ -7,6 +7,12 @@ public class Tv_TheAnswerCube : MonoBehaviour
     public int id;
     public Tv_IdCheck check;
     public bool selected;
+    Vector3 resetTransform;
+
+    public void Start()
+    {
+       resetTransform = gameObject.transform.position;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -31,5 +37,11 @@ public class Tv_TheAnswerCube : MonoBehaviour
                  selected = false;
             }
         }
+    }
+
+    public void ResetAnwsers()
+    {
+        selected = false;
+        gameObject.transform.position = resetTransform;
     }
 }
