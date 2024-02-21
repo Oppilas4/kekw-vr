@@ -28,7 +28,7 @@ public class MC_ReduceGrabDistance : MonoBehaviour
             // If a SphereCollider is found, reduce its radius
             if (sphereCollider != null)
             {
-                sphereCollider.radius = 0.05f;
+                sphereCollider.radius = 0.07f;
             }
         }
     }
