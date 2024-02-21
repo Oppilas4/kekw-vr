@@ -10,9 +10,12 @@ public class Tv_IdCheck : MonoBehaviour
 
     public void Check(int number)
     {
-        if (number == requiredID)
+        if(!hasCorrect)
         {
-            hasCorrect = true;
+            if (number == requiredID)
+            {
+                hasCorrect = true;
+            }
         }
     }
 }
