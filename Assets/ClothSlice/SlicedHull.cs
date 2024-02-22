@@ -58,18 +58,19 @@ namespace ClothSlice {
 			return newObject;
 		}
 
+
 		private void AddClothToObject(GameObject original, GameObject newObject)
 		{
 			var origCloth = original.GetComponent<Cloth>();
 			var newCloth = newObject.AddComponent<Cloth>();
+			newObject.AddComponent<Paintable>();
+			newObject.AddComponent<MeshCollider>();
+
 			var coefficients = newCloth.coefficients;
 
 			var maxZ = newCloth.vertices.Select(vert => vert.z).Max();
-			Debug.Log(maxZ);
-			
 			for (int i = 0; i < coefficients.Length; i++)
 			{
-				Debug.Log(newCloth.vertices[i]);
 				if (Math.Abs(newCloth.vertices[i].z - maxZ) < 0.01f)
 				{
 					coefficients[i].maxDistance = 0;
@@ -102,6 +103,9 @@ namespace ClothSlice {
 				// the the material information
 				newObject.GetComponent<Renderer>().sharedMaterials = shared;
 				newObject.AddComponent<Cloth>();
+				newObject.AddComponent<Paintable>();
+				newObject.AddComponent<MeshCollider>();
+
 				return newObject;
 			}
 
@@ -115,7 +119,10 @@ namespace ClothSlice {
 
 			// the the material information
 			newObject.GetComponent<Renderer>().sharedMaterials = newShared;
+			newObject.AddComponent<Paintable>();
 			newObject.AddComponent<Cloth>();
+			newObject.AddComponent<MeshCollider>();
+
 
 			return newObject;
 		}
