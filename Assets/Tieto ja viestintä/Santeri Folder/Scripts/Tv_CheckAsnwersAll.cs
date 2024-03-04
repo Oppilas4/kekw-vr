@@ -11,6 +11,7 @@ public class Tv_CheckAsnwersAll : MonoBehaviour
     [SerializeField] TMP_Text questionText;
     [SerializeField] Tv_TheAnswerCube[] AnswerOBJ;
     public XRSocketInteractor[] XRSocketInteractor;
+    public GameObject socketOBJ1, socketOBJ2;
     Vector3 socket1, socket2;
 
 
@@ -19,7 +20,17 @@ public class Tv_CheckAsnwersAll : MonoBehaviour
 
     bool buttonWorks = true;
 
-    
+    private void Start()
+    {
+        questionText.text = "Using UnityEnine;\r\n\r\npublic class Luo Esine : MonoBehavioura\r\n{\r\nEsine (           ) \r\n\r\nSijainti (          )\r\n \r\n}";
+
+        socket1 = new Vector3(-0.6569991f, 0.041f, 0.277f);
+        socket2 = new Vector3(-0.6569991f, -0.058f, 0.269f);
+
+        socketOBJ1.transform.localPosition = socket1;
+        socketOBJ2.transform.localPosition = socket2;
+    }
+
 
 
     private void OnTriggerEnter(Collider other)
@@ -58,17 +69,20 @@ public class Tv_CheckAsnwersAll : MonoBehaviour
           {
             
                 case 0:
-                    questionText.text = "Using UnityEnine;\r\n\r\nclass bla bla bla\r\n{\r\n  if(              )\r\n {\r\n\r\n\r\n}\r\n\r\n}";
+                    questionText.text = "Using UnityEnine;\r\n\r\npublic class Luo Esine : MonoBehavioura\r\n{\r\nEsine (           ) \r\n\r\nSijainti (          )\r\n \r\n}";
 
-                    //socket1 = new Vector3(0, 0, 0);
-                    //socket2 = new Vector3(0, 0, 0);
+                    socket1 = new Vector3(-0.6569991f, 0.041f, 0.277f);
+                    socket2 = new Vector3(-0.6569991f, -0.062f, 0.272f);
+
+                    socketOBJ1.transform.localPosition = socket1;
+                    socketOBJ2.transform.localPosition = socket2;
+
                     checkes[0].requiredID = 1;
                     checkes[1].requiredID = 2;
-                    //checkes[0].transform.position = socket1;
-                    //checkes[1].transform.position = socket2;
+
                     questionID++;
                     howManyNow = 0;
-
+                    Debug.Log("Eka");
                     break;
 
                 case 1:
@@ -77,28 +91,31 @@ public class Tv_CheckAsnwersAll : MonoBehaviour
 
                     socket1 = new Vector3(-0.6569991f, 0.018f, 0.2860771f);
                     socket2 = new Vector3(-0.6569991f, -0.123f, 0.3460771f);
+
+                    socketOBJ1.transform.localPosition = socket1;
+                    socketOBJ2.transform.localPosition = socket2;
+
                     checkes[0].requiredID = 3;
                     checkes[1].requiredID = 4;
-                    checkes[0].transform.position = socket1;
-                    checkes[1].transform.position = socket2;
 
-
-                    howManyNow = 0;
+                   
+                   howManyNow = 0;
                     questionID++;
 
                     break;
 
                 case 2:
 
-                    questionText.text = "Using UnityEnine;\r\n\r\nclass bla bla bla\r\n{\r\n  if(              )\r\n {\r\n\r\n\r\n}\r\n\r\n}";
+                    questionText.text = "Using UnityEnine;\r\n\r\npublic class VesiPyssy : MonoBehavioura\r\n{\r\n   if(                  )\r\n\r\n    {\r\n\r\n\r\n    }\r\n \r\n}";
 
-                    //socket1 = new Vector3(0, 0, 0);
-                    //socket2 = new Vector3(0, 0, 0);
-                    checkes[0].requiredID = 3;
-                    checkes[1].requiredID = 4;
-                    //checkes[0].transform.position = socket1;
-                    //checkes[1].transform.position = socket2;
+                    socket1 = new Vector3(-0.6569991f, 0.041f, 0.3f);
+                    socket2 = new Vector3(-0.6569991f, -0.134f, 0.332f);
 
+                    socketOBJ1.transform.localPosition = socket1;
+                    socketOBJ2.transform.localPosition = socket2;
+
+                    checkes[0].requiredID = 5;
+                    checkes[1].requiredID = 6;
 
                     howManyNow = 0;
                     questionID = 0;
@@ -141,11 +158,6 @@ public class Tv_CheckAsnwersAll : MonoBehaviour
                 questionSocket.socketActive = true;
             }
         }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        
     }
 
 }
