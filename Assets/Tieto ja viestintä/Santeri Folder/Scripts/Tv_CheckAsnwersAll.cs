@@ -135,6 +135,7 @@ public class Tv_CheckAsnwersAll : MonoBehaviour
         {
             if (answerObj != null)
             {
+                
                 answerObj.ResetAnwsers();
             }
         }

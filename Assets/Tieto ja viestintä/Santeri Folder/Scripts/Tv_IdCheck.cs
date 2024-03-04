@@ -19,33 +19,26 @@ public class Tv_IdCheck : MonoBehaviour
     {
         mySocket = GetComponent<XRSocketInteractor>();
     }
-    private void Update()
-    {
-        
-       
-
-    }
+   
     public void Check(int number)
     {
-        if(!hasCorrect)
-        {
-            if (number == requiredID)
+        
+        
+        if (number == requiredID)
             {
                 hasCorrect = true;
                 Debug.Log("OIKEIN");
             }
-        }
+        
 
-        else if (hasCorrect)
+        else 
         {
             if (number != requiredID)
             {
                 hasCorrect = false;
-                Debug.Log("VÄÄRIN");
-                
+                Debug.Log("VÄÄRIN");     
             }
         }
-
     }
 
     /*private void OnTriggerEnter(Collider other)
