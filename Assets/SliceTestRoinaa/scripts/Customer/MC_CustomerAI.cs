@@ -1,21 +1,26 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.AI;
 
 public class MC_CustomerAI : MonoBehaviour
 {
     private NavMeshAgent navAgent;
     private MC_SeatManager seatManager;
+    private CustomerController customerController;
 
     private Transform targetSeat;
 
     private float timeInRestaurant = 0f;
-    private bool isLeaving = false;
+    public bool orderPlaced = false;
+    private bool leaving = false;
     private float distanceThreshold = 0.1f; // Adjust this threshold as needed
 
     void Start()
     {
         navAgent = GetComponent<NavMeshAgent>();
         seatManager = FindObjectOfType<MC_SeatManager>();
+        customerController = GetComponent<CustomerController>();
 
         // Check if the required components are present
         if (navAgent == null || seatManager == null)
@@ -31,17 +36,20 @@ public class MC_CustomerAI : MonoBehaviour
 
     private void Update()
     {
-        // Increment the time spent in the restaurant
-        timeInRestaurant += Time.deltaTime;
+        if(orderPlaced)
+        {
+            // Increment the time spent in the restaurant
+            timeInRestaurant += Time.deltaTime;
+        }
+        
 
-        // Check if it's time to leave (5 seconds)
-        if (timeInRestaurant >= 15f && navAgent.remainingDistance < distanceThreshold && !isLeaving)
+        // Check if it's time to leave (60 seconds)
+        if (timeInRestaurant >= 60f && navAgent.remainingDistance < distanceThreshold && orderPlaced && !leaving)
         {
             LeaveRestaurant();
-            timeInRestaurant = 0;
         }
 
-        if (isLeaving && navAgent.remainingDistance < distanceThreshold && timeInRestaurant >= 5f)
+        if (orderPlaced && navAgent.remainingDistance < distanceThreshold && timeInRestaurant >= 65f)
         {
             // The agent has reached its destination, destroy the GameObject
             Destroy(gameObject);
@@ -56,6 +64,9 @@ public class MC_CustomerAI : MonoBehaviour
         {
             // Move the customer to the open seat
             navAgent.SetDestination(targetSeat.position);
+
+            // Link the customer to the seat
+            seatManager.LinkCustomerToSeat(targetSeat, customerController);
         }
         else
         {
@@ -67,11 +78,14 @@ public class MC_CustomerAI : MonoBehaviour
 
     void LeaveRestaurant()
     {
-        isLeaving = true;
+        leaving = true;
         Vector3 entranceLocation = seatManager.ReturnEntrance();
         // Ensure that the seat being returned is a valid seat
         if (seatManager.seatToWaitingPosition.ContainsKey(targetSeat))
         {
+            // Remove the customer's association from the seat
+            seatManager.linkSeatAndCustomer.Remove(targetSeat);
+
             seatManager.AddSeat(targetSeat);
         }
         else

@@ -4,6 +4,7 @@ public class CustomerController : MonoBehaviour
 {
     private Customer customer;
     private OrderManager orderManager;
+    public MC_CustomerAI customerAI;
 
     void Update()
     {
@@ -25,6 +26,7 @@ public class CustomerController : MonoBehaviour
     {
         if (customer.currentOrder == null)
         {
+            customerAI.orderPlaced = true;
             orderManager.GenerateRandomOrder(customer);
             Debug.Log($"Customer {customer.customerId} placed an order: {customer.currentOrder.dishName} - Expiration Time: {customer.currentOrder.expirationTime}");
         }

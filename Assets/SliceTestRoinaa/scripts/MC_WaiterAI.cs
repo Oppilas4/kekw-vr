@@ -5,8 +5,11 @@ using UnityEngine.AI;
 
 public class MC_WaiterAI : MonoBehaviour
 {
+    private MC_SeatManager seatManager;
+
     public Transform waiterArea;
     public List<Transform> currentCustomers = new List<Transform>();
+    public List<Transform> customerSeats = new List<Transform>();
 
     public float orderPromptTime = 2f; // Time to prompt the order (replace with your desired value)
 
@@ -17,6 +20,7 @@ public class MC_WaiterAI : MonoBehaviour
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        seatManager = FindAnyObjectByType<MC_SeatManager>();
         currentTask = Task.None;
         StartCoroutine(WaitForNewTask());
     }
@@ -34,6 +38,7 @@ public class MC_WaiterAI : MonoBehaviour
     private void HandleSeatTaken(Transform seatTransform, Transform waitingPosition)
     {
         currentCustomers.Add(waitingPosition);
+        customerSeats.Add(seatTransform);
     }
 
     private IEnumerator WaitForNewTask()
@@ -80,8 +85,22 @@ public class MC_WaiterAI : MonoBehaviour
                     yield return null;
                 }
 
-                // Arrived at the customer's table, take the order
+                // Arrived at the customer's table, retrieve the CustomerController
+                Transform customerSeat = customerSeats[0];
                 currentCustomers.RemoveAt(0);
+                customerSeats.RemoveAt(0);
+                CustomerController customerController = null;
+                if (seatManager.linkSeatAndCustomer.TryGetValue(customerSeat, out customerController))
+                {
+                    // Now you have access to the CustomerController
+                    // Call the PlaceOrder method
+                    customerController.PlaceOrder();
+                }
+                else
+                {
+                    Debug.LogWarning("No customer controller found for seat: " + customerSeat);
+                }
+
                 currentTask = Task.TakeOrder;
                 break;
 

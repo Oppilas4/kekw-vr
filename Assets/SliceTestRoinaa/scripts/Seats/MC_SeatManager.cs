@@ -5,6 +5,7 @@ using UnityEngine;
 public class MC_SeatManager : MonoBehaviour
 {
     public Dictionary<Transform, Transform> seatToWaitingPosition = new Dictionary<Transform, Transform>();
+    public Dictionary<Transform, CustomerController> linkSeatAndCustomer = new Dictionary<Transform, CustomerController>();
     public List<Transform> seatPositions = new List<Transform>();
     public List<Transform> waitingPositions = new List<Transform>();
     public Transform entranceLocation;
@@ -19,6 +20,24 @@ public class MC_SeatManager : MonoBehaviour
         for (int i = 0; i < seatPositions.Count; i++)
         {
             seatToWaitingPosition.Add(seatPositions[i], waitingPositions[i]);
+        }
+    }
+
+    public void LinkCustomerToSeat(Transform seatTransform, CustomerController customer)
+    {
+        if (seatTransform != null && customer != null)
+        {
+            linkSeatAndCustomer[seatTransform] = customer;
+            // Debug: List everything in the dictionary
+            Debug.Log("Customer dictionary contents after linking:");
+            foreach (var entry in linkSeatAndCustomer)
+            {
+                Debug.Log($"Seat: {entry.Key}, Customer: {entry.Value}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Attempted to link a null seat or customer.");
         }
     }
 
@@ -72,5 +91,10 @@ public class MC_SeatManager : MonoBehaviour
     public Vector3 ReturnEntrance()
     {
         return entranceLocation.position;
+    }
+
+    public bool HasOpenSeats()
+    {
+        return seatPositions.Count > 0;
     }
 }

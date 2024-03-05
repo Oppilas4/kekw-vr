@@ -4,6 +4,7 @@ public class OrderInteraction : MonoBehaviour
 {
     public OrderManager orderManager;
     public GameObject customerPrefab; // Assign your customer prefab in the Inspector
+    public Transform spawnLocation;
 
     private int customerIdCounter = 1;
 
@@ -30,7 +31,7 @@ public class OrderInteraction : MonoBehaviour
 
     public void CreateCustomer()
     {
-        GameObject customerObject = Instantiate(customerPrefab);
+        GameObject customerObject = Instantiate(customerPrefab, spawnLocation.position, Quaternion.identity);
         Customer customer = new Customer(customerIdCounter++);
         customerObject.GetComponent<CustomerController>().Initialize(customer, orderManager);
 
