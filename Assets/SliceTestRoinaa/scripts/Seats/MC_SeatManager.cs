@@ -1,6 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+// Custom class to hold open seat and waiting position
+public class SeatInfo
+{
+    public Transform OpenSeat { get; set; }
+    public Transform WaitingPosition { get; set; }
+}
 
 public class MC_SeatManager : MonoBehaviour
 {
@@ -9,6 +17,9 @@ public class MC_SeatManager : MonoBehaviour
     public List<Transform> seatPositions = new List<Transform>();
     public List<Transform> waitingPositions = new List<Transform>();
     public Transform entranceLocation;
+
+    public List<Transform> tablePositions = new List<Transform>();
+    public Dictionary<Transform, Transform> waitingToTablePosition = new Dictionary<Transform, Transform>();
 
     // Define event for when a new seat is taken
     public delegate void SeatTakenEvent(Transform seatTransform, Transform waitingPosition);
@@ -21,19 +32,35 @@ public class MC_SeatManager : MonoBehaviour
         {
             seatToWaitingPosition.Add(seatPositions[i], waitingPositions[i]);
         }
+
+        for (int i = 0; i < tablePositions.Count; i++)
+        {
+            waitingToTablePosition.Add(waitingPositions[i], tablePositions[i]);
+        }
     }
+
+    public Transform GetTablePositionFromWaitingLocation(Transform waitingLocation)
+    {
+        // Check if the waiting location exists in the dictionary
+        if (waitingToTablePosition.TryGetValue(waitingLocation, out Transform tablePosition))
+        {
+            // Return the corresponding table position
+            return tablePosition;
+        }
+        else
+        {
+            // Handle the case when the waiting location is not found in the dictionary
+            Debug.LogWarning("Table position not found for waiting location: " + waitingLocation);
+            return null; // or another default value, depending on your requirements
+        }
+    }
+
 
     public void LinkCustomerToSeat(Transform seatTransform, CustomerController customer)
     {
         if (seatTransform != null && customer != null)
         {
             linkSeatAndCustomer[seatTransform] = customer;
-            // Debug: List everything in the dictionary
-            Debug.Log("Customer dictionary contents after linking:");
-            foreach (var entry in linkSeatAndCustomer)
-            {
-                Debug.Log($"Seat: {entry.Key}, Customer: {entry.Value}");
-            }
         }
         else
         {
@@ -41,7 +68,8 @@ public class MC_SeatManager : MonoBehaviour
         }
     }
 
-    public Transform GetOpenSeat()
+    // Modify the return type of GetOpenSeat to return SeatInfo
+    public SeatInfo GetOpenSeat()
     {
         if (seatPositions.Count > 0)
         {
@@ -54,10 +82,18 @@ public class MC_SeatManager : MonoBehaviour
                 // Remove the seat from the list
                 seatPositions.RemoveAt(0);
 
-                // Notify subscribers that a seat has been taken
-                OnSeatTaken?.Invoke(openSeat, seatToWaitingPosition[openSeat]);
+                // Create SeatInfo object to hold open seat and waiting position
+                SeatInfo seatInfo = new SeatInfo
+                {
+                    OpenSeat = openSeat,
+                    WaitingPosition = seatToWaitingPosition[openSeat]
+                };
 
-                return openSeat;
+                // Notify subscribers that a seat has been taken
+                OnSeatTaken?.Invoke(seatInfo.OpenSeat, seatInfo.WaitingPosition);
+
+                // Return SeatInfo object
+                return seatInfo;
             }
             else
             {
@@ -68,10 +104,10 @@ public class MC_SeatManager : MonoBehaviour
         {
             Debug.LogWarning("No open seats available!");
         }
-        return entranceLocation; // or some default value
+
+        // Return a default SeatInfo object or handle this case accordingly
+        return new SeatInfo { OpenSeat = entranceLocation, WaitingPosition = entranceLocation };
     }
-
-
 
     public void AddSeat(Transform seatTransform)
     {
@@ -86,7 +122,6 @@ public class MC_SeatManager : MonoBehaviour
             Debug.LogWarning("Attempted to add null seat back to the list.");
         }
     }
-
 
     public Vector3 ReturnEntrance()
     {

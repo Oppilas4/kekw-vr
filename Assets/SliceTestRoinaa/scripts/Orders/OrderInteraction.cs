@@ -38,12 +38,6 @@ public class OrderInteraction : MonoBehaviour
         Debug.Log($"Customer {customer.customerId} created.");
     }
 
-    // Call this function when a customer places an order
-    public void PlaceOrder(Customer customer)
-    {
-        orderManager.GenerateRandomOrder(customer);
-    }
-
     // Call this function when the chef completes an order
     public void CompleteOrder(int orderId)
     {

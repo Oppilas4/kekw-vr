@@ -17,6 +17,14 @@ public class MC_CustomerSpawner : MonoBehaviour
         StartCoroutine(SpawnCustomers());
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SpawnCustomer();
+        }
+    }
+
     private IEnumerator SpawnCustomers()
     {
         // Initial delay before spawning the first customer

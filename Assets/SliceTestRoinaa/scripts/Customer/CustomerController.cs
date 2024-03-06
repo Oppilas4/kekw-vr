@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CustomerController : MonoBehaviour
 {
-    private Customer customer;
+    public Customer customer;
     private OrderManager orderManager;
     public MC_CustomerAI customerAI;
 
@@ -27,7 +27,7 @@ public class CustomerController : MonoBehaviour
         if (customer.currentOrder == null)
         {
             customerAI.orderPlaced = true;
-            orderManager.GenerateRandomOrder(customer);
+            orderManager.GenerateRandomOrder(customer, customerAI.waitingPosition);
             Debug.Log($"Customer {customer.customerId} placed an order: {customer.currentOrder.dishName} - Expiration Time: {customer.currentOrder.expirationTime}");
         }
         else

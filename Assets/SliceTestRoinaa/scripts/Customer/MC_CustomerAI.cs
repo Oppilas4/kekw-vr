@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.AI;
 
 public class MC_CustomerAI : MonoBehaviour
@@ -10,6 +8,7 @@ public class MC_CustomerAI : MonoBehaviour
     private CustomerController customerController;
 
     private Transform targetSeat;
+    public Transform waitingPosition; // New variable to store the waiting position
 
     private float timeInRestaurant = 0f;
     public bool orderPlaced = false;
@@ -36,12 +35,11 @@ public class MC_CustomerAI : MonoBehaviour
 
     private void Update()
     {
-        if(orderPlaced)
+        if (orderPlaced)
         {
             // Increment the time spent in the restaurant
             timeInRestaurant += Time.deltaTime;
         }
-        
 
         // Check if it's time to leave (60 seconds)
         if (timeInRestaurant >= 60f && navAgent.remainingDistance < distanceThreshold && orderPlaced && !leaving)
@@ -58,7 +56,10 @@ public class MC_CustomerAI : MonoBehaviour
 
     void MoveToOpenSeat()
     {
-        targetSeat = seatManager.GetOpenSeat();
+        // Get the open seat and waiting position from the seat manager
+        SeatInfo seatInfo = seatManager.GetOpenSeat();
+        targetSeat = seatInfo.OpenSeat;
+        waitingPosition = seatInfo.WaitingPosition;
 
         if (targetSeat.position != Vector3.zero)
         {
@@ -78,6 +79,8 @@ public class MC_CustomerAI : MonoBehaviour
 
     void LeaveRestaurant()
     {
+        MC_WaiterAI waiterAI = FindAnyObjectByType<MC_WaiterAI>();
+        waiterAI.RemoveOrder(customerController.customer.currentOrder.orderId);
         leaving = true;
         Vector3 entranceLocation = seatManager.ReturnEntrance();
         // Ensure that the seat being returned is a valid seat
@@ -95,5 +98,4 @@ public class MC_CustomerAI : MonoBehaviour
         }
         navAgent.SetDestination(entranceLocation);
     }
-
 }
