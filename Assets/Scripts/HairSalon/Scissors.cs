@@ -19,14 +19,10 @@ public class Scissors : MonoBehaviour
         _primaryAction.started += (_) => {
             if (isHeld)
                 SetScissorState(working: true);
-            else
-                Debug.Log("Not held in action started");
         };
         _primaryAction.canceled += (_) => {
             if (isHeld)
                 SetScissorState(working: false);
-            else
-                Debug.Log("Not held in action canceled");
         };
     }
 
