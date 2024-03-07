@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7113025996802116739}
   - component: {fileID: 7113025996802116736}
   - component: {fileID: 7113025996802116743}
-  - component: {fileID: 7113025996802116740}
   - component: {fileID: -2994778022444215925}
+  - component: {fileID: 8429578069927359571}
   m_Layer: 0
   m_Name: Scissors
   m_TagString: Untagged
@@ -117,7 +117,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7113025996802116740
+--- !u!114 &-2994778022444215925
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,7 +126,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 7113025996802116737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a8c9246194d7b242b1f804f49e2f888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHeld: 0
+  _deleterScript: {fileID: 7113025997188221198}
+--- !u!114 &8429578069927359571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7113025996802116737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31d7a74f16a0f154aa67b6df041d84dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -242,19 +256,7 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
---- !u!114 &-2994778022444215925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7113025996802116737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a8c9246194d7b242b1f804f49e2f888, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _deleterScript: {fileID: 7113025997188221198}
+  _scissorScript: {fileID: -2994778022444215925}
 --- !u!1 &7113025997188221195
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,4 +384,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb00f8ab9413ac74a88c83b94af1f7dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  working: 0
+  active: 1

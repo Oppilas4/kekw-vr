@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Scissors : MonoBehaviour
 {
+    public bool isHeld;
     [SerializeField]
     private VoxelDeleter _deleterScript;
     private XRIDefaultInputActions _actionMap;
@@ -13,15 +14,24 @@ public class Scissors : MonoBehaviour
         _actionMap = new();
         _actionMap.XRIRightHandInteraction.Enable();
         _primaryAction = _actionMap.XRIRightHandInteraction.PrimaryAction;
-        _deleterScript.active = false;
+        SetScissorState(working: false);
 
-        _primaryAction.started += (_) =>
-        {
-            _deleterScript.active = true;
+        _primaryAction.started += (_) => {
+            if (isHeld)
+                SetScissorState(working: true);
+            else
+                Debug.Log("Not held in action started");
         };
-        _primaryAction.canceled += (_) =>
-        {
-            _deleterScript.active = false;
+        _primaryAction.canceled += (_) => {
+            if (isHeld)
+                SetScissorState(working: false);
+            else
+                Debug.Log("Not held in action canceled");
         };
+    }
+
+    private void SetScissorState(bool working)
+    {
+        _deleterScript.active = working;
     }
 }
