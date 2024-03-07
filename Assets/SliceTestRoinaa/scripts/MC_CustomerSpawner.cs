@@ -10,6 +10,10 @@ public class MC_CustomerSpawner : MonoBehaviour
     private float initialSpawnDelay = 5f; // Time to wait before spawning the first customer
     private float timeBetweenCustomers = 30f; // Initial time between customers
     private float halfTimeThreshold = 150f; // Time threshold for halving the spawn time
+
+    private int totalCustomers = 0; // Total customers created
+    private int customersServed = 0; // Customers served and left
+    private bool gameTimeHasRunOut = false;
     private void Start()
     {
         orderInteraction = FindAnyObjectByType<OrderInteraction>();
@@ -19,9 +23,9 @@ public class MC_CustomerSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (totalCustomers == customersServed && gameTimeHasRunOut)
         {
-            SpawnCustomer();
+            TriggerEndGameState();
         }
     }
 
@@ -44,13 +48,30 @@ public class MC_CustomerSpawner : MonoBehaviour
             SpawnCustomer();
             yield return new WaitForSeconds(timeBetweenCustomers);
         }
+
+        if (Time.time >= 300f && !gameTimeHasRunOut)
+        {
+            gameTimeHasRunOut = true;
+        }
     }
 
     private void SpawnCustomer()
     {
         if (seatManager.HasOpenSeats())
         {
+            totalCustomers++;
             orderInteraction.CreateCustomer();
         }
+    }
+
+    public void CustomerLeft()
+    {
+        customersServed++; // Increment customers served
+    }
+
+    void TriggerEndGameState()
+    {
+        // Implement your end game state logic here
+        Debug.Log("All customers have left. Triggering end game state...");
     }
 }

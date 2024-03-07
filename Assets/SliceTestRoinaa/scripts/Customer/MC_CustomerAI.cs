@@ -77,6 +77,12 @@ public class MC_CustomerAI : MonoBehaviour
         }
     }
 
+    public void GetFood()
+    {
+        // Assuming that the food being placed on the table means the customer is ready to leave
+        LeaveRestaurant();
+    }
+
     void LeaveRestaurant()
     {
         MC_WaiterAI waiterAI = FindAnyObjectByType<MC_WaiterAI>();

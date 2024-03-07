@@ -1,3 +1,4 @@
+using UnityEngine;
 using static OrderManager;
 
 [System.Serializable]
@@ -7,4 +8,5 @@ public class Order
     public string dishName;
     public float expirationTime;
     public SteakTemperature steakTemperature;
+    public GameObject orderTicketObject;
 }

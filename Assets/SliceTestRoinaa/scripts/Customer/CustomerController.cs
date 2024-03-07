@@ -36,4 +36,15 @@ public class CustomerController : MonoBehaviour
         }
     }
 
+    public void OrderReady()
+    {
+        customerAI.GetFood();
+    }
+
+    private void OnDestroy()
+    {
+        MC_CustomerSpawner customerSpawner = FindAnyObjectByType<MC_CustomerSpawner>();
+        customerSpawner.CustomerLeft();
+    }
+
 }

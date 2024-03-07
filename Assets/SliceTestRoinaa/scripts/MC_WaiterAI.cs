@@ -28,6 +28,9 @@ public class MC_WaiterAI : MonoBehaviour
     private Transform deliverLocation;
     // Dictionary to hold the waiting positions for each order
     private Dictionary<int, Transform> orderWaitingPositions = new Dictionary<int, Transform>();
+    private Dictionary<Transform, CustomerController> customerControllers = new Dictionary<Transform, CustomerController>();
+
+
 
     private void Start()
     {
@@ -71,6 +74,18 @@ public class MC_WaiterAI : MonoBehaviour
     {
         // Add the order ID and waiting position to the dictionary
         orderWaitingPositions[orderId] = waitingPosition;
+
+        // Find the customer controller associated with the seat
+        Transform customerSeat = seatManager.GetSeatFromWaitingPosition(waitingPosition);
+        if (seatManager.linkSeatAndCustomer.TryGetValue(customerSeat, out CustomerController customerController))
+        {
+            // Save the customer controller in the dictionary
+            customerControllers[customerSeat] = customerController;
+        }
+        else
+        {
+            Debug.LogWarning("No customer controller found for seat: " + customerSeat);
+        }
     }
 
     private void OnOrderComplete(int orderId)
@@ -107,13 +122,25 @@ public class MC_WaiterAI : MonoBehaviour
         }
     }
 
-    private void SetFoodOnTable(GameObject FoodObject)
+    private void SetFoodOnTable(GameObject FoodObject, Transform waitingPosition)
     {
         // Set the foodObject's parent as the foodSlot so the object follows the waiter's hand
         FoodObject.transform.SetParent(tablePosition);
 
         // Optionally, you may want to reset the local position and rotation of the foodObject
         FoodObject.transform.localPosition = Vector3.zero;
+
+        // Find the customer controller associated with the seat
+        Transform customerSeat = seatManager.GetSeatFromWaitingPosition(waitingPosition);
+        if (customerControllers.TryGetValue(customerSeat, out CustomerController customerController))
+        {
+            // Call a function in the customer controller
+            customerController.OrderReady();
+        }
+        else
+        {
+            Debug.LogWarning("No customer controller found for seat: " + customerSeat);
+        }
     }
 
     public void RemoveOrder(int orderId)
@@ -198,7 +225,7 @@ public class MC_WaiterAI : MonoBehaviour
                 tablePosition = seatManager.GetTablePositionFromWaitingLocation(deliverLocation);
 
                 // Set the foodObject's parent as the table's position
-                SetFoodOnTable(foodItem);
+                SetFoodOnTable(foodItem, deliverLocation);
 
                 currentTask = Task.GoToWaiterArea;
                 break;

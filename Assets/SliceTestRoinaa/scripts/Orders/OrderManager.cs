@@ -57,6 +57,8 @@ public class OrderManager : MonoBehaviour
         // Instantiate the order ticket prefab
         GameObject orderTicketObject = Instantiate(orderTicketPrefab, ticketSpawnLoc.position, Quaternion.identity);
 
+        order.orderTicketObject = orderTicketObject;
+
         // Get the OrderTicket component
         OrderTicket orderTicket = orderTicketObject.GetComponent<OrderTicket>();
 
@@ -73,6 +75,13 @@ public class OrderManager : MonoBehaviour
                 // Order expired
                 // Trigger an event or handle expiration as needed
                 Debug.Log("order " + activeOrders[i].orderId + " expired");
+
+                // Destroy the order ticket GameObject
+                if (activeOrders[i].orderTicketObject != null)
+                {
+                    Destroy(activeOrders[i].orderTicketObject);
+                }
+
                 activeOrders.RemoveAt(i);
             }
         }

@@ -8,15 +8,6 @@ public class OrderInteraction : MonoBehaviour
 
     private int customerIdCounter = 1;
 
-    void Update()
-    {
-        // Check for spacebar input to create a customer
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CreateCustomer();
-        }
-    }
-
     void OnEnable()
     {
         // Subscribe to the _calculateDish event when the script is enabled
@@ -34,7 +25,7 @@ public class OrderInteraction : MonoBehaviour
         GameObject customerObject = Instantiate(customerPrefab, spawnLocation.position, Quaternion.identity);
         Customer customer = new Customer(customerIdCounter++);
         customerObject.GetComponent<CustomerController>().Initialize(customer, orderManager);
-
+        
         Debug.Log($"Customer {customer.customerId} created.");
     }
 

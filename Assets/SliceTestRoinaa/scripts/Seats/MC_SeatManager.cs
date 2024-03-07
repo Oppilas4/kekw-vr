@@ -39,6 +39,20 @@ public class MC_SeatManager : MonoBehaviour
         }
     }
 
+    public Transform GetSeatFromWaitingPosition(Transform waitingPosition)
+    {
+        foreach (var seatAndWaitingPosition in seatToWaitingPosition)
+        {
+            if (seatAndWaitingPosition.Value == waitingPosition)
+            {
+                // Return the seat associated with the matching waiting position
+                return seatAndWaitingPosition.Key;
+            }
+        }
+        // If no matching waiting position is found, return null or handle as needed
+        return null;
+    }
+
     public Transform GetTablePositionFromWaitingLocation(Transform waitingLocation)
     {
         // Check if the waiting location exists in the dictionary
