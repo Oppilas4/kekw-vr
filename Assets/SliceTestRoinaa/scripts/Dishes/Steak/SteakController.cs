@@ -233,6 +233,7 @@ public class SteakController : MonoBehaviour
 
                 // Display the score
                 Debug.Log($"Score: {score}");
+                DishScoreManager.Instance.UpdateScore(score);
             }
             catch (Exception ex)
             {

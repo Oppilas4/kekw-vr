@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DishScoreManager : MonoBehaviour
 {
     private float playerScore = 0f;
 
     // Reference to a UI text element to display the score (you can link this in the Unity Editor)
-    public Text scoreText;
+    public TextMeshProUGUI scoreText;
 
     // Singleton pattern to ensure only one instance of ScoreManager exists
     private static DishScoreManager _instance;
