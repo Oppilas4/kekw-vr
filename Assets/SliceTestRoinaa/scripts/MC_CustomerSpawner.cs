@@ -73,5 +73,6 @@ public class MC_CustomerSpawner : MonoBehaviour
     {
         // Implement your end game state logic here
         Debug.Log("All customers have left. Triggering end game state...");
+        DishScoreManager.Instance.EndGamePoints();
     }
 }
