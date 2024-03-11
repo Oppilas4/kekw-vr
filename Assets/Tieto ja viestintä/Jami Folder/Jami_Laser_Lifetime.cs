@@ -27,6 +27,11 @@ public class Jami_Laser_Lifetime : MonoBehaviour
                     Destroy(gameObject);
                     somali = true;
                 }
+                else
+                {
+                    Destroy(gameObject);
+                }
+                   
             }
 
         }
