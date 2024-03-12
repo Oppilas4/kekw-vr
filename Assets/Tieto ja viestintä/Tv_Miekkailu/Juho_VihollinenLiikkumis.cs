@@ -32,22 +32,11 @@ public class Juho_VihollinenLiikkumis : MonoBehaviour
     void Update()
     {
 
-        if (Vector3.Distance(transform.position, player.transform.position) > detectionRange)
+        if (Vector3.Distance(transform.position, player.transform.position) < detectionRange)
         {
             EnnemyController();
         }
     }
-
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            health.TakeDamage();
-            Juho_VihollinenHeath healt = GetComponent<Juho_VihollinenHeath>();
-            healt.TakeDamage(9999999);
-        }
-    }
-
 
     void EnnemyController()
     {
@@ -71,6 +60,7 @@ public class Juho_VihollinenLiikkumis : MonoBehaviour
             {
                 StartCoroutine(MeleeAttackDelay());
                 canHit = false;
+
             }
         }
     }

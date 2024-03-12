@@ -17,7 +17,6 @@ public class Juho_MaterialTest : MonoBehaviour
         go = this.gameObject;
         meshRenderer = go.GetComponent<MeshRenderer>();
 
-
         theDissolveMat = new Material(material);
 
         Material[] materials = meshRenderer.materials;
