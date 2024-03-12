@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5508857180501812915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7863983763532650182}
+  m_Layer: 13
+  m_Name: ShootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7863983763532650182
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5508857180501812915}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0.554}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6795006092006066948}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &6795006092006066944
 GameObject:
   m_ObjectHideFlags: 0
@@ -16,8 +47,8 @@ GameObject:
   - component: {fileID: 6795006092006066954}
   - component: {fileID: 482670875}
   - component: {fileID: 7707405263968269717}
-  m_Layer: 0
-  m_Name: Enemy
+  m_Layer: 13
+  m_Name: ShooterEnemy
   m_TagString: Jami_Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,6 +67,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6795006093461602831}
+  - {fileID: 7863983763532650182}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -117,6 +149,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   player: {fileID: 0}
+  range: 4
+  detectionRange: 3
+  isRanged: 1
+  enemyShootTransform: {fileID: 5508857180501812915}
+  enemyBulletPrefab: {fileID: 6377932825082438197, guid: a74bf140657739c46bbf4c3f5fba63a4,
+    type: 3}
+  vitunforce: 25
 --- !u!114 &6795006092006066954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +171,8 @@ MonoBehaviour:
   maxHealth: 3
   movement: {fileID: 6795006092006066955}
   capCollider: {fileID: 6795006092006066951}
+  color: {r: 1, g: 0, b: 0, a: 1}
+  cutMateria: {fileID: 2100000, guid: 5803669ea349e1d42ac28c4512a572a2, type: 2}
   material1: {fileID: 482670875}
   material2: {fileID: 482670876}
   dissolveSpeed: 0.5
@@ -147,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d197eb3f396724b4d824ae7c34fdfbbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go: {fileID: 6795006092006066944}
+  go: {fileID: 0}
   color: {r: 1, g: 0, b: 0, a: 1}
   material: {fileID: 2100000, guid: 53a304b654410e54692a32d12f3efaca, type: 2}
   dissolveSpeed: 0.5
@@ -176,7 +217,7 @@ GameObject:
   - component: {fileID: 6795006093461602828}
   - component: {fileID: 6795006093461602829}
   - component: {fileID: 482670876}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: EYES
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d197eb3f396724b4d824ae7c34fdfbbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go: {fileID: 6795006093461602824}
+  go: {fileID: 0}
   color: {r: 1, g: 0.9880786, b: 0, a: 1}
   material: {fileID: 2100000, guid: 53a304b654410e54692a32d12f3efaca, type: 2}
   dissolveSpeed: 0.5

@@ -14,6 +14,7 @@ public class Juho_VihollinenLiikkumis : MonoBehaviour
     public float detectionRange;
     private Vector3 playerRange;
     public bool isRanged;
+    bool hasStartedToShoot = false;
 
 
 
@@ -50,21 +51,21 @@ public class Juho_VihollinenLiikkumis : MonoBehaviour
 
     void EnnemyController()
     {
-
         Vector3 lookAt = player.position;
         lookAt.y = transform.position.y;
+        transform.LookAt(lookAt);
 
         if (Vector3.Distance(transform.position, player.transform.position) > range)
         {
-            transform.LookAt(lookAt);
             transform.position += transform.forward * speed * Time.deltaTime;
         }
 
         if (Vector3.Distance(transform.position, player.transform.position) <= range)
         {
-            if (isRanged)
+            if (isRanged && !hasStartedToShoot)
             {
                 StartCoroutine(attackDelay());
+                hasStartedToShoot = true;
             }
             else
             {
@@ -75,11 +76,11 @@ public class Juho_VihollinenLiikkumis : MonoBehaviour
 
     IEnumerator attackDelay()
     {
-        GameObject projectileGO = (GameObject)Instantiate(enemyBulletPrefab, enemyShootTransform.transform.position,
-        enemyBulletPrefab.transform.rotation);
+        GameObject projectileGO = Instantiate(enemyBulletPrefab, enemyShootTransform.transform.position, transform.rotation);
         Rigidbody projectileRb = projectileGO.GetComponent<Rigidbody>();
-        projectileRb.AddForce(vitunforce * Vector3.forward, ForceMode.Impulse);
+        projectileRb.AddForce(enemyShootTransform.transform.forward * vitunforce, ForceMode.Impulse);
         yield return new WaitForSeconds(2);
+        hasStartedToShoot = false;
     }
 }
 

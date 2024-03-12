@@ -8,8 +8,9 @@ public class Juho_Slice : MonoBehaviour
     public Transform startSlicePoint;
     public Transform endSlicePoint;
     public VelocityEstimator velocityEstimator;
+    public Material dissolveMat;
     public LayerMask layer;
-    public float cutForce = 200f;
+    Color color;
 
     private void FixedUpdate()
     {
@@ -17,7 +18,12 @@ public class Juho_Slice : MonoBehaviour
         if(hasHit)
         {
             GameObject target = hit.transform.gameObject;
-            Slice(target);
+            if(target.CompareTag("Jami_Enemy"))
+            {
+                Juho_VihollinenHeath heath = target.GetComponent<Juho_VihollinenHeath>();
+                color = heath.color;
+                Slice(target);
+            }
         }
     }
 
@@ -31,9 +37,10 @@ public class Juho_Slice : MonoBehaviour
 
         if(hull != null)
         {
-            GameObject upperHull = hull.CreateUpperHull(target); // add material after target
+            GameObject upperHull = hull.CreateUpperHull(target, dissolveMat);
             SetupSlicedComponent(upperHull);
-            GameObject lowerHull = hull.CreateLowerHull(target); // add material after target
+
+            GameObject lowerHull = hull.CreateLowerHull(target, dissolveMat);
             SetupSlicedComponent(lowerHull);
 
             Destroy(target);
@@ -42,9 +49,13 @@ public class Juho_Slice : MonoBehaviour
 
     public void SetupSlicedComponent(GameObject slicedObject)
     {
+        Juho_MaterialTest matTest = slicedObject.AddComponent<Juho_MaterialTest>();
+        matTest.color = color;
+        matTest.material = dissolveMat;
+        matTest.StartDissolve();
         Rigidbody rb = slicedObject.AddComponent<Rigidbody>();
-        MeshCollider collider = slicedObject.GetComponent<MeshCollider>();
+        rb.mass = .8f;
+        MeshCollider collider = slicedObject.AddComponent<MeshCollider>();
         collider.convex = true;
-        rb.AddExplosionForce(cutForce, slicedObject.transform.position, 1);
     }
 }

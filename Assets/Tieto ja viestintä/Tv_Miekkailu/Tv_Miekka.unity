@@ -781,10 +781,10 @@ MonoBehaviour:
   startSlicePoint: {fileID: 286360002}
   endSlicePoint: {fileID: 1963358130}
   velocityEstimator: {fileID: 1963358129}
+  dissolveMat: {fileID: 2100000, guid: 53a304b654410e54692a32d12f3efaca, type: 2}
   layer:
     serializedVersion: 2
     m_Bits: 8192
-  cutForce: 200
 --- !u!114 &707382101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -797,6 +797,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625e4258fba219c40b75c034bb2c07d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftHandAttachPoint: {fileID: 977213745}
+  rightHandAttachPoint: {fileID: 977213745}
 --- !u!1001 &813661003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1013,7 +1015,7 @@ MonoBehaviour:
   - {fileID: 1537392455}
   enemyPrefab: {fileID: 6795006092006066944, guid: d627b6d69d2d831419c7d16b64b45ce9,
     type: 3}
-  numberOfEnemiesToSpawn: 0
+  numberOfEnemiesToSpawn: 1
   spawnDelay: 4
   waitTimeFromStart: 5
   currentEnemies: 0

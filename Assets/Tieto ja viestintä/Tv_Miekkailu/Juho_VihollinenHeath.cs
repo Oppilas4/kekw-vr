@@ -11,6 +11,9 @@ public class Juho_VihollinenHeath : MonoBehaviour
     bool hasRemoved = false;
     public CapsuleCollider capCollider;
 
+    public Color color;
+    public Material cutMateria;
+
     public Juho_MaterialTest material1, material2;
     public float dissolveSpeed = 0.5f;
 
