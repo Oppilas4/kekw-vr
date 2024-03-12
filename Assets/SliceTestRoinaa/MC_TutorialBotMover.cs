@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Kekw.Common;
 
-public class MC_TutorialBotMover : MonoBehaviour
+public class MC_TutorialBotMover : MonoBehaviour, IPause
 {
     public List<Transform> navigationPositions = new List<Transform>();
     private NavMeshAgent agent;
@@ -13,15 +14,37 @@ public class MC_TutorialBotMover : MonoBehaviour
         // Get the NavMeshAgent component attached to the same GameObject
         agent = GetComponent<NavMeshAgent>();
 
-        StartCoroutine(MoveToRandomPositionCoroutine());
+        MoveToRandomPosition();
     }
 
-    IEnumerator MoveToRandomPositionCoroutine()
+    private void Update()
     {
-        while (true)
+        if (agent.remainingDistance < 0.1f)
         {
             MoveToRandomPosition();
-            yield return new WaitForSeconds(10); // Wait for 10 seconds
+        }
+    }
+
+    public void SetPause()
+    {
+        if (!agent.isStopped)
+        {
+            agent.isStopped = true;
+        }
+        else
+        {
+            UnPause();
+        }
+    }
+
+    /// <summary>
+    /// <seealso cref="IPause"/>
+    /// </summary>
+    public void UnPause()
+    {
+        if (agent.isStopped)
+        {
+            agent.isStopped = false;
         }
     }
 
