@@ -15,7 +15,7 @@ public class Juho_VihollinenLiikkumis : MonoBehaviour
     private Vector3 playerRange;
     public bool isRanged;
     bool hasStartedToShoot = false;
-
+    bool canHit = true;
 
 
     public GameObject enemyShootTransform;
@@ -64,23 +64,31 @@ public class Juho_VihollinenLiikkumis : MonoBehaviour
         {
             if (isRanged && !hasStartedToShoot)
             {
-                StartCoroutine(attackDelay());
+                StartCoroutine(RangedAttackDelay());
                 hasStartedToShoot = true;
             }
-            else
+            else if (canHit)
             {
-
+                StartCoroutine(MeleeAttackDelay());
+                canHit = false;
             }
         }
     }
 
-    IEnumerator attackDelay()
+    IEnumerator RangedAttackDelay()
     {
         GameObject projectileGO = Instantiate(enemyBulletPrefab, enemyShootTransform.transform.position, transform.rotation);
         Rigidbody projectileRb = projectileGO.GetComponent<Rigidbody>();
         projectileRb.AddForce(enemyShootTransform.transform.forward * vitunforce, ForceMode.Impulse);
         yield return new WaitForSeconds(2);
         hasStartedToShoot = false;
+    }
+
+    IEnumerator MeleeAttackDelay()
+    {
+        health.TakeDamage();
+        yield return new WaitForSeconds(2);
+        canHit = true;
     }
 }
 
