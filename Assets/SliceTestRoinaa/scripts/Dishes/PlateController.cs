@@ -13,7 +13,7 @@ public class PlateController : MonoBehaviour
     
     private IEnumerator OnTriggerEnter(Collider other)
     {
-        VegetableController vegetableController = other.GetComponent<VegetableController>();
+        Vegetable_Handler vegetableController = other.GetComponent<Vegetable_Handler>();
         // Check if the entering object is on the interactable layer
         if (vegetableController != null)
         {
@@ -54,7 +54,7 @@ public class PlateController : MonoBehaviour
     {
         foreach (var vegetable in vegetablePiecesOnPlate)
         {
-            VegetableController vegetableController = vegetable.GetComponent<VegetableController>();
+            Vegetable_Handler vegetableController = vegetable.GetComponent<Vegetable_Handler>();
             if (vegetableController != null && vegetableController.GetVegetableData().vegetableName == ingredientName)
             {
                 return true;
