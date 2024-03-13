@@ -1,75 +1,66 @@
 using System.Collections;
 using UnityEngine;
 
-[System.Serializable]
-public class Round
-{
-    public Transform[] spawnPoints;
-    public GameObject[] enemyPrefabs;
-}
-
 public class Tv_EnemySpawner : MonoBehaviour
 {
-    public float spawnDelay = 1.0f;
-    [SerializeField] float waitTimeFromStart = 5f;
+    public GameObject teleporter;
+    public GameObject enemyPrefab;
+    public Transform[] spawnPoints;
+    public float timeBetweenSpawns = 2.0f;
+    public int totalEnemiesToSpawn = 10;
+    public float spawnCooldown = 1.0f;
 
-    public Round[] rounds;
-
-    private int currentRoundIndex = 0;
-    private int currentEnemies;
+    private int enemiesSpawned = 0;
     private bool isSpawning = false;
-
-    [SerializeField] GameObject[] objectsToActivateAfterWin;
 
     void Start()
     {
-        StartCoroutine(SpawnNextRound());
+        StartCoroutine(SpawnEnemies());
     }
 
-    IEnumerator SpawnNextRound()
+    IEnumerator SpawnEnemies()
     {
-        yield return new WaitForSeconds(waitTimeFromStart);
+        yield return new WaitForSeconds(spawnCooldown);
 
-        while (currentRoundIndex < rounds.Length)
+        while (enemiesSpawned < totalEnemiesToSpawn)
         {
-            Round currentRound = rounds[currentRoundIndex];
-
-            // Spawn enemies for the current round
-            foreach (Transform spawnPoint in currentRound.spawnPoints)
+            // Check if spawning is allowed
+            if (!isSpawning)
             {
-                GameObject enemyPrefab = currentRound.enemyPrefabs[Random.Range(0, currentRound.enemyPrefabs.Length)];
-                GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
-                currentEnemies++;
+                yield return new WaitForSeconds(timeBetweenSpawns);
+                continue;
             }
 
-            isSpawning = true;
+            // Choose a random spawn point
+            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
-            // Wait until all enemies from the current round are killed
-            while (currentEnemies > 0)
-            {
-                yield return null;
-            }
+            // Instantiate enemy at the spawn point
+            Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
 
-            currentRoundIndex++;
+            enemiesSpawned++;
 
-            isSpawning = false;
-
-            yield return null; // Optional delay before starting the next round
-        }
-
-        // If there are no more rounds, activate objects for win condition
-        foreach (GameObject obj in objectsToActivateAfterWin)
-        {
-            obj.SetActive(true);
+            // Wait for the next spawn
+            yield return new WaitForSeconds(timeBetweenSpawns);
         }
     }
+
+    public void StartSpawning()
+    {
+        isSpawning = true;
+    }
+
+    public void StopSpawning()
+    {
+        isSpawning = false;
+    }
+
 
     public void KillEnemy()
     {
-        currentEnemies--;
-        if (!isSpawning && currentEnemies <= 0)
+        enemiesSpawned--;
+        if (!isSpawning && enemiesSpawned <= 0)
         {
-            StartCoroutine(SpawnNextRound());
+            teleporter.SetActive(true);
         }
     }
 }

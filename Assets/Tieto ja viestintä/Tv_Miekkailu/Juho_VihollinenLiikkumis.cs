@@ -76,7 +76,7 @@ public class Juho_VihollinenLiikkumis : MonoBehaviour
 
     IEnumerator MeleeAttackDelay()
     {
-        health.TakeDamage();
+      
         yield return new WaitForSeconds(2);
         canHit = true;
     }
