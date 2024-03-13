@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Gardening
 {
-    public class Pot : MonoBehaviour
+    public class FlowerPot : MonoBehaviour
     {
         public Flower flower;
         private bool _isSeedPlanted;
