@@ -4,6 +4,13 @@ namespace Gardening
 {
     public class SeedPacket : MonoBehaviour
     {
+        public enum SeedType
+        {
+            Box,
+            Sphere,
+        }
+
+        public SeedType seed;
         [SerializeField]
         private ParticleSystem _seedParticles;
         [SerializeField]
