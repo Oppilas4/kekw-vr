@@ -32,7 +32,10 @@ namespace Gardening
 
         private bool CheckTilt()
         {
-            return Mathf.Abs(transform.rotation.eulerAngles.x) % 260 >= 100 || Mathf.Abs(transform.rotation.eulerAngles.z) % 260 >= 100;
+            var angles = transform.rotation.eulerAngles;
+            int dropAngle = 100;
+            int modulo = (360 - dropAngle);
+            return Mathf.Abs(angles.x) % modulo >= dropAngle || Mathf.Abs(angles.z) % modulo >= dropAngle;
         }
 
         private bool CheckCollisionWithPot()
