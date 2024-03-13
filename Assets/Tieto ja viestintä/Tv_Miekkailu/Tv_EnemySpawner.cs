@@ -19,18 +19,9 @@ public class Tv_EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        GameObject[] rayInteractors = GameObject.FindObjectsOfType<GameObject>().Where(obj => obj.name == "Ray Interactor").ToArray();
-
-        //fix later
-
-        foreach (GameObject obj in objectsToActivate)
-        {
-            obj.SetActive(false);
-        }
-        objectsToActivate.AddRange(rayInteractors);
-
         StartCoroutine(SpawnEnemies());
     }
+
 
     IEnumerator SpawnEnemies()
     {
