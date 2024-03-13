@@ -31,12 +31,13 @@ namespace Gardening
 
         private bool CheckTilt()
         {
-            return Mathf.Abs(transform.rotation.eulerAngles.x) >= 100 || Mathf.Abs(transform.rotation.eulerAngles.z) >= 100;
+            return Mathf.Abs(transform.rotation.eulerAngles.x) % 260 >= 100 || Mathf.Abs(transform.rotation.eulerAngles.z) % 260 >= 100;
         }
 
         private bool CheckCollisionWithPot()
         {
             var down = _seedDropPoint.TransformDirection(Vector3.down);
+            Debug.DrawRay(_seedDropPoint.position, down, Color.green);
             if (Physics.Raycast(_seedDropPoint.position, down, out RaycastHit hit, Mathf.Infinity))
             {
                 if (hit.collider.CompareTag("FlowerPot")) return true;
