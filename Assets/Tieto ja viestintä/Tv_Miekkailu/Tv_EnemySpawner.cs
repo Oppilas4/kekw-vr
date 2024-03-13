@@ -1,9 +1,13 @@
+using Oculus.Interaction;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tv_EnemySpawner : MonoBehaviour
 {
-    public GameObject teleporter;
+    public List<GameObject> objectsToActivate;
     public GameObject enemyPrefab;
     public Transform[] spawnPoints;
     public float timeBetweenSpawns = 2.0f;
@@ -15,6 +19,16 @@ public class Tv_EnemySpawner : MonoBehaviour
 
     void Start()
     {
+        GameObject[] rayInteractors = GameObject.FindObjectsOfType<GameObject>().Where(obj => obj.name == "Ray Interactor").ToArray();
+
+        //fix later
+
+        foreach (GameObject obj in objectsToActivate)
+        {
+            obj.SetActive(false);
+        }
+        objectsToActivate.AddRange(rayInteractors);
+
         StartCoroutine(SpawnEnemies());
     }
 
@@ -24,22 +38,9 @@ public class Tv_EnemySpawner : MonoBehaviour
 
         while (enemiesSpawned < totalEnemiesToSpawn)
         {
-            // Check if spawning is allowed
-            if (!isSpawning)
-            {
-                yield return new WaitForSeconds(timeBetweenSpawns);
-                continue;
-            }
-
-            // Choose a random spawn point
             Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-
-            // Instantiate enemy at the spawn point
             Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
-
             enemiesSpawned++;
-
-            // Wait for the next spawn
             yield return new WaitForSeconds(timeBetweenSpawns);
         }
     }
@@ -60,7 +61,10 @@ public class Tv_EnemySpawner : MonoBehaviour
         enemiesSpawned--;
         if (!isSpawning && enemiesSpawned <= 0)
         {
-            teleporter.SetActive(true);
+            foreach (GameObject obj in objectsToActivate)
+            {
+                obj.SetActive(true);
+            }
         }
     }
 }
