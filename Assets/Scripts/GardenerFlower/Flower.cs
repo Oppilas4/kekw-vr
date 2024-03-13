@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,15 @@ using UnityEngine;
 public class Flower : MonoBehaviour
 {
     [SerializeField] private float _growthSpeed;
+    [SerializeField] private int _growthTime;
     private Transform _flowerTransform;
     private bool _grown;
 
     private Vector3 _flowerGrownScale;
     private float _lerpedValue;  // Value of the Mathf.Lerp()
     private float _timeElapsed;  // 3rd, "t" parameter of the Mathf.Lerp()
+
+    private int[,] _growthCountBoxes;
 
     /// <summary>
     /// Sets flower to the default values
@@ -33,9 +37,9 @@ public class Flower : MonoBehaviour
             return;
         _timeElapsed += _growthSpeed * Time.deltaTime;
         _lerpedValue = Mathf.Lerp(0, _flowerGrownScale.x, _timeElapsed);
-        if(_lerpedValue >= _flowerGrownScale.x)
+        if (_lerpedValue >= _flowerGrownScale.x)
             _grown = true;
-        _flowerTransform.localScale = new Vector3(_lerpedValue,_lerpedValue,_lerpedValue);
+        _flowerTransform.localScale = new Vector3(_lerpedValue, _lerpedValue, _lerpedValue);
         Debug.Log(_flowerTransform.localScale.y);
         Debug.Log(_lerpedValue);
     }
