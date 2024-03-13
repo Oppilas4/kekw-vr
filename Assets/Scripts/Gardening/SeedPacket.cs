@@ -14,11 +14,12 @@ namespace Gardening
         private void Update()
         {
             _dropping = CheckTilt();
-            _seedParticles.gameObject.SetActive(_dropping);
             if (_dropping)
             {
                 DropSeeds();
             }
+            var emission = _seedParticles.emission;
+            emission.enabled = _dropping;
         }
 
         private void DropSeeds()
