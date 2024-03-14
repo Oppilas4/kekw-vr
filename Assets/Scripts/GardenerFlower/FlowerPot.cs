@@ -7,20 +7,42 @@ namespace Gardening
 {
     public class FlowerPot : MonoBehaviour
     {
+        public Flower flower;
+        private bool _isSeedPlanted;
+        private GroundFilling _groundFillerScript;
+        private float _timeFillInactive = 0.0f;
         public Plant plant { get; private set; }
         [SerializeField] private Transform _plantRootsPosition;
         private bool _isSeedPlanted = false;
         private bool _isFilledWithDirt;
 
+        private void Start()
+        {
+            _groundFillerScript = GetComponent<GroundFilling>();
+        }
+
+        private void Update()
+        {
+            if (_groundFillerScript.isCurrentlyFilling)
+            {
+                _timeFillInactive += Time.deltaTime;
+                if (_timeFillInactive > 0.2f)
+                {
+                    _groundFillerScript.StopFill();
+                }
+            }
+        }
+
         private void OnParticleCollision(GameObject other)
         {
-            //if (other.CompareTag("Dirt"))
-            //{
-
-            //}
-
-            //if (!_isFilledWithDirt)
-            //    return;
+            if (other.CompareTag("Dirt"))
+            {
+                _timeFillInactive = 0f;
+                if (!_groundFillerScript.isCurrentlyFilling)
+                    _groundFillerScript.StartFill();
+            }
+            if (!_groundFillerScript.isFilled)
+                return;
 
             if (other.CompareTag("Seed") && !_isSeedPlanted)
             {
