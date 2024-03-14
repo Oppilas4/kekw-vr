@@ -45,8 +45,7 @@ GameObject:
   - component: {fileID: 6795006092006066951}
   - component: {fileID: 6795006092006066955}
   - component: {fileID: 6795006092006066954}
-  - component: {fileID: 482670875}
-  - component: {fileID: 7707405263968269717}
+  - component: {fileID: -3235758226259386891}
   m_Layer: 13
   m_Name: ShooterEnemy
   m_TagString: Jami_Enemy
@@ -99,7 +98,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 53a304b654410e54692a32d12f3efaca, type: 2}
+  - {fileID: 2100000, guid: e64814c98fad7ac42a41df747ec1a4be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -150,7 +149,7 @@ MonoBehaviour:
   speed: 3
   player: {fileID: 0}
   range: 4
-  detectionRange: 10
+  detectionRange: 20
   isRanged: 1
   enemyShootTransform: {fileID: 5508857180501812915}
   enemyBulletPrefab: {fileID: 6377932825082438197, guid: a74bf140657739c46bbf4c3f5fba63a4,
@@ -171,12 +170,7 @@ MonoBehaviour:
   maxHealth: 3
   movement: {fileID: 6795006092006066955}
   capCollider: {fileID: 6795006092006066951}
-  color: {r: 0.24126458, g: 1, b: 0, a: 1}
-  cutMateria: {fileID: 2100000, guid: 5803669ea349e1d42ac28c4512a572a2, type: 2}
-  material1: {fileID: 482670875}
-  material2: {fileID: 482670876}
-  dissolveSpeed: 0.5
---- !u!114 &482670875
+--- !u!114 &-3235758226259386891
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,26 +179,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6795006092006066944}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d197eb3f396724b4d824ae7c34fdfbbe, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f6db265c0773494e81757b86b0b122c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go: {fileID: 0}
-  color: {r: 1, g: 0, b: 0, a: 1}
-  material: {fileID: 2100000, guid: 53a304b654410e54692a32d12f3efaca, type: 2}
-  dissolveSpeed: 0.5
---- !u!65 &7707405263968269717
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6795006092006066944}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.2, y: 1.9999999, z: 1.2}
-  m_Center: {x: 0, y: 0, z: 0}
+  color: {r: 1, g: 0.9082564, b: 0, a: 1}
+  oringinalDisolveMat: {fileID: 2100000, guid: 53a304b654410e54692a32d12f3efaca, type: 2}
+  newlyCreatedDissolveMat: {fileID: 0}
+  meshRenderer: {fileID: 0}
 --- !u!1 &6795006093461602824
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +197,7 @@ GameObject:
   - component: {fileID: 6795006093461602831}
   - component: {fileID: 6795006093461602828}
   - component: {fileID: 6795006093461602829}
-  - component: {fileID: 482670876}
+  - component: {fileID: 7863257395765827711}
   m_Layer: 13
   m_Name: EYES
   m_TagString: Untagged
@@ -267,7 +248,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 53a304b654410e54692a32d12f3efaca, type: 2}
+  - {fileID: 2100000, guid: 14af83dbb7bb32243a67de36ab925f5d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -289,7 +270,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &482670876
+--- !u!114 &7863257395765827711
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -298,10 +279,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6795006093461602824}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d197eb3f396724b4d824ae7c34fdfbbe, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f6db265c0773494e81757b86b0b122c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go: {fileID: 0}
-  color: {r: 1, g: 0.9880786, b: 0, a: 1}
-  material: {fileID: 2100000, guid: 53a304b654410e54692a32d12f3efaca, type: 2}
-  dissolveSpeed: 0.5
+  color: {r: 0, g: 0, b: 0, a: 1}
+  oringinalDisolveMat: {fileID: 2100000, guid: 53a304b654410e54692a32d12f3efaca, type: 2}
+  newlyCreatedDissolveMat: {fileID: 0}
+  meshRenderer: {fileID: 0}

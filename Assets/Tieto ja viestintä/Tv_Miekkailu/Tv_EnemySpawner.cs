@@ -1,17 +1,12 @@
-using Oculus.Interaction;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tv_EnemySpawner : MonoBehaviour
 {
-    public List<GameObject> objectsToActivate;
-    public GameObject enemyPrefab;
+    public GameObject enemy1Prefab, enemy2Prefab;
+    public int totalEnemy1ToSpawn, totalEnemy2ToSpawn;
     public Transform[] spawnPoints;
     public float timeBetweenSpawns = 2.0f;
-    public int totalEnemiesToSpawn = 10;
     public float spawnCooldown = 1.0f;
 
     private int enemiesSpawned = 0;
@@ -22,15 +17,24 @@ public class Tv_EnemySpawner : MonoBehaviour
         StartCoroutine(SpawnEnemies());
     }
 
-
     IEnumerator SpawnEnemies()
     {
         yield return new WaitForSeconds(spawnCooldown);
 
-        while (enemiesSpawned < totalEnemiesToSpawn)
+        // Spawn enemy1Prefab
+        for (int i = 0; i < totalEnemy1ToSpawn; i++)
         {
             Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(enemy1Prefab, spawnPoint.position, spawnPoint.rotation);
+            enemiesSpawned++;
+            yield return new WaitForSeconds(timeBetweenSpawns);
+        }
+
+        // Spawn enemy2Prefab
+        for (int i = 0; i < totalEnemy2ToSpawn; i++)
+        {
+            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            Instantiate(enemy2Prefab, spawnPoint.position, spawnPoint.rotation);
             enemiesSpawned++;
             yield return new WaitForSeconds(timeBetweenSpawns);
         }
@@ -52,10 +56,8 @@ public class Tv_EnemySpawner : MonoBehaviour
         enemiesSpawned--;
         if (!isSpawning && enemiesSpawned <= 0)
         {
-            foreach (GameObject obj in objectsToActivate)
-            {
-                obj.SetActive(true);
-            }
+            // Activate other objects when all enemies are killed
+            gameObject.SetActive(true);
         }
     }
 }

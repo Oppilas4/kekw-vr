@@ -20,8 +20,8 @@ public class Juho_Slice : MonoBehaviour
             GameObject target = hit.transform.gameObject;
             if(target.CompareTag("Jami_Enemy"))
             {
-                Juho_VihollinenHeath heath = target.GetComponent<Juho_VihollinenHeath>();
-                color = heath.color;
+                Juho_Dissolve dissolve = target.GetComponent<Juho_Dissolve>();
+                color = dissolve.color;
                 Slice(target);
             }
         }
@@ -37,10 +37,10 @@ public class Juho_Slice : MonoBehaviour
 
         if(hull != null)
         {
-            GameObject upperHull = hull.CreateUpperHull(target, dissolveMat);
+            GameObject upperHull = hull.CreateUpperHull(target);
             SetupSlicedComponent(upperHull);
 
-            GameObject lowerHull = hull.CreateLowerHull(target, dissolveMat);
+            GameObject lowerHull = hull.CreateLowerHull(target);
             SetupSlicedComponent(lowerHull);
 
             Destroy(target);
@@ -49,9 +49,10 @@ public class Juho_Slice : MonoBehaviour
 
     public void SetupSlicedComponent(GameObject slicedObject)
     {
-        Juho_MaterialTest matTest = slicedObject.AddComponent<Juho_MaterialTest>();
+        Juho_Dissolve matTest = slicedObject.AddComponent<Juho_Dissolve>();
         matTest.color = color;
-        matTest.material = dissolveMat;
+        matTest.oringinalDisolveMat = dissolveMat;
+        matTest.RenewTheInfo();
         matTest.StartDissolve();
         Rigidbody rb = slicedObject.AddComponent<Rigidbody>();
         rb.mass = .8f;
