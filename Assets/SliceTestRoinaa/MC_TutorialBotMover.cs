@@ -8,7 +8,8 @@ public class MC_TutorialBotMover : MonoBehaviour, IPause
 {
     public List<Transform> navigationPositions = new List<Transform>();
     private NavMeshAgent agent;
-
+    private float timeAtSpot;
+    public float afkTime;
     void Start()
     {
         // Get the NavMeshAgent component attached to the same GameObject
@@ -21,7 +22,12 @@ public class MC_TutorialBotMover : MonoBehaviour, IPause
     {
         if (agent.remainingDistance < 0.1f)
         {
-            MoveToRandomPosition();
+            timeAtSpot += Time.deltaTime;
+            if (timeAtSpot >= afkTime)
+            {
+                timeAtSpot = 0;
+                MoveToRandomPosition();
+            }
         }
     }
 

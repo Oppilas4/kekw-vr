@@ -14,6 +14,13 @@ public class MC_CustomerAI : MonoBehaviour
     public bool orderPlaced = false;
     private bool leaving = false;
     private float distanceThreshold = 0.1f; // Adjust this threshold as needed
+    public float rotationSpeed = 90f;
+
+    public Animator customerAni;
+
+    public Transform customerHand;
+    public Transform customerMouth;
+    private Transform foodItem;
 
     void Start()
     {
@@ -47,6 +54,18 @@ public class MC_CustomerAI : MonoBehaviour
             LeaveRestaurant();
         }
 
+        if (navAgent.remainingDistance < 0.1)
+        {
+            customerAni.SetBool("Moving", false);
+        }
+
+        if(!leaving)
+        {
+            // Smoothly rotate the customer to match the Y rotation of the seat
+            Quaternion targetRotation = Quaternion.Euler(0f, targetSeat.rotation.eulerAngles.y, 0f);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        }
+
         if (orderPlaced && navAgent.remainingDistance < distanceThreshold && timeInRestaurant >= 65f)
         {
             // The agent has reached its destination, destroy the GameObject
@@ -65,9 +84,11 @@ public class MC_CustomerAI : MonoBehaviour
         {
             // Move the customer to the open seat
             navAgent.SetDestination(targetSeat.position);
+            customerAni.SetBool("Moving", true);
 
             // Link the customer to the seat
             seatManager.LinkCustomerToSeat(targetSeat, customerController);
+
         }
         else
         {
@@ -79,12 +100,29 @@ public class MC_CustomerAI : MonoBehaviour
 
     public void GetFood()
     {
-        // Assuming that the food being placed on the table means the customer is ready to leave
-        LeaveRestaurant();
+        customerAni.SetTrigger("Eat");
+        Transform tablePosition = seatManager.GetTablePositionFromSeatLocation(targetSeat);
+        foodItem = tablePosition.transform.GetChild(0);
+        foodItem.transform.SetParent(customerHand);
+        foodItem.transform.localPosition = Vector3.zero;
+        foodItem.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+    }
+    
+    public void ChangeFoodTransform()
+    {
+        foodItem.transform.SetParent(customerMouth);
+        foodItem.transform.localPosition = Vector3.zero;
+        foodItem.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
+    public void DestroyFoodItem()
+    {
+        Destroy(foodItem.gameObject);
+        LeaveRestaurant();
+    }
     void LeaveRestaurant()
     {
+
         MC_WaiterAI waiterAI = FindAnyObjectByType<MC_WaiterAI>();
         waiterAI.RemoveOrder(customerController.customer.currentOrder.orderId);
         leaving = true;
@@ -103,5 +141,6 @@ public class MC_CustomerAI : MonoBehaviour
             Debug.LogWarning("Invalid seat being returned: " + targetSeat);
         }
         navAgent.SetDestination(entranceLocation);
+        customerAni.SetBool("Moving", true);
     }
 }

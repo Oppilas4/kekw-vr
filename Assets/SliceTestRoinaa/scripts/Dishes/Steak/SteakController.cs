@@ -199,7 +199,7 @@ public class SteakController : MonoBehaviour
 
     public void OnCalculateDish(string temperature)
     {
-        if (CompletedDishArea.currentDish == transform.parent.parent.gameObject)
+        if (CompletedDishArea.currentDish == transform.parent?.parent?.gameObject)
         {
             try
             {

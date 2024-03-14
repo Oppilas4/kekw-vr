@@ -30,7 +30,7 @@ public class MC_WaiterAI : MonoBehaviour
     private Dictionary<int, Transform> orderWaitingPositions = new Dictionary<int, Transform>();
     private Dictionary<Transform, CustomerController> customerControllers = new Dictionary<Transform, CustomerController>();
 
-
+    public Animator waiterAni;
 
     private void Start()
     {
@@ -109,7 +109,7 @@ public class MC_WaiterAI : MonoBehaviour
 
         // Optionally, you may want to reset the local position and rotation of the foodObject
         FoodObject.transform.localPosition = Vector3.zero;
-        FoodObject.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+        FoodObject.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
         // Get the Rigidbody component of the FoodObject
         Rigidbody foodRigidbody = FoodObject.GetComponent<Rigidbody>();
@@ -200,7 +200,7 @@ public class MC_WaiterAI : MonoBehaviour
         {
             case Task.PickUpFood:
                 navMeshAgent.SetDestination(pickUpLoc.position);
-
+                waiterAni.SetBool("Moving", true);
                 while (navMeshAgent.pathPending || navMeshAgent.remainingDistance > 0.1f)
                 {
                     yield return null;
@@ -209,12 +209,14 @@ public class MC_WaiterAI : MonoBehaviour
                 // After picking up the food, set the next task to DeliverFood
                 isFoodDelivery = true;
                 SetDishToDeliver(foodItem);
+                waiterAni.SetBool("Moving", false);
                 currentTask = Task.DeliverFood;
                 break;
 
             case Task.DeliverFood:
                 // Navigate to the waiting position and deliver the order
                 navMeshAgent.SetDestination(deliverLocation.position);
+                waiterAni.SetBool("Carrying", true);
                 Debug.Log("Delivery location");
                 while (navMeshAgent.pathPending || navMeshAgent.remainingDistance > 0.1f)
                 {
@@ -226,6 +228,7 @@ public class MC_WaiterAI : MonoBehaviour
 
                 // Set the foodObject's parent as the table's position
                 SetFoodOnTable(foodItem, deliverLocation);
+                waiterAni.SetBool("Carrying", false);
 
                 currentTask = Task.GoToWaiterArea;
                 break;
@@ -234,6 +237,7 @@ public class MC_WaiterAI : MonoBehaviour
             case Task.GoToCustomerTable:
                 // Implement logic to navigate to the customer's table
                 navMeshAgent.SetDestination(currentCustomers[0].transform.position);
+                waiterAni.SetBool("Moving", true);
 
                 while (navMeshAgent.pathPending || navMeshAgent.remainingDistance > 0.1f)
                 {
@@ -255,12 +259,11 @@ public class MC_WaiterAI : MonoBehaviour
                 {
                     Debug.LogWarning("No customer controller found for seat: " + customerSeat);
                 }
-
+                waiterAni.SetBool("Moving", false);
                 currentTask = Task.TakeOrder;
                 break;
 
             case Task.TakeOrder:
-
                 // Simulate order prompt delay
                 yield return new WaitForSeconds(orderPromptTime);
 
@@ -271,7 +274,7 @@ public class MC_WaiterAI : MonoBehaviour
             case Task.GoToWaiterArea:
                 // Implement logic to navigate back to the waiter area
                 navMeshAgent.SetDestination(waiterArea.position);
-
+                waiterAni.SetBool("Moving", true);
                 while (navMeshAgent.pathPending || navMeshAgent.remainingDistance > 0.1f)
                 {
                     yield return null;
@@ -279,6 +282,7 @@ public class MC_WaiterAI : MonoBehaviour
 
                 // Arrived at the waiter area, prompt the order
                 currentTask = Task.None;
+                waiterAni.SetBool("Moving", false);
                 break;
 
             // Add more cases for different tasks as needed

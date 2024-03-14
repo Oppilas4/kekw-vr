@@ -1,6 +1,7 @@
 using Kekw.VuoksiBotti;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MC_BotTalk : MonoBehaviour
@@ -25,6 +26,14 @@ public class MC_BotTalk : MonoBehaviour
     [SerializeField]
     [Tooltip("Audio tracks that robot can talk.")]
     AudioClip[] _audioClips;
+
+    [SerializeField]
+    [Tooltip("Text object where the text will be shown")]
+    TextMeshPro _textMeshProUGUI;
+
+    [SerializeField]
+    [Tooltip("Sentances to link to voice lines")]
+    private List<string> botTalk = new List<string>();
 
     bool _isTalking = false;
 
@@ -60,7 +69,16 @@ public class MC_BotTalk : MonoBehaviour
         {
             _isTalking = true;
             NotifyOtherComponents(true);
-            AudioClip temp = _audioClips[UnityEngine.Random.Range(0, _audioClips.Length)];
+
+            // Generate a random index
+            int randomIndex = UnityEngine.Random.Range(0, _audioClips.Length);
+
+            // Use the random index to select the audio clip and text string
+            AudioClip temp = _audioClips[randomIndex];
+            string textToShow = botTalk[randomIndex];
+
+            _textMeshProUGUI.text = textToShow;
+
             _audioSource.PlayOneShot(temp);
             StartCoroutine(WaitForSpeechEnd(temp.length + .5f));
         }
@@ -92,6 +110,7 @@ public class MC_BotTalk : MonoBehaviour
         yield return new WaitForSeconds(length);
         NotifyOtherComponents(false);
         _isTalking = false;
+        _textMeshProUGUI.text = null;
     }
 }
 

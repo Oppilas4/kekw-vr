@@ -20,6 +20,7 @@ public class MC_SeatManager : MonoBehaviour
 
     public List<Transform> tablePositions = new List<Transform>();
     public Dictionary<Transform, Transform> waitingToTablePosition = new Dictionary<Transform, Transform>();
+    public Dictionary<Transform, Transform> seatToTablePosition = new Dictionary<Transform, Transform>();
 
     // Define event for when a new seat is taken
     public delegate void SeatTakenEvent(Transform seatTransform, Transform waitingPosition);
@@ -36,6 +37,11 @@ public class MC_SeatManager : MonoBehaviour
         for (int i = 0; i < tablePositions.Count; i++)
         {
             waitingToTablePosition.Add(waitingPositions[i], tablePositions[i]);
+        }
+
+        for (int i = 0; i < tablePositions.Count; i++)
+        {
+            seatToTablePosition.Add(seatPositions[i], tablePositions[i]);
         }
     }
 
@@ -65,6 +71,22 @@ public class MC_SeatManager : MonoBehaviour
         {
             // Handle the case when the waiting location is not found in the dictionary
             Debug.LogWarning("Table position not found for waiting location: " + waitingLocation);
+            return null; // or another default value, depending on your requirements
+        }
+    }
+
+    public Transform GetTablePositionFromSeatLocation(Transform seatLocation)
+    {
+        // Check if the waiting location exists in the dictionary
+        if (seatToTablePosition.TryGetValue(seatLocation, out Transform tablePosition))
+        {
+            // Return the corresponding table position
+            return tablePosition;
+        }
+        else
+        {
+            // Handle the case when the waiting location is not found in the dictionary
+            Debug.LogWarning("Table position not found for waiting location: " + seatLocation);
             return null; // or another default value, depending on your requirements
         }
     }
