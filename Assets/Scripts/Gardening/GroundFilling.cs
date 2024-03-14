@@ -6,6 +6,9 @@ namespace Gardening
 {
     public class GroundFilling : MonoBehaviour
     {
+        public bool isFilled = false;
+        public bool isCurrentlyFilling = false;
+
         [SerializeField] private float fillRate, stepSize;
         [SerializeField] private Transform groundTransform;
         [SerializeField] private Transform lowerBound, upperBound;
@@ -47,17 +50,26 @@ namespace Gardening
             _currentCoroutine = FillCoroutine();
             StartCoroutine(_currentCoroutine);
         }
-        public void StopFill() => StopCoroutine(_currentCoroutine);
+        public void StopFill()
+        {
+            StopCoroutine(_currentCoroutine);
+            isCurrentlyFilling = false;
+        }
         
         private IEnumerator FillCoroutine()
         {
+            isCurrentlyFilling = true;
             while (true)
             {
                 switch (_direction)
                 {
                     case > 0 when groundTransform.localPosition.y > upperBound.localPosition.y:
                     case < 0 when groundTransform.localPosition.y < lowerBound.localPosition.y:
+                    {
+                        isFilled = true;
+                        isCurrentlyFilling = false;
                         yield break;
+                    }
                 }
 
                 groundTransform.localPosition += Vector3.up * (stepSize * _direction);

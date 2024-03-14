@@ -8,16 +8,35 @@ namespace Gardening
     {
         public Flower flower;
         private bool _isSeedPlanted;
-        private bool _isFilledWithDirt;
+        private GroundFilling _groundFillerScript;
+        private float _timeFillInactive = 0.0f;
+
+        private void Start()
+        {
+            _groundFillerScript = GetComponent<GroundFilling>();
+        }
+
+        private void Update()
+        {
+            if (_groundFillerScript.isCurrentlyFilling)
+            {
+                _timeFillInactive += Time.deltaTime;
+                if (_timeFillInactive > 0.2f)
+                {
+                    _groundFillerScript.StopFill();
+                }
+            }
+        }
 
         private void OnParticleCollision(GameObject other)
         {
             if (other.CompareTag("Dirt"))
             {
-
+                _timeFillInactive = 0f;
+                if (!_groundFillerScript.isCurrentlyFilling)
+                    _groundFillerScript.StartFill();
             }
-
-            if (!_isFilledWithDirt)
+            if (!_groundFillerScript.isFilled)
                 return;
 
             if (other.CompareTag("Seed"))
