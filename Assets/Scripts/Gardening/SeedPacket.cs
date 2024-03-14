@@ -4,14 +4,7 @@ namespace Gardening
 {
     public class SeedPacket : MonoBehaviour
     {
-        public enum SeedType
-        {
-            Box,
-            Sphere,
-        }
-
-        // Seed type, checked on collision in flower pot code
-        public SeedType seed;
+        public GameObject associatedPlant;
         [SerializeField]
         private ParticleSystem _seedParticles;
 
