@@ -982,6 +982,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "PrimaryAction",
+                    "type": "Button",
+                    "id": "433d048e-f510-4b39-a098-a96de1de1475",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1070,6 +1079,17 @@
                     "processors": "ScaleVector2(x=0),StickDeadzone",
                     "groups": "Generic XR Controller",
                     "action": "Translate Anchor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a5050dc4-edc3-4f1e-bdde-11caf4688add",
+                    "path": "*/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "PrimaryAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
