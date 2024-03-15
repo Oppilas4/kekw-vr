@@ -7,14 +7,12 @@ namespace Gardening
 {
     public class FlowerPot : MonoBehaviour
     {
-        public Flower flower;
-        private bool _isSeedPlanted;
-        private GroundFilling _groundFillerScript;
-        private float _timeFillInactive = 0.0f;
         public Plant plant { get; private set; }
         [SerializeField] private Transform _plantRootsPosition;
         private bool _isSeedPlanted = false;
-        private bool _isFilledWithDirt;
+
+        private GroundFilling _groundFillerScript;
+        private float _timeFillInactive = 0.0f;
 
         private void Start()
         {

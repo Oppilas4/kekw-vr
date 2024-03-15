@@ -43,8 +43,6 @@ public class Plant : MonoBehaviour
         _lerpedValue = Mathf.Lerp(0, _flowerGrownScale.x, _timeElapsed);
         if (_lerpedValue >= _flowerGrownScale.x)
             _grown = true;
-        _flowerTransform.localScale = new Vector3(_lerpedValue, _lerpedValue, _lerpedValue);
-        Debug.Log(_flowerTransform.localScale.y);
-        Debug.Log(_lerpedValue);
+        _flowerTransform.localScale = new Vector3(_lerpedValue, _lerpedValue, _lerpedValue);;
     }
 }             

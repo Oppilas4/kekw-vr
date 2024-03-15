@@ -41,8 +41,18 @@ namespace Gardening
             _direction = direction switch
             {
                 GroundFillingMode.Fill => 1,
-                GroundFillingMode.TakeOut => -1
+                GroundFillingMode.TakeOut => -1,
+                _ => throw new NotSupportedException()
             };
+            //switch(direction)
+            //{
+            //    case GroundFillingMode.Fill:
+            //        _direction = 1f;
+            //        break;
+            //    case GroundFillingMode.TakeOut:
+            //        _direction = -1f;
+            //        break;
+            //}
         }
 
         public void StartFill()
