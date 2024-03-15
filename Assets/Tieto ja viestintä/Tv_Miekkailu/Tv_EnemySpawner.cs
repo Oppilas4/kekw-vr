@@ -4,38 +4,43 @@ using UnityEngine;
 public class Tv_EnemySpawner : MonoBehaviour
 {
     public GameObject enemy1Prefab, enemy2Prefab;
-    public int totalEnemy1ToSpawn, totalEnemy2ToSpawn;
+    public int totalEnemy1ToSpawn, totalEnemy2ToSpawn, allnemies, enemiesSpawned;
     public Transform[] spawnPoints;
     public float timeBetweenSpawns = 2.0f;
     public float spawnCooldown = 1.0f;
-
-    private int enemiesSpawned = 0;
+    
+    private int enemiesMeleeSpawned = 0;
+    private int enemiesRangedSpawned = 0;
     private bool isSpawning = false;
 
     void Start()
     {
+        allnemies = totalEnemy1ToSpawn + totalEnemy2ToSpawn;
+        enemiesSpawned = totalEnemy1ToSpawn + totalEnemy2ToSpawn;
         StartCoroutine(SpawnEnemies());
+        
     }
 
     IEnumerator SpawnEnemies()
     {
         yield return new WaitForSeconds(spawnCooldown);
 
-        // Spawn enemy1Prefab
-        for (int i = 0; i < totalEnemy1ToSpawn; i++)
+        for (int i = 0; i < allnemies; i++)
         {
+            int jees = Random.Range(0, 100);
             Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            Instantiate(enemy1Prefab, spawnPoint.position, spawnPoint.rotation);
-            enemiesSpawned++;
-            yield return new WaitForSeconds(timeBetweenSpawns);
-        }
+            if(jees <= 25 && enemiesMeleeSpawned <= totalEnemy1ToSpawn)
+            {
+                Instantiate(enemy1Prefab, spawnPoint.position, spawnPoint.rotation);
+                enemiesMeleeSpawned++;
+            }
 
-        // Spawn enemy2Prefab
-        for (int i = 0; i < totalEnemy2ToSpawn; i++)
-        {
-            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            Instantiate(enemy2Prefab, spawnPoint.position, spawnPoint.rotation);
-            enemiesSpawned++;
+            else if (enemiesRangedSpawned <= totalEnemy2ToSpawn)
+            {
+                Instantiate(enemy2Prefab, spawnPoint.position, spawnPoint.rotation);
+                enemiesRangedSpawned++;
+            }
+            
             yield return new WaitForSeconds(timeBetweenSpawns);
         }
     }

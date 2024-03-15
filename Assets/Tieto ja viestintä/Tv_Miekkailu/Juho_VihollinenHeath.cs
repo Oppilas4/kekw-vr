@@ -6,10 +6,9 @@ public class Juho_VihollinenHeath : MonoBehaviour
 {
     public int maxHealth;
     int currentHealth;
-    public Juho_VihollinenLiikkumis movement;
     Tv_EnemySpawner spawner;
     bool hasRemoved = false;
-    public CapsuleCollider capCollider;
+    
 
     private void Start()
     {
@@ -28,8 +27,6 @@ public class Juho_VihollinenHeath : MonoBehaviour
                 hasRemoved = true;
                 spawner = FindObjectOfType<Tv_EnemySpawner>();
                 spawner.KillEnemy();
-                movement.enabled = false;
-                capCollider.enabled = false;
             }
         }
     }
