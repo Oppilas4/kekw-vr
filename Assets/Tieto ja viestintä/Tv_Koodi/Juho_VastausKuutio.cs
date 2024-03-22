@@ -8,6 +8,7 @@ public class Juho_VastausKuutio : MonoBehaviour
 {
     public string koodiNimiKuutiolle;
     public TMP_Text kuutionTeksti;
+    public GameObject particleRefSystem;
     Vector3 resetTransform;
 
     public void Start()

@@ -20,6 +20,8 @@ public class Juho_Slice : MonoBehaviour
             GameObject target = hit.transform.gameObject;
             if(target.CompareTag("Jami_Enemy"))
             {
+                Juho_VihollinenHeath healt = target.GetComponent<Juho_VihollinenHeath>();
+                healt.TakeDamage();
                 Juho_Dissolve dissolve = target.GetComponent<Juho_Dissolve>();
                 color = dissolve.color;
                 Slice(target);

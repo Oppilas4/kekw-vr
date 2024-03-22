@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class Tv_EnemySpawner : MonoBehaviour
 {
-    public GameObject enemy1Prefab, enemy2Prefab;
+    public GameObject enemy1Prefab, enemy2Prefab, teleport;
     public int totalEnemy1ToSpawn, totalEnemy2ToSpawn, allnemies, enemiesSpawned;
     public Transform[] spawnPoints;
     public float timeBetweenSpawns = 2.0f;
     public float spawnCooldown = 1.0f;
     
-    private int enemiesMeleeSpawned = 0;
-    private int enemiesRangedSpawned = 0;
+    public int enemiesMeleeSpawned = 0;
+    public int enemiesRangedSpawned = 0;
     private bool isSpawning = false;
 
     void Start()
@@ -18,7 +18,6 @@ public class Tv_EnemySpawner : MonoBehaviour
         allnemies = totalEnemy1ToSpawn + totalEnemy2ToSpawn;
         enemiesSpawned = totalEnemy1ToSpawn + totalEnemy2ToSpawn;
         StartCoroutine(SpawnEnemies());
-        
     }
 
     IEnumerator SpawnEnemies()
@@ -27,20 +26,20 @@ public class Tv_EnemySpawner : MonoBehaviour
 
         for (int i = 0; i < allnemies; i++)
         {
-            int jees = Random.Range(0, 100);
+            
             Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            if(jees <= 25 && enemiesMeleeSpawned <= totalEnemy1ToSpawn)
-            {
+            if (totalEnemy1ToSpawn > enemiesMeleeSpawned)
+            {        
                 Instantiate(enemy1Prefab, spawnPoint.position, spawnPoint.rotation);
                 enemiesMeleeSpawned++;
             }
 
-            else if (enemiesRangedSpawned <= totalEnemy2ToSpawn)
+             if (totalEnemy2ToSpawn  > enemiesRangedSpawned)
             {
-                Instantiate(enemy2Prefab, spawnPoint.position, spawnPoint.rotation);
+                Instantiate(enemy2Prefab, spawnPoint.position, spawnPoint.rotation); 
                 enemiesRangedSpawned++;
             }
-            
+           
             yield return new WaitForSeconds(timeBetweenSpawns);
         }
     }
@@ -61,8 +60,7 @@ public class Tv_EnemySpawner : MonoBehaviour
         enemiesSpawned--;
         if (!isSpawning && enemiesSpawned <= 0)
         {
-            // Activate other objects when all enemies are killed
-            gameObject.SetActive(true);
+            teleport.SetActive(true);    
         }
     }
 }

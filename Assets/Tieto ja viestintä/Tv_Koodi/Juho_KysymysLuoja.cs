@@ -20,9 +20,6 @@ public class Juho_KysymysLuoja : MonoBehaviour
     public TMP_Text kysymysTeksti;
     [SerializeField] Juho_VastausKuutio[] vastausKuutioReferencet;
 
-    [Space(15)]
-    [Header("Vaikeat Verto Kysymykset")]
-    [Space(10)]
     public GameObject vaikeaTaulutParent;
     public VaikeatKysymykset[] vaikeaKysymykset;
     [HideInInspector] public List<VaikeatKysymykset> j‰ljell‰OlevatVaikeatKysymykset;
@@ -59,7 +56,7 @@ public class Juho_KysymysLuoja : MonoBehaviour
         vaikeaVastausKohtaNelj‰.AsetaKuutio(nykyinenVaikeaKysymys.fourthRowAnswer);
     }
 
-    public IEnumerator PalautaKuutiot()
+    /*public IEnumerator PalautaKuutiot()
     {
         foreach (var vastausKuutiot in vastausKuutioReferencet)
         {
@@ -76,4 +73,5 @@ public class Juho_KysymysLuoja : MonoBehaviour
         vaikeaRiviKolmeKuutioSlot.socketActive = true;
         vaikeaRiviNelj‰KuutioSlot.socketActive = true;
     }
+    */
 }

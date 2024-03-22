@@ -202,8 +202,9 @@ MonoBehaviour:
     type: 3}
   enemy2Prefab: {fileID: 6795006092006066944, guid: d627b6d69d2d831419c7d16b64b45ce9,
     type: 3}
-  totalEnemy1ToSpawn: 20
-  totalEnemy2ToSpawn: 10
+  teleport: {fileID: 132798751}
+  totalEnemy1ToSpawn: 5
+  totalEnemy2ToSpawn: 2
   allnemies: 0
   enemiesSpawned: 0
   spawnPoints:
@@ -214,6 +215,8 @@ MonoBehaviour:
   - {fileID: 178689830}
   timeBetweenSpawns: 1
   spawnCooldown: 2
+  enemiesMeleeSpawned: 0
+  enemiesRangedSpawned: 0
 --- !u!4 &46336808
 Transform:
   m_ObjectHideFlags: 0
@@ -331,6 +334,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &132798751 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7823370713024384238, guid: b0e90a3617ef25845ac8d7ab95ac5bb7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1683108572}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &178689829
 GameObject:
   m_ObjectHideFlags: 0
