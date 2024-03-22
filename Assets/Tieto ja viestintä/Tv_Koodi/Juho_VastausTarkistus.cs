@@ -26,7 +26,6 @@ public class Juho_VastausTarkistus : MonoBehaviour
     {
         if(voikoNappiaPainaa)
         {
-            int difficulty = kysymysLuoja.vaikeusID;
             TarkistaOnkoVastausOikein(difficulty);
         }
     }
