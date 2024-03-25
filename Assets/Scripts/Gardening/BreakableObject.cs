@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Gardening
 {
-    public class Breaking : MonoBehaviour
+    public class BreakableObject : MonoBehaviour
     {
         [SerializeField] private GameObject _brokenPrefab;
 
@@ -12,9 +12,14 @@ namespace Gardening
                 return;
 
             if (collision.relativeVelocity.magnitude > 5f){
-                Instantiate(_brokenPrefab, gameObject.transform.position, gameObject.transform.rotation);
-                Destroy(gameObject);
+                BreakObject();
             }
+        }
+
+        private void BreakObject()
+        {
+            Instantiate(_brokenPrefab, gameObject.transform.position, gameObject.transform.rotation);
+            Destroy(gameObject);
         }
     }
 }
