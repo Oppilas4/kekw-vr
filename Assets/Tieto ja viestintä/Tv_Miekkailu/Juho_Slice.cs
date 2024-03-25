@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using EzySlice;
+using static UnityEngine.GraphicsBuffer;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Juho_Slice : MonoBehaviour
 {
@@ -12,13 +14,17 @@ public class Juho_Slice : MonoBehaviour
     public LayerMask layer;
     Color color;
 
+    public float knockback = 30;
+
+    [System.Obsolete]
     private void FixedUpdate()
     {
         bool hasHit = Physics.Linecast(startSlicePoint.position, endSlicePoint.position, out RaycastHit hit, layer);
-        if(hasHit)
+        if (hasHit)
         {
+            SendHaptics();
             GameObject target = hit.transform.gameObject;
-            if(target.CompareTag("Jami_Enemy"))
+            if (target.CompareTag("Jami_Enemy"))
             {
                 Juho_VihollinenHeath healt = target.GetComponent<Juho_VihollinenHeath>();
                 healt.TakeDamage();
@@ -37,7 +43,7 @@ public class Juho_Slice : MonoBehaviour
 
         SlicedHull hull = target.Slice(endSlicePoint.position, planeNormal);
 
-        if(hull != null)
+        if (hull != null)
         {
             GameObject upperHull = hull.CreateUpperHull(target);
             SetupSlicedComponent(upperHull);
@@ -58,7 +64,18 @@ public class Juho_Slice : MonoBehaviour
         matTest.StartDissolve();
         Rigidbody rb = slicedObject.AddComponent<Rigidbody>();
         rb.mass = .8f;
+        rb.constraints = RigidbodyConstraints.None;
+        Vector3 direction = (slicedObject.transform.position - startSlicePoint.position).normalized;
+        rb.AddForce(direction * knockback);
         MeshCollider collider = slicedObject.AddComponent<MeshCollider>();
         collider.convex = true;
     }
+
+
+        [System.Obsolete]
+        public void SendHaptics()
+        {
+            XRBaseControllerInteractor hand = (XRBaseControllerInteractor)GetComponent<XRBaseInteractable>().selectingInteractor;
+            hand.SendHapticImpulse(0.4f, 0.1f);
+        }
 }

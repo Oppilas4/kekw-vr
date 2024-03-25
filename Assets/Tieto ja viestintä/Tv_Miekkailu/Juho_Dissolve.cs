@@ -9,6 +9,7 @@ public class Juho_Dissolve : MonoBehaviour
     public Material newlyCreatedDissolveMat;
     public MeshRenderer meshRenderer;
 
+
     public void StartDissolve()
     {
         StartCoroutine(DissolveEnemy());
@@ -27,6 +28,8 @@ public class Juho_Dissolve : MonoBehaviour
         }
         meshRenderer.materials = materials;
     }
+
+
 
     IEnumerator DissolveEnemy()
     {
