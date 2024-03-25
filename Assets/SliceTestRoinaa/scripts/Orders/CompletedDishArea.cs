@@ -10,6 +10,7 @@ public class CompletedDishArea : MonoBehaviour
     public UnityEvent _calculateDish = new UnityEvent();
     public UnityEvent<string> _sendSteakTemperature = new UnityEvent<string>();
     public UnityEvent<int> _completeOrder = new UnityEvent<int>();
+    public UnityEvent<GameObject> _objectToDeliver = new UnityEvent<GameObject>();
 
     public static GameObject currentDish; // Store the current dish in the serving area
     public string ticketDishName; // Store the current order
@@ -88,6 +89,8 @@ public class CompletedDishArea : MonoBehaviour
                     {
                         Debug.LogError("Unexpected orderID format");
                     }
+
+                    Destroy(collider.gameObject);
                 }
             }
         }
@@ -99,6 +102,7 @@ public class CompletedDishArea : MonoBehaviour
             SetCurrentDish(foundDish); // Set the current dish
             _calculateDish.Invoke(); // Trigger the _calculateDish event
             _completeOrder.Invoke(orderID);
+            _objectToDeliver.Invoke(currentDish);
             if (ticketDishName == "Dish: Steak")
             {
                 _sendSteakTemperature.Invoke(steakTemperature);

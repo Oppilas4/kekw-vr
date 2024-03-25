@@ -13,14 +13,13 @@ public class MC_BoilingController : MonoBehaviour
         // Assuming the pot tag is "Pot"
         if (other.CompareTag("Pot"))
         {
-            // Get the MC_PotController script from the pot object
-            potController = other.GetComponent<MC_PotController>();
-
+            // check if the object is hot.
+            IHotObject hotObject = other.gameObject.GetComponent<IHotObject>();
             // Check if the pot is filled and if the water is boiling
-            if (potController != null && potController.isPotFilled && potController.boilingParticles.isPlaying)
+            if (hotObject != null && HotObjectManager.IsObjectHot(hotObject))
             {
-                // Find the timerObject as a child of the pot object
-                timerObject = other.transform.Find("CookingTimer").gameObject;
+                Transform firstChild = other.transform.GetChild(0);
+                timerObject = firstChild.gameObject;
 
                 // Check if timerObject is found before attempting to access its components
                 if (timerObject != null)

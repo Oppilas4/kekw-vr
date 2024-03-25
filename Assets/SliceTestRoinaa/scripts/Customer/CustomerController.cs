@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class CustomerController : MonoBehaviour
 {
-    private Customer customer;
+    public Customer customer;
     private OrderManager orderManager;
+    public MC_CustomerAI customerAI;
 
     void Update()
     {
@@ -25,13 +26,25 @@ public class CustomerController : MonoBehaviour
     {
         if (customer.currentOrder == null)
         {
-            orderManager.GenerateRandomOrder(customer);
+            customerAI.orderPlaced = true;
+            orderManager.GenerateRandomOrder(customer, customerAI.waitingPosition);
             Debug.Log($"Customer {customer.customerId} placed an order: {customer.currentOrder.dishName} - Expiration Time: {customer.currentOrder.expirationTime}");
         }
         else
         {
             Debug.Log($"Customer {customer.customerId} already has an order.");
         }
+    }
+
+    public void OrderReady()
+    {
+        customerAI.GetFood();
+    }
+
+    private void OnDestroy()
+    {
+        MC_CustomerSpawner customerSpawner = FindAnyObjectByType<MC_CustomerSpawner>();
+        customerSpawner.CustomerLeft();
     }
 
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
-using Unity.Collections.LowLevel.Unsafe;
+using UnityEngine.VFX;
+using System.Data;
 
 public class StoveController : MonoBehaviour, IHotObject
 {
@@ -11,6 +12,16 @@ public class StoveController : MonoBehaviour, IHotObject
     private bool isCoroutineRunning = false; // Flag to check if the coroutine is running
     private MC_BurnerHelper currentBurnerHelper;
 
+    public GameObject oilObject;
+    private Renderer oilRend;
+    public ParticleSystem fryingEffect;
+    private MC_FryableObjectHelper fryableObject;
+
+    public MC_PourController pourController;
+    public VisualEffect pourEffect;
+    private bool isPouring;
+    
+
     private void OnEnable()
     {
         HotObjectManager.RegisterHotObject(this);
@@ -19,6 +30,42 @@ public class StoveController : MonoBehaviour, IHotObject
     private void OnDisable()
     {
         HotObjectManager.UnregisterHotObject(this);
+    }
+
+    void Start()
+    {
+        oilRend = oilObject.GetComponent<Renderer>();
+    }
+
+    void Update()
+    {
+        if (pourController.IsContainerTilted() && oilRend.material.GetFloat("_Fill") > 0)
+        {
+            if(!isPouring)
+            {
+                pourController.SetPourPosition(pourEffect);
+            }
+            float fillLevel = oilRend.material.GetFloat("_Fill");
+            if (fillLevel < 0.02f)
+            {
+                // Get the current Vector2 value of _RemapOut
+                Vector2 currentRemapOut = oilRend.material.GetVector("_RemapOut");
+
+                // Set the x value to -0.1777 and keep the y value the same
+                Vector2 newRemapOut = new Vector2(-0.1777f, currentRemapOut.y);
+
+                // Set the new Vector2 value for _RemapOut
+                oilRend.material.SetVector("_RemapOut", newRemapOut);
+            }
+
+            pourController.PourLiquid(pourEffect, oilRend, fillLevel);
+            isPouring = true;
+        }
+        else
+        {
+            pourEffect.SendEvent("Stop");
+            isPouring = false;
+        }
     }
 
     public void SetHot(bool isHot)
@@ -60,6 +107,19 @@ public class StoveController : MonoBehaviour, IHotObject
                 currentSteak.StartCooking();
             }
         }
+
+        fryableObject = collision.gameObject.GetComponent<MC_FryableObjectHelper>();
+
+        if (fryableObject != null && oilRend.material.GetFloat("_Fill") > 0 && IsHot())
+        {
+            // Enable the frying particle effect
+            fryingEffect.Play();
+            // Start frying if not already frying
+            if (!fryableObject.IsFrying)
+            {
+                fryableObject.StartFrying();
+            }
+        }
     }
 
     void OnCollisionExit(Collision collision)
@@ -72,6 +132,14 @@ public class StoveController : MonoBehaviour, IHotObject
                 steakController.StopCooking();
                 currentSteak = null;
             }
+        }
+
+        if (fryableObject != null && fryableObject.IsFrying)
+        {
+            // Disable the frying particle effect
+            fryingEffect.Stop();
+            // Stop frying if it was started
+            fryableObject.StopFrying();
         }
     }
 
@@ -129,6 +197,26 @@ public class StoveController : MonoBehaviour, IHotObject
                     StartCoroutine(panHeatCoroutine());
                 }
             }
+        }
+
+        if (other.gameObject.CompareTag("OilBottle"))
+        {
+            // Get the current Vector2 value of _RemapOut
+            Vector2 currentRemapOut = oilRend.material.GetVector("_RemapOut");
+
+            // Set the x value to -0.006 and keep the y value the same
+            Vector2 newRemapOut = new Vector2(-0.006f, currentRemapOut.y);
+
+            // Set the new Vector2 value for _RemapOut
+            oilRend.material.SetVector("_RemapOut", newRemapOut);
+
+            float currentFill = oilRend.material.GetFloat("_Fill");
+
+            // Increase the fill value slowly from  0 to  1
+            currentFill = Mathf.MoveTowards(currentFill, 1f, 0.1f * Time.deltaTime);
+
+            // Set the new fill value
+            oilRend.material.SetFloat("_Fill", currentFill);
         }
     }
 

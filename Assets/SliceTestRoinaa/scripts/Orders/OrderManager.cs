@@ -8,8 +8,14 @@ public class OrderManager : MonoBehaviour
     public List<string> availableDishes;
     public UnityEvent orderPlacedEvent;
     public GameObject orderTicketPrefab;
+    public Transform ticketSpawnLoc;
 
     private List<Order> activeOrders = new List<Order>();
+
+    // Define a delegate for the event
+    public delegate void OrderPlacedDelegate(int orderId, Transform waitingPosition);
+    // Define the event
+    public event OrderPlacedDelegate OnOrderPlaced;
 
     public enum SteakTemperature
     {
@@ -18,7 +24,7 @@ public class OrderManager : MonoBehaviour
         WellDone
     }
 
-    public void GenerateRandomOrder(Customer customer)
+    public void GenerateRandomOrder(Customer customer, Transform waitingPosition)
     {
         Order newOrder = new Order
         {
@@ -41,12 +47,17 @@ public class OrderManager : MonoBehaviour
 
         // Instantiate an order ticket
         InstantiateOrderTicket(newOrder);
+
+        // Invoke the event after the order is placed
+        OnOrderPlaced?.Invoke(newOrder.orderId, waitingPosition);
     }
 
     private void InstantiateOrderTicket(Order order)
     {
         // Instantiate the order ticket prefab
-        GameObject orderTicketObject = Instantiate(orderTicketPrefab);
+        GameObject orderTicketObject = Instantiate(orderTicketPrefab, ticketSpawnLoc.position, Quaternion.identity);
+
+        order.orderTicketObject = orderTicketObject;
 
         // Get the OrderTicket component
         OrderTicket orderTicket = orderTicketObject.GetComponent<OrderTicket>();
@@ -64,6 +75,13 @@ public class OrderManager : MonoBehaviour
                 // Order expired
                 // Trigger an event or handle expiration as needed
                 Debug.Log("order " + activeOrders[i].orderId + " expired");
+
+                // Destroy the order ticket GameObject
+                if (activeOrders[i].orderTicketObject != null)
+                {
+                    Destroy(activeOrders[i].orderTicketObject);
+                }
+
                 activeOrders.RemoveAt(i);
             }
         }
