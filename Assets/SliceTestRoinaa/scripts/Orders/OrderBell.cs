@@ -7,7 +7,7 @@ using Kekw.Interaction;
 public class OrderBell : MonoBehaviour
 {
     public UnityEvent _orderReady = new UnityEvent();
-
+    public Animator ani;
     // Hand that presses button
     string _handTag = null;
 
@@ -36,12 +36,13 @@ public class OrderBell : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.CompareTag("RightHand") || collision.gameObject.CompareTag("LeftHand"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("PepeHands"))
         {
             _handTag = collision.gameObject.tag;
             SendHapticFeedback(_hapticForce, _hapticDuration);
+            ani.SetTrigger("Ding");
             _orderReady.Invoke();
         }
     }

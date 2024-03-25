@@ -19,21 +19,23 @@ public class PlateController : MonoBehaviour
         {
             // Wait for the specified delay before parenting
             yield return new WaitForSeconds(delayBeforeParenting);
-
-            // Remove XRGrabInteractable script if it exists
-            XRGrabInteractable grabInteractable = other.GetComponent<XRGrabInteractable>();
-            if (grabInteractable != null)
+            if (other.GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds))
             {
-                Destroy(grabInteractable);
+                // Remove XRGrabInteractable script if it exists
+                XRGrabInteractable grabInteractable = other.GetComponent<XRGrabInteractable>();
+                if (grabInteractable != null)
+                {
+                    Destroy(grabInteractable);
+                }
+
+                Destroy(GetComponentInChildren<Rigidbody>());
+
+                // Parent the sliced vegetable to the plate
+                other.transform.parent = transform;
+
+                // Add the sliced vegetable to the list
+                vegetablePiecesOnPlate.Add(other.gameObject);
             }
-
-            Destroy(GetComponentInChildren<Rigidbody>());
-
-            // Parent the sliced vegetable to the plate
-            other.transform.parent = transform;
-
-            // Add the sliced vegetable to the list
-            vegetablePiecesOnPlate.Add(other.gameObject);
         }
     }
 
