@@ -8,7 +8,7 @@ namespace Gardening
     public class FlowerPot : MonoBehaviour
     {
         public Plant plant { get; private set; }
-        [SerializeField] private Transform _plantRootsPosition;
+        [SerializeField] private Transform _plantRootsTransform;
         private bool _isSeedPlanted = false;
 
         private GroundFilling _groundFillerScript;
@@ -18,7 +18,6 @@ namespace Gardening
         private void Start()
         {
             _groundFillerScript = GetComponent<GroundFilling>();
-            plant.PlantThePlant();
         }
 
         private void Update()
@@ -62,7 +61,7 @@ namespace Gardening
                 {
                     Quaternion sproutRotation = Quaternion.identity;
                     sproutRotation.eulerAngles = new Vector3(-90, 0, 0);
-                    plant = Instantiate(seedPacket.associatedPlant, _plantRootsPosition.position, sproutRotation);
+                    plant = Instantiate(seedPacket.associatedPlant, _plantRootsTransform);
                     plant.PlantThePlant();
                     plant.transform.parent = transform;
                     _isSeedPlanted = true;

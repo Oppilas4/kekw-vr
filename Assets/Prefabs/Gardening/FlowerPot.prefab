@@ -70,6 +70,7 @@ Transform:
   - {fileID: 4532852139807139987}
   - {fileID: 6140185914003121945}
   - {fileID: 4051589282017144595}
+  - {fileID: 7670721038156277955}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -326,7 +327,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8756ebcc5add1b143827cdedf451964e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _plantRootsPosition: {fileID: 4051589282017144595}
+  _plantRootsTransform: {fileID: 7670721038156277955}
+--- !u!1 &5866245782164083452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7670721038156277955}
+  m_Layer: 20
+  m_Name: plant roots transform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7670721038156277955
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5866245782164083452}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.493, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5740097563702295497}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9047674106570663383
 GameObject:
   m_ObjectHideFlags: 0
