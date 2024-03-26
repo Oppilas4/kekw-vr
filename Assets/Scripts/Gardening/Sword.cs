@@ -36,7 +36,6 @@ namespace Gardening
 
         private void Slice(GameObject target)
         {
-            Debug.Log("Slice called");
             Vector3 velocity = _velocityEstimator.GetVelocityEstimate();
             Vector3 planeNormal = Vector3.Cross(_sliceEnd.position - _sliceStart.position, velocity);
             planeNormal.Normalize();
