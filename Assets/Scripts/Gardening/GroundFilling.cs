@@ -42,6 +42,15 @@ namespace Gardening
                 GroundFillingMode.TakeOut => -1,
                 _ => throw new NotSupportedException()
             };
+            //switch(direction)
+            //{
+            //    case GroundFillingMode.Fill:
+            //        _direction = 1f;
+            //        break;
+            //    case GroundFillingMode.TakeOut:
+            //        _direction = -1f;
+            //        break;
+            //}
         }
 
         public void StartFillingAndCoroutine()

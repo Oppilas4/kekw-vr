@@ -4,7 +4,7 @@ namespace Gardening
 {
     public class SeedPacket : MonoBehaviour
     {
-        public GameObject associatedPlant;
+        public Plant associatedPlant;
         [SerializeField]
         private ParticleSystem _seedParticles;
 
