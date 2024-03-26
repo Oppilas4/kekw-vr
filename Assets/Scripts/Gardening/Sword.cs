@@ -14,6 +14,8 @@ namespace Gardening
         private VelocityEstimator _velocityEstimator;
         [SerializeField]
         private LayerMask _sliceableLayer;
+        [SerializeField]
+        private float _sliceMassMultiplier = 1.0f;
 
         private bool _canSlice = true;
         private float _sliceCooldown = 0.5f;
@@ -64,9 +66,11 @@ namespace Gardening
             {
                 slicedObject.layer = interactableLayer;
                 Rigidbody rb = slicedObject.AddComponent<Rigidbody>();
-                rb.mass = 0.1f;
                 MeshCollider collider = slicedObject.AddComponent<MeshCollider>();
                 collider.convex = true;
+                // Assuming the rigidbody is always a cuboid to avoid expensive per-triangle calculations
+                float volume = collider.bounds.size.x * collider.bounds.size.y * collider.bounds.size.z;
+                rb.mass = volume * _sliceMassMultiplier;
 
                 // Add the vegetableController to the sliced object
                 var newSlicedScript = slicedObject.AddComponent<SliceablePlant>();
