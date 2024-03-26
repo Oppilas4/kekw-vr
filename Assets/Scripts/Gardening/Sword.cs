@@ -72,7 +72,6 @@ namespace Gardening
                 float volume = collider.bounds.size.x * collider.bounds.size.y * collider.bounds.size.z;
                 rb.mass = volume * _sliceMassMultiplier;
 
-                // Add the vegetableController to the sliced object
                 var newSlicedScript = slicedObject.AddComponent<SliceablePlant>();
                 newSlicedScript.sliceMaterial = sliceable.sliceMaterial;
             }
