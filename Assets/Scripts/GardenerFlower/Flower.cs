@@ -1,10 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-public class Plant : MonoBehaviour
+public class Flower : MonoBehaviour
 {
     [SerializeField] private float _growthSpeed;
     [SerializeField] private int _growthTime;
@@ -15,23 +14,21 @@ public class Plant : MonoBehaviour
     private float _lerpedValue;  // Value of the Mathf.Lerp()
     private float _timeElapsed;  // 3rd, "t" parameter of the Mathf.Lerp()
 
-
+    private int[,] _growthCountBoxes;
 
     /// <summary>
     /// Sets flower to the default values
     /// </summary>
-    public void PlantThePlant(Transform rootTransform)
+    public void SetToInitial()
     {
-        Debug.Log("Planted");
-        _flowerTransform = rootTransform;
-        Debug.Log("Flower grown scale: " + _flowerGrownScale);
+        _flowerTransform = GetComponent<Transform>();
+        _flowerGrownScale = _flowerTransform.localScale;
 
         _grown = false;
         _growthSpeed = _growthSpeed / 10;
+        Debug.Log(_growthSpeed);
 
-        GameObject gameObject = Selection.activeGameObject;
-        Undo.RecordObject(gameObject.transform, "Set scale to sprout");
-        _flowerTransform.localScale = new Vector3(0, 0, 0); //Setting flower to the sprout scale
+        _flowerTransform.localScale = new Vector3(0,0,0); //Setting flower to the sprout scale
     }
 
     public void GrowFlower()
@@ -42,6 +39,8 @@ public class Plant : MonoBehaviour
         _lerpedValue = Mathf.Lerp(0, _flowerGrownScale.x, _timeElapsed);
         if (_lerpedValue >= _flowerGrownScale.x)
             _grown = true;
-        _flowerTransform.localScale = new Vector3(_lerpedValue, _lerpedValue, _lerpedValue);;
+        _flowerTransform.localScale = new Vector3(_lerpedValue, _lerpedValue, _lerpedValue);
+        Debug.Log(_flowerTransform.localScale.y);
+        Debug.Log(_lerpedValue);
     }
 }             

@@ -1,6 +1,3 @@
-using Kekw.Interaction;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gardening
@@ -48,8 +45,8 @@ namespace Gardening
                 {
                     Quaternion sproutRotation = Quaternion.identity;
                     sproutRotation.eulerAngles = new Vector3(-90, 0, 0);
-                    plant = Instantiate(seedPacket.associatedPlant, _plantRootsPosition.position, sproutRotation);
-                    plant.PlantThePlant();
+                    plant = Instantiate(seedPacket.associatedPlant, _plantRootsPosition.position, sproutRotation).GetComponent<Plant>();
+                    plant.PlantThePlant(_plantRootsPosition);
                     _isSeedPlanted = true;
                     Debug.Log("The seed is planted");
                 }

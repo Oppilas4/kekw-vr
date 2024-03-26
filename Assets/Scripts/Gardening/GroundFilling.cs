@@ -83,6 +83,7 @@ namespace Gardening
 
         private IEnumerator FillCoroutine()
         {
+            isCurrentlyFilling = true;
             while (true)
             {
                 if (HasFillLimitBeenReached())
