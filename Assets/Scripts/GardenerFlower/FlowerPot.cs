@@ -13,10 +13,12 @@ namespace Gardening
 
         private GroundFilling _groundFillerScript;
         private float _timeFillInactive = 0.0f;
+        private float _timePlantGrowthInactive = 0.0f;
 
         private void Start()
         {
             _groundFillerScript = GetComponent<GroundFilling>();
+            plant.PlantThePlant();
         }
 
         private void Update()
@@ -27,6 +29,18 @@ namespace Gardening
                 if (_timeFillInactive > 0.2f)
                 {
                     _groundFillerScript.StopFill();
+                }
+            }
+
+            if(plant != null)
+            {
+                if (plant.IsCurrentlyGrowing)
+                {
+                    _timePlantGrowthInactive += Time.deltaTime;
+                    if (_timePlantGrowthInactive > 0.2f)
+                    {
+                        plant.StopPlantGrowth();
+                    }
                 }
             }
         }
@@ -44,7 +58,7 @@ namespace Gardening
 
             if (other.CompareTag("Seed") && !_isSeedPlanted)
             {
-                if(other.transform.root.TryGetComponent<SeedPacket>(out var seedPacket))
+                if (other.transform.root.TryGetComponent<SeedPacket>(out var seedPacket))
                 {
                     Quaternion sproutRotation = Quaternion.identity;
                     sproutRotation.eulerAngles = new Vector3(-90, 0, 0);
@@ -59,7 +73,13 @@ namespace Gardening
                 return;
 
             if (other.tag == "Water")
-                plant.GrowFlower();
+            {
+                if (!plant.IsCurrentlyGrowing)
+                {
+                    _timePlantGrowthInactive = 0f;
+                    plant.StartPlantGrowth();
+                }
+            }
         }
     }
 }
