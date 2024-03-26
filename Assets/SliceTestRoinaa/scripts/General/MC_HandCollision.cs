@@ -36,7 +36,7 @@ public class MC_HandCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Pot") || other.gameObject.CompareTag("Burner"))
+        if (other.gameObject.CompareTag("Pot") || other.gameObject.CompareTag("Burner") || other.gameObject.CompareTag("Oil"))
         {
             IHotObject hotObject = other.gameObject.GetComponent<IHotObject>();
             if (hotObject != null && HotObjectManager.IsObjectHot(hotObject))
