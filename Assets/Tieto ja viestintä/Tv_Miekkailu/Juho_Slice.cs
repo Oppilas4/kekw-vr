@@ -76,6 +76,6 @@ public class Juho_Slice : MonoBehaviour
         public void SendHaptics()
         {
             XRBaseControllerInteractor hand = (XRBaseControllerInteractor)GetComponent<XRBaseInteractable>().selectingInteractor;
-            hand.SendHapticImpulse(0.4f, 0.1f);
+            
         }
 }
