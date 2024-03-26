@@ -7,6 +7,8 @@ namespace Gardening
         public Plant associatedPlant;
         [SerializeField]
         private ParticleSystem _seedParticles;
+        [SerializeField]
+        private int _dropAngle;
 
         private void Update()
         {
@@ -14,7 +16,6 @@ namespace Gardening
             // Stops emission instead of turning off. This prevents delay on particle spawn
             // when re-enabling, as well as particles suddenly disappearing
             emission.enabled = CheckTilt();
-            Debug.Log(emission.enabled);
         }
 
         /// <summary>
@@ -23,10 +24,9 @@ namespace Gardening
         private bool CheckTilt()
         {
             var angles = transform.rotation.eulerAngles;
-            int dropAngle = 100;
             // Prevents the seed packet from acting weirdly with large rotation values
-            int modulo = 360 - dropAngle; 
-            return Mathf.Abs(angles.x) % modulo >= dropAngle || Mathf.Abs(angles.z) % modulo >= dropAngle;
+            int modulo = 360 - _dropAngle; 
+            return Mathf.Abs(angles.x) % modulo >= _dropAngle || Mathf.Abs(angles.z) % modulo >= _dropAngle;
         }
     }
 }
