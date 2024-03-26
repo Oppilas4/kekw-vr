@@ -1,4 +1,4 @@
-﻿namespace Gardening
+namespace Gardening
 {
     public enum GroundFillingMode
     {
