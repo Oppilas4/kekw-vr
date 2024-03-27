@@ -17,13 +17,6 @@ public class joku_elementti_ja_sillee : MonoBehaviour
     {
         mySocket = GetComponent<XRSocketInteractor>();
         tarkistus = GameObject.Find("Elementcheck").GetComponent<Jami_ElementtiTarkistus>();
-        tarkistus.TestCombination("Water", "Earth");
-        tarkistus.TestCombination("Water", "Fire");
-        tarkistus.TestCombination("Water", "Air");
-        tarkistus.TestCombination("Earth", "Fire");
-        tarkistus.TestCombination("Earth", "Air");
-        tarkistus.TestCombination("Fire", "Air");
-        tarkistus.TestCombination("Fire", "");
     }
 
     public void KunLaitettuTarkista()
@@ -33,11 +26,13 @@ public class joku_elementti_ja_sillee : MonoBehaviour
         if (kuutioNumero == 1)
         {
             tarkistus.elementti1 = nykyinenKuutio.koodiNimiKuutiolle;
+            tarkistus.TestCombination(tarkistus.elementti1, tarkistus.elementti2);
             Debug.Log(nykyinenKuutio.koodiNimiKuutiolle);
         }
         if (kuutioNumero == 2)
         {
             tarkistus.elementti2 = nykyinenKuutio.koodiNimiKuutiolle;
+            tarkistus.TestCombination(tarkistus.elementti1, tarkistus.elementti2);
             Debug.Log(nykyinenKuutio.koodiNimiKuutiolle);
         }
         //yhdistelm‰t.TarkistaOnkoYhdistelm‰‰();
@@ -48,11 +43,13 @@ public class joku_elementti_ja_sillee : MonoBehaviour
         if (kuutioNumero == 1)
         {
             tarkistus.elementti1 = "";
+            tarkistus.TestCombination(tarkistus.elementti1, tarkistus.elementti2);
             Debug.Log(nykyinenKuutio.koodiNimiKuutiolle);
         }
         if (kuutioNumero == 2)
         {
             tarkistus.elementti2 = "";
+            tarkistus.TestCombination(tarkistus.elementti1, tarkistus.elementti2);
             Debug.Log(nykyinenKuutio.koodiNimiKuutiolle);
         }
     }
