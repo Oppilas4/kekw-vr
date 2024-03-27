@@ -6,6 +6,7 @@ namespace Gardening
     [Serializable]
     public struct AudioObject
     {
+        public bool IsMusic;
         public string audioName;
         public AudioClip audioClip;
     }
