@@ -9,48 +9,42 @@ public class NMAScript : MonoBehaviour
     private NavMeshAgent agent = null;
     private Bounds bounds;
     private Vector3 moveto;
-    private bool flag = false;
 
     private void Start()
     {
         agent = this.GetComponent<NavMeshAgent>();
-        bounds = data[Random.Range(0, data.Count)].sourceBounds;
+
+        bounds = GetRandomBounds();
 
         SetRandomDestination();
     }
 
     private void Update()
     {
-        if (agent.hasPath == false && flag == false)
+        if (agent.hasPath == false)
         {
-            flag = true;
             SetRandomDestination();
         }
     }
 
     private void SetRandomDestination()
     {
-        bounds = data[Random.Range(0, data.Count)].sourceBounds;
-        //1. pick a point
+        bounds = GetRandomBounds();
+
+        moveto = GetRandomPoint();
+        agent.SetDestination(moveto);
+    }
+
+    private Bounds GetRandomBounds()
+    {
+        return data[Random.Range(0, data.Count)].sourceBounds;
+    }
+
+    private Vector3 GetRandomPoint()
+    {
         float rx = Random.Range(bounds.min.x, bounds.max.x);
         float ry = Random.Range(bounds.min.y, bounds.max.y);
         float rz = Random.Range(bounds.min.z, bounds.max.z);
-        moveto = new Vector3(rx, ry, rz);
-        agent.SetDestination(moveto); //figure out path, starts gameobject moving
-
-        //Invoke("CheckPointOnPath", 0.2f);
-
-        flag = false;
+        return new Vector3(rx, ry, rz);
     }
-
-    private void CheckPointOnPath()
-    {
-        //4. check
-        if (agent.pathEndPosition != moveto)
-        {
-            SetRandomDestination();
-        }
-    }
-
-
 }
