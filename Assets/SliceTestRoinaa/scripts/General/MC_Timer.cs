@@ -5,12 +5,9 @@ using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.Events;
 
-public class MC_Timer : MonoBehaviour, IPointerClickHandler
+public class MC_Timer : MonoBehaviour
 {
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Pause = !Pause;
-    }
+    
 
     [SerializeField] private Image uiFill;
     [SerializeField] private TMP_Text uiText;
@@ -18,8 +15,6 @@ public class MC_Timer : MonoBehaviour, IPointerClickHandler
     public int Duration;
 
     private int remainingDuration;
-
-    private bool Pause;
 
     public UnityEvent TimerComplete;
 
@@ -46,15 +41,11 @@ public class MC_Timer : MonoBehaviour, IPointerClickHandler
     private IEnumerator UpdateTimer()
     {
         while (remainingDuration >= 0)
-        {
-            if (!Pause)
-            {
-                uiText.text = $"{remainingDuration % 60}";
-                uiFill.fillAmount = Mathf.InverseLerp(0, Duration, remainingDuration);
-                remainingDuration--;
-                yield return new WaitForSeconds(1f);
-            }
-            yield return null;
+        {   
+            uiText.text = $"{remainingDuration % 60}";
+            uiFill.fillAmount = Mathf.InverseLerp(0, Duration, remainingDuration);
+            remainingDuration--;
+            yield return new WaitForSeconds(1f);
         }
         OnEnd();
     }

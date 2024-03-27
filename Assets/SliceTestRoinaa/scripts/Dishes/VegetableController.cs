@@ -14,7 +14,7 @@ public class VegetableController : MonoBehaviour
         MC_BoilingController.OnVegetableBoiled -= HandleBoiledEvent;
     }
 
-    private void HandleBoiledEvent(VegetableController boiledController)
+    public void HandleBoiledEvent(VegetableController boiledController)
     {
         // Check if this VegetableController is the one that got boiled
         if (this == boiledController)
