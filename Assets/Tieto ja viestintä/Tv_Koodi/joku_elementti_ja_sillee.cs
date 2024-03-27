@@ -23,7 +23,7 @@ public class joku_elementti_ja_sillee : MonoBehaviour
         tarkistus.TestCombination("Earth", "Fire");
         tarkistus.TestCombination("Earth", "Air");
         tarkistus.TestCombination("Fire", "Air");
-        tarkistus.TestCombination("Kulli", "Palli");
+        tarkistus.TestCombination("Fire", "");
     }
 
     public void KunLaitettuTarkista()
