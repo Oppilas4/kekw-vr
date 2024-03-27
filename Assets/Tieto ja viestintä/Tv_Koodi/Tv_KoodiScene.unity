@@ -384,7 +384,6 @@ GameObject:
   - component: {fileID: 253260292}
   - component: {fileID: 253260295}
   - component: {fileID: 253260294}
-  - component: {fileID: 253260296}
   - component: {fileID: 253260297}
   m_Layer: 19
   m_Name: Hard_Slot_2
@@ -439,8 +438,8 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 253260296}
-        m_TargetAssemblyTypeName: Jami_VastausKohta, Assembly-CSharp
+      - m_Target: {fileID: 253260297}
+        m_TargetAssemblyTypeName: joku_elementti_ja_sillee, Assembly-CSharp
         m_MethodName: KunLaitettuTarkista
         m_Mode: 1
         m_Arguments:
@@ -453,7 +452,19 @@ MonoBehaviour:
         m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 253260297}
+        m_TargetAssemblyTypeName: joku_elementti_ja_sillee, Assembly-CSharp
+        m_MethodName: KunPoistetaanTarkista
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_OnHoverEntered:
@@ -487,19 +498,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.25, y: 0.04, z: 0.03234137}
   m_Center: {x: 0, y: 5.7646162e-11, z: -0.001986247}
---- !u!114 &253260296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 253260291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5742f0837c479d54e919456f6d4cdcbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  "yhdistelm\xE4t": {fileID: 254283202}
 --- !u!114 &253260297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,7 +520,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 254283201}
-  - component: {fileID: 254283202}
   m_Layer: 0
   m_Name: "Yhdistelm\xE4t"
   m_TagString: Untagged
@@ -550,29 +547,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &254283202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 254283200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 563eab6e0bf09b5408842e224076a478, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  "yhdistelm\xE4t":
-  - particle1: {fileID: 425948295}
-    particle2: {fileID: 421720335}
-    finishedParticle: {fileID: 1709131288}
-  - particle1: {fileID: 425948295}
-    particle2: {fileID: 1314306697}
-    finishedParticle: {fileID: 353973064}
-  allAloneParticle:
-  - {fileID: 425948295}
-  - {fileID: 421720335}
-  - {fileID: 1314306697}
 --- !u!1 &328197681
 GameObject:
   m_ObjectHideFlags: 0

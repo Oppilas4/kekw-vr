@@ -64,19 +64,19 @@ public class Jami_ElementtiTarkistus : MonoBehaviour
         {
             case "Water":
                 Debug.Log(element);
-                Instantiate(waterPrefab, transform.position, Quaternion.identity);
+                //Instantiate(waterPrefab, transform.position, Quaternion.identity);
                 break;
             case "Earth":
                 Debug.Log(element);
-                Instantiate(earthPrefab, transform.position, Quaternion.identity);
+               // Instantiate(earthPrefab, transform.position, Quaternion.identity);
                 break;
             case "Fire":
                 Debug.Log(element);
-                Instantiate(firePrefab, transform.position, Quaternion.identity);
+               // Instantiate(firePrefab, transform.position, Quaternion.identity);
                 break;
             case "Air":
                 Debug.Log(element);
-                Instantiate(airPrefab, transform.position, Quaternion.identity);
+             //   Instantiate(airPrefab, transform.position, Quaternion.identity);
                 break;
             case "Mud":
                 Debug.Log(element);
