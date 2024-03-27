@@ -46,7 +46,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skyboxes:
   - weather: 0
-    material: {fileID: 2100000, guid: 7416536dbe0334cfd888dd1beb75a9fb, type: 2}
+    data:
+      skybox: {fileID: 2100000, guid: 7416536dbe0334cfd888dd1beb75a9fb, type: 2}
+      rainy: 0
   - weather: 1
-    material: {fileID: 2100000, guid: f2b5f3f20933f434e850db1b710542fd, type: 2}
+    data:
+      skybox: {fileID: 2100000, guid: f2b5f3f20933f434e850db1b710542fd, type: 2}
+      rainy: 1
   _defaultSkybox: 0
+  _playerTransform: {fileID: 0}
+  _rainPrefab: {fileID: 6921453041328424802, guid: 329daf429eacef0418f32a6df6a5c365,
+    type: 3}
+  _rainHeight: 10
