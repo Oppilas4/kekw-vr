@@ -54,6 +54,7 @@ public class XRKnob : XRBaseInteractable
 
     private void StartTurn(SelectEnterEventArgs eventArgs)
     {
+        Debug.Log("starting turn");
         selectInteractor = eventArgs.interactor;
         selectRotation = selectInteractor.transform.rotation;
     }

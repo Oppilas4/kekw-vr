@@ -10,7 +10,7 @@ namespace Gardening
 	
 		public void UpdateMusic(XRKnob knob)
 		{
-			int index = (int) (knob.Value * (musicClips.Length - 1));
+			int index = Mathf.RoundToInt(knob.Value * (musicClips.Length - 1));
 			
 			source.clip = musicClips[index];
 			source.Play();
