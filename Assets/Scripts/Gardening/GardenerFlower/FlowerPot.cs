@@ -65,6 +65,7 @@ namespace Gardening
                     plant.PlantThePlant();
                     plant.transform.parent = transform;
                     _isSeedPlanted = true;
+                    PlantManager.OnSeedWasPlanted?.Invoke();
                     Debug.Log("The seed is planted");
                 }
             }

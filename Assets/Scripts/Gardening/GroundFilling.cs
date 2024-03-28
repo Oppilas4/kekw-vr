@@ -117,7 +117,7 @@ namespace Gardening
             if (IsReachedTopBoundary())
             {
                 IsFilledUp(true);
-                PlantManager.OnPotWasFilled.Invoke();
+                PlantManager.OnPotWasFilled?.Invoke();
             }
             else
             {

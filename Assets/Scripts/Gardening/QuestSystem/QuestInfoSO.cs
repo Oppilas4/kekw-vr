@@ -18,11 +18,6 @@ namespace Gardening
         public QuestStep[] questSteps;
 
         // [Header("Rewards")]
-        private void OnValidate()
-        {
-        #if UNITY_EDITOR
-            id = this.name;
-        #endif
-        }
+
     }
 }

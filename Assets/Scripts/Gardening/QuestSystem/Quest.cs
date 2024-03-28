@@ -8,44 +8,45 @@ public class Quest
 {
    public event Action OnQuestFinished;
 
-   private bool _isStepInProgress;
-   private QuestInfoSO questInfo;
-   private Queue<QuestStep> questStepsQueue;
+   public QuestInfoSO questInfo;   //TODO make private
+   private Queue<QuestStep> questStepsQueue = new Queue<QuestStep>();
 
    private QuestStep currentStep;
+
    public Quest(QuestInfoSO questInfo)
     {
         this.questInfo = questInfo;
-        foreach(QuestStep step in questInfo.questSteps){
+
+        foreach (QuestStep step in questInfo.questSteps){
             questStepsQueue.Enqueue(step);
         }
     }
+
     public void StartQuest()
     {
-        AdvanceQuest();
+        if(NextStepAvailable())
+            AdvanceQuest();
     }
+
     private void AdvanceQuest()
     {
-        if (_isStepInProgress)
-            return;
-
         currentStep = questStepsQueue.Dequeue();
         currentStep.StartQuestStep();
-        _isStepInProgress = true;
-        currentStep.OnStepFinished += HandleFinishedStep;
+        currentStep.OnStepFinished += HandleStepFinished;
     }
-    private void HandleFinishedStep()
+
+    private void HandleStepFinished()
     {
         if (!NextStepAvailable())
         {
             OnQuestFinished?.Invoke();
+            return;
         }
 
-        currentStep.OnStepFinished -= HandleFinishedStep;
-        currentStep.FinishQuestStep();
-        _isStepInProgress = false;
+        currentStep.OnStepFinished -= HandleStepFinished;
         AdvanceQuest();
     }
+
     private bool NextStepAvailable()
     {
         if (questStepsQueue.Count >= 1)

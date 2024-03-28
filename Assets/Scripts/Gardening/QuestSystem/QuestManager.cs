@@ -6,37 +6,69 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
-    private Dictionary<int, Quest> _quests;
+    private Queue<Quest> _quests = new Queue<Quest>();
     private int _currentQuestIndex;
-    private int _currentQuest;
+    private Quest _currentQuest;
     private bool _isQuestPlaying;
+    private void Start()
+    {
+        Initialize();
+    }
     private void Initialize()
     {
-        QuestInfoSO[] allQuests = Resources.LoadAll<QuestInfoSO>("Gardening");
+        QuestInfoSO[] QuestInfoObjects = Resources.LoadAll<QuestInfoSO>("Gardening");  //Loading scriptable objects data from "Resources" folder
+        Dictionary<int, Quest> unsortedQuests = new Dictionary<int, Quest>();  //Dictionary is used to help the checking for the dublicates
 
-        for (int i = 0; i < allQuests.Length; i++)
+        for (int i = 0; i < QuestInfoObjects.Length; i++)
         {
-            if (_quests.ContainsKey(allQuests[i].id))
+            if (unsortedQuests.ContainsKey(QuestInfoObjects[i].id))
+            {
+                Debug.LogWarning("The QuestInfo with the ID" 
+                    + QuestInfoObjects[i].id + " already exists");
                 continue;
-            _quests.Add(allQuests[i].id, new Quest(allQuests[i]));  //creaitng quest objects
+            }
+            unsortedQuests.Add(QuestInfoObjects[i].id, new Quest(QuestInfoObjects[i]));  //creaitng quest objects
         }
-        var sortedQuests = _quests.OrderByDescending(kvp => kvp.Key);
-        _quests = sortedQuests.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        foreach (var kvp in _quests)
+
+        var sortedQuests = unsortedQuests.OrderByDescending(kvp => kvp.Key);   // sorting quests by their ID
+        foreach(KeyValuePair<int, Quest> kvp in  sortedQuests)  // Converting Dictionary to the List
         {
-            Debug.Log(kvp.Key + " " + kvp.Value);
+            _quests.Enqueue(kvp.Value);
         }
-        _currentQuestIndex = 0;
-        PlayNextQuest();
+
+        foreach(Quest quest in _quests)
+        {
+            Debug.Log(quest.questInfo.id);
+        }
+
+        _currentQuestIndex = -1;
+        if (NextQuestAvailable())
+            PlayNextQuest();
 
     }
     private void PlayNextQuest()
     {
-        if (_currentQuestIndex >= _quests.Count())
+        if (!NextQuestAvailable())
         {
-            Debug.Log("No more quests! ");
+            Debug.Log("All quests are finished!");
             return;
         }
+
         _currentQuestIndex++;
+        _currentQuest = _quests.Dequeue();
+        _currentQuest.OnQuestFinished += HandleQuestFinished;
+        _currentQuest.StartQuest();
+    }
+    private void HandleQuestFinished()
+    {
+        _currentQuest.OnQuestFinished -= HandleQuestFinished;
+        PlayNextQuest();
+    }
+    private bool NextQuestAvailable()
+    {
+        if(_quests.Count >= 1)
+            return true;
+        else 
+            return false;
     }
 }
