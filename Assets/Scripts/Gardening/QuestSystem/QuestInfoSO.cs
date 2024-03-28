@@ -7,7 +7,7 @@ namespace Gardening
     [CreateAssetMenu(fileName = "QuestInfoSO", menuName = "Quest System/QuestInfoSO", order = 1)]
     public class QuestInfoSO : ScriptableObject
     {
-        [field: SerializeField] public string id {  get; private set; }
+        [field: SerializeField] public int id {  get; private set; }
         [Header("General")]
         public string QuestDescription;
 

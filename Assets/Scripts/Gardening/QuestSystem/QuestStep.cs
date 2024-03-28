@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,12 @@ namespace Gardening
 {
     public abstract class QuestStep : MonoBehaviour
     {
+        public event Action OnStepFinished;
         private bool isFinished;
+        public virtual void StartQuestStep()
+        {
+            //Add logic to follow the progress of the quest
+        }
         public void FinishQuestStep()
         {
             if (!isFinished)
