@@ -65,7 +65,6 @@ namespace Gardening
                     plant.PlantThePlant();
                     plant.transform.parent = transform;
                     _isSeedPlanted = true;
-                    Debug.Log("The seed is planted");
                 }
             }
 
