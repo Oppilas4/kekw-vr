@@ -37,7 +37,7 @@ public class MC_FryerBasket : MonoBehaviour
             if (other.GetComponent<Collider>().bounds.Intersects(GetComponent<Collider>().bounds))
             {
                 Rigidbody rb = other.GetComponent<Rigidbody>();
-                rb.isKinematic = true;
+                rb.constraints = RigidbodyConstraints.FreezeAll;
                 vegetableRigidbodies.Add(rb);
                 // Parent the sliced vegetable to the basket
                 other.transform.parent = transform;
@@ -59,7 +59,7 @@ public class MC_FryerBasket : MonoBehaviour
 
             foreach (Rigidbody rb in vegetableRigidbodies)
             {
-                rb.isKinematic = false;
+                rb.constraints = RigidbodyConstraints.None;
             }
 
             vegetablePiecesOnPlate.Clear();

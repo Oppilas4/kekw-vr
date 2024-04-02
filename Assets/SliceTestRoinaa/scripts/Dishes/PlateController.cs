@@ -64,5 +64,29 @@ public class PlateController : MonoBehaviour
         }
         return false;
     }
-    
+
+    // Helper function to return the count of each type of vegetable on the plate
+    public Dictionary<GameObject, int> GetVegetableCounts()
+    {
+        Dictionary<GameObject, int> counts = new Dictionary<GameObject, int>();
+
+        foreach (var vegetable in vegetablePiecesOnPlate)
+        {
+            if (vegetable != null)
+            {
+                if (counts.ContainsKey(vegetable))
+                {
+                    counts[vegetable]++;
+                }
+                else
+                {
+                    counts.Add(vegetable, 1);
+                }
+            }
+        }
+
+        return counts;
+    }
+
+
 }
