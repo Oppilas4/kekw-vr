@@ -24,19 +24,6 @@ public class SteakController : MonoBehaviour
 
     private Coroutine cookingCoroutine;
 
-
-    void OnEnable()
-    {
-        // Subscribe to the _calculateDish event when the script is enabled
-        FindObjectOfType<CompletedDishArea>()._sendSteakTemperature.AddListener(OnCalculateDish);
-    }
-
-    void OnDisable()
-    {
-        // Unsubscribe from the _calculateDish event when the script is disabled to prevent memory leaks
-        FindObjectOfType<CompletedDishArea>()._sendSteakTemperature.RemoveListener(OnCalculateDish);
-    }
-
     public enum CookingStage
     {
         Uncooked,
@@ -199,32 +186,25 @@ public class SteakController : MonoBehaviour
 
     public void OnCalculateDish(string temperature)
     {
-        if (CompletedDishArea.currentDish == transform.parent?.parent?.gameObject)
-        {
             try
             {
-                // Split the string on the colon and take the second part, trim whitespace
-                string tempStatus = temperature.Split(':')[1].Trim();
-
-                Debug.Log("Temperature status received: " + tempStatus);
-
                 // Convert the trimmed temperature status to the corresponding CookingStage
                 CookingStage desiredStage;
-                if (string.Equals(tempStatus, "Raw", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(temperature, "Raw", StringComparison.OrdinalIgnoreCase))
                 {
                     desiredStage = CookingStage.Raw;
                 }
-                else if (string.Equals(tempStatus, "Medium", StringComparison.OrdinalIgnoreCase))
+                else if (string.Equals(temperature, "Medium", StringComparison.OrdinalIgnoreCase))
                 {
                     desiredStage = CookingStage.Medium;
                 }
-                else if (string.Equals(tempStatus, "WellDone", StringComparison.OrdinalIgnoreCase))
+                else if (string.Equals(temperature, "WellDone", StringComparison.OrdinalIgnoreCase))
                 {
                     desiredStage = CookingStage.WellDone;
                 }
                 else
                 {
-                    throw new ArgumentException($"Invalid temperature status: {tempStatus}");
+                    throw new ArgumentException($"Invalid temperature status: {temperature}");
                 }
 
                 Debug.Log("Desired Cooking Stage: " + desiredStage);
@@ -239,7 +219,6 @@ public class SteakController : MonoBehaviour
             {
                 Debug.LogError($"Error in OnCalculateDish: {ex}");
             }
-        }
     }
 
 

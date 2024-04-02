@@ -80,19 +80,7 @@ public class SaladBowl : MonoBehaviour
         return false;
     }
 
-    void OnEnable()
-    {
-        // Subscribe to the _calculateDish event when the script is enabled
-        FindObjectOfType<CompletedDishArea>()._calculateDish.AddListener(OnCalculateDish);
-    }
-
-    void OnDisable()
-    {
-        // Unsubscribe from the _calculateDish event when the script is disabled to prevent memory leaks
-        FindObjectOfType<CompletedDishArea>()._calculateDish.RemoveListener(OnCalculateDish);
-    }
-
-    void OnCalculateDish()
+    public void CalculateDish()
     {
         // Check if the current dish in the serving area is the same as the one triggering the calculations
         if (CompletedDishArea.currentDish == transform.parent.gameObject)

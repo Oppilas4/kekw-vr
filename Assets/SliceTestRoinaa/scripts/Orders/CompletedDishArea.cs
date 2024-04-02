@@ -3,17 +3,27 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using static OrderManager;
+using UnityEngine.XR;
+
+public class DishInfo
+{
+    public string DishName;
+    public string SteakTemperature;
+
+    public DishInfo(string dishName, string steakTemperature)
+    {
+        DishName = dishName;
+        SteakTemperature = steakTemperature;
+    }
+}
 
 public class CompletedDishArea : MonoBehaviour
 {
-    public UnityEvent _calculateDish = new UnityEvent();
-    public UnityEvent<string> _sendSteakTemperature = new UnityEvent<string>();
+    public UnityEvent<DishInfo> _calculateDish = new UnityEvent<DishInfo>();
     public UnityEvent<int> _completeOrder = new UnityEvent<int>();
     public UnityEvent<GameObject> _objectToDeliver = new UnityEvent<GameObject>();
 
     public static GameObject currentDish; // Store the current dish in the serving area
-    public string ticketDishName; // Store the current order
     private string steakTemperature;
     private int orderID;
 
@@ -37,7 +47,6 @@ public class CompletedDishArea : MonoBehaviour
     public void ClearCurrentDish()
     {
         currentDish = null;
-        ticketDishName = null;
         steakTemperature = null;
     }
 
@@ -57,6 +66,7 @@ public class CompletedDishArea : MonoBehaviour
 
         GameObject foundDish = null;
         int ticketCount = 0;
+        string ticketDishName = null;
 
         foreach (Collider collider in colliders)
         {
@@ -70,8 +80,12 @@ public class CompletedDishArea : MonoBehaviour
                 OrderTicket orderTicket = collider.GetComponent<OrderTicket>();
                 if (orderTicket != null)
                 {
-                    ticketDishName = orderTicket.dishNameText.text;
+                    ticketDishName = orderTicket.dishNameText.text.TrimStart("Dish: ".ToCharArray());
                     steakTemperature = orderTicket.steakTemperatureText.text;
+                    if (steakTemperature != "")
+                    {
+                        steakTemperature = steakTemperature.Split(':')[1].Trim();
+                    }
                     string orderIDText = orderTicket.orderNumberText.text;
                     string[] splitText = orderIDText.Split('#');
                     if (splitText.Length == 2)
@@ -100,13 +114,9 @@ public class CompletedDishArea : MonoBehaviour
             Debug.Log("Dish and Order Ticket detected in the serving area");
 
             SetCurrentDish(foundDish); // Set the current dish
-            _calculateDish.Invoke(); // Trigger the _calculateDish event
+            _calculateDish.Invoke(new DishInfo(ticketDishName, steakTemperature)); // Trigger the _calculateDish event
             _completeOrder.Invoke(orderID);
             _objectToDeliver.Invoke(currentDish);
-            if (ticketDishName == "Dish: Steak")
-            {
-                _sendSteakTemperature.Invoke(steakTemperature);
-            }
 
             ClearCurrentDish(); // Clear the current dish after calculations
         }

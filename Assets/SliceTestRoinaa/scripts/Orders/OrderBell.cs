@@ -16,7 +16,8 @@ public class OrderBell : MonoBehaviour
 
     const float _hapticForce = .5f;
     const float _hapticDuration = .25f;
-
+    public float _cooldownDuration = 2f;
+    private bool _canTrigger = true;
     private void SendHapticFeedback(float amplitude, float duration)
     {
         if (_leftHapticBroker == null || _rightHapticBroker == null)
@@ -35,15 +36,22 @@ public class OrderBell : MonoBehaviour
             _rightHapticBroker.TriggerHapticFeedback(amplitude, duration);
         }
     }
+    IEnumerator Cooldown()
+    {
+        yield return new WaitForSeconds(_cooldownDuration);
+        _canTrigger = true;
+    }
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("PepeHands"))
+        if (_canTrigger && collision.gameObject.layer == LayerMask.NameToLayer("PepeHands"))
         {
+            _canTrigger = false;
             _handTag = collision.gameObject.tag;
             SendHapticFeedback(_hapticForce, _hapticDuration);
             ani.SetTrigger("Ding");
             _orderReady.Invoke();
+            StartCoroutine(Cooldown());
         }
     }
 }

@@ -32,6 +32,8 @@ public class MC_WaiterAI : MonoBehaviour
 
     public Animator waiterAni;
 
+    private Coroutine currentCoroutine;
+
     private void Start()
     {
         OrderManager orderManager = FindObjectOfType<OrderManager>();
@@ -168,27 +170,43 @@ public class MC_WaiterAI : MonoBehaviour
     {
         if (isFoodReady)
         {
+            if (currentCoroutine != null)
+            {
+                StopCoroutine(currentCoroutine);
+            }
             currentTask = Task.PickUpFood;
-            StartCoroutine(PerformTask());
+            currentCoroutine = StartCoroutine(PerformTask());
             isFoodReady= false;
         }
         else if (isFoodDelivery)
         {
+            if (currentCoroutine != null)
+            {
+                StopCoroutine(currentCoroutine);
+            }
             currentTask = Task.DeliverFood;
-            StartCoroutine(PerformTask());
+            currentCoroutine = StartCoroutine(PerformTask());
             isFoodDelivery= false;
         }
         // Implement logic to find new tasks (e.g., find a new customer)
         else if (currentCustomers.Count > 0)
         {
+            if (currentCoroutine != null)
+            {
+                StopCoroutine(currentCoroutine);
+            }
             // Set the task and start the corresponding behavior
             currentTask = Task.GoToCustomerTable;
-            yield return StartCoroutine(PerformTask());
+            yield return currentCoroutine = StartCoroutine(PerformTask());
         }
         else
         {
+            if (currentCoroutine != null)
+            {
+                StopCoroutine(currentCoroutine);
+            }
             currentTask = Task.GoToWaiterArea;
-            yield return StartCoroutine(PerformTask());
+            yield return currentCoroutine = StartCoroutine(PerformTask());
         }
     }
 
@@ -199,6 +217,7 @@ public class MC_WaiterAI : MonoBehaviour
         switch (currentTask)
         {
             case Task.PickUpFood:
+                Debug.Log("Haen ruokaa");
                 navMeshAgent.SetDestination(pickUpLoc.position);
                 waiterAni.SetBool("Moving", true);
                 while (navMeshAgent.pathPending || navMeshAgent.remainingDistance > 0.1f)
