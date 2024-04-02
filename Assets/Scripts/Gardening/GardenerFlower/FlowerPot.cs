@@ -18,7 +18,6 @@ namespace Gardening
         private void Start()
         {
             _groundFillerScript = GetComponent<GroundFilling>();
-            plant.PlantThePlant();
         }
 
         private void Update()
