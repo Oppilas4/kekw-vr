@@ -180,7 +180,6 @@ namespace Gardening
 
         private Dictionary<int, Blossom> CreateBlossoms(List<IvyNode> nodes, bool isFirst)
         {
-
             Dictionary<int, Blossom> bls = new Dictionary<int, Blossom>();
             for (int i = 0; i < nodes.Count; i++)
             {

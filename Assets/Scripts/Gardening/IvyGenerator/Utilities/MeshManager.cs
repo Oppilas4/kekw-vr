@@ -26,15 +26,13 @@ public class MeshManager : Singleton<MeshManager>
 
     public void AddMesh(Transform t, Mesh mesh, Material material)
     {
+        Debug.Log("AddMesh called " + t.name);
         if (_meshParent == null)
         {
             _meshParent = new GameObject("MeshParent");
         }
 
-        if (_meshGroupRenderers == null)
-        {
-            _meshGroupRenderers = new Dictionary<string, MeshGroupRenderer>();
-        }
+        _meshGroupRenderers ??= new Dictionary<string, MeshGroupRenderer>();
 
         if (_meshGroupRenderers.ContainsKey(material.name))
         {
