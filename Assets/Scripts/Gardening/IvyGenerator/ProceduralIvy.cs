@@ -33,34 +33,31 @@ namespace Gardening
             {
                 if (Physics.Raycast(spawner.transform.position, spawner.transform.forward, out RaycastHit hit, 10f))
                 {
-                    Debug.Log("Raycast succeeded");
                     CreateIvy(hit);
                 }
-                else
-                    Debug.Log("Raycast failed");
             }
             //CombineAndClear();
         }
 
-        //private void Update()
-        //{
+        private void Update()
+        {
 
-        //    if (Input.GetKeyUp(KeyCode.Space))
-        //    {
-        //        // call this method when you are ready to group your meshes
-        //        CombineAndClear();
-        //    }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                // call this method when you are ready to group your meshes
+                CombineAndClear();
+            }
 
-        //    if (Input.GetMouseButtonDown(0))
-        //    {
-        //        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        //        RaycastHit hit;
-        //        if (Physics.Raycast(ray, out hit, 100))
-        //        {
-        //            CreateIvy(hit);
-        //        }
-        //    }
-        //}
+            //if (Input.GetMouseButtonDown(0))
+            //{
+            //    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            //    RaycastHit hit;
+            //    if (Physics.Raycast(ray, out hit, 100))
+            //    {
+            //        CreateIvy(hit);
+            //    }
+            //}
+        }
 
         private Vector3 FindTangentFromArbitraryNormal(Vector3 normal)
         {

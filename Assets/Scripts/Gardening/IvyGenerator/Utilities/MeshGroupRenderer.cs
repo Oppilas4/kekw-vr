@@ -2,35 +2,35 @@ using UnityEngine;
 
 public class MeshGroupRenderer : MonoBehaviour
 {
-    const string COLOR = "_Color";
-    const string COLOREND = "_ColorEnd";
+    private const string COLOR = "_Color";
+    private const string COLOREND = "_ColorEnd";
 
     public MeshFilter meshFilter;
     public MeshRenderer meshRenderer;
-    MeshGroup meshGroup;
-    Material lastAddedMaterial;
+    private MeshGroup _meshGroup;
+    private Material _lastAddedMaterial;
 
     public bool Add(Transform t, Mesh mesh, Material material)
     {
         Color color = material.GetColor(COLOR);
         Color colorEnd = material.GetColor(COLOREND);
-        if (meshGroup == null)
+        if (_meshGroup == null)
         {
-            meshGroup = new MeshGroup(material.name, color, colorEnd);
+            _meshGroup = new MeshGroup(material.name, color, colorEnd);
         }
-        meshGroup.meshes.Add(mesh);
-        meshGroup.transforms.Add(t);
-        lastAddedMaterial = material;
+        _meshGroup.meshes.Add(mesh);
+        _meshGroup.transforms.Add(t);
+        _lastAddedMaterial = material;
         return true;
     }
 
     public void CombineAndRender()
     {
-        if (meshGroup != null)
+        if (_meshGroup != null)
         {
-            Mesh mesh = CombineMeshes(meshGroup);
+            Mesh mesh = CombineMeshes(_meshGroup);
             meshFilter.mesh = mesh;
-            meshRenderer.material = lastAddedMaterial;
+            meshRenderer.material = _lastAddedMaterial;
         }
     }
 

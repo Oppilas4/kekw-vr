@@ -31,30 +31,30 @@ public class MeshGroup
 
 public class MeshManager : Singleton<MeshManager>
 {
-    Dictionary<string, MeshGroupRenderer> meshGroupRenderers;
-    GameObject meshParent;
+    private Dictionary<string, MeshGroupRenderer> _meshGroupRenderers;
+    private GameObject _meshParent;
 
     public void AddMesh(Transform t, Mesh mesh, Material material)
     {
-        if (meshParent == null)
+        if (_meshParent == null)
         {
-            meshParent = new GameObject("meshParent");
+            _meshParent = new GameObject("meshParent");
         }
 
-        if (meshGroupRenderers == null)
+        if (_meshGroupRenderers == null)
         {
-            meshGroupRenderers = new Dictionary<string, MeshGroupRenderer>();
+            _meshGroupRenderers = new Dictionary<string, MeshGroupRenderer>();
         }
 
-        if (meshGroupRenderers.ContainsKey(material.name))
+        if (_meshGroupRenderers.ContainsKey(material.name))
         {
-            meshGroupRenderers[material.name].Add(t, mesh, material);
+            _meshGroupRenderers[material.name].Add(t, mesh, material);
         }
         else
         {
-            GameObject render = new GameObject("meshGroup - " + material.name);
-            Debug.Log("new object:" + material.name);
-            render.transform.SetParent(meshParent.transform);
+            GameObject render = new("meshGroup - " + material.name);
+            //Debug.Log("new object:" + material.name);
+            render.transform.SetParent(_meshParent.transform);
 
             MeshFilter mFilter = render.AddComponent<MeshFilter>();
             MeshRenderer mRenderer = render.AddComponent<MeshRenderer>();
@@ -63,20 +63,20 @@ public class MeshManager : Singleton<MeshManager>
             groupRenderer.meshFilter = mFilter;
             groupRenderer.meshRenderer = mRenderer;
             groupRenderer.Add(t, mesh, material);
-            meshGroupRenderers.Add(material.name, groupRenderer);
+            _meshGroupRenderers.Add(material.name, groupRenderer);
         }
 
     }
 
     public void CombineAll()
     {
-        if (meshGroupRenderers != null)
+        if (_meshGroupRenderers != null)
         {
-            foreach (var group in meshGroupRenderers)
+            foreach (var group in _meshGroupRenderers)
             {
                 group.Value.CombineAndRender();
             }
-            meshGroupRenderers.Clear();
+            _meshGroupRenderers.Clear();
             Resources.UnloadUnusedAssets();
         }
     }

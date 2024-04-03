@@ -8,54 +8,54 @@ namespace Gardening
         const string AMOUNT = "_Amount";
         const float MAX = 0.5f;
 
-        Material material;
-        List<MeshRenderer> renderers;
+        private Material _material;
+        private List<MeshRenderer> _renderers;
 
-        bool animate;
-        float growthSpeed = 2;
-        float currentAmount = -1;
+        private bool _animate;
+        private float _growthSpeed = 2;
+        private float _currentAmount = -1;
 
         public void Init(Material material)
         {
-            this.material = new Material(material);
+            _material = new Material(material);
         }
 
         private void Start()
         {
-            renderers = new List<MeshRenderer>();
+            _renderers = new List<MeshRenderer>();
             foreach (Transform t in transform)
             {
                 MeshRenderer r = t.GetComponent<MeshRenderer>();
-                renderers.Add(r);
-                r.material = material;
+                _renderers.Add(r);
+                r.material = _material;
             }
 
-            material.SetFloat(AMOUNT, currentAmount);
-            animate = false;
+            _material.SetFloat(AMOUNT, _currentAmount);
+            _animate = false;
         }
 
         public void Grow(float growthSpeed)
         {
-            this.growthSpeed = growthSpeed;
-            animate = true;
+            _growthSpeed = growthSpeed;
+            _animate = true;
         }
 
         public bool IsGrowing()
         {
-            return animate || currentAmount >= MAX;
+            return _animate || _currentAmount >= MAX;
         }
 
         private void Update()
         {
-            if (animate)
+            if (_animate)
             {
-                currentAmount += Time.deltaTime * growthSpeed;
-                material.SetFloat(AMOUNT, currentAmount);
-                if (currentAmount >= MAX)
+                _currentAmount += Time.deltaTime * _growthSpeed;
+                _material.SetFloat(AMOUNT, _currentAmount);
+                if (_currentAmount >= MAX)
                 {
-                    animate = false;
-                    material.SetFloat(AMOUNT, MAX);
-                    foreach (var r in renderers)
+                    _animate = false;
+                    _material.SetFloat(AMOUNT, MAX);
+                    foreach (var r in _renderers)
                     {
                         MeshManager.instance.AddMesh(r.transform, r.GetComponent<MeshFilter>().mesh, r.GetComponent<MeshRenderer>().sharedMaterial);
                     }

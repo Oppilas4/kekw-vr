@@ -4,17 +4,17 @@ namespace Gardening
 {
     public class IvyNode
     {
-        Vector3 position;
-        Vector3 normal;
+        private Vector3 _position;
+        private Vector3 _normal;
 
         public IvyNode(Vector3 position, Vector3 normal)
         {
-            this.position = position;
-            this.normal = normal;
+            _position = position;
+            _normal = normal;
         }
 
-        public Vector3 GetPosition() => position;
-        public Vector3 GetNormal() => normal;
+        public Vector3 GetPosition() => _position;
+        public Vector3 GetNormal() => _normal;
 
     }
 }
