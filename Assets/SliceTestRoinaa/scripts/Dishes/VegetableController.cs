@@ -3,6 +3,7 @@ using UnityEngine;
 public class VegetableController : MonoBehaviour
 {
     public VegetableData vegetableData;
+    public bool isCooked = false;
 
     private void OnEnable()
     {
@@ -19,13 +20,7 @@ public class VegetableController : MonoBehaviour
         // Check if this VegetableController is the one that got boiled
         if (this == boiledController)
         {
-            // Update the VegetableData to reflect that the vegetable is cooked
-            vegetableData.isCooked = true;
-
-            Debug.Log(vegetableData.isCooked);
-
-            // Perform any additional actions required after boiling
-            // For example, changing the appearance or playing a sound
+            isCooked = true;
         }
     }
 

@@ -5,10 +5,10 @@ using UnityEngine;
 public class MC_OilController : MonoBehaviour, IHotObject
 {
     public ParticleSystem boilEffect;
-    private bool isOn;
+    private bool isOn = false;
     private float currentEmissionRate = 0f;
     private const float emissionChangeSpeed = 20f;
-    private List<GameObject> objectsInOil = new List<GameObject>();
+    public List<GameObject> objectsInOil = new List<GameObject>();
 
     public MC_DeepFrierTimer timer;
     private void OnEnable()
@@ -33,6 +33,7 @@ public class MC_OilController : MonoBehaviour, IHotObject
         if (isOn && objectsInOil.Count != 0)
         {
             UpdateEmissionRate(80);
+            StartTimer();
         }
         else if(!isOn)
         {
@@ -53,8 +54,7 @@ public class MC_OilController : MonoBehaviour, IHotObject
             VegetableData vegetableData = vegetableController.GetVegetableData();
             if (vegetableData.vegetableName == "Potato" && IsHot())
             {
-                timer.gameObject.SetActive(true);
-                timer.StartTimer(10);
+                StartTimer();
             }
         }
         if (objectsInOil.Count == 0 && vegetableController != null && IsHot())
@@ -62,7 +62,7 @@ public class MC_OilController : MonoBehaviour, IHotObject
             objectsInOil.Add(other.gameObject);
             UpdateEmissionRate(80);
         }
-        else if(vegetableController != null)
+        else if(vegetableController != null && !objectsInOil.Contains(other.gameObject))
         {
             objectsInOil.Add(other.gameObject);
         }
@@ -75,9 +75,17 @@ public class MC_OilController : MonoBehaviour, IHotObject
             objectsInOil.Remove(other.gameObject);
             if (objectsInOil.Count == 0)
             {
+                timer.StopTimer();
+                timer.gameObject.SetActive(false);
                 UpdateEmissionRate(0);
             }
         }
+    }
+
+    private void StartTimer()
+    {
+        timer.gameObject.SetActive(true);
+        timer.StartTimer(10);
     }
 
     public void UpdateEmissionRate(float targetEmissionRate)

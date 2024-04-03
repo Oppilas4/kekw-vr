@@ -90,7 +90,7 @@ public class MC_DishCalculation : MonoBehaviour
                     if (vegController != null)
                     {
                         // Check if the potato is not cooked
-                        if (vegController.vegetableData.isCooked == false)
+                        if (vegController.isCooked == false)
                         {
                             anyPotatoNotCooked = true;
                         }

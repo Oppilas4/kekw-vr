@@ -30,6 +30,15 @@ public class MC_DeepFrierTimer : MonoBehaviour
         Begin(duration);
     }
 
+    public void StopTimer()
+    {
+        if (timerCoroutine != null)
+        {
+            StopCoroutine(timerCoroutine);
+            timerCoroutine = null;
+        }
+    }
+
     private void Begin(int seconds)
     {
         remainingDuration = seconds;
