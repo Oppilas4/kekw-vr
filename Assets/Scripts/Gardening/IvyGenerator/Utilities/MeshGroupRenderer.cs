@@ -26,12 +26,10 @@ public class MeshGroupRenderer : MonoBehaviour
 
     public void CombineAndRender()
     {
-        if (_meshGroup != null)
-        {
-            Mesh mesh = CombineMeshes(_meshGroup);
-            meshFilter.mesh = mesh;
-            meshRenderer.material = _lastAddedMaterial;
-        }
+        if (_meshGroup == null) return;
+        Mesh mesh = CombineMeshes(_meshGroup);
+        meshFilter.mesh = mesh;
+        meshRenderer.material = _lastAddedMaterial;
     }
 
     private Mesh CombineMeshes(MeshGroup group)
@@ -49,10 +47,8 @@ public class MeshGroupRenderer : MonoBehaviour
 
         for (int i = 0; i < group.meshes.Count; i++)
         {
-            if (group.transforms[i] != null)
-            {
-                Destroy(group.transforms[i].gameObject);
-            }
+            if (group.transforms[i] == null) continue;
+            Destroy(group.transforms[i].gameObject);
         }
 
         return mesh;

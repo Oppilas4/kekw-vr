@@ -63,11 +63,7 @@ namespace Gardening
         {
             Vector3 t1 = Vector3.Cross(normal, Vector3.forward);
             Vector3 t2 = Vector3.Cross(normal, Vector3.up);
-            if (t1.magnitude > t2.magnitude)
-            {
-                return t1;
-            }
-            return t2;
+            return t1.magnitude > t2.magnitude ? t1 : t2;
         }
 
         public void CreateIvy(RaycastHit hit)

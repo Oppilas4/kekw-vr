@@ -60,15 +60,13 @@ public class MeshManager : Singleton<MeshManager>
 
     public void CombineAll()
     {
-        if (_meshGroupRenderers != null)
+        if (_meshGroupRenderers == null) return;
+        foreach (var group in _meshGroupRenderers)
         {
-            foreach (var group in _meshGroupRenderers)
-            {
-                group.Value.CombineAndRender();
-            }
-            _meshGroupRenderers.Clear();
-            Resources.UnloadUnusedAssets();
+            group.Value.CombineAndRender();
         }
+        _meshGroupRenderers.Clear();
+        Resources.UnloadUnusedAssets();
     }
 
 }

@@ -47,19 +47,15 @@ namespace Gardening
 
         private void Update()
         {
-            if (_animate)
+            if (!_animate) return;
+            _currentAmount += Time.deltaTime * _growthSpeed;
+            _material.SetFloat(AMOUNT, _currentAmount);
+            if (_currentAmount < MAX) return;
+            _animate = false;
+            _material.SetFloat(AMOUNT, MAX);
+            foreach (var r in _renderers)
             {
-                _currentAmount += Time.deltaTime * _growthSpeed;
-                _material.SetFloat(AMOUNT, _currentAmount);
-                if (_currentAmount >= MAX)
-                {
-                    _animate = false;
-                    _material.SetFloat(AMOUNT, MAX);
-                    foreach (var r in _renderers)
-                    {
-                        MeshManager.instance.AddMesh(r.transform, r.GetComponent<MeshFilter>().mesh, r.GetComponent<MeshRenderer>().sharedMaterial);
-                    }
-                }
+                MeshManager.instance.AddMesh(r.transform, r.GetComponent<MeshFilter>().mesh, r.GetComponent<MeshRenderer>().sharedMaterial);
             }
         }
     }
