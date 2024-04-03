@@ -12,22 +12,12 @@ public class MeshGroup
     public MeshGroup(string materialName, Color materialColor, Color materialColorEnd)
     {
         this.materialName = materialName;
-        this.color = materialColor;
-        this.colorEnd = materialColorEnd;
-        this.meshes = new List<Mesh>();
-        this.transforms = new List<Transform>();
+        color = materialColor;
+        colorEnd = materialColorEnd;
+        meshes = new List<Mesh>();
+        transforms = new List<Transform>();
     }
 }
-
-// public class MeshChunk {
-//     public Mesh mesh;
-//     public Transform transform;
-
-//     public MeshChunk(Mesh mesh, Transform transform) {
-//         this.mesh = mesh;
-//         this.transform = transform;
-//     }
-// }
 
 public class MeshManager : Singleton<MeshManager>
 {
@@ -38,7 +28,7 @@ public class MeshManager : Singleton<MeshManager>
     {
         if (_meshParent == null)
         {
-            _meshParent = new GameObject("meshParent");
+            _meshParent = new GameObject("MeshParent");
         }
 
         if (_meshGroupRenderers == null)
@@ -52,7 +42,7 @@ public class MeshManager : Singleton<MeshManager>
         }
         else
         {
-            GameObject render = new("meshGroup - " + material.name);
+            GameObject render = new("MeshGroup - " + material.name);
             //Debug.Log("new object:" + material.name);
             render.transform.SetParent(_meshParent.transform);
 

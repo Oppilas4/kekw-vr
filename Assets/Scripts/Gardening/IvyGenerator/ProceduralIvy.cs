@@ -95,14 +95,6 @@ namespace Gardening
             _ivyCount++;
         }
 
-        private Vector3 CalculateTangent(Vector3 p0, Vector3 p1, Vector3 normal)
-        {
-            var heading = p1 - p0;
-            var distance = heading.magnitude;
-            var direction = heading / distance;
-            return Vector3.Cross(normal, direction).normalized;
-        }
-
         private Vector3 ApplyCorrection(Vector3 p, Vector3 normal)
         {
             return p + normal * 0.01f;
@@ -110,7 +102,7 @@ namespace Gardening
 
         private bool IsOccluded(Vector3 from, Vector3 to)
         {
-            Ray ray = new Ray(from, (to - from) / (to - from).magnitude);
+            Ray ray = new(from, (to - from) / (to - from).magnitude);
             return Physics.Raycast(ray, (to - from).magnitude);
         }
 
@@ -124,7 +116,6 @@ namespace Gardening
             Vector3 middle = (p0 + p1) / 2;
             var h = p0 - p1;
             var distance = h.magnitude;
-            var dir = h / distance;
             return middle + normal * distance;
         }
 
@@ -133,7 +124,7 @@ namespace Gardening
 
             if (count == maxPointsForBranch)
             {
-                IvyNode rootNode = new IvyNode(pos, normal);
+                IvyNode rootNode = new(pos, normal);
                 return new List<IvyNode> { rootNode }.join(CreateBranch(count - 1, pos, normal, dir));
             }
             else if (count < maxPointsForBranch && count > 0)
@@ -211,7 +202,7 @@ namespace Gardening
                         else
                         {
                             Vector3 p4 = p3 - normal * segmentLength;
-                            IvyNode p4Node = new IvyNode(p4, dir);
+                            IvyNode p4Node = new(p4, dir);
 
                             if (IsOccluded(p4, pos, normal))
                             {
@@ -242,6 +233,5 @@ namespace Gardening
                 Destroy(t.gameObject);
             }
         }
-
     }
 }
