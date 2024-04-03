@@ -5,11 +5,6 @@ namespace Gardening
 {
     public class ProceduralIvy : MonoBehaviour
     {
-
-        //public Camera cam;
-        //[Space]
-        //public float recycleInterval = 30;
-        [Space]
         public int branches = 3;
         public int maxPointsForBranch = 20;
         public float segmentLength = .002f;
@@ -44,19 +39,8 @@ namespace Gardening
 
             if (Input.GetKeyUp(KeyCode.Space))
             {
-                // call this method when you are ready to group your meshes
                 CombineAndClear();
             }
-
-            //if (Input.GetMouseButtonDown(0))
-            //{
-            //    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            //    RaycastHit hit;
-            //    if (Physics.Raycast(ray, out hit, 100))
-            //    {
-            //        CreateIvy(hit);
-            //    }
-            //}
         }
 
         private Vector3 FindTangentFromArbitraryNormal(Vector3 normal)
@@ -221,6 +205,7 @@ namespace Gardening
             return null;
         }
 
+        // Group meshes to improve performance
         private void CombineAndClear()
         {
             MeshManager.instance.CombineAll();

@@ -11,16 +11,14 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         get
         {
-            if (_instance == null)
+            if (_instance != null) return _instance;
+            _instance = GameObject.FindObjectOfType<T>();
+            if (_instance != null) return _instance; // Cursed
+            var singletonObj = new GameObject
             {
-                _instance = GameObject.FindObjectOfType<T>();
-                if (_instance == null)
-                {
-                    var singletonObj = new GameObject();
-                    singletonObj.name = typeof(T).ToString();
-                    _instance = singletonObj.AddComponent<T>();
-                }
-            }
+                name = typeof(T).ToString()
+            };
+            _instance = singletonObj.AddComponent<T>();
             return _instance;
         }
     }

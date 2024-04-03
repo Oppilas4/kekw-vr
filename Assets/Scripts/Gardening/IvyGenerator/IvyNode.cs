@@ -15,6 +15,5 @@ namespace Gardening
 
         public Vector3 GetPosition() => _position;
         public Vector3 GetNormal() => _normal;
-
     }
 }
