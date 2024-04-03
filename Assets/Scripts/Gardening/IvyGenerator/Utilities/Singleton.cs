@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-
+#if DEBUG
     public static bool verbose = false;
+#endif
     public static bool keepAlive = true;
 
     private static T _instance = null;
@@ -32,8 +33,10 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         if (_instance != null)
         {
+#if DEBUG
             if (verbose)
                 Debug.Log("SingleAccessPoint, Destroy duplicate instance " + name + " of " + instance.name);
+#endif
             Destroy(gameObject);
             return;
         }
@@ -45,16 +48,18 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
+#if DEBUG
         if (_instance == null)
         {
             if (verbose)
                 Debug.LogError("SingleAccessPoint<" + typeof(T).Name + "> Instance null in Awake");
+
             return;
         }
 
         if (verbose)
             Debug.Log("SingleAccessPoint instance found " + instance.GetType().Name);
-
+#endif
     }
 
 }
