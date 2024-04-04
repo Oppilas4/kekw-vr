@@ -8,22 +8,25 @@ public class MC_VuoksiBeatsSpawner : MonoBehaviour
     public Transform[] points;
     public float beat = 60/105*2;
     private float timer;
+    public AudioSource audioSource;
 
     private bool gameRunning = false;
     public void StartVuoksiBeats()
     {
         gameRunning = true;
+        audioSource.Play();
     }
 
     public void StopVuoksiBeats()
     {
         gameRunning = false;
+        audioSource.Stop();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameRunning)
+        if (gameRunning && audioSource.isPlaying)
         {
             if (timer > beat)
             {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class VegetableController : MonoBehaviour
@@ -35,6 +36,20 @@ public class VegetableController : MonoBehaviour
         {
             Debug.LogError("VegetableData is not assigned to " + gameObject.name);
             return null;
+        }
+    }
+
+    public List<Material> GetMaterials()
+    {
+        Renderer renderer = GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            return new List<Material>(renderer.materials);
+        }
+        else
+        {
+            Debug.LogError("No Renderer component found on " + gameObject.name);
+            return new List<Material>();
         }
     }
 }

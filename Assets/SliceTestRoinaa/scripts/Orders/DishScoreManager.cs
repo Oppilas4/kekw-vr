@@ -11,7 +11,7 @@ public class DishScoreManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
 
     public List<GameObject> starGameObjects;
-
+    public GameObject exitPortal;
     // Singleton pattern to ensure only one instance of ScoreManager exists
     private static DishScoreManager _instance;
     public static DishScoreManager Instance
@@ -76,5 +76,7 @@ public class DishScoreManager : MonoBehaviour
         {
             starGameObjects[i].SetActive(i < stars);
         }
+
+        exitPortal.SetActive(true);
     }
 }

@@ -31,6 +31,7 @@ public class MC_StartVuoksiBeats : MonoBehaviour
     void OnSword1Released(XRBaseInteractor interactor)
     {
         sword1Grabbed = false;
+        StopGame();
     }
 
     void OnSword2Grabbed(XRBaseInteractor interactor)
@@ -42,6 +43,7 @@ public class MC_StartVuoksiBeats : MonoBehaviour
     void OnSword2Released(XRBaseInteractor interactor)
     {
         sword2Grabbed = false;
+        StopGame();
     }
 
     void CheckBothSwordsGrabbed()
@@ -49,10 +51,6 @@ public class MC_StartVuoksiBeats : MonoBehaviour
         if (sword1Grabbed && sword2Grabbed)
         {
             StartGame(); // Call your method to start the game
-        }
-        else
-        {
-            StopGame();
         }
     }
 

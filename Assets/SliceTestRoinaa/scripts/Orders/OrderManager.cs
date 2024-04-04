@@ -9,8 +9,10 @@ public class OrderManager : MonoBehaviour
     public UnityEvent orderPlacedEvent;
     public GameObject orderTicketPrefab;
     public Transform ticketSpawnLoc;
+    private MC_OrderTicketManager orderTicketManager;
 
     private List<Order> activeOrders = new List<Order>();
+    
 
     // Define a delegate for the event
     public delegate void OrderPlacedDelegate(int orderId, Transform waitingPosition);
@@ -22,6 +24,11 @@ public class OrderManager : MonoBehaviour
         Raw,
         Medium,
         WellDone
+    }
+
+    private void Start()
+    {
+        orderTicketManager = FindAnyObjectByType<MC_OrderTicketManager>();
     }
 
     public void GenerateRandomOrder(Customer customer, Transform waitingPosition)
@@ -64,6 +71,11 @@ public class OrderManager : MonoBehaviour
 
         // Pass the steak temperature to the order ticket
         orderTicket.SetOrderInfo(order.orderId, order.dishName, order.steakTemperature);
+
+        if(orderTicketManager != null)
+        {
+            orderTicketManager.addTicketToList(orderTicketObject);
+        }
     }
 
     private void CheckOrderStatus()

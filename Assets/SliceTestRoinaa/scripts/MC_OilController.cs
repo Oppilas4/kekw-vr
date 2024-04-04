@@ -9,6 +9,7 @@ public class MC_OilController : MonoBehaviour, IHotObject
     private float currentEmissionRate = 0f;
     private const float emissionChangeSpeed = 20f;
     public List<GameObject> objectsInOil = new List<GameObject>();
+    public List<Material> materialsInOil = new List<Material>();
 
     public MC_DeepFrierTimer timer;
     private void OnEnable()
@@ -60,19 +61,30 @@ public class MC_OilController : MonoBehaviour, IHotObject
         if (objectsInOil.Count == 0 && vegetableController != null && IsHot())
         {
             objectsInOil.Add(other.gameObject);
+            materialsInOil.AddRange(vegetableController.GetMaterials());
             UpdateEmissionRate(80);
         }
         else if(vegetableController != null && !objectsInOil.Contains(other.gameObject))
         {
             objectsInOil.Add(other.gameObject);
+            materialsInOil.AddRange(vegetableController.GetMaterials());
         }
     }
 
     public void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<VegetableController>())
+        VegetableController vegetableController = other.GetComponent<VegetableController>();
+        if (vegetableController != null)
         {
             objectsInOil.Remove(other.gameObject);
+
+            List<Material> materialsToRemove = vegetableController.GetMaterials();
+
+            // Remove these materials from the materialsInOil list
+            foreach (Material material in materialsToRemove)
+            {
+                materialsInOil.Remove(material);
+            }
             if (objectsInOil.Count == 0)
             {
                 timer.StopTimer();
@@ -86,6 +98,7 @@ public class MC_OilController : MonoBehaviour, IHotObject
     {
         timer.gameObject.SetActive(true);
         timer.StartTimer(10);
+        StartCoroutine(IncrementFloatAndSetNoiseLerp(1f));
     }
 
     public void UpdateEmissionRate(float targetEmissionRate)
@@ -120,6 +133,24 @@ public class MC_OilController : MonoBehaviour, IHotObject
                     vegetableController.HandleBoiledEvent(vegetableController);
                 }
             }
+        }
+    }
+
+    private IEnumerator IncrementFloatAndSetNoiseLerp(float targetValue)
+    {
+        foreach (Material material in materialsInOil)
+        {
+            material.SetFloat("_isFried", 1); // Assuming _isFried is a float in the shader
+        }
+        float currentValue = 0f;
+        while (currentValue < targetValue)
+        {
+            currentValue += 0.1f;
+            foreach (Material material in materialsInOil)
+            {
+                material.SetFloat("_NoiseLerp", currentValue);
+            }
+            yield return new WaitForSeconds(0.1f); // Wait for 0.1 seconds before the next increment
         }
     }
 
