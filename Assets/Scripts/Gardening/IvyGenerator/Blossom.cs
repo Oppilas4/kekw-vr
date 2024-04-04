@@ -5,8 +5,8 @@ namespace Gardening
 {
     public class Blossom : MonoBehaviour
     {
-        const string AMOUNT = "_Amount";
-        const float MAX = 0.5f;
+        private const string AMOUNT = "_Amount";
+        private const float MAX = 0.5f;
 
         private Material _material;
         private List<MeshRenderer> _renderers;
