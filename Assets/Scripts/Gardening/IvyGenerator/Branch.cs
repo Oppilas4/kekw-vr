@@ -87,10 +87,10 @@ namespace Gardening
 
                     if (_blossoms.ContainsKey(estimateNodeID))
                     {
-                        Blossom b = _blossoms[estimateNodeID];
-                        if (!b.IsGrowing())
+                        Blossom blossom = _blossoms[estimateNodeID];
+                        if (!blossom.IsGrowing())
                         {
-                            b.Grow(_growthSpeed);
+                            blossom.Grow(_growthSpeed);
                         }
                     }
                 }
@@ -118,56 +118,62 @@ namespace Gardening
             Vector2[] uv = new Vector2[nodes.Count * _meshFaces * 4];
             int[] triangles = new int[(nodes.Count - 1) * _meshFaces * 6];
 
-            for (int i = 0; i < nodes.Count; i++)
+            for (int index = 0; index < nodes.Count; index++)
             {
                 float vStep = 2f * Mathf.PI / _meshFaces;
 
-                var fw = Vector3.zero;
-                if (i > 0)
+                var forward = Vector3.zero;
+                if (index > 0)
                 {
-                    fw = _branchNodes[i - 1].GetPosition() - _branchNodes[i].GetPosition();
+                    forward = _branchNodes[index - 1].GetPosition() - _branchNodes[index].GetPosition();
                 }
 
-                if (i < _branchNodes.Count - 1)
+                if (index < _branchNodes.Count - 1)
                 {
-                    fw += _branchNodes[i].GetPosition() - _branchNodes[i + 1].GetPosition();
+                    forward += _branchNodes[index].GetPosition() - _branchNodes[index + 1].GetPosition();
                 }
 
-                if (fw == Vector3.zero)
+                if (forward == Vector3.zero)
                 {
-                    fw = Vector3.forward;
+                    forward = Vector3.forward;
                 }
 
-                fw.Normalize();
+                forward.Normalize();
 
-                var up = _branchNodes[i].GetNormal();
+                var up = _branchNodes[index].GetNormal();
                 up.Normalize();
 
-                for (int v = 0; v < _meshFaces; v++)
+                for (int faceIndex = 0; faceIndex < _meshFaces; faceIndex++)
                 {
-                    var orientation = Quaternion.LookRotation(fw, up);
+                    var orientation = Quaternion.LookRotation(forward, up);
                     Vector3 xAxis = Vector3.up;
                     Vector3 yAxis = Vector3.right;
-                    Vector3 pos = _branchNodes[i].GetPosition();
-                    pos += orientation * xAxis * (_branchRadius * Mathf.Sin(v * vStep));
-                    pos += orientation * yAxis * (_branchRadius * Mathf.Cos(v * vStep));
+                    Vector3 pos = _branchNodes[index].GetPosition();
+                    pos += orientation * xAxis * (_branchRadius * Mathf.Sin(faceIndex * vStep));
+                    pos += orientation * yAxis * (_branchRadius * Mathf.Cos(faceIndex * vStep));
 
-                    vertices[i * _meshFaces + v] = pos;
+                    vertices[index * _meshFaces + faceIndex] = pos;
 
-                    var diff = pos - _branchNodes[i].GetPosition();
-                    normals[i * _meshFaces + v] = diff / diff.magnitude;
+                    var diff = pos - _branchNodes[index].GetPosition();
+                    normals[index * _meshFaces + faceIndex] = diff / diff.magnitude;
 
-                    float uvID = Remap(i, 0, nodes.Count - 1, 0, 1);
-                    uv[i * _meshFaces + v] = new Vector2((float)v / _meshFaces, uvID);
+                    float uvID = Remap(index, 0, nodes.Count - 1, 0, 1);
+                    uv[index * _meshFaces + faceIndex] = new Vector2((float)faceIndex / _meshFaces, uvID);
                 }
 
-                if (i + 1 >= nodes.Count) continue;
-                for (int v = 0; v < _meshFaces; v++)
+                if (index + 1 >= nodes.Count) continue;
+                for (int faceIndex = 0; faceIndex < _meshFaces; faceIndex++)
                 {
-                    triangles[i * _meshFaces * 6 + v * 6] = ((v + 1) % _meshFaces) + i * _meshFaces;
-                    triangles[i * _meshFaces * 6 + v * 6 + 1] = triangles[i * _meshFaces * 6 + v * 6 + 4] = v + i * _meshFaces;
-                    triangles[i * _meshFaces * 6 + v * 6 + 2] = triangles[i * _meshFaces * 6 + v * 6 + 3] = ((v + 1) % _meshFaces + _meshFaces) + i * _meshFaces;
-                    triangles[i * _meshFaces * 6 + v * 6 + 5] = (_meshFaces + v % _meshFaces) + i * _meshFaces;
+                    triangles[index * _meshFaces * 6 + faceIndex * 6] = ((faceIndex + 1) % _meshFaces) + index * _meshFaces;
+                    triangles[index * _meshFaces * 6 + faceIndex * 6 + 1] = triangles[index * _meshFaces * 6 + faceIndex * 6 + 4] = faceIndex + index * _meshFaces;
+                    // What
+                    triangles[index
+                        * _meshFaces
+                        * 6
+                        + faceIndex
+                        * 6
+                        + 2] = triangles[index * _meshFaces * 6 + faceIndex * 6 + 3] = ((faceIndex + 1) % _meshFaces + _meshFaces) + index * _meshFaces;
+                    triangles[index * _meshFaces * 6 + faceIndex * 6 + 5] = (_meshFaces + faceIndex % _meshFaces) + index * _meshFaces;
                 }
             }
 
@@ -180,95 +186,86 @@ namespace Gardening
 
         private Dictionary<int, Blossom> CreateBlossoms(List<IvyNode> nodes, bool isFirst)
         {
-            Dictionary<int, Blossom> bls = new();
-            for (int i = 0; i < nodes.Count; i++)
+            Dictionary<int, Blossom> blossoms = new();
+            for (int index = 0; index < nodes.Count; index++)
             {
 
-                var r = Random.Range(0, 10);
+                var randomValue = Random.Range(0, 10);
 
-                if ((i <= 0 && !isFirst) || r <= 2) continue;
+                if ((index <= 0 && !isFirst) || randomValue <= 2) continue;
 
-                Vector3 n = nodes[i].GetNormal();
+                Vector3 normal = nodes[index].GetNormal();
                 Vector3 otherNormal = Vector3.up;
-                Vector3 fw = Vector3.forward;
-                if (i > 0)
+                Vector3 forward = Vector3.forward;
+                if (index > 0)
                 {
-                    fw = nodes[i - 1].GetPosition() - nodes[i].GetPosition();
-                    otherNormal = nodes[i - 1].GetNormal();
+                    forward = nodes[index - 1].GetPosition() - nodes[index].GetPosition();
+                    otherNormal = nodes[index - 1].GetNormal();
                 }
-                else if (i < nodes.Count - 1)
+                else if (index < nodes.Count - 1)
                 {
-                    fw = nodes[i].GetPosition() - nodes[i + 1].GetPosition();
-                    otherNormal = nodes[i + 1].GetNormal();
-                }
-
-                var isFlower = (r == 3) && Vector3.Dot(n, otherNormal) >= .95f;
-
-                var prefab = _leafPrefab;
-                if (isFlower)
-                {
-                    prefab = _flowerPrefab;
+                    forward = nodes[index].GetPosition() - nodes[index + 1].GetPosition();
+                    otherNormal = nodes[index + 1].GetNormal();
                 }
 
-                Quaternion rotation = Quaternion.LookRotation(fw.normalized, n);
+                var isFlower = (randomValue == 3) && Vector3.Dot(normal, otherNormal) >= .95f;
+
+                var prefab = isFlower ? _flowerPrefab : _leafPrefab;
+
+                Quaternion rotation = Quaternion.LookRotation(forward.normalized, normal);
           
-                float flowerOffset = isFlower ? 0.02f : 0;
-                //float uvID = Remap(i, 0, nodes.Count - 1, 0, 1);
-                Blossom b = Instantiate(prefab, nodes[i].GetPosition() + nodes[i].GetNormal() * (_branchRadius + flowerOffset), rotation);
-                b.Init(isFlower ? _flowerMaterial : _leafMaterial);
-                b.transform.SetParent(transform);
+                float blossomOffset = isFlower ? 0.02f : 0;
+                Blossom blossom = Instantiate(prefab, nodes[index].GetPosition() + nodes[index].GetNormal() * (_branchRadius + blossomOffset), rotation);
+                blossom.Init(isFlower ? _flowerMaterial : _leafMaterial);
+                blossom.transform.SetParent(transform);
                 //b.transform.forward = n;
-                MeshManager.instance.AddMesh(b.transform, b.GetComponent<MeshFilter>().mesh, b.GetComponent<MeshRenderer>().material);
-                bls.Add(i, b);
+                MeshManager.instance.AddMesh(blossom.transform, blossom.GetComponent<MeshFilter>().mesh, blossom.GetComponent<MeshRenderer>().material);
+                blossoms.Add(index, blossom);
             }
-            return bls;
+            return blossoms;
         }
 
 
         private void OnDrawGizmosSelected()
         {
             if (_branchNodes == null) return;
-            for (int i = 0; i < _branchNodes.Count; i++)
+            for (int index = 0; index < _branchNodes.Count; index++)
             {
-                Gizmos.DrawSphere(_branchNodes[i].GetPosition(), .002f);
-                Gizmos.color = Color.white;
-
+                Gizmos.DrawSphere(_branchNodes[index].GetPosition(), .002f);
                 Gizmos.color = Color.blue;
 
-                var fw = Vector3.zero;
-                if (i > 0)
+                var forward = Vector3.zero;
+                if (index > 0)
                 {
-                    fw = _branchNodes[i - 1].GetPosition() - _branchNodes[i].GetPosition();
+                    forward = _branchNodes[index - 1].GetPosition() - _branchNodes[index].GetPosition();
                 }
 
-                if (i < _branchNodes.Count - 1)
+                if (index < _branchNodes.Count - 1)
                 {
-                    fw += _branchNodes[i].GetPosition() - _branchNodes[i + 1].GetPosition();
+                    forward += _branchNodes[index].GetPosition() - _branchNodes[index + 1].GetPosition();
                 }
 
-                fw.Normalize();
+                forward.Normalize();
 
-                var up = _branchNodes[i].GetNormal();
+                var up = _branchNodes[index].GetNormal();
                 up.Normalize();
 
-                Vector3.OrthoNormalize(ref up, ref fw);
+                Vector3.OrthoNormalize(ref up, ref forward);
 
                 float vStep = (2f * Mathf.PI) / _meshFaces;
-                for (int v = 0; v < _meshFaces; v++)
+                for (int faceIndex = 0; faceIndex < _meshFaces; faceIndex++)
                 {
 
-                    Gizmos.DrawLine(_branchNodes[i].GetPosition(), _branchNodes[i].GetPosition() + fw * .05f);
+                    Gizmos.DrawLine(_branchNodes[index].GetPosition(), _branchNodes[index].GetPosition() + forward * .05f);
 
-                    var orientation = Quaternion.LookRotation(fw, up);
-                    Vector3 xAxis = Vector3.up;
-                    Vector3 yAxis = Vector3.right;
-                    Vector3 pos = _branchNodes[i].GetPosition();
-                    pos += orientation * xAxis * (_branchRadius * Mathf.Sin(v * vStep));
-                    pos += orientation * yAxis * (_branchRadius * Mathf.Cos(v * vStep));
+                    var orientation = Quaternion.LookRotation(forward, up);
+                    Vector3 pos = _branchNodes[index].GetPosition();
+                    pos += orientation * Vector3.up * (_branchRadius * Mathf.Sin(faceIndex * vStep));
+                    pos += orientation * Vector3.right * (_branchRadius * Mathf.Cos(faceIndex * vStep));
 
                     Gizmos.color = new Color(
-                        (float)v / _meshFaces,
-                        (float)v / _meshFaces,
+                        (float)faceIndex / _meshFaces,
+                        (float)faceIndex / _meshFaces,
                         1f
                     );
                     Gizmos.DrawSphere(pos, .002f);
