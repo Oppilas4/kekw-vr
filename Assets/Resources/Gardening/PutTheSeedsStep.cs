@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FillThePotStep : QuestStep
+public class PutTheSeedsStep : QuestStep
 {
     public override void StartQuestStep()
     {
         base.StartQuestStep();
-        PlantManager.OnPotWasFilled += Evaluate;
+        PlantManager.OnSeedWasPlanted += Evaluate;
     }
     protected override void Evaluate()
-    {                                                               
+    {
         FinishQuestStep();
     }
     protected override void FinishQuestStep()
     {
-        PlantManager.OnPotWasFilled -= Evaluate;
+        PlantManager.OnSeedWasPlanted -= FinishQuestStep;
         base.FinishQuestStep();
     }
 }

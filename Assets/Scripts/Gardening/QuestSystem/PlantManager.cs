@@ -8,5 +8,6 @@ namespace Gardening
  public class PlantManager : MonoBehaviour
     {
         public static Action OnPotWasFilled;
+        public static Action OnSeedWasPlanted;
     }
 }

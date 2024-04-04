@@ -1,22 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gardening
 {
+    /// <summary>
+    /// Abstract Class to creat Quest Steps
+    /// </summary>
     public abstract class QuestStep : MonoBehaviour
     {
-        private bool isFinished;
-        public void FinishQuestStep()
+        public event Action OnStepFinished;
+        protected bool _isFinished;
+        public virtual void StartQuestStep()
         {
-            if (!isFinished)
-            {
-                isFinished = true;
-                Debug.Log("Quest Step is finished");
+            //Add logic to follow the progress of the quest
+            _isFinished = false;
+        }
+        protected virtual void Evaluate()
+        {
+            //Add logic that is responsible for cheking if the quest was complited
+        }
 
-                // TO_DO  Add method to advance the quest to the next step
-                Destroy(gameObject);
+        protected virtual void FinishQuestStep()
+        {
+            if (!_isFinished)
+            {
+                _isFinished = true;
+                Debug.Log("Quest Step is finished " + this.name);
+                OnStepFinished?.Invoke();
             }
+            //Remove dependencies
         }
     }
 }
