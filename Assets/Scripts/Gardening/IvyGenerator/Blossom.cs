@@ -9,7 +9,6 @@ namespace Gardening
         private const float MAX = 0.5f;
 
         private Material _material;
-        private List<MeshRenderer> _renderers;
 
         private bool _animate;
         private float _growthSpeed = 2;
@@ -22,13 +21,7 @@ namespace Gardening
 
         private void Start()
         {
-            _renderers = new List<MeshRenderer>();
-            foreach (Transform t in transform)
-            {
-                MeshRenderer r = t.GetComponent<MeshRenderer>();
-                _renderers.Add(r);
-                r.material = _material;
-            }
+            GetComponent<MeshRenderer>().material = _material;
 
             _material.SetFloat(AMOUNT, _currentAmount);
             _animate = false;
@@ -53,10 +46,6 @@ namespace Gardening
             if (_currentAmount < MAX) return;
             _animate = false;
             _material.SetFloat(AMOUNT, MAX);
-            foreach (var r in _renderers)
-            {
-                MeshManager.instance.AddMesh(r.transform, r.GetComponent<MeshFilter>().mesh, r.GetComponent<MeshRenderer>().sharedMaterial);
-            }
         }
     }
 }

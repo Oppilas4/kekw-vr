@@ -180,7 +180,7 @@ namespace Gardening
 
         private Dictionary<int, Blossom> CreateBlossoms(List<IvyNode> nodes, bool isFirst)
         {
-            Dictionary<int, Blossom> bls = new Dictionary<int, Blossom>();
+            Dictionary<int, Blossom> bls = new();
             for (int i = 0; i < nodes.Count; i++)
             {
 
@@ -211,11 +211,14 @@ namespace Gardening
                 }
 
                 Quaternion rotation = Quaternion.LookRotation(fw.normalized, n);
+          
                 float flowerOffset = isFlower ? 0.02f : 0;
                 //float uvID = Remap(i, 0, nodes.Count - 1, 0, 1);
                 Blossom b = Instantiate(prefab, nodes[i].GetPosition() + nodes[i].GetNormal() * (_branchRadius + flowerOffset), rotation);
                 b.Init(isFlower ? _flowerMaterial : _leafMaterial);
                 b.transform.SetParent(transform);
+                //b.transform.forward = n;
+                MeshManager.instance.AddMesh(b.transform, b.GetComponent<MeshFilter>().mesh, b.GetComponent<MeshRenderer>().material);
                 bls.Add(i, b);
             }
             return bls;
