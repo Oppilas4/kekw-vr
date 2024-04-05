@@ -221,7 +221,10 @@ namespace Gardening
                 Blossom blossom = Instantiate(prefab, nodes[index].GetPosition() + nodes[index].GetNormal() * (_branchRadius + blossomOffset), rotation);
                 blossom.Init(isFlower ? _flowerMaterial : _leafMaterial);
                 blossom.transform.SetParent(transform);
-                //b.transform.forward = n;
+
+                // I guess this kind of works
+                blossom.transform.forward = normal;
+
                 MeshManager.instance.AddMesh(blossom.transform, blossom.GetComponent<MeshFilter>().mesh, blossom.GetComponent<MeshRenderer>().material);
                 blossoms.Add(index, blossom);
             }
