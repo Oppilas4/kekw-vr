@@ -74,4 +74,9 @@ public class MC_OrderTicketMovement : MonoBehaviour
         }
         col.enabled = true;
     }
+
+    private void OnDestroy()
+    {
+        orderTicketManager.removeTicketFromList(gameObject);
+    }
 }

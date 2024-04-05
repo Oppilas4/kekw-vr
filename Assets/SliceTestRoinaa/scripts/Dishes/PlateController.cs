@@ -6,6 +6,9 @@ using Unity.VisualScripting;
 
 public class PlateController : MonoBehaviour
 {
+    public ParticleSystem _bubbles;
+    public ParticleSystem _foam;
+    public GameObject DecalProjector;
     // This list will store the sliced vegetable pieces on the plate
     private List<GameObject> vegetablePiecesOnPlate = new List<GameObject>();
 
@@ -36,6 +39,28 @@ public class PlateController : MonoBehaviour
                 // Add the sliced vegetable to the list
                 vegetablePiecesOnPlate.Add(other.gameObject);
             }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Sponge"))
+        {
+            if (!_foam.isPlaying)
+            {
+                _foam.Play();
+                _bubbles.Play();
+            }
+            DecalProjector.SetActive(false);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Sponge"))
+        {
+            _foam.Stop();
+            _bubbles.Stop();
         }
     }
 

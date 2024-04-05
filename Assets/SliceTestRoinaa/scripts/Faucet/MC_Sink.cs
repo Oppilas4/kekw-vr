@@ -22,6 +22,8 @@ public class MC_Sink : MonoBehaviour
 
     private bool needsShaderUpdate = false;
 
+    private MC_SinkWater sinkWater;
+
 
     private void OnEnable()
     {
@@ -48,6 +50,7 @@ public class MC_Sink : MonoBehaviour
     {
         // Assuming the waterObject has a Renderer component for its material
         waterRenderer = waterObject.GetComponent<Renderer>();
+        sinkWater = FindAnyObjectByType<MC_SinkWater>();
     }
 
     private void Update()
@@ -117,6 +120,7 @@ public class MC_Sink : MonoBehaviour
         if (interactable == plug)
         {
             InsertPlug(false);
+            sinkWater.DisableSoapEffect();
         }
     }
 
