@@ -211,6 +211,12 @@ namespace Gardening
                 var isFlower = (randomValue == 3) && Vector3.Dot(normal, otherNormal) >= .95f;
 
                 var prefab = isFlower ? _flowerPrefab : _leafPrefab;
+                if (prefab == null)
+                {
+                    _wantBlossoms = false;
+                    Debug.LogWarning("Flower or leaf prefabs are not set even though \"Want Blossoms\" is set. Defaulting to no blossoms");
+                    return null;
+                }
 
                 Quaternion rotation = Quaternion.LookRotation(forward.normalized, normal);
           
