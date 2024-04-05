@@ -76,31 +76,28 @@ namespace Gardening
 
         private void Update()
         {
-            if (_animate)
+            if (!_animate) return;
+            _currentAmount += Time.deltaTime * _growthSpeed;
+            _material.SetFloat(AMOUNT, _currentAmount);
+
+            if (_wantBlossoms)
             {
-                _currentAmount += Time.deltaTime * _growthSpeed;
-                _material.SetFloat(AMOUNT, _currentAmount);
+                var estimateNodeID = (int)Remap(_currentAmount, -.5f, .5f, 0, _branchNodes.Count - 1);
 
-                if (_wantBlossoms)
+                if (_blossoms.ContainsKey(estimateNodeID))
                 {
-                    var estimateNodeID = (int)Remap(_currentAmount, -.5f, .5f, 0, _branchNodes.Count - 1);
-
-                    if (_blossoms.ContainsKey(estimateNodeID))
+                    Blossom blossom = _blossoms[estimateNodeID];
+                    if (!blossom.IsGrowing())
                     {
-                        Blossom blossom = _blossoms[estimateNodeID];
-                        if (!blossom.IsGrowing())
-                        {
-                            blossom.Grow(_growthSpeed);
-                        }
+                        blossom.Grow(_growthSpeed);
                     }
                 }
-
-                if (_currentAmount < MAX) return;
-                _animate = false;
-                _material.SetFloat(AMOUNT, MAX);
-                MeshManager.instance.AddMesh(transform, _meshFilter.mesh, _meshRenderer.sharedMaterial);
             }
 
+            if (_currentAmount < MAX) return;
+            _animate = false;
+            _material.SetFloat(AMOUNT, MAX);
+            MeshManager.instance.AddMesh(transform, _meshFilter.mesh, _meshRenderer.sharedMaterial);
         }
 
         private float Remap(float input, float oldLow, float oldHigh, float newLow, float newHigh)
