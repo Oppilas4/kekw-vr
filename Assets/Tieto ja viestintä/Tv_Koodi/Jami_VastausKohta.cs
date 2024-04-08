@@ -5,7 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Jami_VastausKohta : MonoBehaviour
 {
-    public Yhdistelm‰Tarkistus yhdistelm‰t;
+    public Tv_Yhdistelm‰Tarkistus yhdistelm‰t;
     Juho_VastausKuutio nykyinenKuutio;
     XRSocketInteractor mySocket;
 

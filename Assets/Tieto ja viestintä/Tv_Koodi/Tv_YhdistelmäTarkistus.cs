@@ -10,7 +10,7 @@ public class Yhdistelmätt
     public GameObject finishedParticle;
 }
 
-public class YhdistelmäTarkistus : MonoBehaviour
+public class Tv_YhdistelmäTarkistus : MonoBehaviour
 {
     public Yhdistelmätt[] yhdistelmät;
     public GameObject[] allAloneParticle;
