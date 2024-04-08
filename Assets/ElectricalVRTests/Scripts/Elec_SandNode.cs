@@ -172,7 +172,7 @@ public class Elec_SandNode : MonoBehaviour
     public void RemoveNeighbourVoltage(GameObject RemoveFrom)
     {
         if(RemoveFrom == null) return;
-        if(ReceivedVoltagesATM.ContainsKey(RemoveFrom))ReceivedVoltagesATM.Remove(RemoveFrom);
+        else if(ReceivedVoltagesATM.ContainsKey(RemoveFrom))ReceivedVoltagesATM.Remove(RemoveFrom);
         UpdateVoltage(true);
     }
 
