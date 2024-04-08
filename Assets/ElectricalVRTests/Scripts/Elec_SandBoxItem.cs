@@ -21,9 +21,10 @@ public class Elec_SandBoxItem : MonoBehaviour
     }
     void MamaSpawn(XRBaseInteractor xRBaseInteractor)
     {
-        if (xRBaseInteractor.GetComponent<XRDirectInteractor>() != null || xRBaseInteractor.GetComponent<XRRayInteractor>() != null)
+        if (xRBaseInteractor.GetComponent<XRDirectInteractor>() != null && MamaSpawner != null  || xRBaseInteractor.GetComponent<XRRayInteractor>() != null && MamaSpawner != null)
         {
             MamaSpawner.SpawnItem();
+            MamaSpawner = null;
         }
     }
 }
