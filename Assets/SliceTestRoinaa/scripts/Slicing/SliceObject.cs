@@ -22,7 +22,7 @@ public class SliceObject : MonoBehaviour
             GameObject target = hit.transform.gameObject;
 
             // Check if the target has the VegetableController script before slicing
-            if (target.GetComponent<VegetableController>() != null)
+            if (target.GetComponent<Vegetable_Handler>() != null)
             {
                 Slice(target);
                 StartCoroutine(StartCooldown());
@@ -40,7 +40,7 @@ public class SliceObject : MonoBehaviour
 
         if (hull != null)
         {
-            VegetableController vegetableController = GetVegetableController(target);
+            Vegetable_Handler vegetableController = GetVegetableController(target);
             Material insideMaterial = vegetableController.vegetableData.insideMaterial;
             GameObject upperHull = hull.CreateUpperHull(target, insideMaterial);
             SetupSlicedComponent(upperHull, vegetableController);
@@ -52,9 +52,9 @@ public class SliceObject : MonoBehaviour
         }
     }
 
-    private VegetableController GetVegetableController(GameObject vegetable)
+    private Vegetable_Handler GetVegetableController(GameObject vegetable)
     {
-        VegetableController vegetableController = vegetable.GetComponent<VegetableController>();
+        Vegetable_Handler vegetableController = vegetable.GetComponent<Vegetable_Handler>();
 
         if (vegetableController != null)
         {
@@ -67,7 +67,7 @@ public class SliceObject : MonoBehaviour
         }
     }
 
-    public void SetupSlicedComponent(GameObject slicedObject, VegetableController vegetableController)
+    public void SetupSlicedComponent(GameObject slicedObject, Vegetable_Handler vegetableController)
     {
         int interactableLayer = LayerMask.NameToLayer("Interactable");
 
@@ -80,7 +80,7 @@ public class SliceObject : MonoBehaviour
             collider.convex = true;
 
             // Add the vegetableController to the sliced object
-            VegetableController slicedVegetableController = slicedObject.AddComponent<VegetableController>();
+            Vegetable_Handler slicedVegetableController = slicedObject.AddComponent<Vegetable_Handler>();
 
             slicedVegetableController.vegetableData = vegetableController.vegetableData;
 
