@@ -108,12 +108,13 @@ namespace Gardening
 
         private Mesh CreateMesh(List<IvyNode> nodes)
         {
+            var sixMeshes = _meshFaces * 6;
             Mesh branchMesh = new();
 
             Vector3[] vertices = new Vector3[(nodes.Count) * _meshFaces * 4];
             Vector3[] normals = new Vector3[nodes.Count * _meshFaces * 4];
             Vector2[] uv = new Vector2[nodes.Count * _meshFaces * 4];
-            int[] triangles = new int[(nodes.Count - 1) * _meshFaces * 6];
+            int[] triangles = new int[(nodes.Count - 1) * sixMeshes];
 
             for (int index = 0; index < nodes.Count; index++)
             {
@@ -161,16 +162,16 @@ namespace Gardening
                 if (index + 1 >= nodes.Count) continue;
                 for (int faceIndex = 0; faceIndex < _meshFaces; faceIndex++)
                 {
-                    triangles[index * _meshFaces * 6 + faceIndex * 6] = ((faceIndex + 1) % _meshFaces) + index * _meshFaces;
-                    triangles[index * _meshFaces * 6 + faceIndex * 6 + 1] = triangles[index * _meshFaces * 6 + faceIndex * 6 + 4] = faceIndex + index * _meshFaces;
+                    var sixIndices = faceIndex * 6;
+                    triangles[index * sixMeshes + sixIndices] = ((faceIndex + 1) % _meshFaces) + index * _meshFaces;
+                    triangles[index * sixMeshes + sixIndices + 1] = triangles[(index * sixMeshes) + sixIndices + 4] = faceIndex + index * _meshFaces;
                     // What
                     triangles[index
                         * _meshFaces
                         * 6
-                        + faceIndex
-                        * 6
-                        + 2] = triangles[index * _meshFaces * 6 + faceIndex * 6 + 3] = ((faceIndex + 1) % _meshFaces + _meshFaces) + index * _meshFaces;
-                    triangles[index * _meshFaces * 6 + faceIndex * 6 + 5] = (_meshFaces + faceIndex % _meshFaces) + index * _meshFaces;
+                        + sixIndices
+                        + 2] = triangles[index * sixMeshes + sixIndices + 3] = (faceIndex + 1) % _meshFaces + _meshFaces + (index * _meshFaces);
+                    triangles[index * sixMeshes + sixIndices + 5] = _meshFaces + faceIndex % _meshFaces + (index * _meshFaces);
                 }
             }
 
