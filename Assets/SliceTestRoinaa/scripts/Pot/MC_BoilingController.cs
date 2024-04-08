@@ -7,7 +7,7 @@ public class MC_BoilingController : MonoBehaviour
     public GameObject timerObject; // timerObject is a child of the "Pot" object. get the reference by searching for a child called "CookingTimer"
     public MC_Timer timerScript; // timerScript is attached to the timerObject. get the reference by getting the component out of the timerObject
 
-    public static event Action<Vegetable_Handler> OnVegetableBoiled;
+    public static event Action<VegetableController> OnVegetableBoiled;
     private void OnTriggerEnter(Collider other)
     {
         // Assuming the pot tag is "Pot"
@@ -58,7 +58,7 @@ public class MC_BoilingController : MonoBehaviour
     private void OnBoilComplete()
     {
         // Assuming you have a reference to the VegetableController that was boiled
-        Vegetable_Handler boiledVegetableController = GetComponent<Vegetable_Handler>(); // Retrieve the VegetableController somehow
+        VegetableController boiledVegetableController = GetComponent<VegetableController>(); // Retrieve the VegetableController somehow
 
         // Raise the event to notify that the vegetable has been boiled
         OnVegetableBoiled?.Invoke(boiledVegetableController);
