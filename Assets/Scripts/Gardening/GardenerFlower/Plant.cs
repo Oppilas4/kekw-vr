@@ -17,7 +17,7 @@ namespace Gardening
 
         private Transform _flowerTransform;
 
-        private List<Material> _growMaterials = new List<Material>();
+        private List<Material> _growMaterials = new();
 
         private bool _isGrown;
         private int index = 0;
@@ -65,7 +65,7 @@ namespace Gardening
             float currentValue = material.GetFloat("Grow_");
             while (!_isGrown)
             {
-                currentValue += 1/(_growthTime / _refreshRate);
+                currentValue += 1 / (_growthTime / _refreshRate);
                 if (currentValue >= _maxGrowValue)
                 {
                     _isGrown = true;
