@@ -79,7 +79,7 @@ namespace Gardening
                 Debug.LogWarning($"Plantable does not exist on root or leaf: {other.gameObject.name}");
                 return;
             }
-            plant = Instantiate(plantable.associatedPlant, _plantRootsTransform.position, Quaternion.identity);
+            plant = Instantiate(plantable.associatedPlant, _plantRootsTransform.position, Quaternion.Euler(-90f, 0f, 0f));
             plant.PlantThePlant();
             plant.transform.parent = transform;
             Destroy(other.gameObject);
