@@ -21,6 +21,7 @@ namespace Gardening
         private Blossom _leafPrefab;
         private Blossom _flowerPrefab;
         private bool _wantBlossoms;
+        private bool _wantFlowers;
         private Dictionary<int, Blossom> _blossoms;
 
         private float _branchRadius = 0.02f;
@@ -50,6 +51,21 @@ namespace Gardening
             _leafPrefab = leafPrefab;
             _flowerPrefab = flowerPrefab;
             _wantBlossoms = true;
+            _wantFlowers = true;
+            _blossoms = CreateBlossoms(branchNodes, isFirst);
+        }
+
+        public void Init(List<IvyNode> branchNodes, float branchRadius, Material material, Material leafMaterial, Blossom leafPrefab, bool isFirst)
+        {
+            _branchNodes = branchNodes;
+            _branchRadius = branchRadius;
+            _material = new Material(material);
+            _mesh = CreateMesh(branchNodes);
+
+            _leafMaterial = leafMaterial;
+            _leafPrefab = leafPrefab;
+            _wantBlossoms = true;
+            _wantFlowers = false;
             _blossoms = CreateBlossoms(branchNodes, isFirst);
         }
 
@@ -97,7 +113,7 @@ namespace Gardening
             if (_currentAmount < MAX) return;
             _animate = false;
             _material.SetFloat(AMOUNT, MAX);
-            MeshManager.instance.AddMesh(transform, _meshFilter.mesh, _meshRenderer.sharedMaterial);
+            MeshManager.instance.AddMesh(transform, _meshFilter.mesh, _meshRenderer.material);
         }
 
         private float Remap(float input, float oldLow, float oldHigh, float newLow, float newHigh)
@@ -206,7 +222,7 @@ namespace Gardening
                     otherNormal = nodes[index + 1].GetNormal();
                 }
 
-                var isFlower = (randomValue == 3) && Vector3.Dot(normal, otherNormal) >= .95f;
+                var isFlower = _wantFlowers && (randomValue == 3) && Vector3.Dot(normal, otherNormal) >= .95f;
 
                 var prefab = isFlower ? _flowerPrefab : _leafPrefab;
                 if (prefab == null)

@@ -18,6 +18,7 @@ namespace Gardening
         public Blossom flowerPrefab;
         [Space]
         public bool wantBlossoms;
+        public bool wantFlowers;
 
         private int _ivyCount = 0;
 
@@ -32,6 +33,7 @@ namespace Gardening
                 }
             }
             //CombineAndClear();
+            if (wantFlowers && !wantBlossoms) Debug.LogWarning("wantFlowers is enabled, but wantBlossoms is not. Defaulting to no blossoms.");
         }
 
         private void Update()
@@ -65,9 +67,13 @@ namespace Gardening
                 {
                     branchScript.Init(nodes, branchRadius, branchMaterial);
                 }
-                else
+                else if (wantFlowers)
                 {
                     branchScript.Init(nodes, branchRadius, branchMaterial, leafMaterial, leafPrefab, flowerMaterial, flowerPrefab, index == 0);
+                }
+                else
+                {
+                    branchScript.Init(nodes, branchRadius, branchMaterial, leafMaterial, leafPrefab, index == 0);
                 }
                 branch.transform.SetParent(ivy.transform);
             }
