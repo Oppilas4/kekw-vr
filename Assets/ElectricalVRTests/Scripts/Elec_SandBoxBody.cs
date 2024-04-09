@@ -5,7 +5,6 @@ using UnityEngine;
 public class Elec_SandBoxBody : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Quaternion RotationOnEnter;
     void Start()
     {
         
@@ -18,17 +17,12 @@ public class Elec_SandBoxBody : MonoBehaviour
     }
 
     private void OnTriggerStay(Collider other)
-    {
-        
+    {       
         if(other.GetComponent<Elec_SandBoxItem>() != null) 
         {
-            other.transform.rotation = RotationOnEnter ;
-            other.transform.position = new Vector3(transform.position.x,other.transform.position.y,other.transform.position.z);
+            other.transform.rotation = Quaternion.Euler(0,0,0);
+            other.GetComponent<Elec_SandBoxItem>().PositionToBox(transform.position);
             other.GetComponent<Rigidbody>().isKinematic = true;
         }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        other.GetComponent<Rigidbody>().isKinematic = false;
     }
 }
