@@ -1,6 +1,3 @@
-using Kekw.Interaction;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gardening
@@ -8,7 +5,7 @@ namespace Gardening
     public class FlowerPot : MonoBehaviour
     {
         public Plant plant { get; private set; }
-        [SerializeField] private Transform _plantRootsPosition;
+        [SerializeField] private Transform _plantRootsTransform;
         private bool _isSeedPlanted = false;
 
         private GroundFilling _groundFillerScript;
@@ -31,15 +28,12 @@ namespace Gardening
                 }
             }
 
-            if(plant != null)
+            if (plant != null && plant.IsCurrentlyGrowing)
             {
-                if (plant.IsCurrentlyGrowing)
+                _timePlantGrowthInactive += Time.deltaTime;
+                if (_timePlantGrowthInactive > 0.2f)
                 {
-                    _timePlantGrowthInactive += Time.deltaTime;
-                    if (_timePlantGrowthInactive > 0.2f)
-                    {
-                        plant.StopPlantGrowth();
-                    }
+                    plant.StopPlantGrowth();
                 }
             }
         }
@@ -52,8 +46,7 @@ namespace Gardening
                 if (!_groundFillerScript.isCurrentlyFilling)
                     _groundFillerScript.StartFillingAndCoroutine();
             }
-            if (!_groundFillerScript.isFilled)
-                return;
+            if (!_groundFillerScript.isFilled) return;
 
             if (other.CompareTag("Seed") && !_isSeedPlanted)
             {
@@ -61,24 +54,35 @@ namespace Gardening
                 {
                     Quaternion sproutRotation = Quaternion.identity;
                     sproutRotation.eulerAngles = new Vector3(-90, 0, 0);
-                    plant = Instantiate(seedPacket.associatedPlant, _plantRootsPosition.position, sproutRotation);
+                    plant = Instantiate(seedPacket.associatedPlant, _plantRootsTransform.position, sproutRotation);
                     plant.PlantThePlant();
                     plant.transform.parent = transform;
                     _isSeedPlanted = true;
                 }
             }
 
-            if (!_isSeedPlanted)
-                return;
+            if (!_isSeedPlanted) return;
 
-            if (other.tag == "Water")
+            if (!other.CompareTag("Water")) return;
+            if (plant.IsCurrentlyGrowing) return;
+            _timePlantGrowthInactive = 0f;
+            plant.StartPlantGrowth();
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (!_groundFillerScript.isFilled || _isSeedPlanted || !(other.collider.CompareTag("Root") || other.collider.CompareTag("Leaf")))
+                return;
+            other.gameObject.TryGetComponent<Plantable>(out var plantable);
+            if (plantable == null)
             {
-                if (!plant.IsCurrentlyGrowing)
-                {
-                    _timePlantGrowthInactive = 0f;
-                    plant.StartPlantGrowth();
-                }
+                Debug.LogWarning($"Plantable does not exist on root or leaf: {other.gameObject.name}");
+                return;
             }
+            plant = Instantiate(plantable.associatedPlant, _plantRootsTransform.position, Quaternion.identity);
+            plant.PlantThePlant();
+            plant.transform.parent = transform;
+            Destroy(other.gameObject);
         }
     }
 }
