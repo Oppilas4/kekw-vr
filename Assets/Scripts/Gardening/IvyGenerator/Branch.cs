@@ -125,15 +125,14 @@ namespace Gardening
         private Mesh CreateMesh(List<IvyNode> nodes)
         {
             var sixMeshes = _meshFaces * 6;
-            int numberOfNodes = nodes.Count;
             Mesh branchMesh = new();
 
-            Vector3[] vertices = new Vector3[numberOfNodes * _meshFaces * 4];
-            Vector3[] normals = new Vector3[numberOfNodes * _meshFaces * 4];
-            Vector2[] uv = new Vector2[numberOfNodes * _meshFaces * 4];
-            int[] triangles = new int[(numberOfNodes - 1) * sixMeshes];
+            Vector3[] vertices = new Vector3[nodes.Count * _meshFaces * 4];
+            Vector3[] normals = new Vector3[nodes.Count * _meshFaces * 4];
+            Vector2[] uv = new Vector2[nodes.Count * _meshFaces * 4];
+            int[] triangles = new int[(nodes.Count - 1) * sixMeshes];
 
-            for (int index = 0; index < numberOfNodes; index++)
+            for (int index = 0; index < nodes.Count; index++)
             {
                 float vStep = 2f * Mathf.PI / _meshFaces;
 
@@ -172,11 +171,11 @@ namespace Gardening
                     var diff = pos - _branchNodes[index].GetPosition();
                     normals[index * _meshFaces + faceIndex] = diff / diff.magnitude;
 
-                    float uvID = Remap(index, 0, numberOfNodes - 1, 0, 1);
+                    float uvID = Remap(index, 0, nodes.Count - 1, 0, 1);
                     uv[index * _meshFaces + faceIndex] = new Vector2((float)faceIndex / _meshFaces, uvID);
                 }
 
-                if (index + 1 >= numberOfNodes) continue;
+                if (index + 1 >= nodes.Count) continue;
                 for (int faceIndex = 0; faceIndex < _meshFaces; faceIndex++)
                 {
                     var sixIndices = faceIndex * 6;
