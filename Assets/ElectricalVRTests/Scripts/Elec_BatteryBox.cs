@@ -19,7 +19,7 @@ public class Elec_BatteryBox : MonoBehaviour, IVoltage
     }
     void DeleteVoltage(XRBaseInteractor arg0) 
     {
-        if(arg0.gameObject.GetComponent<Elec_SandNode>() != null) arg0.GetComponent<Elec_SandNode>().currentVoltage = 0;
+       
     }
     void Update()
     {
