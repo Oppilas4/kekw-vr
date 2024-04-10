@@ -26,7 +26,7 @@ public class Tv_EnemyMovement : MonoBehaviour
 
     private void Update()
     {
-            gameObject.transform.LookAt(player);
+            
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
