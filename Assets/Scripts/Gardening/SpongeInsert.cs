@@ -31,8 +31,7 @@ public class SpongeInsert : MonoBehaviour
         _interactable.enabled = false;
         _rb.isKinematic = true;
         GetComponent<Collider>().enabled = false;
-        transform.position = other.GetContact(0).point;
-        transform.rotation = Quaternion.FromToRotation(transform.up, -other.GetContact(0).normal);
+        transform.SetPositionAndRotation(other.GetContact(0).point, Quaternion.FromToRotation(transform.up, -other.GetContact(0).normal));
         transform.SetParent(other.transform, true);
         _isAnchored = true;
     }
