@@ -13,6 +13,7 @@ public class Elec_SandBoxItem : MonoBehaviour
     XRBaseInteractable interactable;
     public float DistanceToDetach;
     public Vector3 OffsetToSandBox;
+    public Quaternion SandBoxRotation;
     public List<Elec_SandBoxInOut> Input;
     public List<Elec_SandBoxInOut> Output;
     public int Voltage = 0;
@@ -65,20 +66,12 @@ public class Elec_SandBoxItem : MonoBehaviour
     public void PositionToBox(Vector3 pos)
     {
         transform.position = new Vector3(pos.x + OffsetToSandBox.x, transform.position.y, transform.position.z);
-    }
-    public void RotationToBox()
-    {
-        if (!locked)
-        {
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-            GetComponent<XRGrabInteractable>().movementType = XRBaseInteractable.MovementType.Kinematic;
-            GetComponent<XRGrabInteractable>().trackRotation = false;
-            locked = true;
-        }
+
     }
     public void BackToNormal()
     {
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        GetComponent<XRGrabInteractable>().movementType = XRBaseInteractable.MovementType.Instantaneous;
+        locked = false;
+        GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<XRGrabInteractable>().trackRotation = true;
     }
 }
