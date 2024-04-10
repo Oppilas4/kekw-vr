@@ -52,7 +52,7 @@ namespace Gardening
             {
                 if (other.transform.root.TryGetComponent<SeedPacket>(out var seedPacket))
                 {
-                    plant = Instantiate(seedPacket.associatedPlant, _plantRootsTransform.position, Quaternion.Euler(-90f, 0f, 0f));
+                    plant = Instantiate(seedPacket.associatedPlant, _plantRootsTransform.position, Quaternion.identity);
                     plant.PlantThePlant();
                     plant.transform.parent = transform;
                     _isSeedPlanted = true;
@@ -79,7 +79,7 @@ namespace Gardening
                 Debug.LogWarning($"Plantable does not exist on root or leaf: {other.gameObject.name}");
                 return;
             }
-            plant = Instantiate(plantable.associatedPlant, _plantRootsTransform.position, Quaternion.Euler(-90f, 0f, 0f));
+            plant = Instantiate(plantable.associatedPlant, _plantRootsTransform.position, Quaternion.identity);
             plant.PlantThePlant();
             plant.transform.parent = transform;
             Destroy(other.gameObject);
