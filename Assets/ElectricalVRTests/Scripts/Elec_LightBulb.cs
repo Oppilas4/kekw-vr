@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -42,7 +43,7 @@ public class Elec_LightBulb : MonoBehaviour
     }
     public void BulbDisable()
     {
-        if(!Broken)
+        if(!Broken && Glass != null && LightMesh != null)
         {
             LightMesh.material = Glass;
         }
@@ -54,7 +55,7 @@ public class Elec_LightBulb : MonoBehaviour
     }
     void DisableBulbXR(XRBaseInteractor Interactor)
     {
-        BulbDisable();
+        if(!Sandbox)  BulbDisable();
     }
     private void OnCollisionEnter(Collision collision)
     {
