@@ -5,7 +5,7 @@ using EzySlice;
 using static UnityEngine.GraphicsBuffer;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class Juho_Slice : MonoBehaviour
+public class TV_SwordSlice : MonoBehaviour
 {
     [SerializeField] bool isEcoloop = false;
     public Transform startSlicePoint;
@@ -29,10 +29,10 @@ public class Juho_Slice : MonoBehaviour
             {
                 if(!isEcoloop)
                 {
-                    Juho_VihollinenHeath healt = target.GetComponent<Juho_VihollinenHeath>();
+                    TV_EnemyHealth healt = target.GetComponent<TV_EnemyHealth>();
                     healt.TakeDamage();
                 }
-                Juho_Dissolve dissolve = target.GetComponent<Juho_Dissolve>();
+                TV_DisolveScript dissolve = target.GetComponent<TV_DisolveScript>();
                 color = dissolve.color;
                 Slice(target);
             }
@@ -61,7 +61,7 @@ public class Juho_Slice : MonoBehaviour
 
     public void SetupSlicedComponent(GameObject slicedObject)
     {
-        Juho_Dissolve matTest = slicedObject.AddComponent<Juho_Dissolve>();
+        TV_DisolveScript matTest = slicedObject.AddComponent<TV_DisolveScript>();
         matTest.color = color;
         matTest.oringinalDisolveMat = dissolveMat;
         matTest.RenewTheInfo();

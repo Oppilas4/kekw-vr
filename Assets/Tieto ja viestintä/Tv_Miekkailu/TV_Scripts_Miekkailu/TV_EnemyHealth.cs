@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Juho_VihollinenHeath : MonoBehaviour
+public class TV_EnemyHealth : MonoBehaviour
 {
     Tv_EnemySpawner spawner;
     bool hasRemoved = false;

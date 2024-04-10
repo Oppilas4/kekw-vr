@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Juho_Dissolve : MonoBehaviour
+public class TV_DisolveScript : MonoBehaviour
 {
     public Color color;
     public Material oringinalDisolveMat;

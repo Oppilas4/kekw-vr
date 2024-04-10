@@ -5,14 +5,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class Juho_VihollinenLiikkumis : MonoBehaviour
+public class TV_EnemyMovement : MonoBehaviour
 {
     public float speed;
     public Transform player;
-    Juho_PelaajaHealth health;
     public float range;
     public float detectionRange;
-    private Vector3 playerRange;
     public bool isRanged;
     bool hasStartedToShoot = false;
     bool canHit = true;
@@ -25,8 +23,6 @@ public class Juho_VihollinenLiikkumis : MonoBehaviour
     private void Start()
     {
         player = GameObject.Find("XR Origin").GetComponent<Transform>();
-        health = GameObject.Find("PlayerHealth").GetComponent<Juho_PelaajaHealth>();
-        playerRange = player.transform.position;
     }
 
     void Update()
