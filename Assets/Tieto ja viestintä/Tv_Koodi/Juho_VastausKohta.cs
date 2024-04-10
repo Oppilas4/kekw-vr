@@ -5,8 +5,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Juho_VastausKohta : MonoBehaviour
 {
-    public Juho_VastausKuutio vaadittuKuutio;
-    Juho_VastausKuutio nykyinenKuutio;
+    public TV_AnswerCube vaadittuKuutio;
+    TV_AnswerCube nykyinenKuutio;
     XRSocketInteractor mySocket;
 
     public bool oikeaNappiOn = false;
@@ -16,12 +16,12 @@ public class Juho_VastausKohta : MonoBehaviour
         mySocket = GetComponent<XRSocketInteractor>();
     }
 
-    public void AsetaKuutio(Juho_VastausKuutio asetettavaKuutio)
+    public void AsetaKuutio(TV_AnswerCube asetettavaKuutio)
     {
         vaadittuKuutio = asetettavaKuutio;
     }
 
-    public void Tarkistus(Juho_VastausKuutio laitettuKuutio)
+    public void Tarkistus(TV_AnswerCube laitettuKuutio)
     {
         if(laitettuKuutio == vaadittuKuutio)
         {
@@ -38,7 +38,7 @@ public class Juho_VastausKohta : MonoBehaviour
     public void KunLaitettuTarkista()
     {
         var selectedGameObject = mySocket.GetOldestInteractableSelected();
-        nykyinenKuutio = selectedGameObject.transform.gameObject.GetComponent<Juho_VastausKuutio>();
+        nykyinenKuutio = selectedGameObject.transform.gameObject.GetComponent<TV_AnswerCube>();
         Tarkistus(nykyinenKuutio);
     }
 

@@ -8,7 +8,7 @@ public class Juho_VastausTarkistus : MonoBehaviour
     public Juho_KysymysLuoja kysymysLuoja;
 
     public Juho_VastausKohta hardSlot1, hardSlot2, hardSlot3, hardSlot4;
-    public Juho_VastausKuutio[] kaikkiVastausKuutiot;
+    public TV_AnswerCube[] kaikkiVastausKuutiot;
 
     public TMP_Text kuinkaMeniTeksti;
 

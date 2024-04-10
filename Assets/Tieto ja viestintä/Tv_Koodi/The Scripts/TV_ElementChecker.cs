@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Jami_ElementtiTarkistus : MonoBehaviour
+public class TV_ElementChecker : MonoBehaviour
 {
     public string elementti1, elementti2;
     public GameObject waterPrefab, earthPrefab, firePrefab, airPrefab;

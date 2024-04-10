@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Juho_VastausKuutio : MonoBehaviour
+public class TV_AnswerCube : MonoBehaviour
 {
     public string koodiNimiKuutiolle;
     public TMP_Text kuutionTeksti;

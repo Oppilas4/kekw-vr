@@ -2,27 +2,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class joku_elementti_ja_sillee : MonoBehaviour
+public class TV_AnswerCubeSocket : MonoBehaviour
 {
-    Jami_ElementtiTarkistus tarkistus;
+    TV_ElementChecker tarkistus;
     XRSocketInteractor mySocket;
-    Juho_VastausKuutio nykyinenKuutio;
+    TV_AnswerCube nykyinenKuutio;
 
     public int kuutioNumero = 1;
-
-
-
 
     private void Start()
     {
         mySocket = GetComponent<XRSocketInteractor>();
-        tarkistus = GameObject.Find("Elementcheck").GetComponent<Jami_ElementtiTarkistus>();
+        tarkistus = GameObject.Find("Elementcheck").GetComponent<TV_ElementChecker>();
     }
 
     public void KunLaitettuTarkista()
     {
         var selectedGameObject = mySocket.GetOldestInteractableSelected();
-        nykyinenKuutio = selectedGameObject.transform.gameObject.GetComponent<Juho_VastausKuutio>();
+        nykyinenKuutio = selectedGameObject.transform.gameObject.GetComponent<TV_AnswerCube>();
         if (kuutioNumero == 1)
         {
             tarkistus.elementti1 = nykyinenKuutio.koodiNimiKuutiolle;

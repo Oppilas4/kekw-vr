@@ -9,16 +9,16 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class VaikeatKysymykset
 {
     public string questionName;
-    public Juho_VastausKuutio firstRowAnswer;
-    public Juho_VastausKuutio secondRowAnswer;
-    public Juho_VastausKuutio thirdRowAnswer;
-    public Juho_VastausKuutio fourthRowAnswer;
+    public TV_AnswerCube firstRowAnswer;
+    public TV_AnswerCube secondRowAnswer;
+    public TV_AnswerCube thirdRowAnswer;
+    public TV_AnswerCube fourthRowAnswer;
 }
 
 public class Juho_KysymysLuoja : MonoBehaviour
 {
     public TMP_Text kysymysTeksti;
-    [SerializeField] Juho_VastausKuutio[] vastausKuutioReferencet;
+    [SerializeField] TV_AnswerCube[] vastausKuutioReferencet;
 
     public GameObject vaikeaTaulutParent;
     public VaikeatKysymykset[] vaikeaKysymykset;

@@ -6,7 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Jami_VastausKohta : MonoBehaviour
 {
     public Tv_Yhdistelm‰Tarkistus yhdistelm‰t;
-    Juho_VastausKuutio nykyinenKuutio;
+    TV_AnswerCube nykyinenKuutio;
     XRSocketInteractor mySocket;
 
     private void Start()
@@ -17,7 +17,7 @@ public class Jami_VastausKohta : MonoBehaviour
     public void KunLaitettuTarkista()
     {
         var selectedGameObject = mySocket.GetOldestInteractableSelected();
-        nykyinenKuutio = selectedGameObject.transform.gameObject.GetComponent<Juho_VastausKuutio>();
+        nykyinenKuutio = selectedGameObject.transform.gameObject.GetComponent<TV_AnswerCube>();
         nykyinenKuutio.particleRefSystem.SetActive(true);
         yhdistelm‰t.TarkistaOnkoYhdistelm‰‰();
     }
@@ -25,7 +25,7 @@ public class Jami_VastausKohta : MonoBehaviour
     public void KunPoistetaanTarkista()
     {
         var selectedGameObject = mySocket.GetOldestInteractableSelected();
-        nykyinenKuutio = selectedGameObject.transform.gameObject.GetComponent<Juho_VastausKuutio>();
+        nykyinenKuutio = selectedGameObject.transform.gameObject.GetComponent<TV_AnswerCube>();
         nykyinenKuutio.particleRefSystem.SetActive(false);
         yhdistelm‰t.TarkistaOnkoYhdistelm‰‰();
     }
