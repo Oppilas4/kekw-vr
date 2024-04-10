@@ -52,9 +52,7 @@ namespace Gardening
             {
                 if (other.transform.root.TryGetComponent<SeedPacket>(out var seedPacket))
                 {
-                    Quaternion sproutRotation = Quaternion.identity;
-                    sproutRotation.eulerAngles = new Vector3(-90, 0, 0);
-                    plant = Instantiate(seedPacket.associatedPlant, _plantRootsTransform.position, sproutRotation);
+                    plant = Instantiate(seedPacket.associatedPlant, _plantRootsTransform.position, Quaternion.Euler(-90f, 0f, 0f));
                     plant.PlantThePlant();
                     plant.transform.parent = transform;
                     _isSeedPlanted = true;
