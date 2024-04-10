@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7772881621491971943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7772881621491971940}
+  - component: {fileID: 7772881621491971941}
+  - component: {fileID: 7772881621491971962}
+  m_Layer: 0
+  m_Name: ProceduralIvy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7772881621491971940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7772881621491971943}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5614303, y: -3.7262998, z: 37.49731}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7772881621491971941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7772881621491971943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a2091e5a7f3254d8f6601df333bac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  branches: 8
+  maxPointsForBranch: 40
+  segmentLength: 0.33
+  branchRadius: 0.06
+  branchMaterial: {fileID: 2100000, guid: 2f8ffe87f2ee5aa489a7f71ad598151a, type: 2}
+  leafMaterial: {fileID: 2100000, guid: 092d424ea28d90c44b68258b5e0a1d0b, type: 2}
+  flowerMaterial: {fileID: 2100000, guid: 2fee83851eeea3e45bc24aedb81cb49e, type: 2}
+  leafPrefab: {fileID: 5667178622041362157, guid: 47056a68d0993e74195649e034bbed34,
+    type: 3}
+  flowerPrefab: {fileID: 5084102720036815829, guid: 9537b405e0d43334dbb6e43e2bbc9c7c,
+    type: 3}
+  wantBlossoms: 1
+  wantFlowers: 1
+--- !u!114 &7772881621491971962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7772881621491971943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 648a795db11ebaa499a6195a3d79a876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

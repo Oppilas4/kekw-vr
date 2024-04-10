@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2118591633779069796}
   - component: {fileID: 3083105684565990593}
   - component: {fileID: 949576729345386507}
-  - component: {fileID: 1095760661199245121}
+  - component: {fileID: 8667121924171609109}
   m_Layer: 0
   m_Name: Flower
   m_TagString: Untagged
@@ -85,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1095760661199245121
+--- !u!114 &8667121924171609109
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,8 +94,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1598055974465456606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecb53c69f1a7150499e1c14c223e76c0, type: 3}
+  m_Script: {fileID: 11500000, guid: a921d6ef92ee1cf47999830c5aa321c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _growthSpeed: 10
+  _meshRenderer: {fileID: 949576729345386507}
+  _minGrowValue: 0.1
+  _maxGrowValue: 0.5
   _growthTime: 10
+  _refreshRate: 1
