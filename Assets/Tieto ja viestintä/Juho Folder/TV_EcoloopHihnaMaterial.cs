@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TV_HihnaMaterial : MonoBehaviour
+public class TV_EcoloopHihnaMaterial : MonoBehaviour
 {
     public bool usesY;
-    public float scrollSpeed = 0.5f; // Adjust the speed of the scrolling
+    public float scrollSpeed = 0.5f;
 
     void Update()
     {
-        // Get the current material of the object
         Material material = GetComponent<Renderer>().material;
-
-        // Calculate the offset to move the texture
         float offset = Time.time * scrollSpeed;
 
         if(usesY)
