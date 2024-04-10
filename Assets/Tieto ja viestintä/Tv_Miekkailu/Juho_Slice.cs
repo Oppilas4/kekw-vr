@@ -7,6 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Juho_Slice : MonoBehaviour
 {
+    [SerializeField] bool isEcoloop = false;
     public Transform startSlicePoint;
     public Transform endSlicePoint;
     public VelocityEstimator velocityEstimator;
@@ -26,8 +27,11 @@ public class Juho_Slice : MonoBehaviour
             GameObject target = hit.transform.gameObject;
             if (target.CompareTag("Jami_Enemy"))
             {
-                Juho_VihollinenHeath healt = target.GetComponent<Juho_VihollinenHeath>();
-                healt.TakeDamage();
+                if(!isEcoloop)
+                {
+                    Juho_VihollinenHeath healt = target.GetComponent<Juho_VihollinenHeath>();
+                    healt.TakeDamage();
+                }
                 Juho_Dissolve dissolve = target.GetComponent<Juho_Dissolve>();
                 color = dissolve.color;
                 Slice(target);
