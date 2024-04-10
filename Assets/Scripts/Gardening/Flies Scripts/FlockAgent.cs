@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gardening
@@ -12,7 +10,6 @@ namespace Gardening
         private void Start()
         {
             _agentCollider = GetComponent<Collider>();
-            Debug.Log("worked");
         }
         public void Move(Vector3 newPosition)   // Moves agent to the new position we will get from FlockBehavior
         {
