@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class Elec_SandBoxItem : MonoBehaviour
 {
@@ -16,20 +17,21 @@ public class Elec_SandBoxItem : MonoBehaviour
     public List<Elec_SandBoxInOut> Output;
     public int Voltage = 0;
     public UnityEvent WhenOn, WhenOff;
+    bool locked = false;
     void Start()
     {
-        interactable = GetComponent<XRBaseInteractable>();  
+        interactable = GetComponent<XRBaseInteractable>();
         interactable.selectEntered.AddListener(MamaFind);
-        interactable.selectEntered.AddListener(MamaSpawn); 
+        interactable.selectEntered.AddListener(MamaSpawn);
         StartCoroutine(WaitTillOn());
     }
     void MamaFind(SelectEnterEventArgs args)
     {
-        if(MamaSpawner == null) MamaSpawner = args.interactorObject.transform.GetComponent<Elec_SandItemSpawner>();
+        if (MamaSpawner == null) MamaSpawner = args.interactorObject.transform.GetComponent<Elec_SandItemSpawner>();
     }
     void MamaSpawn(SelectEnterEventArgs args)
     {
-        if (args.interactorObject.transform.GetComponent<XRDirectInteractor>() != null && MamaSpawner != null  || args.interactorObject.transform.GetComponent<XRRayInteractor>() != null && MamaSpawner != null)
+        if (args.interactorObject.transform.GetComponent<XRDirectInteractor>() != null && MamaSpawner != null || args.interactorObject.transform.GetComponent<XRRayInteractor>() != null && MamaSpawner != null)
         {
             MamaSpawner.SpawnItem();
             MamaSpawner = null;
@@ -37,7 +39,7 @@ public class Elec_SandBoxItem : MonoBehaviour
     }
     IEnumerator WaitTillOn()
     {
-        yield return new WaitUntil(()=> Voltage > 0);
+        yield return new WaitUntil(() => Voltage > 0);
         WhenOn.Invoke();
         StartCoroutine(WaitTillOff());
     }
@@ -58,10 +60,25 @@ public class Elec_SandBoxItem : MonoBehaviour
             {
                 transform.position = interactable.GetOldestInteractorSelecting().transform.position;
             }
-        }               
+        }
     }
     public void PositionToBox(Vector3 pos)
     {
-        transform.position = new Vector3(pos.x + OffsetToSandBox.x,transform.position.y,transform.position.z);
+        transform.position = new Vector3(pos.x + OffsetToSandBox.x, transform.position.y, transform.position.z);
+    }
+    public void RotationToBox()
+    {
+        if (!locked)
+        {
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            GetComponent<XRGrabInteractable>().movementType = XRBaseInteractable.MovementType.Kinematic;
+            GetComponent<XRGrabInteractable>().trackRotation = false;
+            locked = true;
+        }
+    }
+    public void BackToNormal()
+    {
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        GetComponent<XRGrabInteractable>().movementType = XRBaseInteractable.MovementType.Instantaneous;
     }
 }
