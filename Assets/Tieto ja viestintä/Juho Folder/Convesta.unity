@@ -462,12 +462,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b948c9faa5cdb804dbaea9d022b7510b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectsToSpawn:
-  - {fileID: 4990734704376091262, guid: 107a53e209211af4dbf82f6d1a48ab59, type: 3}
-  - {fileID: 8006050538760335022, guid: a59ea900982325646b6ef740a797cd29, type: 3}
-  - {fileID: 7656600195789140734, guid: d02fa911fa483dd47b1f57294b85ff2f, type: 3}
+  items:
+  - objectToSpawn: {fileID: 4990734704376091262, guid: 107a53e209211af4dbf82f6d1a48ab59,
+      type: 3}
+    objectRotationWhenSpawned: {x: 0, y: 0, z: 0}
+  - objectToSpawn: {fileID: 5454398081183117358, guid: 8e16fd684b4f1c4418ac94cdf3ea9ef3,
+      type: 3}
+    objectRotationWhenSpawned: {x: -90, y: 0, z: 0}
+  - objectToSpawn: {fileID: 7204559917965044907, guid: d2eb3affce2df3a428e2254f9689612f,
+      type: 3}
+    objectRotationWhenSpawned: {x: -90, y: 0, z: 0}
+  - objectToSpawn: {fileID: 5837508573250845766, guid: e31d9d9be785c014080a6898cd8bb61c,
+      type: 3}
+    objectRotationWhenSpawned: {x: -90, y: 90, z: 0}
+  - objectToSpawn: {fileID: 7142974738755356099, guid: 7be3deccc3a1c1d4ab851dd3ae1e0800,
+      type: 3}
+    objectRotationWhenSpawned: {x: 90, y: 0, z: 0}
+  - objectToSpawn: {fileID: 1387328418150505475, guid: cd48bc0eed563b24e9e6d4d9cb64f793,
+      type: 3}
+    objectRotationWhenSpawned: {x: -90, y: 0, z: 0}
+  - objectToSpawn: {fileID: 4955317869542797527, guid: 84d856c4ca2a9ec44969bf51aacf0fa4,
+      type: 3}
+    objectRotationWhenSpawned: {x: -90, y: 0, z: 0}
+  - objectToSpawn: {fileID: 8006050538760335022, guid: a59ea900982325646b6ef740a797cd29,
+      type: 3}
+    objectRotationWhenSpawned: {x: -90, y: 0, z: 0}
+  - objectToSpawn: {fileID: 3462022225894731346, guid: 9bc4ac45120ef4c49aeef9cb62f851f6,
+      type: 3}
+    objectRotationWhenSpawned: {x: 0, y: 0, z: 0}
   spawnPoint: {fileID: 1655100163}
-  minSpawnDelay: 3
+  minSpawnDelay: 2.5
   maxSpawnDelay: 3
 --- !u!65 &220109642
 BoxCollider:
@@ -1012,7 +1036,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 597565843}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
