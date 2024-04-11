@@ -72,6 +72,5 @@ public class Elec_SandBoxItem : MonoBehaviour
     {
         locked = false;
         GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<XRGrabInteractable>().trackRotation = true;
     }
 }

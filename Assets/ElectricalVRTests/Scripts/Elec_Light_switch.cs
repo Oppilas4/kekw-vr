@@ -23,7 +23,7 @@ public class Elec_Light_switch : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-                if (other.tag == "LeftHand" || other.tag == "RightHand")
+        if (other.GetComponent<CapsuleCollider>() != null && other.CompareTag("RightHand") || other.GetComponent<CapsuleCollider>() != null && other.CompareTag("LeftHand"))
                 {
                     Audio.PlayOneShot(ClickSound);          
                     if (!ison)
@@ -44,16 +44,7 @@ public class Elec_Light_switch : MonoBehaviour
     }
     public void OnOff()
     {
-        if (boxItem.Voltage > 0)
-        {
-            OutPut.GiveOut = false;
-            Debug.Log("BallsOut");
-            SavedVoltage = boxItem.Voltage;
-        }
-        else if(boxItem.Voltage <= 0) 
-        {
-            OutPut.GiveOut = true;
-            boxItem.Voltage = SavedVoltage;
-        }
+        if(OutPut.GiveOut)OutPut.GiveOut = false;
+        else if(!OutPut.GiveOut) OutPut.GiveOut = true;
     }
 }
