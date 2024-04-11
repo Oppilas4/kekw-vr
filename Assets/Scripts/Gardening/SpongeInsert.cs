@@ -34,7 +34,7 @@ namespace Gardening
             _rb.isKinematic = true;
             GetComponent<Collider>().enabled = false;
             transform.SetPositionAndRotation(other.GetContact(0).point, Quaternion.FromToRotation(transform.up, -other.GetContact(0).normal));
-            transform.SetParent(other.transform, true);
+            transform.SetParent(other.transform.parent, true);
             _isAnchored = true;
         }
 
