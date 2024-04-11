@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class SliceablePlant : MonoBehaviour
+namespace Gardening
 {
-    public Material sliceMaterial;
+    public class SliceablePlant : MonoBehaviour
+    {
+        public Material sliceMaterial;
+    }
 }

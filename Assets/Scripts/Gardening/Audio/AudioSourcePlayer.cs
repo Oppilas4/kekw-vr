@@ -1,29 +1,31 @@
-using Gardening;
 using UnityEngine;
 
-public class AudioSourcePlayer : MonoBehaviour
+namespace Gardening
 {
-    [SerializeField] private AudioSource _source;
-    [SerializeField] private string _audioClipName;
-
-    private AudioClip _audioClip;
-
-    private void Start()
+    public class AudioSourcePlayer : MonoBehaviour
     {
-        _audioClip = AudioManager.Instance.GetAudio(_audioClipName);
-        _source.clip = _audioClip;
-    }
+        [SerializeField] private AudioSource _source;
+        [SerializeField] private string _audioClipName;
 
-    public void PlayClip()
-    {
-        _source.Play();
-    }
+        private AudioClip _audioClip;
 
-    /// <summary>
-    /// Can be useful in case of looped sounds
-    /// </summary>
-    public void PauseClip()
-    {
-        _source.Pause();
+        private void Start()
+        {
+            _audioClip = AudioManager.Instance.GetAudio(_audioClipName);
+            _source.clip = _audioClip;
+        }
+
+        public void PlayClip()
+        {
+            _source.Play();
+        }
+
+        /// <summary>
+        /// Can be useful in case of looped sounds
+        /// </summary>
+        public void PauseClip()
+        {
+            _source.Pause();
+        }
     }
 }

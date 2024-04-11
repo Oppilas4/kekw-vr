@@ -1,15 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForceForBrokenObject : MonoBehaviour
+namespace Gardening
 {
-   [SerializeField] private List<Rigidbody> _objectParts = new List<Rigidbody>();
-
-   public void AddForceToAllParts(Vector3 velocity)
+    public class ForceForBrokenObject : MonoBehaviour
     {
-        foreach (var part in _objectParts)
+        [SerializeField] private List<Rigidbody> _objectParts = new List<Rigidbody>();
+
+        public void AddForceToAllParts(Vector3 velocity)
         {
-            part.velocity = velocity;
+            foreach (var part in _objectParts)
+            {
+                part.velocity = velocity;
+            }
         }
     }
 }

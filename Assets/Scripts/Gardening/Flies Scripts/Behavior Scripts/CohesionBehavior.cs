@@ -1,8 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Gardening {
+namespace Gardening
+{
     [CreateAssetMenu(fileName = "Cohesion Behavior", menuName = "Flock/Behaviors/CohesionBehavior")]
     public class CohesionBehavior : FlockBehaviour
     {

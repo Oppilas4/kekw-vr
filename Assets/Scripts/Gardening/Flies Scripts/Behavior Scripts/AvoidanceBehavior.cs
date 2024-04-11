@@ -1,11 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// Corrects movement of the agent to avoid colliding with other agents
 /// </summary>
 
-namespace Gardening 
+namespace Gardening
 {
     [CreateAssetMenu(fileName = "Avoidance Behavior", menuName = "Flock/Behaviors/AvoidanceBehavior")]
     public class AvoidanceBehavior : FlockBehaviour

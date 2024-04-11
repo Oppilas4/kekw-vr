@@ -1,9 +1,8 @@
- using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Gardening {
+namespace Gardening
+{
     [CreateAssetMenu(fileName = "Composite Behavior", menuName = "Flock/Composite Behavior")]
     public class CompositeBehavior : FlockBehaviour
     {
