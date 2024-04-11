@@ -15,6 +15,7 @@ public class Elec_Light_switch : MonoBehaviour
     public bool Sandbox = false;
     Elec_SandBoxItem boxItem;
     int SavedVoltage;
+    public Elec_SandBoxInOut OutPut;
     private void Start()
     {
         boxItem = GetComponent<Elec_SandBoxItem>();
@@ -45,13 +46,13 @@ public class Elec_Light_switch : MonoBehaviour
     {
         if (boxItem.Voltage > 0)
         {
+            OutPut.GiveOut = false;
             Debug.Log("BallsOut");
             SavedVoltage = boxItem.Voltage;
-            boxItem.Voltage = 0;
         }
         else if(boxItem.Voltage <= 0) 
         {
-            Debug.Log("BallsIn");
+            OutPut.GiveOut = true;
             boxItem.Voltage = SavedVoltage;
         }
     }

@@ -9,8 +9,10 @@ public class Elec_SandBoxInOut : MonoBehaviour , IVoltage
     public InOrOut orOut;
     public Elec_SandBoxItem item;
     IVoltage connectedEnd;
+    public bool GiveOut = true;
     private void Start()
     {
+        GiveOut = true;
         item = GetComponentInParent<Elec_SandBoxItem>();
         interactor = GetComponent<XRBaseInteractor>();
         interactor.selectEntered.AddListener(CheckInOrOut);
@@ -18,9 +20,14 @@ public class Elec_SandBoxInOut : MonoBehaviour , IVoltage
     }
     private void Update()
     {
-        if(connectedEnd != null && orOut == InOrOut.OUT) 
+        if (connectedEnd != null && orOut == InOrOut.OUT) 
         {
-            connectedEnd.Voltage_Receive(item.Voltage);
+            if (GiveOut)
+            {
+                Debug.Log("DebugPoo");
+                connectedEnd.Voltage_Receive(item.Voltage);
+            }
+            else if (!GiveOut) connectedEnd.Voltage_Receive(0);
         }
         else if(connectedEnd != null && orOut != InOrOut.OUT) 
         {
@@ -33,7 +40,12 @@ public class Elec_SandBoxInOut : MonoBehaviour , IVoltage
         switch (orOut)
         {
             case InOrOut.OUT:
-                e.interactableObject.transform.GetComponent<Elec_SandBoxWireEnd>().Voltage_Receive(item.Voltage);
+                if (GiveOut) e.interactableObject.transform.GetComponent<Elec_SandBoxWireEnd>().Voltage_Receive(item.Voltage);
+                else if (!GiveOut)
+                {
+                    Debug.Log("DebugPee");
+                    e.interactableObject.transform.GetComponent<Elec_SandBoxWireEnd>().Voltage_Receive(0);
+                }
                 break;
             case InOrOut.IN:
                 item.Voltage = e.interactableObject.transform.GetComponent<Elec_SandBoxWireEnd>().Voltage_Send();               
