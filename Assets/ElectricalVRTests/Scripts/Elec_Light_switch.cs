@@ -15,6 +15,7 @@ public class Elec_Light_switch : MonoBehaviour
     public bool Sandbox = false;
     Elec_SandBoxItem boxItem;
     int SavedVoltage;
+    public Elec_SandBoxInOut OutPut;
     private void Start()
     {
         boxItem = GetComponent<Elec_SandBoxItem>();
@@ -22,7 +23,7 @@ public class Elec_Light_switch : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-                if (other.tag == "LeftHand" || other.tag == "RightHand")
+        if (other.GetComponent<CapsuleCollider>() != null && other.CompareTag("RightHand") || other.GetComponent<CapsuleCollider>() != null && other.CompareTag("LeftHand"))
                 {
                     Audio.PlayOneShot(ClickSound);          
                     if (!ison)
@@ -43,16 +44,7 @@ public class Elec_Light_switch : MonoBehaviour
     }
     public void OnOff()
     {
-        if (boxItem.Voltage > 0)
-        {
-            Debug.Log("BallsOut");
-            SavedVoltage = boxItem.Voltage;
-            boxItem.Voltage = 0;
-        }
-        else if(boxItem.Voltage <= 0) 
-        {
-            Debug.Log("BallsIn");
-            boxItem.Voltage = SavedVoltage;
-        }
+        if(OutPut.GiveOut)OutPut.GiveOut = false;
+        else if(!OutPut.GiveOut) OutPut.GiveOut = true;
     }
 }
