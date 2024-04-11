@@ -22,7 +22,6 @@ public class Elec_SandBoxBody : MonoBehaviour
         {
             other.GetComponent<Elec_SandBoxItem>().PositionToBox(transform.position);
             other.GetComponent<Rigidbody>().isKinematic = true;
-            Debug.Log("Shimmy shimmy ya");
         }
     }
 }
