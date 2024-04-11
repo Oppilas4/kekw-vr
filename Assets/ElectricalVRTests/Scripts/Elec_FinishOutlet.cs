@@ -9,7 +9,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Elec_FinishOutlet : MonoBehaviour
 {
-    public UnityEvent OnFinish;
+    public UnityEvent OnFinish,OnEnabled;
     private bool hasFinished = false;
     XRBaseInteractor interactor;
     public Elec_GridNode ourGridNode;
@@ -88,5 +88,8 @@ public class Elec_FinishOutlet : MonoBehaviour
     {
         GoalReached = false;
     }
-
+    private void OnEnable()
+    {
+        OnEnabled.Invoke();
+    }
 }
