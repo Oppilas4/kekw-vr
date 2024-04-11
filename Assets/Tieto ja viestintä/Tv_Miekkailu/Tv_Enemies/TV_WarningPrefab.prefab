@@ -47,9 +47,9 @@ GameObject:
   - component: {fileID: 498359743742482878}
   - component: {fileID: 498359743742482877}
   - component: {fileID: 498359743742482866}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Icosphere.003
-  m_TagString: Untagged
+  m_TagString: Jami_Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f6db265c0773494e81757b86b0b122c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 1, g: 0, b: 0, a: 1}
+  color: {r: 1, g: 0.94493365, b: 0, a: 1}
   oringinalDisolveMat: {fileID: 2100000, guid: 53a304b654410e54692a32d12f3efaca, type: 2}
   newlyCreatedDissolveMat: {fileID: 0}
   meshRenderer: {fileID: 0}
@@ -527,7 +527,7 @@ GameObject:
   - component: {fileID: 9021133171846666899}
   - component: {fileID: 9021133171846666898}
   m_Layer: 0
-  m_Name: Tv_Warning
+  m_Name: TV_WarningPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -562,7 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7125158b2e2144c949924ae3ec3214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 4788577879872150787, guid: 7c8e3e3b27cfcb641b7e569595620f53, type: 3}
+  agent: {fileID: 9021133171846666898}
   player: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
@@ -582,7 +582,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9021133171846666897}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 1
   m_Acceleration: 45.08

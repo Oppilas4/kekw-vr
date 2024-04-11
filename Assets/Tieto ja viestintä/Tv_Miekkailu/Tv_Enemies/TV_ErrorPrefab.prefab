@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 1337450014733500557}
   - component: {fileID: 4250537241963568546}
   m_Layer: 13
-  m_Name: Tv_Error2
+  m_Name: TV_ErrorPrefab
   m_TagString: Jami_Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -351,7 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7125158b2e2144c949924ae3ec3214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 4788577879872150787, guid: 7c8e3e3b27cfcb641b7e569595620f53, type: 3}
+  agent: {fileID: 4250537241963568546}
   player: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
@@ -371,7 +371,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5285261771289593832}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 1
   m_Acceleration: 45.08
@@ -442,8 +442,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.052585855, y: 0.055907123, z: 0.15259571}
-  m_Center: {x: 0.0000018152151, y: -0.0000000067004366, z: 0.04694105}
+  m_Size: {x: 0.021721482, y: 0.026599014, z: 0.15259574}
+  m_Center: {x: -0.00055497023, y: -0.0004825144, z: 0.046941113}
 --- !u!114 &1470529701
 MonoBehaviour:
   m_ObjectHideFlags: 0
