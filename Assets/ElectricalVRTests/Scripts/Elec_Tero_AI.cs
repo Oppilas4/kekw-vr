@@ -17,6 +17,7 @@ public class Elec_Tero_AI : MonoBehaviour
     }
 
     public AudioSource ourAudioSource;
+    public Elec_Tero_Speaker ourSpeaker;
     public List<AudioClip> Welcome;
     public List<AudioClip> Idle;
     public List<AudioClip> DeathByLiveWire;
@@ -81,6 +82,7 @@ public class Elec_Tero_AI : MonoBehaviour
         ourAnimator.SetBool("Talking",true);
         Bubbleswhiletalk.Play();
         isTalking = true;
+        ourSpeaker.Talking = true;
         DialogueLength = toSay.length;
         ourAudioSource.PlayOneShot(toSay);
         StartCoroutine(LockUntilDialogueFinished(DialogueLength));
@@ -91,6 +93,7 @@ public class Elec_Tero_AI : MonoBehaviour
         yield return new WaitForSeconds(time);
         Bubbleswhiletalk.Stop();
         isTalking = false;
+        ourSpeaker.Talking = false;
         ourAnimator.SetBool("Talking", false);
     }
 
