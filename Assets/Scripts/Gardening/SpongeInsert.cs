@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -34,7 +36,14 @@ namespace Gardening
             _rb.isKinematic = true;
             GetComponent<Collider>().enabled = false;
 
-            transform.SetPositionAndRotation(other.GetContact(0).point, Quaternion.FromToRotation(transform.up, -other.GetContact(0).normal));
+            Vector3 averageOfPoints;
+            {
+                Vector3 sumOfPoints = Vector3.zero;
+                Array.ForEach(other.contacts, delegate (ContactPoint c) { sumOfPoints += c.point; });
+                averageOfPoints = sumOfPoints / other.contactCount;
+            }
+
+            transform.SetPositionAndRotation(averageOfPoints, Quaternion.FromToRotation(transform.up, -other.GetContact(0).normal));
 
             transform.SetParent(other.transform, true);
 
