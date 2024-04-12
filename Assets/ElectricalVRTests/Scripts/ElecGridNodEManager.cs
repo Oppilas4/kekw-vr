@@ -35,6 +35,7 @@ public class ElecGridNodEManager : MonoBehaviour
             Completed.Play();
             Elec_MegaTool Megan = FindObjectOfType<Elec_MegaTool>();
             Megan.ResetWireList();
+            Elec_PuzzleCompletitionManager.Pointz++;
             Explosives();
         }
     }
