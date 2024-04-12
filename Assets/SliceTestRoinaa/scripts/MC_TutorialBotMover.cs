@@ -7,20 +7,14 @@ using Kekw.Common;
 public class MC_TutorialBotMover : MonoBehaviour, IPause
 {
     public List<Transform> navigationPositions = new List<Transform>();
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     private float timeAtSpot;
     public float afkTime;
-    void Start()
-    {
-        // Get the NavMeshAgent component attached to the same GameObject
-        agent = GetComponent<NavMeshAgent>();
-
-        MoveToRandomPosition();
-    }
+    
 
     private void Update()
     {
-        if (agent.remainingDistance < 0.1f)
+        if (agent.remainingDistance < 0.1f && !agent.isStopped)
         {
             timeAtSpot += Time.deltaTime;
             if (timeAtSpot >= afkTime)
@@ -55,7 +49,7 @@ public class MC_TutorialBotMover : MonoBehaviour, IPause
     }
 
 
-    void MoveToRandomPosition()
+    public void MoveToRandomPosition()
     {
         // Check if there are any positions in the list
         if (navigationPositions.Count > 0)

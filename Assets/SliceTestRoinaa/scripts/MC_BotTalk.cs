@@ -14,6 +14,13 @@ public class MC_BotTalk : MonoBehaviour
     MC_TutorialBotMover _mover;
 
     /// <summary>
+    /// Bots mover
+    /// </summary>
+    [SerializeField]
+    [Tooltip("Tutorial component")]
+    MC_BotTutorialSequence _tutorial;
+
+    /// <summary>
     /// Talking audio source
     /// </summary>
     [SerializeField]
@@ -29,7 +36,7 @@ public class MC_BotTalk : MonoBehaviour
 
     [SerializeField]
     [Tooltip("Text object where the text will be shown")]
-    TextMeshPro _textMeshProUGUI;
+    TextMeshProUGUI _textMeshProUGUI;
 
     [SerializeField]
     [Tooltip("Sentances to link to voice lines")]
@@ -84,6 +91,26 @@ public class MC_BotTalk : MonoBehaviour
         }
     }
 
+    public void TalkLine(AudioClip voiceLine, string dialogueLine)
+    {
+        if (!_audioSource.isPlaying && !_isTalking && !_isPaused)
+        {
+            _tutorial.currentDialogueIndex++;
+            _isTalking = true;
+            NotifyOtherComponents(true);
+
+            _textMeshProUGUI.text = dialogueLine;
+
+            _audioSource.PlayOneShot(voiceLine);
+            StartCoroutine(WaitForTutorialSpeech(voiceLine.length + .5f));
+        }
+    }
+
+    public void ClearText()
+    {
+        _textMeshProUGUI.text = null;
+    }
+
     /// <summary>
     /// NOtify other components that bot should speak.
     /// </summary>
@@ -111,6 +138,12 @@ public class MC_BotTalk : MonoBehaviour
         NotifyOtherComponents(false);
         _isTalking = false;
         _textMeshProUGUI.text = null;
+    }
+
+    IEnumerator WaitForTutorialSpeech(float length)
+    {
+        yield return new WaitForSeconds(length);
+        _isTalking = false;
     }
 }
 
