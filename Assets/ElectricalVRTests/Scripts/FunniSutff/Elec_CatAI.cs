@@ -12,13 +12,15 @@ public class Elec_CatAI : MonoBehaviour
     Animator animator;
     float Speed;
     public Transform Paws;
-    public GameObject RamiPos, Head,MainCamera;
+    public GameObject RamiPos, Head,MainCamera,GoTo;
 
     public Vector3 walkPoint;
     public bool walkPointSet,FelineIncstinctON, RamiOn,RoutineGoing;
-    bool Slepy = true;
+    public bool Slepy = true;
     public float walkPointRange;
     public LayerMask whatIsGround;
+
+    XRSocketInteractor socketInteractor;
     private void Start()
     {
         MainCamera = GameObject.Find("Main Camera");
@@ -26,30 +28,32 @@ public class Elec_CatAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         Player = GameObject.Find("XR Origin").GetComponent<Transform>();
         agent.enabled = false;
+        socketInteractor = GetComponentInChildren<XRSocketInteractor>();
+        socketInteractor.selectEntered.AddListener(GoodSir);
     }
     private void Update()
     {
+        if(Vector3.Distance(GoTo.transform.position,transform.position ) < 2)Destroy(gameObject);
         Speed = agent.velocity.magnitude;
         animator.SetFloat("Speed",Speed);    
         if (Slepy && Vector3.Distance(Player.position, transform.position) < 4)
         {
             animator.SetTrigger("WakeyWakey");
-            Slepy = false;
         }
-        if(agent.enabled) 
+        if(agent.enabled && !Slepy) 
         {
-            if (RamiOn && !Slepy)
+            if (RamiOn)
             {
                 Zoomies();
             }
-            else if (!FelineIncstinctON && !Slepy)
+            else if (!FelineIncstinctON)
             {
                 agent.speed = 1.0f;
                 agent.stoppingDistance = 2f;
                 agent.SetDestination(Player.position);
                 animator.SetBool("CatchBool", false);
             }
-            else if (FelineIncstinctON && !Slepy)
+            else if (FelineIncstinctON)
             {
                 agent.speed = 2f;
                 agent.stoppingDistance = 1f;
@@ -61,6 +65,15 @@ public class Elec_CatAI : MonoBehaviour
             }
         }
        
+    }
+    void GoodSir(SelectEnterEventArgs pp)
+    {
+        if (pp.interactableObject.transform.name == "crown")
+        {
+            animator.SetTrigger("IUsedToRule");
+            Slepy = true;
+            agent.enabled = false;
+        }
     }
     private void Zoomies()
     {
