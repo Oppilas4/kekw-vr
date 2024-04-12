@@ -33,8 +33,11 @@ namespace Gardening
             _interactable.enabled = false;
             _rb.isKinematic = true;
             GetComponent<Collider>().enabled = false;
+
             transform.SetPositionAndRotation(other.GetContact(0).point, Quaternion.FromToRotation(transform.up, -other.GetContact(0).normal));
-            transform.SetParent(other.transform.parent, true);
+
+            transform.SetParent(other.transform, true);
+
             _isAnchored = true;
         }
 
@@ -45,9 +48,9 @@ namespace Gardening
             if (args.interactableObject != _interactable) { Debug.Log("Interactable object is not equal to interactable"); return; };
 #pragma warning restore
             _isAnchored = false;
+            transform.SetParent(null, true);
             GetComponent<Collider>().enabled = true;
             _rb.isKinematic = false;
-            transform.SetParent(null, true);
         }
     }
 
