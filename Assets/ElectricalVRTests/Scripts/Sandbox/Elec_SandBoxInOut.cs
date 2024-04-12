@@ -24,7 +24,6 @@ public class Elec_SandBoxInOut : MonoBehaviour , IVoltage
         {
             if (GiveOut)
             {
-                Debug.Log("DebugPoo");
                 connectedEnd.Voltage_Receive(item.Voltage);
             }
             else if (!GiveOut) connectedEnd.Voltage_Receive(0);

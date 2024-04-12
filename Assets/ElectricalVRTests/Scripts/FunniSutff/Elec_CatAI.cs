@@ -16,6 +16,7 @@ public class Elec_CatAI : MonoBehaviour
 
     public Vector3 walkPoint;
     public bool walkPointSet,FelineIncstinctON, RamiOn,RoutineGoing;
+    bool Slepy = true;
     public float walkPointRange;
     public LayerMask whatIsGround;
     private void Start()
@@ -24,32 +25,42 @@ public class Elec_CatAI : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
         Player = GameObject.Find("XR Origin").GetComponent<Transform>();
+        agent.enabled = false;
     }
     private void Update()
     {
         Speed = agent.velocity.magnitude;
-        animator.SetFloat("Speed",Speed);
-        if (RamiOn)
+        animator.SetFloat("Speed",Speed);    
+        if (Slepy && Vector3.Distance(Player.position, transform.position) < 4)
         {
-            Zoomies();
+            animator.SetTrigger("WakeyWakey");
+            Slepy = false;
         }
-        else if (!FelineIncstinctON)
+        if(agent.enabled) 
         {
-            agent.speed = 1.0f;
-            agent.stoppingDistance = 2f;
-            agent.SetDestination(Player.position);
-            animator.SetBool("CatchBool", false);
-        }
-        else if (FelineIncstinctON)
-        {
-            agent.speed = 2f;
-            agent.stoppingDistance = 1f;
-            agent.SetDestination(LaserPointerEnd.position);
-            if (Vector3.Distance(Paws.position, LaserPointerEnd.position) < 0.25)
+            if (RamiOn && !Slepy)
             {
-                animator.SetBool("CatchBool", true);
+                Zoomies();
             }
-        }       
+            else if (!FelineIncstinctON && !Slepy)
+            {
+                agent.speed = 1.0f;
+                agent.stoppingDistance = 2f;
+                agent.SetDestination(Player.position);
+                animator.SetBool("CatchBool", false);
+            }
+            else if (FelineIncstinctON && !Slepy)
+            {
+                agent.speed = 2f;
+                agent.stoppingDistance = 1f;
+                agent.SetDestination(LaserPointerEnd.position);
+                if (Vector3.Distance(Paws.position, LaserPointerEnd.position) < 0.25)
+                {
+                    animator.SetBool("CatchBool", true);
+                }
+            }
+        }
+       
     }
     private void Zoomies()
     {
