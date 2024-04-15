@@ -42,9 +42,10 @@ namespace Gardening
             _rb.isKinematic = true;
             GetComponent<Collider>().enabled = false;
 
-            Vector3 averageOfPoints = GetAverageOfContactPoints(other.contacts);
-            transform.SetPositionAndRotation(averageOfPoints, Quaternion.FromToRotation(transform.up, -other.GetContact(0).normal));
-            transform.SetParent(other.transform, true);
+            //Vector3 averageOfPoints = GetAverageOfContactPoints(other.contacts);
+            ///transform.SetParent(other.transform, true);
+            //transform.SetPositionAndRotation(averageOfPoints, Quaternion.FromToRotation(transform.up, -other.GetContact(0).normal));
+            transform.rotation = Quaternion.FromToRotation(transform.up, -other.GetContact(0).normal);
 
             _isAnchored = true;
         }
