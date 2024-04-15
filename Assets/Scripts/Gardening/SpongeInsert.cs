@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -30,21 +29,21 @@ namespace Gardening
             AnchorTo(other);
         }
 
+        private Vector3 GetAverageOfContactPoints(ContactPoint[] points)
+        {
+            Vector3 sum = Vector3.zero;
+            Array.ForEach(points, delegate (ContactPoint c) { sum += c.point; });
+            return sum / points.Length;
+        }
+
         private void AnchorTo(Collision other)
         {
             _interactable.enabled = false;
             _rb.isKinematic = true;
             GetComponent<Collider>().enabled = false;
 
-            Vector3 averageOfPoints;
-            {
-                Vector3 sumOfPoints = Vector3.zero;
-                Array.ForEach(other.contacts, delegate (ContactPoint c) { sumOfPoints += c.point; });
-                averageOfPoints = sumOfPoints / other.contactCount;
-            }
-
+            Vector3 averageOfPoints = GetAverageOfContactPoints(other.contacts);
             transform.SetPositionAndRotation(averageOfPoints, Quaternion.FromToRotation(transform.up, -other.GetContact(0).normal));
-
             transform.SetParent(other.transform, true);
 
             _isAnchored = true;
