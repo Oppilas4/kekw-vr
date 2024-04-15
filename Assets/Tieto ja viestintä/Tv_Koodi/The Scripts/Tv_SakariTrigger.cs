@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tv_SakariTrigger : MonoBehaviour
 {
     public Tv_Sakari sakariBehaviour;
-
+    bool testipaska = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,10 +21,12 @@ public class Tv_SakariTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("tv_pullo"))
+        if (other.gameObject.CompareTag("tv_pullo") && !testipaska)
         {
-            sakariBehaviour.sakariAnger = true;
+            sakariBehaviour.bottle = other.gameObject;
+            sakariBehaviour.isBottle = true;
             Debug.Log("Pullo");
+            testipaska=true;
         }
     }
 }

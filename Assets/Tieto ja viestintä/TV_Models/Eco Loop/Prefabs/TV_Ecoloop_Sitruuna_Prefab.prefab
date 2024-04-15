@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7195166011396284696}
   - component: {fileID: 7195166011396284703}
   - component: {fileID: 1116331709}
+  - component: {fileID: 5064065566838888156}
   m_Layer: 13
   m_Name: TV_Ecoloop_Sitruuna_Prefab
   m_TagString: Jami_Enemy
@@ -112,7 +113,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 8006050538760335022}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.77273655
   m_Height: 4.7079706
   m_Direction: 2
@@ -133,3 +134,17 @@ MonoBehaviour:
   oringinalDisolveMat: {fileID: 2100000, guid: 53a304b654410e54692a32d12f3efaca, type: 2}
   newlyCreatedDissolveMat: {fileID: 0}
   meshRenderer: {fileID: 8366501718066581371}
+--- !u!64 &5064065566838888156
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8006050538760335022}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2124705421725058983, guid: 6cd219a9f37a8524ab228342d560dace, type: 3}
