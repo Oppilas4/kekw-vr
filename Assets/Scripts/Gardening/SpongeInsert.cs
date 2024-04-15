@@ -20,7 +20,7 @@ namespace Gardening
         {
             _rb = GetComponent<Rigidbody>();
             _interactable = GetComponent<XRGrabInteractable>();
-            _interactable.selectEntered.AddListener(Unanchor);
+            //_interactable.selectEntered.AddListener(Unanchor);
         }
 
         private void OnCollisionEnter(Collision other)
@@ -29,12 +29,12 @@ namespace Gardening
             AnchorTo(other);
         }
 
-        private Vector3 GetAverageOfContactPoints(ContactPoint[] points)
-        {
-            Vector3 sum = Vector3.zero;
-            Array.ForEach(points, delegate (ContactPoint c) { sum += c.point; });
-            return sum / points.Length;
-        }
+        //private Vector3 GetAverageOfContactPoints(ContactPoint[] points)
+        //{
+        //    Vector3 sum = Vector3.zero;
+        //    Array.ForEach(points, delegate (ContactPoint c) { sum += c.point; });
+        //    return sum / points.Length;
+        //}
 
         private void AnchorTo(Collision other)
         {
@@ -50,17 +50,17 @@ namespace Gardening
             _isAnchored = true;
         }
 
-        private void Unanchor(SelectEnterEventArgs args)
-        {
-#pragma warning disable 0252
-            // Comparing references here, need to check if this actually works
-            if (args.interactableObject != _interactable) { Debug.Log("Interactable object is not equal to interactable"); return; };
-#pragma warning restore
-            _isAnchored = false;
-            transform.SetParent(null, true);
-            GetComponent<Collider>().enabled = true;
-            _rb.isKinematic = false;
-        }
-    }
+//        private void Unanchor(SelectEnterEventArgs args)
+//        {
+//#pragma warning disable 0252
+//            // Comparing references here, need to check if this actually works
+//            if (args.interactableObject != _interactable) { Debug.Log("Interactable object is not equal to interactable"); return; };
+//#pragma warning restore
+//            _isAnchored = false;
+//            transform.SetParent(null, true);
+//            GetComponent<Collider>().enabled = true;
+//            _rb.isKinematic = false;
+//        }
+//    }
 
 }
