@@ -21,11 +21,13 @@ public class Elec_StartOutlet : MonoBehaviour
         {
             if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
             {
+                multimeter = other.GetComponent<Elec_Multimeter>();
                 multimeter.VoltageMusltimeter = ourNode.ourVoltage.voltage;
             }
             else if (other.tag == "StickyMultiMeter")
             {
-                if(multimeter != null) { multimeter.StickyVoltage = ourNode.ourVoltage.voltage; }  
+                multimeter = other.GetComponent<Elec_MultiStick>().MamaMultimeter;
+                if (multimeter != null) { multimeter.StickyVoltage = ourNode.ourVoltage.voltage; }  
             }
         }
 
@@ -33,12 +35,14 @@ public class Elec_StartOutlet : MonoBehaviour
     public void OnTriggerExit(Collider other)
     {      
          if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
-        {
+        {         
             multimeter.VoltageMusltimeter = 0;
+            multimeter = null;
         }
         else if (other.tag == "StickyMultiMeter")
-        {
+        {          
             multimeter.StickyVoltage = 0;
+            multimeter = null;
         }
     }
 }
