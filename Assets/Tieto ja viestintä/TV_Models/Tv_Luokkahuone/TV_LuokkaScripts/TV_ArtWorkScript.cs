@@ -16,6 +16,7 @@ public class TV_ArtWorkScript : MonoBehaviour
 
         Material newMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
         newMaterial.mainTexture = theArtwork;
+        newMaterial.SetFloat("_Smoothness", 0f);
         mRenderer.material = newMaterial;
     }
 }
