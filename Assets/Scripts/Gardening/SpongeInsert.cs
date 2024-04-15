@@ -61,6 +61,6 @@ namespace Gardening
 //            GetComponent<Collider>().enabled = true;
 //            _rb.isKinematic = false;
 //        }
-//    }
+    }
 
 }
