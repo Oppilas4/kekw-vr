@@ -52,11 +52,13 @@ public class Elec_FinishOutlet : MonoBehaviour
         if (ourGridNode.ElectricityIsOn)
         {
             if(other.gameObject.GetComponent<Elec_Multimeter>() != null) 
-            {         
+            {
+                multimeter = other.GetComponent<Elec_Multimeter>();
                 multimeter.VoltageMusltimeter = goalVoltage;
             }
             else if (other.tag == "StickyMultiMeter")
             {
+                multimeter = other.GetComponent<Elec_MultiStick>().MamaMultimeter;
                 if (multimeter != null) { multimeter.StickyVoltage = goalVoltage; }
             }
         }
@@ -64,15 +66,17 @@ public class Elec_FinishOutlet : MonoBehaviour
     }
     public void OnTriggerExit(Collider other)
     {
-       if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
+        if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
         {
             multimeter.VoltageMusltimeter = 0;
+            multimeter = null;
         }
         else if (other.tag == "StickyMultiMeter")
         {
             multimeter.StickyVoltage = 0;
+            multimeter = null;
         }
-    }
+    }   
     void ReceiveVoltageFromCable(XRBaseInteractable Staple)
     {
         if (Staple.GetComponent<Elec_StapleMakeStick>().SpoolItIsON.Voltage_Send() == goalVoltage)

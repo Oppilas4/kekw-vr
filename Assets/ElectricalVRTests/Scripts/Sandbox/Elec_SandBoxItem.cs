@@ -18,7 +18,7 @@ public class Elec_SandBoxItem : MonoBehaviour
     public List<Elec_SandBoxInOut> Output;
     public int Voltage = 0;
     public UnityEvent WhenOn, WhenOff;
-    bool locked = false;
+    public bool locked = false;
     void Start()
     {
         interactable = GetComponent<XRBaseInteractable>();

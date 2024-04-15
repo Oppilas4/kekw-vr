@@ -12,7 +12,7 @@ public class Elec_CofffeeFlakes : MonoBehaviour
     public float vel;
     private void Start()
     {
-        CoffeeFlakes = GetComponent<ParticleSystem>();
+        CoffeeFlakes = GetComponentInChildren<ParticleSystem>();
         Rigid = GetComponent<Rigidbody>();
     }
     void Update()
@@ -25,13 +25,6 @@ public class Elec_CofffeeFlakes : MonoBehaviour
         if (Vector3.Dot(transform.up, Vector3.down) < 0.75 && flaked)
         {
             flaked = false;
-        }
-    }
-    private void OnParticleCollision(GameObject other)
-    {
-        if (other.name == "elec_tero")
-        {
-            TeroNomNom.Play();
         }
     }
 }
