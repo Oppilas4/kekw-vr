@@ -46,6 +46,7 @@ public class MC_DishCalculation : MonoBehaviour
             Transform plateArea = transform.Find("PlateArea");
             if (plateArea != null)
             {
+                CalculatePotatoes();
                 // Loop through all children of the Plate Area
                 foreach (Transform child in plateArea)
                 {
@@ -64,6 +65,65 @@ public class MC_DishCalculation : MonoBehaviour
         {
             CalculateFries();
         }
+    }
+
+    private void CalculatePotatoes()
+    {
+        // Initialize score variables
+        float baseScore = 50f;
+        float dishScore = baseScore;
+        int potatoCount = 0;
+        int perfectPotatoCount = 2; // Ideal amount of potatoes for the perfect steak dish
+
+        // Get the vegetable counts dictionary
+        Dictionary<GameObject, int> vegetableCounts = plateController.GetVegetableCounts();
+
+        // Check if there are any vegetables other than "Potato"
+        foreach (var pair in vegetableCounts)
+        {
+            if (pair.Key.CompareTag("Potato"))
+            {
+                // Get the vegetable controller from each potato object
+                VegetableController vegController = pair.Key.GetComponent<VegetableController>();
+                if (vegController != null)
+                {
+                    // Check if the potato is not cooked
+                    if (vegController.isCooked == false)
+                    {
+                        // Deduct points for not cooked potatoes
+                        dishScore -= baseScore * 0.25f; // Arbitrary deduction, adjust as needed
+                    }
+                    else
+                    {
+                        // Increment the count of cooked potatoes
+                        potatoCount += pair.Value;
+                    }
+                }
+            }
+            else
+            {
+                if (!pair.Key.CompareTag("Steak"))
+                {
+                    // Deduct points if there is something else on the plate other than "Potato"
+                    dishScore -= baseScore * 0.5f; // Arbitrary deduction, adjust as needed
+                }
+                
+            }
+        }
+
+        if (potatoCount != perfectPotatoCount)
+        {
+            // Deduct points for having less than the ideal amount of potatoes
+            int missingPotatoCount = perfectPotatoCount - potatoCount;
+            if (missingPotatoCount > 0)
+            {
+                float missingPotatoDeduction = missingPotatoCount * 10f; // Deduct 10 points per missing potato
+                dishScore -= missingPotatoDeduction;
+            }
+        }
+
+        // Update the game manager with the calculated score
+        DishScoreManager.Instance.UpdateScore(dishScore);
     }
 
     private void CalculateFries()

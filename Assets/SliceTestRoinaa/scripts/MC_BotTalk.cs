@@ -46,6 +46,8 @@ public class MC_BotTalk : MonoBehaviour
 
     bool _isPaused = false;
 
+    private int currentIndex = 0;
+
     public void SetPause()
     {
         if (!_isPaused)
@@ -77,17 +79,21 @@ public class MC_BotTalk : MonoBehaviour
             _isTalking = true;
             NotifyOtherComponents(true);
 
-            // Generate a random index
-            int randomIndex = UnityEngine.Random.Range(0, _audioClips.Length);
-
-            // Use the random index to select the audio clip and text string
-            AudioClip temp = _audioClips[randomIndex];
-            string textToShow = botTalk[randomIndex];
+            // Use the current index to select the audio clip and text string
+            AudioClip temp = _audioClips[currentIndex];
+            string textToShow = botTalk[currentIndex];
 
             _textMeshProUGUI.text = textToShow;
 
             _audioSource.PlayOneShot(temp);
             StartCoroutine(WaitForSpeechEnd(temp.length + .5f));
+
+            // Increment the index and reset if necessary
+            currentIndex++;
+            if (currentIndex >= _audioClips.Length)
+            {
+                currentIndex = 0;
+            }
         }
     }
 
@@ -97,7 +103,6 @@ public class MC_BotTalk : MonoBehaviour
         {
             _tutorial.currentDialogueIndex++;
             _isTalking = true;
-            NotifyOtherComponents(true);
 
             _textMeshProUGUI.text = dialogueLine;
 

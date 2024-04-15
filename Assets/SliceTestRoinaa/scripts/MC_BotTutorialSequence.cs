@@ -33,6 +33,7 @@ public class MC_BotTutorialSequence : MonoBehaviour
     public void StartDialogue()
     {
         isDialogueActive = true;
+        botMover.agent.isStopped = true;
         botTalk.TalkLine(dialogueSounds[0], dialogueLines[0]);
     }
 
