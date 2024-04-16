@@ -97,7 +97,6 @@ GameObject:
   - component: {fileID: 4728431043723753494}
   - component: {fileID: 4728431043723753493}
   - component: {fileID: 4728431043723753490}
-  - component: {fileID: 4728431043723753489}
   - component: {fileID: 4728431043723753491}
   m_Layer: 13
   m_Name: switch for sandbox
@@ -143,7 +142,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DistanceToDetach: 0
   OffsetToSandBox: {x: 0, y: 0, z: 0}
-  SandBoxRotation: {x: 0, y: 0, z: 0, w: 0}
   Input: []
   Output: []
   Voltage: 0
@@ -383,19 +381,6 @@ MonoBehaviour:
   WhatKInd: 0
   reset: 1
   WhichHand: 2
---- !u!65 &4728431043723753489
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4728431043723753492}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.964995, y: 3.31, z: 4.01}
-  m_Center: {x: -1.2674973, y: 8.511851e-16, z: 0}
 --- !u!82 &4728431043723753491
 AudioSource:
   m_ObjectHideFlags: 0
