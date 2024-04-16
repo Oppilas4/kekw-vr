@@ -8,8 +8,12 @@ public class Elec_LostNFound : MonoBehaviour
     public Transform Box, PlayerSpawn;
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag != "Plater" && !other.GetComponent<XRGrabInteractable>().isSelected)other.gameObject.transform.position = Box.position;
-        else other.transform.position = PlayerSpawn.position;
+        if (other.GetComponent<XRBaseInteractable>() != null)
+        {
+            if(other.tag != "Player" && !other.GetComponent<XRGrabInteractable>().isSelected)other.gameObject.transform.position = Box.position;
+            else other.transform.position = PlayerSpawn.position;
+        }
+        
 
     }
 }

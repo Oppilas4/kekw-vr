@@ -13,7 +13,6 @@ public class Elec_SandBoxItem : MonoBehaviour
     XRBaseInteractable interactable;
     public float DistanceToDetach;
     public Vector3 OffsetToSandBox;
-    public Quaternion SandBoxRotation;
     public List<Elec_SandBoxInOut> Input;
     public List<Elec_SandBoxInOut> Output;
     public int Voltage = 0;
