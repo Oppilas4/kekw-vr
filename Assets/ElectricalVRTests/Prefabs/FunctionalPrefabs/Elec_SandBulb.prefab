@@ -115,6 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orOut: 0
   item: {fileID: 0}
+  GiveOut: 1
 --- !u!1 &2897830232626673368
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,19 +288,7 @@ MonoBehaviour:
       m_Calls: []
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3229464754631009539}
-        m_TargetAssemblyTypeName: Elec_SandBoxItem, Assembly-CSharp
-        m_MethodName: BackToNormal
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_Activated:
     m_PersistentCalls:
       m_Calls: []
@@ -489,7 +478,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DistanceToDetach: 0.2
   OffsetToSandBox: {x: -0.1, y: 0, z: 0}
-  SandBoxRotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
   Input: []
   Output: []
   Voltage: 0
