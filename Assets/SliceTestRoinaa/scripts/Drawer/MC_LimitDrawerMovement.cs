@@ -11,11 +11,13 @@ public class MC_LimitDrawerMovement : MonoBehaviour
     private XRBaseInteractor grabbingHand;
     private Vector3 initialHandPosition;
     private Vector3 lastPosition;
+    private AudioSource audioSource;
 
     void Start()
     {
         drawerHandle.selectEntered.AddListener(OnDrawnHandleGrabbed);
         drawerHandle.selectExited.AddListener(OnDrawnHandleReleased);
+        audioSource = GetComponent<AudioSource>();
     }
 
     void OnDestroy()
@@ -56,6 +58,12 @@ public class MC_LimitDrawerMovement : MonoBehaviour
             {
                 // Update the drawer's position normally
                 lastPosition = transform.position;
+
+                // Check if the audio source is not already playing
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
             }
         }
     }

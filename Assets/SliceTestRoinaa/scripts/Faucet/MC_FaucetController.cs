@@ -10,7 +10,7 @@ public class MC_FaucetController : MonoBehaviour, IDial
     [SerializeField] ParticleSystem waterParticles;
     private float minFlowRate = 0f;
     private float maxFlowRate = 40f;
-
+    public AudioSource _audioSource;
     public BooleanEvent OnWaterStatusChanged;
 
     public void DialChanged(float dialValue)
@@ -28,6 +28,15 @@ public class MC_FaucetController : MonoBehaviour, IDial
         if (wasWaterOn != isWaterOn)
         {
             OnWaterStatusChanged?.Invoke(isWaterOn); // Invoke the event with the new status
+
+            if (isWaterOn)
+            {
+                _audioSource.Play();
+            }
+            else
+            {
+                _audioSource.Stop();
+            }
         }
         emission.enabled = isWaterOn;
     }

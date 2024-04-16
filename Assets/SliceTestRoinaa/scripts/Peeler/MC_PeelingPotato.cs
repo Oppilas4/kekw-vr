@@ -5,7 +5,7 @@ using UnityEngine;
 public class MC_PeelingPotato : MonoBehaviour
 {
     public GameObject decalPrefab; // Assign the decal prefab in Inspector
-
+    public AudioSource _audioSource;
     public Transform rayPointObject; // Assign the empty GameObject in Inspector
 
     private void OnTriggerEnter(Collider other)
@@ -26,6 +26,10 @@ public class MC_PeelingPotato : MonoBehaviour
                 // Check if the raycast hits an object with the tag "Potato"
                 if (hit.collider.CompareTag("Potato"))
                 {
+                    if (!_audioSource.isPlaying)
+                    {
+                        _audioSource.Play();
+                    }
                     // Spawn the Test prefab at the hit point
                     GameObject spawnedTest = Instantiate(decalPrefab, hit.point, Quaternion.identity);
 

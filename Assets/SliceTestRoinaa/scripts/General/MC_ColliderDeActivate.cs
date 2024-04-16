@@ -8,6 +8,7 @@ public class MC_ColliderDeActivate : MonoBehaviour
 {
     public Collider lidCollider;
     private XRSocketInteractor socketInteractor;
+    public AudioSource _audioSource;
 
     void Awake()
     {
@@ -37,6 +38,10 @@ public class MC_ColliderDeActivate : MonoBehaviour
     {
         // When the lid is attached, disable its collider
         lidCollider.isTrigger = true;
+        if (_audioSource != null)
+        {
+            _audioSource.Play();
+        }
     }
 
     private void OnLidDetached(SelectExitEventArgs args)

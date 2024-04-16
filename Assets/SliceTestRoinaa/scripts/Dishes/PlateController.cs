@@ -9,6 +9,7 @@ public class PlateController : MonoBehaviour
     public ParticleSystem _bubbles;
     public ParticleSystem _foam;
     public GameObject DecalProjector;
+    public AudioSource _audioSource;
     // This list will store the sliced vegetable pieces on the plate
     private List<GameObject> vegetablePiecesOnPlate = new List<GameObject>();
 
@@ -46,6 +47,10 @@ public class PlateController : MonoBehaviour
     {
         if (other.CompareTag("Sponge"))
         {
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+            }
             if (!_foam.isPlaying)
             {
                 _foam.Play();
@@ -61,6 +66,11 @@ public class PlateController : MonoBehaviour
         {
             _foam.Stop();
             _bubbles.Stop();
+
+            if (_audioSource.isPlaying)
+            {
+                _audioSource.Stop();
+            }
         }
     }
 

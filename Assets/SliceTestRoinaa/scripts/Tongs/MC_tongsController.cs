@@ -16,10 +16,13 @@ public class MC_tongsController : MonoBehaviour
     private XRGrabInteractable grabInteractor => GetComponent<XRGrabInteractable>();
     private bool isGrabbed = false;
 
+    private AudioSource _audioSource;
+
     void OnEnable()
     {
         grabInteractor.selectEntered.AddListener(OnGrabStart);
         grabInteractor.selectExited.AddListener(OnGrabEnd);
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void OnDisable()
@@ -89,6 +92,13 @@ public class MC_tongsController : MonoBehaviour
             {
                 // Set the "Close" parameter of the Animator based on the trigger input
                 tongsAnimator.SetFloat("Close", triggerAmount);
+
+                // Check if the tongs are being pressed together without holding an object
+                if (triggerAmount > 0.5f && grabbedObject == null)
+                {
+                    // Play the audio source
+                    _audioSource.Play();
+                }
             }
 
             // Check for grabbing objects

@@ -10,10 +10,12 @@ public class MC_OilController : MonoBehaviour, IHotObject
     private const float emissionChangeSpeed = 20f;
     public List<GameObject> objectsInOil = new List<GameObject>();
     public List<Material> materialsInOil = new List<Material>();
+    private AudioSource _audioSource;
 
     public MC_DeepFrierTimer timer;
     private void OnEnable()
     {
+        _audioSource = GetComponent<AudioSource>();
         HotObjectManager.RegisterHotObject(this);
     }
 
@@ -33,11 +35,19 @@ public class MC_OilController : MonoBehaviour, IHotObject
 
         if (isOn && objectsInOil.Count != 0)
         {
+            if (_audioSource != null && !_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+            }
             UpdateEmissionRate(80);
             StartTimer();
         }
         else if(!isOn)
         {
+            if (_audioSource != null)
+            {
+                _audioSource.Stop();
+            }
             UpdateEmissionRate(0);
         }
     }
@@ -87,6 +97,10 @@ public class MC_OilController : MonoBehaviour, IHotObject
             }
             if (objectsInOil.Count == 0)
             {
+                if (_audioSource != null)
+                {
+                    _audioSource.Stop();
+                }
                 timer.StopTimer();
                 timer.gameObject.SetActive(false);
                 UpdateEmissionRate(0);

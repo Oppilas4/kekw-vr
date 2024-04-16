@@ -6,7 +6,12 @@ public class MC_OrderTicketManager : MonoBehaviour
 {
     private List<GameObject> ticketsInMachine = new List<GameObject>();
     private bool _occupied = false;
+    private AudioSource _audioSource;
 
+    private void Start()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
     public bool isOccupied(GameObject ticket)
     {
         if (ticketsInMachine.Count > 0 && ticketsInMachine[0] == ticket)
@@ -40,5 +45,13 @@ public class MC_OrderTicketManager : MonoBehaviour
     public void addTicketToList(GameObject ticket)
     {
         ticketsInMachine.Add(ticket);
+    }
+
+    public void PlayPrintSound()
+    {
+        if (_audioSource != null && !_audioSource.isPlaying)
+        {
+            _audioSource.Play();
+        }
     }
 }

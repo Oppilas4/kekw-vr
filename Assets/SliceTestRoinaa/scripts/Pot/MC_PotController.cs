@@ -28,6 +28,8 @@ public class MC_PotController : MonoBehaviour, IHotObject
     public List<Transform> pourEffectPositions; // List of points around the rim for pouring effect
     private Vector3 lowestPosition;
 
+    public AudioSource _audioSource;
+
     private void Start()
     {
         // Get the renderer component from the water object
@@ -235,6 +237,10 @@ public class MC_PotController : MonoBehaviour, IHotObject
             // Start the boiling particle effect
             boilingParticles.Play();
         }
+        if (!_audioSource.isPlaying)
+        {
+            _audioSource.Play();
+        }
         // Increase the emission rate gradually
         boilingParticlesEmissionRate = Mathf.MoveTowards(boilingParticlesEmissionRate, 20f, Time.deltaTime * 5f);
         var emission = boilingParticles.emission;
@@ -245,6 +251,7 @@ public class MC_PotController : MonoBehaviour, IHotObject
 
     private void EndBoiling()
     {
+        _audioSource.Stop();
         boilingParticlesEmissionRate = Mathf.MoveTowards(boilingParticlesEmissionRate, 0f, Time.deltaTime * 5f);
         var emission = boilingParticles.emission;
         emission.rateOverTime = boilingParticlesEmissionRate;

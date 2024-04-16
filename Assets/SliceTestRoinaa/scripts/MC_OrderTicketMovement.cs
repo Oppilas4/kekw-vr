@@ -67,6 +67,7 @@ public class MC_OrderTicketMovement : MonoBehaviour
     }
     private IEnumerator MoveTicket()
     {
+        orderTicketManager.PlayPrintSound();
         while (Vector3.Distance(transform.position, targetPosition.position) > 0.1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition.position, speed * Time.deltaTime);

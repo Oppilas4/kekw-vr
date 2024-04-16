@@ -9,10 +9,16 @@ public class SliceObject : MonoBehaviour
     public Transform endSlicePoint;
     public VelocityEstimator velocityEstimator;
     public LayerMask sliceableLayer;
+    private AudioSource _audioSource;
+    public AudioClip _sharpening;
 
     private bool canSlice = true;
     private float sliceCooldown = 0.5f; // Cooldown duration
 
+    private void Start()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
     void FixedUpdate()
     {
         bool hasHit = Physics.Linecast(startSlicePoint.position, endSlicePoint.position, out RaycastHit hit, sliceableLayer);
@@ -41,6 +47,8 @@ public class SliceObject : MonoBehaviour
         if (hull != null)
         {
             VegetableController vegetableController = GetVegetableController(target);
+            _audioSource.clip = vegetableController.vegetableData._audioClip;
+            _audioSource.Play();
             Material insideMaterial = vegetableController.vegetableData.insideMaterial;
             GameObject upperHull = hull.CreateUpperHull(target, insideMaterial);
             SetupSlicedComponent(upperHull, vegetableController);
@@ -88,6 +96,17 @@ public class SliceObject : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Sharpener"))
+        {
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.clip = _sharpening;
+                _audioSource.Play();
+            }
+        }
+    }
 
     IEnumerator StartCooldown()
     {

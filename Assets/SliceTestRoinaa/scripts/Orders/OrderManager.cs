@@ -62,7 +62,7 @@ public class OrderManager : MonoBehaviour
     private void InstantiateOrderTicket(Order order)
     {
         // Instantiate the order ticket prefab
-        GameObject orderTicketObject = Instantiate(orderTicketPrefab, ticketSpawnLoc.position, Quaternion.identity);
+        GameObject orderTicketObject = Instantiate(orderTicketPrefab, ticketSpawnLoc.position, Quaternion.Euler(0f,90f,0f));
 
         order.orderTicketObject = orderTicketObject;
 
