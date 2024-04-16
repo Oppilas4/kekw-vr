@@ -28,13 +28,12 @@ public class Elec_Light_switch : MonoBehaviour
         if (other.GetComponent<CapsuleCollider>() != null && other.CompareTag("RightHand") || other.GetComponent<CapsuleCollider>() != null && other.CompareTag("LeftHand"))
                 {
                     if(other.CompareTag("RightHand"))WhichHand = Hand.RightHand;
-                    else if(other.CompareTag("LeftHand"))WhichHand= Hand.LeftHand;
-                    Audio.PlayOneShot(ClickSound);                             
+                    else if(other.CompareTag("LeftHand"))WhichHand= Hand.LeftHand;                       
                 }                
     }
     private void OnTriggerExit(Collider other)
     {
-       if(other == InCase) WhichHand = Hand.none;
+       WhichHand = Hand.none;
     }
     private void Update()
     {
@@ -82,10 +81,9 @@ public class Elec_Light_switch : MonoBehaviour
             ison = false;
         }
     }
-    [ContextMenu("OnOff")]
     public void OnOff()
     {
-        Debug.Log("OnOff");
+        Audio.PlayOneShot(ClickSound);
         switch (WhatKInd)
         {
             case KindOfSwitch.ONOFF:

@@ -13,7 +13,5 @@ public class Elec_LostNFound : MonoBehaviour
             if(other.tag != "Player" && !other.GetComponent<XRGrabInteractable>().isSelected)other.gameObject.transform.position = Box.position;
             else other.transform.position = PlayerSpawn.position;
         }
-        
-
     }
 }
