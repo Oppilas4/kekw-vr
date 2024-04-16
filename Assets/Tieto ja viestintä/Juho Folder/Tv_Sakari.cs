@@ -8,8 +8,6 @@ public class Tv_Sakari : MonoBehaviour
    public Transform startPos;
     public Transform player;
     public float speed;
-    public bool sakariAnger;
-    public float sakariRange;
     private NavMeshAgent navMeshAgent;
     public Transform attachTransformHand;
     public GameObject bottle;
@@ -64,7 +62,7 @@ public class Tv_Sakari : MonoBehaviour
 
     void UpdateIdleState()
     {
-        if (!carryingBottle && !sakariAnger)
+        if (!carryingBottle)
         {
             if (isBottle)
             {
@@ -73,7 +71,7 @@ public class Tv_Sakari : MonoBehaviour
                 navMeshAgent.SetDestination(bottle.transform.position);
             }
         }
-        else if (!sakariAnger)
+        else
         {
             navMeshAgent.SetDestination(door.position);
             anim.SetBool("IsIdle", false);
@@ -100,7 +98,7 @@ public class Tv_Sakari : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (currentState == SakariState.Idle && other.CompareTag("tv_pullo") && !sakariAnger && !carryingBottle)
+        if (currentState == SakariState.Idle && other.CompareTag("tv_pullo") && !carryingBottle)
         {
             PickUpBottle();
         }
@@ -110,6 +108,8 @@ public class Tv_Sakari : MonoBehaviour
     {
         print("PickUp");
         Rigidbody rb = bottle.GetComponent<Rigidbody>();
+        TV_SakariThrowObject throws = bottle.GetComponent<TV_SakariThrowObject>();
+        throws.ShowTheMagic(true);
         carryingBottle = true;
         rb.isKinematic = true;
         bottle.transform.parent = attachTransformHand;
@@ -126,9 +126,10 @@ public class Tv_Sakari : MonoBehaviour
     }
     void ThrowBottleOut()
     {
-        sakariAnger = true;
         carryingBottle = false;
         Rigidbody rb = bottle.GetComponent<Rigidbody>();
+        TV_SakariThrowObject throws = bottle.GetComponent<TV_SakariThrowObject>();
+        throws.ShowTheMagic(false);
         rb.isKinematic = false;
         bottle.transform.parent = null;
         Vector3 throwDirection = (door.position - throwTransform.position).normalized;
@@ -138,6 +139,8 @@ public class Tv_Sakari : MonoBehaviour
         Vector3 torqueDirection = Random.onUnitSphere;
         rb.AddTorque(torqueDirection * torqueStrength, ForceMode.Impulse);
         currentState = SakariState.Returning;
+        bottle = null;
+        isBottle = false;
         Invoke("SakariReturn", 1.0f);
     }
 }

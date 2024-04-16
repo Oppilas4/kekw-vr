@@ -5,28 +5,20 @@ using UnityEngine;
 public class Tv_SakariTrigger : MonoBehaviour
 {
     public Tv_Sakari sakariBehaviour;
-    bool testipaska = false;
-    // Start is called before the first frame update
-    void Start()
+    bool canCollect = true;
+    private IEnumerator ResetCanCollect()
     {
-       
+        yield return new WaitForSeconds(5f); // Wait for 5 seconds
+        canCollect = true; // Allow collection again after 5 seconds
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("tv_pullo") && !testipaska)
+        if (other.gameObject.CompareTag("tv_pullo") && canCollect)
         {
             sakariBehaviour.bottle = other.gameObject;
             sakariBehaviour.isBottle = true;
-            Debug.Log("Pullo");
-            testipaska=true;
+            canCollect = false;
+            StartCoroutine(ResetCanCollect());
         }
     }
 }
