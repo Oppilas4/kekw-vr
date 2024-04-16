@@ -13,12 +13,11 @@ public class Elec_Light_switch : MonoBehaviour
     AudioSource Audio;
     public bool Sandbox = false;
     Elec_SandBoxItem boxItem;
-    int SavedVoltage;
     public Elec_SandBoxInOut OutPut,Output2;
     public KindOfSwitch WhatKInd;
     public bool reset;
     public Hand WhichHand;
-    Input TriggerInput;
+    Collider InCase;
     private void Start()
     {
         boxItem = GetComponent<Elec_SandBoxItem>();
@@ -35,7 +34,7 @@ public class Elec_Light_switch : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        WhichHand = Hand.none;
+       if(other == InCase) WhichHand = Hand.none;
     }
     private void Update()
     {
@@ -44,7 +43,6 @@ public class Elec_Light_switch : MonoBehaviour
                 case Hand.RightHand:
                     if (Input.GetButtonDown("XRI_Right_TriggerButton") && reset)
                     {
-                        Debug.Log("Plop");
                         reset = false;
                         CallOnOff();
                     }
@@ -56,7 +54,6 @@ public class Elec_Light_switch : MonoBehaviour
                 case Hand.LeftHand:
                     if (Input.GetButtonDown("XRI_Left_TriggerButton") && reset)
                     {
-                        Debug.Log("Plop");
                         reset = false;
                         CallOnOff();
                     }
@@ -67,7 +64,7 @@ public class Elec_Light_switch : MonoBehaviour
                     break;
         }
     }
-    [ContextMenu("OnOff")]
+
     public void CallOnOff()
     {
         if (!ison)
@@ -85,9 +82,10 @@ public class Elec_Light_switch : MonoBehaviour
             ison = false;
         }
     }
+    [ContextMenu("OnOff")]
     public void OnOff()
     {
-       
+        Debug.Log("OnOff");
         switch (WhatKInd)
         {
             case KindOfSwitch.ONOFF:
@@ -107,8 +105,6 @@ public class Elec_Light_switch : MonoBehaviour
                 }
                 break;
         }
-        if (OutPut.GiveOut)OutPut.GiveOut = false;
-        else if(!OutPut.GiveOut) OutPut.GiveOut = true;
     }
     public enum KindOfSwitch
     {
