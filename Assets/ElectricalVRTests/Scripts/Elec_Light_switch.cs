@@ -17,23 +17,30 @@ public class Elec_Light_switch : MonoBehaviour
     public KindOfSwitch WhatKInd;
     public bool reset;
     public Hand WhichHand;
-    Collider InCase;
+    XRDirectInteractor directInteractor;
+    XRBaseInteractable interactable;
     private void Start()
     {
+        interactable = GetComponent<XRBaseInteractable>();
         boxItem = GetComponent<Elec_SandBoxItem>();
         Audio = GetComponent<AudioSource>();
+        interactable.hoverEntered.AddListener(OnSelected);
+        interactable.hoverExited.AddListener(OnDeselected);
     }
-    public void OnTriggerEnter(Collider other)
+    public void OnSelected(HoverEnterEventArgs args)
     {
-        if (other.GetComponent<CapsuleCollider>() != null && other.CompareTag("RightHand") || other.GetComponent<CapsuleCollider>() != null && other.CompareTag("LeftHand"))
-                {
-                    if(other.CompareTag("RightHand"))WhichHand = Hand.RightHand;
-                    else if(other.CompareTag("LeftHand"))WhichHand= Hand.LeftHand;                       
-                }                
+            if (args.interactorObject.transform.CompareTag("RightHand")) WhichHand = Hand.RightHand;
+            else if (args.interactorObject.transform.CompareTag("LeftHand")) WhichHand = Hand.LeftHand;
+            directInteractor = args.interactorObject.transform.GetComponent<XRDirectInteractor>();
     }
-    private void OnTriggerExit(Collider other)
+    public void OnDeselected(HoverExitEventArgs args)
     {
-       WhichHand = Hand.none;
+        if (args.interactorObject.transform.GetComponent<XRDirectInteractor>() == directInteractor)
+        {
+            WhichHand = Hand.none;
+            directInteractor = null;
+        }
+
     }
     private void Update()
     {

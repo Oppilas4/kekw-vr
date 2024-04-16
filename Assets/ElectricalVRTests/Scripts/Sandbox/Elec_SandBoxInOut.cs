@@ -42,7 +42,6 @@ public class Elec_SandBoxInOut : MonoBehaviour , IVoltage
                 if (GiveOut) e.interactableObject.transform.GetComponent<Elec_SandBoxWireEnd>().Voltage_Receive(item.Voltage);
                 else if (!GiveOut)
                 {
-                    Debug.Log("DebugPee");
                     e.interactableObject.transform.GetComponent<Elec_SandBoxWireEnd>().Voltage_Receive(0);
                 }
                 break;
