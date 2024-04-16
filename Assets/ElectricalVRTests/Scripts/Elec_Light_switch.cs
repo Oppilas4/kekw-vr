@@ -16,6 +16,9 @@ public class Elec_Light_switch : MonoBehaviour
     int SavedVoltage;
     public Elec_SandBoxInOut OutPut,Output2;
     public KindOfSwitch WhatKInd;
+    public bool reset;
+    public Hand WhichHand;
+    Input TriggerInput;
     private void Start()
     {
         boxItem = GetComponent<Elec_SandBoxItem>();
@@ -25,25 +28,66 @@ public class Elec_Light_switch : MonoBehaviour
     {
         if (other.GetComponent<CapsuleCollider>() != null && other.CompareTag("RightHand") || other.GetComponent<CapsuleCollider>() != null && other.CompareTag("LeftHand"))
                 {
-                    Audio.PlayOneShot(ClickSound);          
-                    if (!ison)
+                    if(other.CompareTag("RightHand"))WhichHand = Hand.RightHand;
+                    else if(other.CompareTag("LeftHand"))WhichHand= Hand.LeftHand;
+                    Audio.PlayOneShot(ClickSound);                             
+                }                
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        WhichHand = Hand.none;
+    }
+    private void Update()
+    {
+            switch (WhichHand)
+            {
+                case Hand.RightHand:
+                    if (Input.GetButtonDown("XRI_Right_TriggerButton") && reset)
                     {
-                        WhatToWhenON.Invoke();          
-                        off.SetActive(false);
-                        on.SetActive(true);
-                        ison = true;
+                        Debug.Log("Plop");
+                        reset = false;
+                        CallOnOff();
                     }
                     else
                     {
-                        WhatToWhenOFF.Invoke();
-                        off.SetActive(true);
-                        on.SetActive(false);
-                        ison = false;
+                        reset = true;
                     }
-                }                
+                break;
+                case Hand.LeftHand:
+                    if (Input.GetButtonDown("XRI_Left_TriggerButton") && reset)
+                    {
+                        Debug.Log("Plop");
+                        reset = false;
+                        CallOnOff();
+                    }
+                    else
+                    {
+                        reset = true;
+                    }
+                    break;
+        }
+    }
+    [ContextMenu("OnOff")]
+    public void CallOnOff()
+    {
+        if (!ison)
+        {
+            WhatToWhenON.Invoke();
+            off.SetActive(false);
+            on.SetActive(true);
+            ison = true;
+        }
+        else
+        {
+            WhatToWhenOFF.Invoke();
+            off.SetActive(true);
+            on.SetActive(false);
+            ison = false;
+        }
     }
     public void OnOff()
     {
+       
         switch (WhatKInd)
         {
             case KindOfSwitch.ONOFF:
@@ -70,5 +114,11 @@ public class Elec_Light_switch : MonoBehaviour
     {
         ONOFF,
         OR
+    }
+    public enum Hand
+    {
+        LeftHand,
+        RightHand,
+        none
     }
 }
