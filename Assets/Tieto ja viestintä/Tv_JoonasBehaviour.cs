@@ -1,70 +1,67 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Tv_JoonasBehaviour : MonoBehaviour
+public class TV_JoonasBehaviour : MonoBehaviour
 {
-    public Transform sitPoint; // The point where the NPC sits
-    public Transform standPoint; // The point where the NPC stands up
-    public Transform targetPoint; // The point where the NPC walks to when the player approaches
-    public float sitTime = 5f; // How long the NPC stays seated before standing up
-    public float walkSpeed = 1.5f; // Walking speed of the NPC
+    public Transform sitLocation;
+    public Transform whereToGoStand;
 
     private NavMeshAgent agent;
     private Animator animator;
-    public bool isSeated = true;
+
+    [SerializeField] bool isWalking;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-
-        // Initially, NPC is seated
         Sit();
     }
 
-    void Update()
+    private void Update()
     {
-        // Check if the NPC is seated and idle
-        if (isSeated && !animator.GetBool("isWalking"))
-        {
-            // Start monologue animation or behavior
-            // For example, play idle animation or trigger monologue
-        }
+        ReachedTheDestination();
     }
 
-    // Function to make the NPC sit down
     void Sit()
     {
-        agent.enabled = false; // Disable NavMeshAgent while sitting
-        transform.position = sitPoint.position;
-        transform.rotation = sitPoint.rotation;
-        isSeated = true;
-        Invoke("StandUp", sitTime); // Call StandUp() after sitTime seconds
+        transform.position = sitLocation.position;
+        transform.rotation = sitLocation.rotation;
+        agent.enabled = false;
+        animator.SetBool("Sitting", true);
+        isWalking = false; // Set isWalking to false when sitting down
     }
 
-    // Function to make the NPC stand up and walk to the target point
-    public void StandUp()
+
+    public void StartToMove(Transform point)
     {
-        animator.Play("JoonasStandUp");
-        isSeated = false;
+        animator.SetBool("Sitting", false);
+
+        agent.enabled = true;
+        isWalking = true;
+        agent.SetDestination(point.position);
     }
 
-    // Function to handle NPC reaching the stand point
-    public void ReachedStandPoint()
+    public void ReachedTheDestination()
     {
-        print("moving");
-        agent.enabled = true; // Enable NavMeshAgent
-        agent.SetDestination(targetPoint.position); // Move to target point after reaching stand point
-        //animator.SetBool("isWalking", true); // Trigger walking animation
+        if (agent.enabled == true)
+        {
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                isWalking = false;
+
+                if (Vector3.Distance(transform.position, sitLocation.position) < 0.5f)
+                {
+                    Sit();
+                }
+
+                else if (Vector3.Distance(transform.position, whereToGoStand.position) < 0.5f)
+                {
+                    animator.SetTrigger("Stand");
+                }
+            }
+        }
     }
-
-    // Function to handle NPC reaching the target point
-    public void ReachedTargetPoint()
-    {
-        animator.SetBool("isWalking", false); // Stop walking animation
-        // Perform any additional behavior or dialogue once the NPC reaches the target point
-    }
-
-    // Function to handle player entering the trigger area
-
 }
