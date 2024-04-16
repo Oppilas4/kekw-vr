@@ -7,7 +7,7 @@ public class MC_LookAt : MonoBehaviour
     private void Start()
     {
         // Find the player by tag
-        player = GameObject.Find("XR Origin");
+        player = Camera.main.gameObject;
     }
 
     void Update()
