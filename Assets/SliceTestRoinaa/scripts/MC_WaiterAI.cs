@@ -97,6 +97,7 @@ public class MC_WaiterAI : MonoBehaviour
             deliverLocation = waitingPosition;
             orderWaitingPositions.Remove(orderId);
             isFoodReady = true;
+            Debug.Log("FoodReady");
         }
         
     }
@@ -175,6 +176,7 @@ public class MC_WaiterAI : MonoBehaviour
                 StopCoroutine(currentCoroutine);
             }
             currentTask = Task.PickUpFood;
+            Debug.Log("Pick up food");
             currentCoroutine = StartCoroutine(PerformTask());
             isFoodReady= false;
         }
