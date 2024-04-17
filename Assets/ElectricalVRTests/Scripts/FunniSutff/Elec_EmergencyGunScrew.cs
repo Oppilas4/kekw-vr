@@ -17,6 +17,7 @@ public class Elec_EmergencyGunScrew : MonoBehaviour
             unscrewed=true;
             GetComponent<Rigidbody>().isKinematic = false;
             MamaBox.Screws--;
+            GetComponent<AudioSource>().Play();
         }
     }
 }

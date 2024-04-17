@@ -11,7 +11,7 @@ public class Elec_BlSingleCylinder : MonoBehaviour
     public float Force;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Rigidbody>() != null && other.GetComponent<XRBaseInteractable>() != null && !Occupied && other.GetComponent<XRBaseInteractable>().isSelected)
+        if (other.GetComponent<Rigidbody>() != null && other.GetComponent<XRBaseInteractable>() != null && !Occupied && other.GetComponent<XRBaseInteractable>().isSelected && other.GetComponent<XRBaseInteractable>().GetOldestInteractorSelecting().transform.GetComponent<XRSocketInteractor>() == null)
         {
             other.GetComponent<XRBaseInteractable>().enabled = false;
             Round = other.gameObject;

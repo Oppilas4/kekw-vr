@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Elec_SandBoxWireEnd : MonoBehaviour, IVoltage
 {
-    Elec_SandBoxWire mamaWire;
+    public Elec_SandBoxWire mamaWire;
 
     public void Voltage_Receive(int newVoltage)
     {
@@ -14,11 +14,5 @@ public class Elec_SandBoxWireEnd : MonoBehaviour, IVoltage
     public int Voltage_Send()
     {
         return mamaWire.Voltage;
-    }
-
-    void Start()
-    {
-        mamaWire = GetComponentInParent<Elec_SandBoxWire>();    
-    }
-    
+    }    
 }
