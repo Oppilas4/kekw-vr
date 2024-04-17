@@ -20,7 +20,6 @@ public class Elec_FinishOutlet : MonoBehaviour
     [Obsolete]
     private void Start()
     {
-        multimeter = GameObject.FindObjectOfType<Elec_Multimeter>();
         ourGridNode= GetComponent<Elec_GridNode>();
         interactor = GetComponent<XRBaseInteractor>();
         interactor.onSelectEntered.AddListener(ReceiveVoltageFromCable);
