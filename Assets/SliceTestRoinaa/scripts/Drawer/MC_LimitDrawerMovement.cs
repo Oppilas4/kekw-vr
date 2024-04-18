@@ -31,14 +31,12 @@ public class MC_LimitDrawerMovement : MonoBehaviour
         isDrawnHandleGrabbed = true;
         grabbingHand = args.interactorObject as XRBaseInteractor;
         initialHandPosition = grabbingHand.transform.position;
-        Debug.Log("Grabbed");
     }
 
     void OnDrawnHandleReleased(SelectExitEventArgs args)
     {
         isDrawnHandleGrabbed = false;
         grabbingHand = null;
-        Debug.Log("release");
     }
 
     void Update()
@@ -50,7 +48,6 @@ public class MC_LimitDrawerMovement : MonoBehaviour
 
             if (handDistanceFromInitialPosition > jointLimit)
             {
-                Debug.Log("stop movement");
                 // Stop updating the drawer's position
                 transform.position = lastPosition;
             }

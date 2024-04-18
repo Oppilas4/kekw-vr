@@ -49,7 +49,7 @@ public class MC_CustomerAI : MonoBehaviour
         }
 
         // Check if it's time to leave (60 seconds)
-        if (timeInRestaurant >= 60f && navAgent.remainingDistance < distanceThreshold && orderPlaced && !leaving)
+        if (timeInRestaurant >= 150f && navAgent.remainingDistance < distanceThreshold && orderPlaced && !leaving)
         {
             LeaveRestaurant();
         }
@@ -66,7 +66,7 @@ public class MC_CustomerAI : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
 
-        if (orderPlaced && navAgent.remainingDistance < distanceThreshold && timeInRestaurant >= 65f)
+        if (orderPlaced && navAgent.remainingDistance < distanceThreshold && timeInRestaurant >= 155f)
         {
             // The agent has reached its destination, destroy the GameObject
             Destroy(gameObject);

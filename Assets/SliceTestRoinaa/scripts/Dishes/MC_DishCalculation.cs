@@ -135,7 +135,7 @@ public class MC_DishCalculation : MonoBehaviour
         float baseScore = 100f;
         float dishScore = baseScore;
         int friesCount = 0;
-        int perfectFriesCount = 20; // Ideal amount of fries
+        int perfectFriesCount = 10; // Ideal amount of fries
 
         bool anyPotatoNotCooked = false; // Flag to check if any potato is not cooked
                                          // Check if there are any vegetables other than "Potato"
@@ -159,7 +159,6 @@ public class MC_DishCalculation : MonoBehaviour
 
                 // Calculate the volume of each potato and deduct points for oversized pieces
                 float _pieceSize = CalculatePieceSize(pair.Key);
-                Debug.Log(_pieceSize);
                 // Count the number of fries
                 friesCount += pair.Value;
 

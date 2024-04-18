@@ -37,7 +37,7 @@ public class OrderManager : MonoBehaviour
         {
             orderId = Random.Range(1000, 9999),
             dishName = availableDishes[Random.Range(0, availableDishes.Count)],
-            expirationTime = Time.time + 60f // 60 seconds expiration time (adjust as needed)
+            expirationTime = Time.time + 150f // 60 seconds expiration time (adjust as needed)
         };
 
         // Assign a random temperature to the steak if the dish is a steak
