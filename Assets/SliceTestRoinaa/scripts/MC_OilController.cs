@@ -73,6 +73,10 @@ public class MC_OilController : MonoBehaviour, IHotObject
             objectsInOil.Add(other.gameObject);
             materialsInOil.AddRange(vegetableController.GetMaterials());
             UpdateEmissionRate(80);
+            if (_audioSource != null && !_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+            }
         }
         else if(vegetableController != null && !objectsInOil.Contains(other.gameObject))
         {
