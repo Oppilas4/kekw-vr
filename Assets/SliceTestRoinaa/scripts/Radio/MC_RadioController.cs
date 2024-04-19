@@ -13,11 +13,25 @@ public class MC_RadioController : MonoBehaviour
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+        Shuffle(audioClips);
         _audioSource.clip = audioClips[_currentClipIndex];
         _audioSource.loop = false;
         _audioSource.playOnAwake = false;
+        
     }
 
+    void Shuffle(List<AudioClip> list)
+    {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = Random.Range(0, n + 1);
+            AudioClip value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+    }
     IEnumerator CheckIfTrackFinished()
     {
         while (_audioSource.isPlaying && !_isPaused) // Check if the music is not paused
