@@ -11,11 +11,13 @@ public class MC_LimitDrawerMovement : MonoBehaviour
     private XRBaseInteractor grabbingHand;
     private Vector3 initialHandPosition;
     private Vector3 lastPosition;
+    private AudioSource audioSource;
 
     void Start()
     {
         drawerHandle.selectEntered.AddListener(OnDrawnHandleGrabbed);
         drawerHandle.selectExited.AddListener(OnDrawnHandleReleased);
+        audioSource = GetComponent<AudioSource>();
     }
 
     void OnDestroy()
@@ -29,14 +31,12 @@ public class MC_LimitDrawerMovement : MonoBehaviour
         isDrawnHandleGrabbed = true;
         grabbingHand = args.interactorObject as XRBaseInteractor;
         initialHandPosition = grabbingHand.transform.position;
-        Debug.Log("Grabbed");
     }
 
     void OnDrawnHandleReleased(SelectExitEventArgs args)
     {
         isDrawnHandleGrabbed = false;
         grabbingHand = null;
-        Debug.Log("release");
     }
 
     void Update()
@@ -48,7 +48,6 @@ public class MC_LimitDrawerMovement : MonoBehaviour
 
             if (handDistanceFromInitialPosition > jointLimit)
             {
-                Debug.Log("stop movement");
                 // Stop updating the drawer's position
                 transform.position = lastPosition;
             }
@@ -56,6 +55,12 @@ public class MC_LimitDrawerMovement : MonoBehaviour
             {
                 // Update the drawer's position normally
                 lastPosition = transform.position;
+
+                // Check if the audio source is not already playing
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
             }
         }
     }

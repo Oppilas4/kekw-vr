@@ -37,7 +37,7 @@ public class OrderManager : MonoBehaviour
         {
             orderId = Random.Range(1000, 9999),
             dishName = availableDishes[Random.Range(0, availableDishes.Count)],
-            expirationTime = Time.time + 60f // 60 seconds expiration time (adjust as needed)
+            expirationTime = Time.time + 150f // 60 seconds expiration time (adjust as needed)
         };
 
         // Assign a random temperature to the steak if the dish is a steak
@@ -62,7 +62,7 @@ public class OrderManager : MonoBehaviour
     private void InstantiateOrderTicket(Order order)
     {
         // Instantiate the order ticket prefab
-        GameObject orderTicketObject = Instantiate(orderTicketPrefab, ticketSpawnLoc.position, Quaternion.identity);
+        GameObject orderTicketObject = Instantiate(orderTicketPrefab, ticketSpawnLoc.position, Quaternion.Euler(0f,90f,0f));
 
         order.orderTicketObject = orderTicketObject;
 

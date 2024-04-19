@@ -18,6 +18,12 @@ public class OrderBell : MonoBehaviour
     const float _hapticDuration = .25f;
     public float _cooldownDuration = 2f;
     private bool _canTrigger = true;
+    private AudioSource _audioSource;
+
+    private void Start()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
     private void SendHapticFeedback(float amplitude, float duration)
     {
         if (_leftHapticBroker == null || _rightHapticBroker == null)
@@ -46,6 +52,7 @@ public class OrderBell : MonoBehaviour
     {
         if (_canTrigger && collision.gameObject.layer == LayerMask.NameToLayer("PepeHands"))
         {
+            _audioSource.Play();
             _canTrigger = false;
             _handTag = collision.gameObject.tag;
             SendHapticFeedback(_hapticForce, _hapticDuration);

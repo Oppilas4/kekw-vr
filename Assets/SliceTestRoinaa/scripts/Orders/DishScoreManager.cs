@@ -68,7 +68,7 @@ public class DishScoreManager : MonoBehaviour
         }
 
         // Calculate the number of stars based on the score
-        int stars = Mathf.CeilToInt(playerScore / (1000f / 5f)); // Assuming 1000 points = 5 stars
+        int stars = Mathf.CeilToInt(playerScore / (800f / 5f)); // Assuming 1000 points = 5 stars
         stars = Mathf.Clamp(stars, 0, 5); // Ensure the number of stars does not exceed 5
 
         // Activate/Deactivate stars based on the score

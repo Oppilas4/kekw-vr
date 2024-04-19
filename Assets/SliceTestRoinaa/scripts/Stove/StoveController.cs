@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.VFX;
 using System.Data;
+using Oculus.Interaction;
 
 public class StoveController : MonoBehaviour, IHotObject
 {
@@ -20,6 +21,9 @@ public class StoveController : MonoBehaviour, IHotObject
     public MC_PourController pourController;
     public VisualEffect pourEffect;
     private bool isPouring;
+    private AudioSource _audioSource;
+    public AudioClip _fryingSound;
+    public AudioClip _waterSound;
     
 
     private void OnEnable()
@@ -35,6 +39,7 @@ public class StoveController : MonoBehaviour, IHotObject
     void Start()
     {
         oilRend = oilObject.GetComponent<Renderer>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -93,6 +98,7 @@ public class StoveController : MonoBehaviour, IHotObject
         }
 
         isPanHot = false;
+        _audioSource.Stop();
 
         isCoroutineRunning = false;
     }
@@ -104,6 +110,12 @@ public class StoveController : MonoBehaviour, IHotObject
             currentSteak = collision.gameObject.GetComponent<SteakController>();
             if (currentSteak != null && isPanHot)
             {
+                if (!_audioSource.isPlaying)
+                {
+                    _audioSource.clip = _fryingSound;
+                    _audioSource.loop = true;
+                    _audioSource.Play();
+                }
                 currentSteak.StartCooking();
             }
         }
@@ -131,6 +143,7 @@ public class StoveController : MonoBehaviour, IHotObject
             {
                 steakController.StopCooking();
                 currentSteak = null;
+                _audioSource.Stop();
             }
         }
 
@@ -156,6 +169,16 @@ public class StoveController : MonoBehaviour, IHotObject
                 {
                     currentSteak.StartCooking();
                 }
+            }
+        }
+
+        if (other.gameObject.CompareTag("WaterSource"))
+        {
+            if (other.GetComponent<MC_FaucetControllerHelper>().isWaterOn() && IsHot())
+            {
+                _audioSource.clip = _waterSound;
+                _audioSource.loop = false;
+                _audioSource.Play();
             }
         }
     }
@@ -185,6 +208,12 @@ public class StoveController : MonoBehaviour, IHotObject
 
                 if (currentSteak != null)
                 {
+                    if (!_audioSource.isPlaying)
+                    {
+                        _audioSource.clip = _fryingSound;
+                        _audioSource.loop = true;
+                        _audioSource.Play();
+                    }
                     currentSteak.StartCooking();
                 }
             }

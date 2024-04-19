@@ -227,15 +227,15 @@ public class SteakController : MonoBehaviour
     public int CalculateScore(CookingStage desiredStage, CookingStage topHalfStage, CookingStage bottomHalfStage)
     {
         Debug.Log("calculating");
-        int score = 100;
+        int score = 50;
 
         // Calculate the score for the top half of the steak
         int topHalfScore = Mathf.Abs((int)desiredStage - (int)topHalfStage);
-        score -= topHalfScore * 10;
+        score -= topHalfScore * 5;
 
         // Calculate the score for the bottom half of the steak
         int bottomHalfScore = Mathf.Abs((int)desiredStage - (int)bottomHalfStage);
-        score -= bottomHalfScore * 10;
+        score -= bottomHalfScore * 5;
 
         return score;
     }

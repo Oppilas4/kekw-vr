@@ -7,6 +7,7 @@ public class FlameController : MonoBehaviour, IDial
 {
     public bool isOn = false;
     [SerializeField] ParticleSystem flameParticles;
+    public AudioSource _audioSource;
 
     void Start()
     {
@@ -25,6 +26,15 @@ public class FlameController : MonoBehaviour, IDial
         // Enable or disable the particle system based on whether the stove is on
         var emission = flameParticles.emission;
         emission.enabled = isOn;
+
+        if (isOn)
+        {
+            _audioSource.Play();
+        }
+        else
+        {
+            _audioSource.Stop();
+        }
     }
 
     public bool GetIsOn()

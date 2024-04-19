@@ -16,10 +16,15 @@ public class MC_tongsController : MonoBehaviour
     private XRGrabInteractable grabInteractor => GetComponent<XRGrabInteractable>();
     private bool isGrabbed = false;
 
+    private AudioSource _audioSource;
+
+    private InteractionLayerMask originalInteractionLayers;
+
     void OnEnable()
     {
         grabInteractor.selectEntered.AddListener(OnGrabStart);
         grabInteractor.selectExited.AddListener(OnGrabEnd);
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void OnDisable()
@@ -89,6 +94,13 @@ public class MC_tongsController : MonoBehaviour
             {
                 // Set the "Close" parameter of the Animator based on the trigger input
                 tongsAnimator.SetFloat("Close", triggerAmount);
+
+                // Check if the tongs are being pressed together without holding an object
+                if (triggerAmount > 0.5f && grabbedObject == null)
+                {
+                    // Play the audio source
+                    _audioSource.Play();
+                }
             }
 
             // Check for grabbing objects
@@ -114,6 +126,12 @@ public class MC_tongsController : MonoBehaviour
                 XRGrabInteractable interactable = hit.collider.GetComponent<XRGrabInteractable>();
                 if (interactable != null)
                 {
+                    // Store the original interaction layer mask
+                    originalInteractionLayers = interactable.interactionLayers;
+
+                    // Change the interaction layer mask to "Nothing"
+                    interactable.interactionLayers = LayerMask.GetMask("Nothing");
+
                     // Grab the interactable using the XRGrabInteractable's Grab method
                     grabbedObject = interactable;
 
@@ -136,6 +154,9 @@ public class MC_tongsController : MonoBehaviour
     {
         if (grabbedObject != null)
         {
+            // Reset the interaction layer mask to its original value
+            grabbedObject.interactionLayers = originalInteractionLayers;
+
             // Reset the parent of the grabbed object.
             grabbedObject.transform.parent = null;
 

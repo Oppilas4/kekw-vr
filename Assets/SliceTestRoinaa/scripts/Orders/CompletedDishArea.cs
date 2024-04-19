@@ -60,7 +60,7 @@ public class CompletedDishArea : MonoBehaviour
     {
         BoxCollider boxCollider = GetComponent<BoxCollider>();
 
-        Vector3 colliderSize = boxCollider.size;
+        Vector3 colliderSize = boxCollider.size /2;
 
         Collider[] colliders = Physics.OverlapBox(transform.position, colliderSize, transform.rotation);
 

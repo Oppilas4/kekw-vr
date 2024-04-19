@@ -58,6 +58,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717364ce3afafcb4b92c6f8668800043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bubbles: {fileID: 0}
+  _foam: {fileID: 0}
+  DecalProjector: {fileID: 0}
+  _audioSource: {fileID: 0}
   delayBeforeParenting: 0.5
 --- !u!1 &1104562974839032866
 GameObject:
@@ -71,6 +75,7 @@ GameObject:
   - component: {fileID: 1104562974839032895}
   - component: {fileID: 1104562974839032864}
   - component: {fileID: 4561034857459884110}
+  - component: {fileID: 6279440703730968020}
   m_Layer: 13
   m_Name: SaladBowl
   m_TagString: Dish
@@ -250,6 +255,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saladBowl: {fileID: 1104562975086598811}
   plateController: {fileID: 1104562974278025808}
+  thresholdSize: 0.05
+  oversizedPieceDeduction: 0.1
+--- !u!65 &6279440703730968020
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104562974839032866}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.28570426, y: 0.1290324, z: 0.24419431}
+  m_Center: {x: 0, y: -0.02399017, z: 0}
 --- !u!1 &1104562975086598815
 GameObject:
   m_ObjectHideFlags: 0
