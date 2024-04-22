@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,5 +15,12 @@ public class Elec_PuzzleCompletitionManager : MonoBehaviour
     IEnumerator WaitTillAllCompleted()
     {
         yield return new WaitUntil(() => Pointz >= 3);
+    }
+    public void RestartAllSpools()
+    {
+        foreach (var Stapler in FindObjectsOfType<Elec_MegaTool>().ToList())
+        {
+            Stapler.ResetWireList();
+        }
     }
 }

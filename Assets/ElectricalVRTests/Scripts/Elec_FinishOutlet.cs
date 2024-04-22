@@ -67,11 +67,13 @@ public class Elec_FinishOutlet : MonoBehaviour
     {
         if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
         {
+            multimeter = other.GetComponent<Elec_Multimeter>();
             multimeter.VoltageMusltimeter = 0;
             multimeter = null;
         }
         else if (other.tag == "StickyMultiMeter")
         {
+            multimeter = other.GetComponent<Elec_MultiStick>().MamaMultimeter;
             multimeter.StickyVoltage = 0;
             multimeter = null;
         }

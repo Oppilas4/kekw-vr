@@ -19,11 +19,12 @@ public class Elec_CatAI : MonoBehaviour
     public bool Slepy = true;
     public float walkPointRange;
     public LayerMask whatIsGround;
+    public InteractionLayerMask InteractionLayerMask;
 
     XRSocketInteractor socketInteractor;
     private void Start()
     {
-        MainCamera = GameObject.Find("Main Camera");
+        MainCamera = Camera.main.gameObject;
         animator = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
         Player = GameObject.Find("XR Origin").GetComponent<Transform>();

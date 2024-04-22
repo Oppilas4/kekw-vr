@@ -17,7 +17,7 @@ public class ElecGridNodEManager : MonoBehaviour
     public int LinesCompleted = 0;
     public int LinesToComplete = 0;
     public bool finished = false;
-    public bool Exploding = false;
+    public bool Exploding = false,BeenCompleted = false;
     Elec_GridNode LastNode;
     private void Start()
     {
@@ -35,7 +35,11 @@ public class ElecGridNodEManager : MonoBehaviour
             Completed.Play();
             Elec_MegaTool Megan = FindObjectOfType<Elec_MegaTool>();
             Megan.ResetWireList();
-            Elec_PuzzleCompletitionManager.Pointz++;
+            if (!BeenCompleted)
+            {
+                BeenCompleted = true;
+                Elec_PuzzleCompletitionManager.Pointz++;
+            }
             Explosives();
         }
     }

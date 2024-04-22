@@ -15,8 +15,10 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
     GameObject Player;
     public GameObject DeathPosition;
     public ParticleSystem LHand, RHand;
+    Elec_Haptics Haptics;
     private void Start()
     {
+        Haptics = GetComponent<Elec_Haptics>();
         SkellyRenderers.Add(GameObject.Find("Bone_mesh.039").GetComponent<Renderer>());
         SkellyRenderers.Add(GameObject.Find("Bone_mesh.019").GetComponent<Renderer>());
         NormalRenderers.Add(GameObject.Find("asdMesh.002").GetComponent<Renderer>());
@@ -36,6 +38,7 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
     }
     IEnumerator FlashSkellyHands()
     {
+        Haptics.SendHaptics(1, 2);
         for (int i = 0; i < HowManyFlashes; i++)
         {
             foreach(Renderer foundRenderer in NormalRenderers)
