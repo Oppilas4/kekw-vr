@@ -205,8 +205,8 @@ MonoBehaviour:
   enemy2Prefab: {fileID: 8685843753021562808, guid: 05361ebd5a73e0448b7aec155a339ddb,
     type: 3}
   teleport: {fileID: 1503501788}
-  totalEnemy1ToSpawn: 5
-  totalEnemy2ToSpawn: 2
+  totalEnemy1ToSpawn: 10
+  totalEnemy2ToSpawn: 10
   allnemies: 0
   enemiesSpawned: 0
   spawnPoints:
@@ -215,8 +215,8 @@ MonoBehaviour:
   - {fileID: 1563868087}
   - {fileID: 1703974201}
   - {fileID: 178689830}
-  timeBetweenSpawns: 1
-  spawnCooldown: 2
+  timeBetweenSpawns: 3
+  spawnCooldown: 7
   enemiesMeleeSpawned: 0
   enemiesRangedSpawned: 0
 --- !u!4 &46336808
@@ -6573,6 +6573,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 307087147278302840, guid: b0e90a3617ef25845ac8d7ab95ac5bb7,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 307087147278302840, guid: b0e90a3617ef25845ac8d7ab95ac5bb7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.592
+      objectReference: {fileID: 0}
+    - target: {fileID: 307087147278302840, guid: b0e90a3617ef25845ac8d7ab95ac5bb7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.838
+      objectReference: {fileID: 0}
+    - target: {fileID: 307087147278302840, guid: b0e90a3617ef25845ac8d7ab95ac5bb7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 307087147278302840, guid: b0e90a3617ef25845ac8d7ab95ac5bb7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 307087147278302840, guid: b0e90a3617ef25845ac8d7ab95ac5bb7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 712317609083595201, guid: b0e90a3617ef25845ac8d7ab95ac5bb7,
         type: 3}
