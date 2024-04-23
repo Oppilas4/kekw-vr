@@ -37,6 +37,7 @@ public class ElecGridNodEManager : MonoBehaviour
             Megan.ResetWireList();
             if (!BeenCompleted)
             {
+                Debug.Log("Points added");
                 BeenCompleted = true;
                 Elec_PuzzleCompletitionManager.Pointz++;
             }

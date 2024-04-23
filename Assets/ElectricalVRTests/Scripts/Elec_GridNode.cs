@@ -272,7 +272,7 @@ public class Elec_GridNode : MonoBehaviour
     }
     public void StartExlosive(int time)
     {
-        StartCoroutine(Explode(time));
+        if(gameObject.activeSelf)StartCoroutine(Explode(time));
     }
     IEnumerator Explode(float time)
     {
