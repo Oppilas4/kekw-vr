@@ -11,7 +11,6 @@ public class TV_EnemyHealth : MonoBehaviour
     {
             if(!hasRemoved)
             {
-                Debug.Log("Kuoli lolers");
                 hasRemoved = true;
                 spawner = FindObjectOfType<Tv_EnemySpawner>();
                 spawner.KillEnemy();
