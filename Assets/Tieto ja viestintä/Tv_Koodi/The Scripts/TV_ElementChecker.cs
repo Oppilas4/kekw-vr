@@ -5,7 +5,8 @@ using UnityEngine;
 public class TV_ElementChecker : MonoBehaviour
 {
     public string elementti1, elementti2;
-    public GameObject waterPrefab, earthPrefab, firePrefab, airPrefab;
+    public GameObject waterPrefab, earthPrefab, firePrefab, airPrefab, dustPrefab, rainPrefab, lavaPrefab, steamPrefab, smokePrefab, mudPrefab;
+    public Transform elementSpawnTransform;
 
     // Start is called before the first frame update
     public Dictionary<string, string> combinationRules = new Dictionary<string, string>()
@@ -81,14 +82,17 @@ public class TV_ElementChecker : MonoBehaviour
             case "Mud":
                 Debug.Log(element);
                 // Spawn Mud prefab
+                Instantiate(airPrefab, transform.position, Quaternion.identity);
                 break;
             case "Steam":
                 Debug.Log(element);
                 // Spawn Steam prefab
+                Instantiate(steamPrefab, transform.position, Quaternion.identity);
                 break;
             case "Rain":
                 Debug.Log(element);
                 // Spawn Rain prefab
+                Instantiate(rainPrefab, transform.position, Quaternion.identity);
                 break;
             case "Lava":
                 Debug.Log(element);
@@ -96,10 +100,12 @@ public class TV_ElementChecker : MonoBehaviour
                 break;
             case "Dust":
                 Debug.Log(element);
+                Instantiate(dustPrefab, transform.position, Quaternion.identity);
                 // Spawn Dust prefab
                 break;
             case "Smoke":
                 Debug.Log(element);
+                Instantiate(smokePrefab, transform.position, Quaternion.identity);
                 // Spawn Smoke prefab
                 break;
             default:
