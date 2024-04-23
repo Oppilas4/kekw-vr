@@ -9,7 +9,6 @@ public class Jami_HihnaV2 : MonoBehaviour
     {
         if (other.CompareTag("Jami_Enemy"))
         {
-            Debug.Log("Colliding");
             Rigidbody rb = other.GetComponent<Rigidbody>();
             if (rb != null)
             {
