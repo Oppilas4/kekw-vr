@@ -23,12 +23,20 @@ public class TV_AnswerCubeSocket : MonoBehaviour
         if (kuutioNumero == 1)
         {
             tarkistus.elementti1 = nykyinenKuutio.koodiNimiKuutiolle;
+            if (tarkistus.activeElement != null)
+            {
+                tarkistus.activeElement.SetActive(false);
+            }
             tarkistus.TestCombination(tarkistus.elementti1, tarkistus.elementti2);
             Debug.Log(nykyinenKuutio.koodiNimiKuutiolle);
         }
         if (kuutioNumero == 2)
         {
             tarkistus.elementti2 = nykyinenKuutio.koodiNimiKuutiolle;
+            if (tarkistus.activeElement != null)
+            {
+                tarkistus.activeElement.SetActive(false);
+            }
             tarkistus.TestCombination(tarkistus.elementti1, tarkistus.elementti2);
             Debug.Log(nykyinenKuutio.koodiNimiKuutiolle);
         }
@@ -40,12 +48,21 @@ public class TV_AnswerCubeSocket : MonoBehaviour
         if (kuutioNumero == 1)
         {
             tarkistus.elementti1 = "";
+            if (tarkistus.activeElement != null)
+            {
+                tarkistus.activeElement.SetActive(false);
+            }
             tarkistus.TestCombination(tarkistus.elementti1, tarkistus.elementti2);
             Debug.Log(nykyinenKuutio.koodiNimiKuutiolle);
         }
         if (kuutioNumero == 2)
         {
             tarkistus.elementti2 = "";
+            if (tarkistus.activeElement != null)
+            {
+                tarkistus.activeElement.SetActive(false);
+            }
+
             tarkistus.TestCombination(tarkistus.elementti1, tarkistus.elementti2);
             Debug.Log(nykyinenKuutio.koodiNimiKuutiolle);
         }
