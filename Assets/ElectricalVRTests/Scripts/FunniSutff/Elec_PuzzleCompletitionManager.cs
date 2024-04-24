@@ -15,6 +15,7 @@ public class Elec_PuzzleCompletitionManager : MonoBehaviour
     IEnumerator WaitTillAllCompleted()
     {
         yield return new WaitUntil(() => Pointz >= 3);
+        OnAllComplete.Invoke();
     }
     public void RestartAllSpools()
     {
