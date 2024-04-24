@@ -25,7 +25,7 @@ public class Tv_CloningMachine : MonoBehaviour
 
     public void CloneObject()
     {
-        if (cloneableObject != null)
+        if (cloneableObject != null && !cloneableObject.CompareTag("tv_pullo") && !cloneableObject.CompareTag("Tv_vastausCube"))
         {
             // Instantiate a clone of the cloneableObject.
             GameObject clonedObject = Instantiate(cloneableObject, outputPlate.position, Quaternion.identity);
