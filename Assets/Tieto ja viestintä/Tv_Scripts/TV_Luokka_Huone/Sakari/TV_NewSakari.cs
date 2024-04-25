@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static Tv_Sakari;
-using UnityEngine.ProBuilder.Shapes;
 
 public class TV_NewSakari : MonoBehaviour
 {
