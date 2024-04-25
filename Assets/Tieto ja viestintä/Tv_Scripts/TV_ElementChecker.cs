@@ -144,7 +144,7 @@ public class TV_ElementChecker : MonoBehaviour
                     activeElement.SetActive(false);
                 }
                 //lavaPrefab.SetActive(true);
-                activeElement = rainPrefab;
+                activeElement = lavaPrefab;
                 activeElement.SetActive(true);
                 break;
             case "Dust":
