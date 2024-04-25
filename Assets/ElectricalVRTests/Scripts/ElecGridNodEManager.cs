@@ -131,6 +131,10 @@ public class ElecGridNodEManager : MonoBehaviour
         {
             finished = false;
             ResetStuff.Invoke();
+            foreach (var Bulb in GetComponentsInChildren<Elec_LightBulb>())
+            {
+                Bulb.BulbDisable();
+            }
             LinesCompleted = 0;
             foreach (Elec_GridNode ourNodes in Spawned_Nodes)
             {

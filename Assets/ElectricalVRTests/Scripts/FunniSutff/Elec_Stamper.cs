@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Elec_Stamper : MonoBehaviour
 {
@@ -8,13 +9,15 @@ public class Elec_Stamper : MonoBehaviour
     public List<GameObject> list;
     public Transform DecalPos;
     public Quaternion DecalRot;
+    XRBaseInteractable interactable;
     void Start()
     {
         body = GetComponent<Rigidbody>();
+        interactable = GetComponent<XRBaseInteractable>();
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (body.velocity.magnitude > 0.5)
+        if (body.velocity.magnitude > 0.25 && interactable.isSelected)
         {
             Stamp(Quaternion.FromToRotation(Vector3.up, collision.GetContact(0).normal) * DecalRot);
         }
