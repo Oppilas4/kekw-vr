@@ -7,14 +7,18 @@ public class TV_JoonasBehaviour : MonoBehaviour
 {
     public Transform sitLocation;
     public Transform whereToGoStand;
+    public AudioClip[] sittingQuotes;
+    public AudioClip standingQuote;
 
     private NavMeshAgent agent;
     private Animator animator;
+    private AudioSource audioSource;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
         Sit();
     }
 
@@ -31,8 +35,14 @@ public class TV_JoonasBehaviour : MonoBehaviour
         animator.SetBool("IsWalking", false);
         animator.SetBool("IsIdle", false);
         animator.SetBool("IsSitting", true);
+        // Play random sitting quote
+        if (sittingQuotes.Length > 0)
+        {
+            int randomIndex = Random.Range(0, sittingQuotes.Length);
+            audioSource.clip = sittingQuotes[randomIndex];
+            audioSource.Play();
+        }
     }
-
 
     public void StartToMove(Transform point)
     {
@@ -54,12 +64,14 @@ public class TV_JoonasBehaviour : MonoBehaviour
                 {
                     Sit();
                 }
-
                 else if (Vector3.Distance(transform.position, whereToGoStand.position) < 0.5f)
                 {
                     animator.SetBool("IsWalking", false);
                     animator.SetBool("IsSitting", false);
                     animator.SetBool("IsIdle", true);
+                    // Play standing quote
+                    audioSource.clip = standingQuote;
+                    audioSource.Play();
                 }
             }
         }
