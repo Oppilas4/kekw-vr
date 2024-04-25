@@ -41,8 +41,6 @@ public class Elec_Tero_AI : MonoBehaviour
     public static Elec_Tero_AI Instance { get { return _instance; } }
 
 
-
-
     public void Awake()
     {
         if (_instance == null) _instance = this;
