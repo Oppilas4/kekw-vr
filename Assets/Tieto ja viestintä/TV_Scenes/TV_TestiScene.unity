@@ -4676,6 +4676,7 @@ GameObject:
   - component: {fileID: 419442015}
   - component: {fileID: 419442014}
   - component: {fileID: 419442013}
+  - component: {fileID: 419442016}
   m_Layer: 0
   m_Name: SakariAngerTrigger
   m_TagString: Untagged
@@ -4707,8 +4708,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 8.195165, y: 2.857619, z: 1.4389799}
-  m_Center: {x: 2.4055858, y: 0.92880976, z: -0.76517403}
+  m_Size: {x: 7.9068623, y: 2.857619, z: 7.6435366}
+  m_Center: {x: 2.2614346, y: 0.92880976, z: -3.8674521}
 --- !u!4 &419442015
 Transform:
   m_ObjectHideFlags: 0
@@ -4724,6 +4725,19 @@ Transform:
   m_Father: {fileID: 1668159426}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &419442016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 419442012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8166641a62d1e4b9c885d5730bc326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sakari: {fileID: 643880671}
 --- !u!1 &439647763
 GameObject:
   m_ObjectHideFlags: 0
@@ -6379,7 +6393,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643880666}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fcc8ca583f5a134da5cde025d6df9aa, type: 3}
   m_Name: 
@@ -6411,7 +6425,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -6452,6 +6466,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.8293165, z: 1}
   m_Center: {x: 0, y: 0.9003867, z: 0}
+--- !u!114 &643880671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643880666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bc45201b983c5f4e965d41403dd16bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottlesToThrow: []
+  currentBottle: {fileID: 0}
+  whereBottleGoesWhenPicked: {fileID: 1946575679}
+  theDoor: {fileID: 1310757042}
+  theDesk: {fileID: 148569982}
+  throwPoint: {fileID: 2130316692}
 --- !u!1001 &654952293
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7325,8 +7357,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1469676652}
   - {fileID: 1528671656}
+  - {fileID: 1469676652}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13886,7 +13918,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1310757041}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.424, y: 0.232, z: -2.357}
+  m_LocalPosition: {x: -1.424, y: -0.676, z: -2.357}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17024,7 +17056,7 @@ PrefabInstance:
     - target: {fileID: 7051063070438733309, guid: 631208b93b2a3f44a80df645a280fbbf,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7051063070438733309, guid: 631208b93b2a3f44a80df645a280fbbf,
         type: 3}
@@ -17310,7 +17342,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d3328da2b80e2d04daea5562a9394289,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d3328da2b80e2d04daea5562a9394289,
         type: 3}
@@ -17330,7 +17362,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d3328da2b80e2d04daea5562a9394289,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.154116
+      value: -4.449
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d3328da2b80e2d04daea5562a9394289,
         type: 3}
@@ -17340,7 +17372,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d3328da2b80e2d04daea5562a9394289,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.835598
+      value: -17.647
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d3328da2b80e2d04daea5562a9394289,
         type: 3}
@@ -17487,10 +17519,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1469676653}
+        m_TargetAssemblyTypeName: TV_SakariThrowObject, Assembly-CSharp
+        m_MethodName: CheckIfInHands
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1469676653}
+        m_TargetAssemblyTypeName: TV_SakariThrowObject, Assembly-CSharp
+        m_MethodName: CheckIfInHands
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_Activated:
     m_PersistentCalls:
       m_Calls: []
@@ -17617,7 +17673,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67ea01e50d61e4d4588cb4f7654df07b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sakari: {fileID: 643880671}
   magicThing: {fileID: 1994054543}
+  isInHands: 0
+  isInSakariHands: 0
 --- !u!4 &1473476469 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 65e7ab6ec0b9c034388712bd0765cabd,
@@ -22395,7 +22454,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1946575679}
   m_Layer: 0
-  m_Name: HAnd Point
+  m_Name: Where Bottle Goes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22409,7 +22468,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1946575678}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.08239669, y: 1.0250069, z: 0.48176676}
+  m_LocalPosition: {x: 0.154, y: 0.695, z: 0.571}
   m_LocalScale: {x: 0.28005654, y: 0.28005654, z: 0.28005654}
   m_ConstrainProportionsScale: 0
   m_Children: []
