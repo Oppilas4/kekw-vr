@@ -7,13 +7,13 @@ public class Elec_PlaySoundOnDrop : MonoBehaviour
     Rigidbody body;
     public AudioClip clip;
     AudioSource audioSource;
-    void Start()
+    void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         body = GetComponent<Rigidbody>();
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (body.velocity.magnitude > 0 && collision.transform.GetComponent<Rigidbody>() == null) audioSource.PlayOneShot(clip);
+        if (body.velocity.magnitude > 0 && collision.gameObject.transform.GetComponent<Rigidbody>() == null && clip != null) audioSource?.PlayOneShot(clip);
     }
 }

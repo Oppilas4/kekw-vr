@@ -13,7 +13,8 @@ public class Elec_Tero_AI : MonoBehaviour
         DEATHBYSCREWDRIVER,
         DEATHBYLIVEWIRES,
         DEATHBYPOWERISON,
-        COFFEE
+        COFFEE,
+        LIGHTBULB
     }
 
     public AudioSource ourAudioSource;
@@ -25,12 +26,15 @@ public class Elec_Tero_AI : MonoBehaviour
     public List<AudioClip> DeathByPowerIsOn;
 
     public List<AudioClip> Coffee;
+    public List<AudioClip> Lightbulb;
+
     public Animator ourAnimator;
     public ParticleSystem Bubbleswhiletalk;
 
     public bool isTalking = false;
     public float DialogueLength = 0.0f;
     private int HowMuchCoffee = 0;
+    private int HowMuchLightbulb = 0;
 
 
     private static Elec_Tero_AI _instance;
@@ -73,6 +77,10 @@ public class Elec_Tero_AI : MonoBehaviour
             case dialoguetype.COFFEE:
                 toSay = Coffee[HowMuchCoffee];
                 HowMuchCoffee = Mathf.Clamp(HowMuchCoffee += 1,0, Coffee.Count-1);
+                break;
+            case dialoguetype.LIGHTBULB:
+                toSay = Lightbulb[HowMuchLightbulb];
+                HowMuchLightbulb = Mathf.Clamp(HowMuchLightbulb += 1, 0, Lightbulb.Count - 1);
                 break;
             default:
                 print("No VoicELine defineedasdlkj");
