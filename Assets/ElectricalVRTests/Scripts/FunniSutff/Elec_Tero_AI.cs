@@ -73,6 +73,7 @@ public class Elec_Tero_AI : MonoBehaviour
                 toSay = DeathByPowerIsOn[Random.Range(0, DeathByPowerIsOn.Count - 1)];
                 break;
             case dialoguetype.COFFEE:
+                print("Kahvi nom nom");
                 toSay = Coffee[HowMuchCoffee];
                 HowMuchCoffee = Mathf.Clamp(HowMuchCoffee += 1,0, Coffee.Count-1);
                 break;

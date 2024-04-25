@@ -5,22 +5,22 @@ using UnityEngine.UIElements;
 
 public class Elec_CofffeeFlakes : MonoBehaviour
 {
-    ParticleSystem CoffeeFlakes;
     bool flaked = false;
     public AudioSource TeroNomNom;
     Rigidbody Rigid;
     public float vel;
+    Elec_KahviFlakesParticles KahviFlakesParticles;
     private void Start()
     {
-        CoffeeFlakes = GetComponentInChildren<ParticleSystem>();
+        KahviFlakesParticles = GetComponentInChildren<Elec_KahviFlakesParticles>();
         Rigid = GetComponent<Rigidbody>();
     }
     void Update()
     {
         if (Vector3.Dot(transform.up, Vector3.down) > 0.75 && !flaked && Rigid.velocity.y < -vel)
         {
-            CoffeeFlakes.Play();
             flaked = true;
+            KahviFlakesParticles.PartIt();
         }
         if (Vector3.Dot(transform.up, Vector3.down) < 0.75 && flaked)
         {
