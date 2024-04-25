@@ -12,11 +12,10 @@ public class Tv_EnemySpawner : MonoBehaviour
     public int enemiesMeleeSpawned = 0;
     public int enemiesRangedSpawned = 0;
     private bool isSpawning = false;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         allnemies = totalEnemy1ToSpawn + totalEnemy2ToSpawn;
         enemiesSpawned = totalEnemy1ToSpawn + totalEnemy2ToSpawn;
         StartCoroutine(SpawnEnemies());
@@ -62,8 +61,14 @@ public class Tv_EnemySpawner : MonoBehaviour
         enemiesSpawned--;
         if (!isSpawning && enemiesSpawned <= 0)
         {
-            audioSource.Play();
+            Invoke("PlayAudio", 1f);
+            
             teleport.SetActive(true);    
         }
+    }
+
+    void PlayAudio()
+    {
+        audioSource.Play();
     }
 }

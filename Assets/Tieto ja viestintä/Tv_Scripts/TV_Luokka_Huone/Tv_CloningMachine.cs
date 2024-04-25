@@ -2,9 +2,17 @@ using UnityEngine;
 
 public class Tv_CloningMachine : MonoBehaviour
 {
+    AudioSource audioSource;
+    public AudioClip cantClone;
+    public AudioClip canClone;
     public Transform outputPlate; // The plate where the cloned object will appear.
     private GameObject cloneableObject = null; // Reference to the object that can be cloned.
 
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         // Check if the trigger collider is triggered by an object.
@@ -32,10 +40,14 @@ public class Tv_CloningMachine : MonoBehaviour
             clonedObject.transform.rotation = outputPlate.rotation;
 
             Debug.Log("Object cloned!");
+            audioSource.clip = canClone;
+            audioSource.Play();
         }
         else
         {
             Debug.Log("No object to clone on the plate.");
+            audioSource.clip = cantClone;
+            audioSource.Play();
         }
     }
 }
