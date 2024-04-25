@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class TV_JoonasBehaviour : MonoBehaviour
 {
+
+    public GameObject buttonActive;
     public Transform sitLocation;
     public Transform whereToGoStand;
     public AudioClip[] sittingQuotes;
@@ -68,6 +70,7 @@ public class TV_JoonasBehaviour : MonoBehaviour
     void Sit()
     {
         sitting = true;
+        buttonActive.SetActive(true);
         transform.position = sitLocation.position;
         transform.rotation = sitLocation.rotation;
         agent.enabled = false;
@@ -102,10 +105,9 @@ public class TV_JoonasBehaviour : MonoBehaviour
                     animator.SetBool("IsWalking", false);
                     animator.SetBool("IsSitting", false);
                     animator.SetBool("IsIdle", true);
+
                     // Play standing quote
-                    audioSource.clip = standingQuote;
-                    audioSource.Play();
-                    Invoke("JoonasReturn", 8f);
+                    StartCoroutine(koikeliMoikeli());
                 }
             }
         }
@@ -122,6 +124,14 @@ public class TV_JoonasBehaviour : MonoBehaviour
         }
     }
 
+
+    IEnumerator koikeliMoikeli()
+    {
+        audioSource.clip = standingQuote;
+        audioSource.Play();
+        yield return new WaitForSeconds(8f);
+        JoonasReturn();
+    }
     void JoonasReturn()
     {
         StartToMove(sitLocation);
