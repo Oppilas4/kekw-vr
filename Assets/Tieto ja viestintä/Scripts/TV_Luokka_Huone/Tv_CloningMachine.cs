@@ -25,16 +25,11 @@ public class Tv_CloningMachine : MonoBehaviour
 
     public void CloneObject()
     {
-        if (cloneableObject != null && !cloneableObject.CompareTag("tv_pullo") && !cloneableObject.CompareTag("Tv_vastausCube"))
+        if (cloneableObject != null && cloneableObject.CompareTag("Tv_CopyableObject"))
         {
-            // Instantiate a clone of the cloneableObject.
             GameObject clonedObject = Instantiate(cloneableObject, outputPlate.position, Quaternion.identity);
-
-            // Set the cloned object's position and rotation to match the output plate.
             clonedObject.transform.position = outputPlate.position;
             clonedObject.transform.rotation = outputPlate.rotation;
-
-            // Optionally, you can also copy other properties or components from the cloneableObject to the cloned object here.
 
             Debug.Log("Object cloned!");
         }

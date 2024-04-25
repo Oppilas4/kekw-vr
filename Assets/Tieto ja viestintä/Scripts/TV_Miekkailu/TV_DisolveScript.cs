@@ -22,14 +22,24 @@ public class TV_DisolveScript : MonoBehaviour
         newlyCreatedDissolveMat.color = color;
 
         Material[] materials = meshRenderer.materials;
+        List<Material> newMaterialsList = new List<Material>();
+
         for (int i = 0; i < materials.Length; i++)
         {
-            materials[i] = newlyCreatedDissolveMat;
+            if (i == 0)
+            {
+                newMaterialsList.Add(newlyCreatedDissolveMat);
+            }
+            else
+            {
+                Destroy(materials[i]); // Remove the material
+            }
         }
-        meshRenderer.materials = materials;
+
+        meshRenderer.material = newlyCreatedDissolveMat; // Assign the new material to the meshRenderer
+
+        meshRenderer.materials = newMaterialsList.ToArray(); // Assign the new materials array to the meshRenderer
     }
-
-
 
     IEnumerator DissolveEnemy()
     {
