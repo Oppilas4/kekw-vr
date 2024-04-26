@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CollisionSound : MonoBehaviour
+public class Tv_collitionSound : MonoBehaviour
 {
     public AudioClip collisionSound; // Sound to play on collision
     private AudioSource audioSource;
