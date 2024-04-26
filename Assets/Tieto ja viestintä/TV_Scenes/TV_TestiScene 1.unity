@@ -3610,7 +3610,7 @@ PrefabInstance:
     - target: {fileID: 869045877564431580, guid: 1577fab331d371446a515ee956144bf1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.301
+      value: -2.47
       objectReference: {fileID: 0}
     - target: {fileID: 869045877564431580, guid: 1577fab331d371446a515ee956144bf1,
         type: 3}
@@ -3620,7 +3620,7 @@ PrefabInstance:
     - target: {fileID: 869045877564431580, guid: 1577fab331d371446a515ee956144bf1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.065000534
+      value: -7.44
       objectReference: {fileID: 0}
     - target: {fileID: 869045877564431580, guid: 1577fab331d371446a515ee956144bf1,
         type: 3}
@@ -4272,7 +4272,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.796, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1894788401}
   m_Father: {fileID: 1337547562}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4792,6 +4793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sakariBehaviour: {fileID: 643880667}
+  canCollect: 1
 --- !u!65 &419442014
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6485,12 +6487,15 @@ MonoBehaviour:
   startPos: {fileID: 148569982}
   player: {fileID: 0}
   speed: 0
+  navMeshAgent: {fileID: 0}
   attachTransformHand: {fileID: 1946575679}
   bottle: {fileID: 0}
+  carryingBottle: 0
   door: {fileID: 1310757042}
   isBottle: 0
   throwTransform: {fileID: 2130316692}
   rotationSpeed: 1
+  currentState: 0
   anim: {fileID: 643880669}
   sakariLookHere: {fileID: 473485902}
 --- !u!195 &643880668
@@ -13452,6 +13457,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1234780070 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f3996b2b856a1d946afda5b3242dea26,
+    type: 3}
+  m_PrefabInstance: {fileID: 1337547561}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1243959065 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2295841225227313860, guid: 5d13beed4e644bd4583300e7d56cdaa1,
@@ -17914,7 +17925,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67ea01e50d61e4d4588cb4f7654df07b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sakari: {fileID: 0}
   magicThing: {fileID: 1994054543}
+  isInHands: 0
+  isInSakariHands: 0
 --- !u!4 &1473476469 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 65e7ab6ec0b9c034388712bd0765cabd,
@@ -18235,7 +18249,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1499404424}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.27730137, y: -1.378, z: -3.73}
+  m_LocalPosition: {x: 0.27730137, y: -1.212, z: -3.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22072,6 +22086,103 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1894668197}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1894788400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1894788401}
+  - component: {fileID: 1894788404}
+  - component: {fileID: 1894788403}
+  - component: {fileID: 1894788402}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1894788401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894788400}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.151, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 305222672}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1894788402
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894788400}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1894788403
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894788400}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1894788404
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894788400}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1912803955
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23092,6 +23203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 243bd4e3baca64a468ba600621be3aa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonActive: {fileID: 1234780070}
   sitLocation: {fileID: 1499404425}
   whereToGoStand: {fileID: 2034448831}
   sittingQuotes:
