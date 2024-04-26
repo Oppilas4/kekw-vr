@@ -2,6 +2,7 @@ using Oculus.Interaction.Surfaces;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Elec_Tero_AI : MonoBehaviour
 {
@@ -15,6 +16,13 @@ public class Elec_Tero_AI : MonoBehaviour
         DEATHBYPOWERISON,
         COFFEE,
         LIGHTBULB
+    }
+    //Kyrylo's stuff
+    public enum DeathKind
+    {
+       DEATHBYSCREWDRIVER,
+       DEATHBYLIVEWIRES,
+       DEATHBYPOWERISON
     }
 
     public AudioSource ourAudioSource;
@@ -35,7 +43,7 @@ public class Elec_Tero_AI : MonoBehaviour
     public float DialogueLength = 0.0f;
     private int HowMuchCoffee = 0;
     private int HowMuchLightbulb = 0;
-
+    DeathKind kindaDed;
 
     private static Elec_Tero_AI _instance;
     public static Elec_Tero_AI Instance { get { return _instance; } }
@@ -43,11 +51,33 @@ public class Elec_Tero_AI : MonoBehaviour
 
     public void Awake()
     {
-        if (_instance == null) _instance = this;
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         else Destroy(this);
+        switch (kindaDed)
+        {
+            case DeathKind.DEATHBYSCREWDRIVER:
+                Say(dialoguetype.DEATHBYSCREWDRIVER); break;
+            case DeathKind.DEATHBYLIVEWIRES:
+                Say(dialoguetype.DEATHBYLIVEWIRES); break;
+            case DeathKind.DEATHBYPOWERISON:
+                Say(dialoguetype.DEATHBYPOWERISON); break;
+            default:
+                Say(dialoguetype.WELCOME);
+                break;
+        }
     }
-
-  
+    private void Start()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if(scene.buildIndex != 5) Destroy(gameObject);
+    }
     public void Say(dialoguetype whatToSay)
     {
         if (isTalking) return;
@@ -73,7 +103,6 @@ public class Elec_Tero_AI : MonoBehaviour
                 toSay = DeathByPowerIsOn[Random.Range(0, DeathByPowerIsOn.Count - 1)];
                 break;
             case dialoguetype.COFFEE:
-                print("Kahvi nom nom");
                 toSay = Coffee[HowMuchCoffee];
                 HowMuchCoffee = Mathf.Clamp(HowMuchCoffee += 1,0, Coffee.Count-1);
                 break;
@@ -82,7 +111,7 @@ public class Elec_Tero_AI : MonoBehaviour
                 HowMuchLightbulb = Mathf.Clamp(HowMuchLightbulb += 1, 0, Lightbulb.Count - 1);
                 break;
             default:
-                print("No VoicELine defineedasdlkj");
+                print("No VoicELine defineedasdlkj"); //Henri's stroke
                 break;
         }
         if (toSay == null) return;
