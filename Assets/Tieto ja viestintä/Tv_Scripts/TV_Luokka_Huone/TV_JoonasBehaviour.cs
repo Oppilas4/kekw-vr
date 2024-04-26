@@ -134,7 +134,7 @@ public class TV_JoonasBehaviour : MonoBehaviour
         hasStartedCoroutine = true;
         audioSource.clip = standingQuote;
         audioSource.Play();
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(9f);
         JoonasReturn();
     }
     void JoonasReturn()

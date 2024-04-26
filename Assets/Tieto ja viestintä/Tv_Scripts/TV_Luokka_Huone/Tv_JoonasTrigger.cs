@@ -2,21 +2,19 @@ using UnityEngine;
 
 public class Tv_JoonasTrigger : MonoBehaviour
 {
+    public TV_CheckIfCompletedRise check;
     public TV_JoonasBehaviour joonas;
-
+    bool hasTalked;
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            joonas.StartToMove(joonas.whereToGoStand);
+            if (!hasTalked && check != null && check.hasTheNumber != 0)
+            {
+                check.Congratulations();
+                hasTalked = true;
+            }
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            joonas.StartToMove(joonas.sitLocation);
-        }
-    }
 }
