@@ -21,6 +21,7 @@ public class Elec_Light_switch : MonoBehaviour
     XRBaseInteractable interactable;
     private void Start()
     {
+        WhichHand = Hand.none;
         interactable = GetComponent<XRBaseInteractable>();
         boxItem = GetComponent<Elec_SandBoxItem>();
         Audio = GetComponent<AudioSource>();
@@ -118,8 +119,8 @@ public class Elec_Light_switch : MonoBehaviour
     }
     public enum Hand
     {
+        none,
         LeftHand,
-        RightHand,
-        none
+        RightHand        
     }
 }

@@ -20,6 +20,7 @@ public class Elec_Tero_AI : MonoBehaviour
     //Kyrylo's stuff
     public enum DeathKind
     {
+       WELCOME,
        DEATHBYSCREWDRIVER,
        DEATHBYLIVEWIRES,
        DEATHBYPOWERISON
@@ -65,7 +66,7 @@ public class Elec_Tero_AI : MonoBehaviour
                 Say(dialoguetype.DEATHBYLIVEWIRES); break;
             case DeathKind.DEATHBYPOWERISON:
                 Say(dialoguetype.DEATHBYPOWERISON); break;
-            default:
+            case DeathKind.WELCOME:
                 Say(dialoguetype.WELCOME);
                 break;
         }

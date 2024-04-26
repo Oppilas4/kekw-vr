@@ -20,7 +20,7 @@ public class Elec_RamiEye : MonoBehaviour
     void Start()
     
     {
-        Animator = GetComponent<Animator>();
+        Animator = GetComponentInChildren<Animator>();
         RamiInteractable = GetComponent<XRBaseInteractable>();
         LookAtWhat = GameObject.Find("Main Camera");
         RamiSocketInteractable.onSelectExited.AddListener(MyLittleDancer);
@@ -38,8 +38,8 @@ public class Elec_RamiEye : MonoBehaviour
 
     void Update()
     {
-        Reye.transform.up = LookAtWhat.transform.position - transform.position;
-        Leye.transform.up = LookAtWhat.transform.position - transform.position;
+        Reye.transform.LookAt(LookAtWhat.transform);
+        Leye.transform.LookAt(LookAtWhat.transform);
         if (RamiInteractable.isSelected)
         {
             var interactor = RamiInteractable.interactorsSelecting[0];
