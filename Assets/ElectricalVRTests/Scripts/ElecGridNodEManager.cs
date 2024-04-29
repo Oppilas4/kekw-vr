@@ -104,7 +104,17 @@ public class ElecGridNodEManager : MonoBehaviour
         SetTheLastNode();
     }
     //26.1 to disable previous neighbour nodes
-   
+    public void PluggingNode(Elec_GridNode toPlug)
+    {
+        if (latestPluggedIn) StartCoroutine(WaitOneFrameToRemoveVoltages(latestPluggedIn));
+        if (PluggedNodes.Contains(toPlug) == false) PluggedNodes.Add(toPlug);
+        latestPluggedIn = toPlug;
+    }
+    IEnumerator WaitOneFrameToRemoveVoltages(Elec_GridNode toUseAsRemoveSource)
+    {
+        yield return null;
+        if (toUseAsRemoveSource != null) toUseAsRemoveSource.RemoveVoltageFromNeighbours();
+    }
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
