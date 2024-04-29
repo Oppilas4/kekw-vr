@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class TV_CheckIfCompletedRise : MonoBehaviour
 {
+    public Tv_JoonasAudioManager audioManager;
     public int hasTheNumber = 0;
     AudioSource audioSource;
+    public AudioClip audioClip;
 
     private void Start()
     {
@@ -21,6 +23,7 @@ public class TV_CheckIfCompletedRise : MonoBehaviour
 
     public void Congratulations()
     {
-        audioSource.Play();
+        audioManager.PlayVoiceline(audioClip);
+        //audioSource.Play();
     }
 }

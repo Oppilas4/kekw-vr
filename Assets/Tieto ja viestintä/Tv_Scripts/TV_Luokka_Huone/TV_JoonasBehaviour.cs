@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class TV_JoonasBehaviour : MonoBehaviour
 {
+    private Tv_JoonasAudioManager audioManager;
     public Transform sitLocation;
     public Transform whereToGoStand;
     public AudioClip[] sittingQuotes;
@@ -24,6 +25,7 @@ public class TV_JoonasBehaviour : MonoBehaviour
 
     void Start()
     {
+        audioManager = GetComponent<Tv_JoonasAudioManager>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
@@ -52,8 +54,10 @@ public class TV_JoonasBehaviour : MonoBehaviour
                 if (sittingQuotesQueue.Count > 0)
                 {
                     // Play the current quote
-                    audioSource.clip = sittingQuotesQueue[currentQuoteIndex];
+                    audioManager.PlayVoiceline(sittingQuotesQueue[currentQuoteIndex]);
+                    /*audioSource.clip = sittingQuotesQueue[currentQuoteIndex];
                     audioSource.Play();
+                    */
                     // Move to the next quote
                     currentQuoteIndex++;
                     if (currentQuoteIndex >= sittingQuotesQueue.Count)
@@ -133,8 +137,10 @@ public class TV_JoonasBehaviour : MonoBehaviour
     IEnumerator koikeliMoikeli()
     {
         hasStartedCoroutine = true;
-        audioSource.clip = standingQuote;
+        audioManager.PlayVoiceline(standingQuote);
+        /*audioSource.clip = standingQuote;
         audioSource.Play();
+        */
         yield return new WaitForSeconds(9f);
         teleportPortal.SetActive(true);
         JoonasReturn();
