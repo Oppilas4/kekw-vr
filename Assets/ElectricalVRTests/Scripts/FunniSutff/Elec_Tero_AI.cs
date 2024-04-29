@@ -57,11 +57,13 @@ public class Elec_Tero_AI : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else Destroy(this);
+        else Destroy(gameObject);
     }
     private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        Say(dialoguetype.WELCOME);
+        print("Harro");
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -79,10 +81,6 @@ public class Elec_Tero_AI : MonoBehaviour
             case DeathKind.DEATHBYPOWERISON:
                 Say(dialoguetype.DEATHBYPOWERISON);
                 print("die PowerIsON");
-                break;
-            case DeathKind.WELCOME:
-                Say(dialoguetype.WELCOME);
-                print("Harro");
                 break;
         }
     }
