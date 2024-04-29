@@ -9,10 +9,13 @@ public class Tv_EnemyMovement : MonoBehaviour
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
-    
+    public bool runAway;
+    public Vector3 walkPoint;
+    bool walkPointSet;
+    public float walkPointRange;
 
     //Patrolling
- 
+
 
     //States
     public float sightRange, attackRange;
@@ -30,6 +33,17 @@ public class Tv_EnemyMovement : MonoBehaviour
             playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
+
+        if(runAway)
+        {
+            Patroling();
+        }
+
+
+        if(!runAway)
+        {
+
+        
             // When player is in sight range stars chaseing player
             if (playerInSightRange && !playerInAttackRange)
             {
@@ -39,9 +53,10 @@ public class Tv_EnemyMovement : MonoBehaviour
             if (playerInSightRange && playerInAttackRange)
             {
                 agent.speed = 0f;
-            }      
+            }
+        }
 
-            
+
     }
 
     // Runs towards player
@@ -50,5 +65,44 @@ public class Tv_EnemyMovement : MonoBehaviour
         agent.speed = 6;
 
         agent.SetDestination(player.position);
+    }
+
+
+    private void Patroling()
+    {
+
+        agent.speed = 3;
+        if (!walkPointSet)
+        {
+            SearchWalkPoint();
+        }
+
+        if (walkPointSet)
+        {
+            agent.SetDestination(walkPoint);
+        }
+
+        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+        if (distanceToWalkPoint.magnitude < 1f)
+        {
+            walkPointSet = false;
+        }
+    }
+
+    private void SearchWalkPoint()
+    {
+        // Generate random points within the walk point range
+        Vector3 randomDirection = Random.insideUnitSphere * walkPointRange;
+        randomDirection += transform.position;
+        NavMeshHit navHit;
+
+        // Check if the random point is on the NavMesh
+        if (NavMesh.SamplePosition(randomDirection, out navHit, walkPointRange, NavMesh.AllAreas))
+        {
+            // If the point is on the NavMesh, set it as the walk point
+            walkPointSet = true;
+            walkPoint = navHit.position;
+        }
     }
 }
