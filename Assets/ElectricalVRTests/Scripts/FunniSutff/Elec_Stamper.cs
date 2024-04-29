@@ -8,7 +8,6 @@ public class Elec_Stamper : MonoBehaviour
     Rigidbody body;
     public List<GameObject> list;
     public Transform DecalPos;
-    public Quaternion DecalRot;
     XRBaseInteractable interactable;
     void Start()
     {
@@ -19,11 +18,11 @@ public class Elec_Stamper : MonoBehaviour
     {
         if (body.velocity.magnitude > 0.25 && interactable.isSelected)
         {
-            Stamp(Quaternion.FromToRotation(Vector3.up, collision.GetContact(0).normal) * DecalRot);
+            Stamp();
         }
     }
-    void Stamp(Quaternion rot)
+    void Stamp()
     {
-        Instantiate(list[Random.Range(0, list.Count)],DecalPos.position,rot);
+        Instantiate(list[Random.Range(0, list.Count)],DecalPos.position,DecalPos.rotation);
     }
 }

@@ -59,7 +59,7 @@ public class Elec_Tero_AI : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else Destroy(this);
+        else Destroy(gameObject);
     }
 
     private void Update()
@@ -82,6 +82,8 @@ public class Elec_Tero_AI : MonoBehaviour
     private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        Say(dialoguetype.WELCOME);
+        print("Harro");
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -89,13 +91,17 @@ public class Elec_Tero_AI : MonoBehaviour
         switch (kindaDed)
         {
             case DeathKind.DEATHBYSCREWDRIVER:
-                Say(dialoguetype.DEATHBYSCREWDRIVER); break;
+                Say(dialoguetype.DEATHBYSCREWDRIVER);
+                print("die Screwdriver");
+                break;
             case DeathKind.DEATHBYLIVEWIRES:
-                Say(dialoguetype.DEATHBYLIVEWIRES); break;
+                Say(dialoguetype.DEATHBYLIVEWIRES);
+                print("die Wire");
+                break;
             case DeathKind.DEATHBYPOWERISON:
-                Say(dialoguetype.DEATHBYPOWERISON); break;
-            case DeathKind.WELCOME:
-                Say(dialoguetype.WELCOME); break;
+                Say(dialoguetype.DEATHBYPOWERISON);
+                print("die PowerIsON");
+                break;
         }
     }
     public void Say(dialoguetype whatToSay)
