@@ -4,10 +4,15 @@ public class TV_EcoloopHihnaMaterial : MonoBehaviour
 {
     public bool usesY;
     public float scrollSpeed = 0.5f;
+    Material material;
+
+    private void Start()
+    {
+        material = GetComponent<Renderer>().material;
+    }
 
     void Update()
     {
-        Material material = GetComponent<Renderer>().material;
         float offset = Time.time * scrollSpeed;
 
         if(usesY)
