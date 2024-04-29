@@ -170,7 +170,6 @@ public class Elec_GridNode : MonoBehaviour
             if (ReceivedVoltagesATM.ContainsKey(ref_interactable.gameObject) == false) ReceivedVoltagesATM.Add(ref_interactable.gameObject, foundIVoltage.Voltage_Send());
             UpdateVoltage(true);
         }
-        ourManager.PluggingNode(this); //26.1 to disable previous neighbour nodes
     }
 
     private void LateUpdate()
