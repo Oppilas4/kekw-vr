@@ -50,6 +50,8 @@ public class Elec_Tero_AI : MonoBehaviour
     public static Elec_Tero_AI Instance { get { return _instance; } }
 
 
+    public float TimerForIdle = 10;
+
     public void Awake()
     {
         if (_instance == null)
@@ -57,11 +59,31 @@ public class Elec_Tero_AI : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else Destroy(this);
+        else Destroy(gameObject);
     }
+
+    private void Update()
+    {
+        if (TimerForIdle > 0) 
+        {
+            TimerForIdle = TimerForIdle - 1 * Time.deltaTime;
+        }
+        else
+        {
+            if (isTalking) TimerForIdle = 15;
+            else
+            {
+                Say(dialoguetype.IDLE);
+                TimerForIdle = Random.Range(10, 20);
+            }
+        }
+    }
+
     private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        Say(dialoguetype.WELCOME);
+        print("Harro");
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -69,13 +91,17 @@ public class Elec_Tero_AI : MonoBehaviour
         switch (kindaDed)
         {
             case DeathKind.DEATHBYSCREWDRIVER:
-                Say(dialoguetype.DEATHBYSCREWDRIVER); break;
+                Say(dialoguetype.DEATHBYSCREWDRIVER);
+                print("die Screwdriver");
+                break;
             case DeathKind.DEATHBYLIVEWIRES:
-                Say(dialoguetype.DEATHBYLIVEWIRES); break;
+                Say(dialoguetype.DEATHBYLIVEWIRES);
+                print("die Wire");
+                break;
             case DeathKind.DEATHBYPOWERISON:
-                Say(dialoguetype.DEATHBYPOWERISON); break;
-            case DeathKind.WELCOME:
-                Say(dialoguetype.WELCOME); break;
+                Say(dialoguetype.DEATHBYPOWERISON);
+                print("die PowerIsON");
+                break;
         }
     }
     public void Say(dialoguetype whatToSay)
