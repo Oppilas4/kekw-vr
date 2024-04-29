@@ -7,7 +7,7 @@ public class TV_EcoloopBelt : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Jami_Enemy"))
+        if (other.CompareTag("TV_BeltObject"))
         {
             Rigidbody rb = other.GetComponent<Rigidbody>();
             if (rb != null)

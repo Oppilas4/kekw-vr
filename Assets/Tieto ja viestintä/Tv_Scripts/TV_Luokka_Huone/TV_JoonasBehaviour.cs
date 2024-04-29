@@ -15,6 +15,7 @@ public class TV_JoonasBehaviour : MonoBehaviour
     private AudioSource audioSource;
 
     [SerializeField] Tv_JoonasActivation activation;
+    [SerializeField] GameObject teleportPortal;
 
     private List<AudioClip> sittingQuotesQueue = new List<AudioClip>();
     private int currentQuoteIndex = 0;
@@ -135,6 +136,7 @@ public class TV_JoonasBehaviour : MonoBehaviour
         audioSource.clip = standingQuote;
         audioSource.Play();
         yield return new WaitForSeconds(9f);
+        teleportPortal.SetActive(true);
         JoonasReturn();
     }
     void JoonasReturn()

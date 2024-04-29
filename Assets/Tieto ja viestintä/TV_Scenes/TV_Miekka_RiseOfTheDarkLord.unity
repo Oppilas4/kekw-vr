@@ -173,7 +173,9 @@ MonoBehaviour:
   spawnCooldown: 7
   enemiesMeleeSpawned: 0
   enemiesRangedSpawned: 0
-  audioSource: {fileID: 1601830585}
+  winAudio: {fileID: 0}
+  spawnSound: {fileID: 0}
+  killSound: {fileID: 0}
 --- !u!4 &46336808
 Transform:
   m_ObjectHideFlags: 0
@@ -243,12 +245,12 @@ GameObject:
   - component: {fileID: 113472907}
   - component: {fileID: 113472906}
   - component: {fileID: 113472905}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: Wall (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &113472904
 Transform:
@@ -492,7 +494,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &287290210
 Transform:
@@ -934,12 +936,12 @@ GameObject:
   - component: {fileID: 406399830}
   - component: {fileID: 406399829}
   - component: {fileID: 406399828}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: Wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &406399827
 Transform:
@@ -967,8 +969,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 38.513004, y: 1, z: 0.99999976}
+  m_Center: {x: -18.756502, y: 0, z: 0}
 --- !u!23 &406399829
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1225,12 +1227,12 @@ GameObject:
   - component: {fileID: 431519902}
   - component: {fileID: 431519901}
   - component: {fileID: 431519900}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: Wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &431519899
 Transform:
@@ -2300,12 +2302,12 @@ GameObject:
   - component: {fileID: 520815868}
   - component: {fileID: 520815867}
   - component: {fileID: 520815866}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &520815865
 Transform:
@@ -2333,8 +2335,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 36.275925, y: 1, z: 0.99999976}
+  m_Center: {x: -17.637962, y: 0, z: 0}
 --- !u!23 &520815867
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4344,12 +4346,12 @@ GameObject:
   - component: {fileID: 867422853}
   - component: {fileID: 867422852}
   - component: {fileID: 867422851}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &867422850
 Transform:
@@ -4377,8 +4379,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 22.461271, y: 1, z: 0.99999976}
+  m_Center: {x: -10.730638, y: 0, z: 1.2658179e-15}
 --- !u!23 &867422852
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4829,6 +4831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   whereToTeleport: {fileID: 1570166464}
+  onlySword: 0
 --- !u!65 &981853017
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5226,12 +5229,12 @@ GameObject:
   - component: {fileID: 1083534847}
   - component: {fileID: 1083534846}
   - component: {fileID: 1083534845}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: Wall (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1083534844
 Transform:
@@ -5259,8 +5262,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 30.444176, y: 1, z: 0.99999976}
+  m_Center: {x: 14.72209, y: 0, z: -1.5126696e-16}
 --- !u!23 &1083534846
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7097,12 +7100,12 @@ GameObject:
   - component: {fileID: 1536207185}
   - component: {fileID: 1536207184}
   - component: {fileID: 1536207183}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: Wall (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1536207182
 Transform:
@@ -8998,12 +9001,12 @@ GameObject:
   - component: {fileID: 1862760529}
   - component: {fileID: 1862760528}
   - component: {fileID: 1862760527}
-  m_Layer: 21
+  m_Layer: 0
   m_Name: Wall (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1862760526
 Transform:

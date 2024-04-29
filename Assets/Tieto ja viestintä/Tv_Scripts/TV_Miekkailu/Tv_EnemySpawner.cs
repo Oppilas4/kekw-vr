@@ -12,7 +12,9 @@ public class Tv_EnemySpawner : MonoBehaviour
     public int enemiesMeleeSpawned = 0;
     public int enemiesRangedSpawned = 0;
     private bool isSpawning = false;
-    public AudioSource audioSource;
+    public AudioSource winAudio;
+    public AudioSource spawnSound;
+    public AudioSource killSound;
 
     void Start()
     {
@@ -32,12 +34,14 @@ public class Tv_EnemySpawner : MonoBehaviour
             if (totalEnemy1ToSpawn > enemiesMeleeSpawned)
             {        
                 Instantiate(enemy1Prefab, spawnPoint.position, spawnPoint.rotation);
+                spawnSound.Play();
                 enemiesMeleeSpawned++;
             }
 
              if (totalEnemy2ToSpawn  > enemiesRangedSpawned)
             {
-                Instantiate(enemy2Prefab, spawnPoint.position, spawnPoint.rotation); 
+                Instantiate(enemy2Prefab, spawnPoint.position, spawnPoint.rotation);
+                spawnSound.Play();
                 enemiesRangedSpawned++;
             }
            
@@ -54,11 +58,11 @@ public class Tv_EnemySpawner : MonoBehaviour
     {
         isSpawning = false;
     }
-
-
     public void KillEnemy()
     {
         enemiesSpawned--;
+        killSound.Play();
+
         if (!isSpawning && enemiesSpawned <= 0)
         {
             Invoke("PlayAudio", 1f);
@@ -69,6 +73,6 @@ public class Tv_EnemySpawner : MonoBehaviour
 
     void PlayAudio()
     {
-        audioSource.Play();
+        winAudio.Play();
     }
 }
