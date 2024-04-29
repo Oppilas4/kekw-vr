@@ -267,7 +267,7 @@ public class Elec_GridNode : MonoBehaviour
     public IEnumerator DisableTempor()
     {
         ourXRSocketInteractor.enabled = false;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         ourXRSocketInteractor.enabled = true;
     }
     public void StartExlosive(int time)
