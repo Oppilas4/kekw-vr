@@ -44,7 +44,7 @@ public class Elec_Tero_AI : MonoBehaviour
     public float DialogueLength = 0.0f;
     private int HowMuchCoffee = 0;
     private int HowMuchLightbulb = 0;
-    DeathKind kindaDed;
+    public DeathKind kindaDed;
 
     private static Elec_Tero_AI _instance;
     public static Elec_Tero_AI Instance { get { return _instance; } }
@@ -58,6 +58,14 @@ public class Elec_Tero_AI : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         else Destroy(this);
+    }
+    private void Start()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if(scene.buildIndex != 5) Destroy(gameObject);
         switch (kindaDed)
         {
             case DeathKind.DEATHBYSCREWDRIVER:
@@ -67,17 +75,8 @@ public class Elec_Tero_AI : MonoBehaviour
             case DeathKind.DEATHBYPOWERISON:
                 Say(dialoguetype.DEATHBYPOWERISON); break;
             case DeathKind.WELCOME:
-                Say(dialoguetype.WELCOME);
-                break;
+                Say(dialoguetype.WELCOME); break;
         }
-    }
-    private void Start()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if(scene.buildIndex != 5) Destroy(gameObject);
     }
     public void Say(dialoguetype whatToSay)
     {

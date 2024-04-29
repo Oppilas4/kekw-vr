@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using static Elec_Tero_AI;
 
 public class Elec_FX_SkeletonFlash : MonoBehaviour
 {
@@ -16,6 +17,14 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
     public GameObject DeathPosition;
     public ParticleSystem LHand, RHand;
     Elec_Haptics Haptics;
+    public DeathKind EnumiWhatDeath;
+    public enum DeathKind
+    {
+        DEATHBYPOWERISON,
+        DEATHBYSCREWDRIVER,
+        DEATHBYLIVEWIRES
+        
+    }
     private void Start()
     {
         Haptics = GetComponent<Elec_Haptics>();
@@ -63,6 +72,15 @@ public class Elec_FX_SkeletonFlash : MonoBehaviour
             }
             yield return null;
             yield return new WaitForSeconds(Mathf.Abs(timeBetweenFlashes));
+        }
+        switch (EnumiWhatDeath)
+        {
+            case DeathKind.DEATHBYPOWERISON:
+                Elec_Tero_AI.Instance.kindaDed = Elec_Tero_AI.DeathKind.DEATHBYPOWERISON; break;
+            case DeathKind.DEATHBYSCREWDRIVER:
+                Elec_Tero_AI.Instance.kindaDed = Elec_Tero_AI.DeathKind.DEATHBYSCREWDRIVER; break;
+            case DeathKind.DEATHBYLIVEWIRES:
+                Elec_Tero_AI.Instance.kindaDed = Elec_Tero_AI.DeathKind.DEATHBYLIVEWIRES; break;
         }
         LHand.Stop();
         RHand.Stop();
