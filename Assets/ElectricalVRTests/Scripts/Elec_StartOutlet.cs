@@ -14,6 +14,7 @@ public class Elec_StartOutlet : MonoBehaviour
     {
         multimeter = GameObject.FindObjectOfType<Elec_Multimeter>();
         ourNode = GetComponent<Elec_GridNode>();
+        ourNode.currentVoltage = ourNode.StartWithVoltage;
     }
     public void OnTriggerStay(Collider other)
     {     
