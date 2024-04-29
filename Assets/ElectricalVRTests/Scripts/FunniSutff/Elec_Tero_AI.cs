@@ -69,13 +69,21 @@ public class Elec_Tero_AI : MonoBehaviour
         switch (kindaDed)
         {
             case DeathKind.DEATHBYSCREWDRIVER:
-                Say(dialoguetype.DEATHBYSCREWDRIVER); break;
+                Say(dialoguetype.DEATHBYSCREWDRIVER);
+                print("die Screwdriver");
+                break;
             case DeathKind.DEATHBYLIVEWIRES:
-                Say(dialoguetype.DEATHBYLIVEWIRES); break;
+                Say(dialoguetype.DEATHBYLIVEWIRES);
+                print("die Wire");
+                break;
             case DeathKind.DEATHBYPOWERISON:
-                Say(dialoguetype.DEATHBYPOWERISON); break;
+                Say(dialoguetype.DEATHBYPOWERISON);
+                print("die PowerIsON");
+                break;
             case DeathKind.WELCOME:
-                Say(dialoguetype.WELCOME); break;
+                Say(dialoguetype.WELCOME);
+                print("Harro");
+                break;
         }
     }
     public void Say(dialoguetype whatToSay)
