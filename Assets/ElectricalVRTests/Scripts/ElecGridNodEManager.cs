@@ -149,6 +149,7 @@ public class ElecGridNodEManager : MonoBehaviour
             {
                 ourNodes.NodesResetting = false;
             }
+            latestPluggedIn = null;
         }
                   
     }
