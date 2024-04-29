@@ -109,7 +109,7 @@ public class Elec_Tero_AI : MonoBehaviour
         if (isTalking) return;
         AudioClip toSay = null;
 
-        ourAnimator.SetFloat(0, Random.Range(0, 2));
+        ourAnimator.SetFloat("Offset", Random.Range(0, 2));
 
         switch(whatToSay)
         {
