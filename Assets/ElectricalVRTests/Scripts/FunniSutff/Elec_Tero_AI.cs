@@ -50,6 +50,8 @@ public class Elec_Tero_AI : MonoBehaviour
     public static Elec_Tero_AI Instance { get { return _instance; } }
 
 
+    public float TimerForIdle = 10;
+
     public void Awake()
     {
         if (_instance == null)
@@ -59,6 +61,24 @@ public class Elec_Tero_AI : MonoBehaviour
         }
         else Destroy(this);
     }
+
+    private void Update()
+    {
+        if (TimerForIdle > 0) 
+        {
+            TimerForIdle = TimerForIdle - 1 * Time.deltaTime;
+        }
+        else
+        {
+            if (isTalking) TimerForIdle = 15;
+            else
+            {
+                Say(dialoguetype.IDLE);
+                TimerForIdle = Random.Range(10, 20);
+            }
+        }
+    }
+
     private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
