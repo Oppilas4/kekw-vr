@@ -9,6 +9,8 @@ public class TV_ElementChecker : MonoBehaviour
     public Transform elementSpawnTransform;
     public GameObject activeElement;
 
+    [SerializeField] GameObject sakariPatsas;
+
     // Start is called before the first frame update
     public Dictionary<string, string> combinationRules = new Dictionary<string, string>()
     {
@@ -19,6 +21,8 @@ public class TV_ElementChecker : MonoBehaviour
         { "EarthAir", "Dust" },
         { "FireAir", "Smoke" }
     };
+
+    List<string> madeCombinations = new List<string>();
 
     // Function to combine elements
     public string CombineElements(string element1, string element2)
@@ -42,7 +46,6 @@ public class TV_ElementChecker : MonoBehaviour
         return combinedElement;
     }
 
-    // Example function to demonstrate combining elements
     public void TestCombination(string element1, string element2)
     {
         string result = CombineElements(element1, element2);
@@ -50,16 +53,18 @@ public class TV_ElementChecker : MonoBehaviour
         {
             Debug.Log("Combined: " + result);
             SpawnElement(result);
+            // Add the combination to the list of made combinations
+            madeCombinations.Add(result);
+            // Check if all specified combinations are made
+            CheckForSakariPatsasActivation();
         }
         else
         {
-            // If no combination is found, spawn single element
             SpawnElement(element1);
             SpawnElement(element2);
         }
     }
 
-    // Spawn element based on combined element or single element
     void SpawnElement(string element)
     {
         switch (element)
@@ -70,9 +75,9 @@ public class TV_ElementChecker : MonoBehaviour
                 {
                     activeElement.SetActive(false);
                 }
-                //waterPrefab.SetActive(true);
                 activeElement = waterPrefab;
                 activeElement.SetActive(true);
+
                 break;
             case "Earth":
                 Debug.Log(element);
@@ -80,7 +85,6 @@ public class TV_ElementChecker : MonoBehaviour
                 {
                     activeElement.SetActive(false);
                 }
-                // Instantiate(earthPrefab, transform.position, Quaternion.identity);
                 activeElement = earthPrefab;
                 activeElement.SetActive(true);
                 break;
@@ -90,7 +94,6 @@ public class TV_ElementChecker : MonoBehaviour
                 {
                     activeElement.SetActive(false);
                 }
-                //firePrefab.SetActive(true);
                 activeElement = firePrefab;
                 activeElement.SetActive(true);
                 break;
@@ -100,7 +103,6 @@ public class TV_ElementChecker : MonoBehaviour
                 {
                     activeElement.SetActive(false);
                 }
-                //airPrefab.SetActive(true);
                 activeElement = airPrefab;
                 activeElement.SetActive(true);
                 break;
@@ -110,8 +112,6 @@ public class TV_ElementChecker : MonoBehaviour
                 {
                     activeElement.SetActive(false);
                 }
-                // Spawn Mud prefab
-                //mudPrefab.SetActive(true);
                 activeElement = mudPrefab;
                 activeElement.SetActive(true);
                 break;
@@ -121,8 +121,6 @@ public class TV_ElementChecker : MonoBehaviour
                     activeElement.SetActive(false);
                 }
                 Debug.Log(element);
-                // Spawn Steam prefab
-                //steamPrefab.SetActive(true);
                 activeElement = steamPrefab;
                 activeElement.SetActive(true);
                 break;
@@ -132,8 +130,6 @@ public class TV_ElementChecker : MonoBehaviour
                 {
                     activeElement.SetActive(false);
                 }
-                // Spawn Rain prefab
-                //rainPrefab.SetActive(true);
                 activeElement = rainPrefab;
                 activeElement.SetActive(true);
                 break;
@@ -143,7 +139,6 @@ public class TV_ElementChecker : MonoBehaviour
                 {
                     activeElement.SetActive(false);
                 }
-                //lavaPrefab.SetActive(true);
                 activeElement = lavaPrefab;
                 activeElement.SetActive(true);
                 break;
@@ -153,8 +148,6 @@ public class TV_ElementChecker : MonoBehaviour
                 {
                     activeElement.SetActive(false);
                 }
-                //dustPrefab.SetActive(true);
-                // Spawn Dust prefab
                 activeElement = dustPrefab;
                 activeElement.SetActive(true);
                 break;
@@ -164,14 +157,35 @@ public class TV_ElementChecker : MonoBehaviour
                 {
                     activeElement.SetActive(false);
                 }
-                //smokePrefab.SetActive(true);
-                // Spawn Smoke prefab
                 activeElement = smokePrefab;
                 activeElement.SetActive(true);
                 break;
             default:
                 Debug.LogWarning("No prefab defined for " + element);
                 break;
+        }
+    }
+
+    void CheckForSakariPatsasActivation()
+    {
+        // Define the specified combinations
+        List<string> specifiedCombinations = new List<string>() { "Mud", "Steam", "Rain", "Lava", "Dust", "Smoke" };
+
+        // Check if all specified combinations are present in madeCombinations
+        bool allCombinationsMade = true;
+        foreach (string combination in specifiedCombinations)
+        {
+            if (!madeCombinations.Contains(combination))
+            {
+                allCombinationsMade = false;
+                break;
+            }
+        }
+
+        // Activate sakariPatsas if all combinations are made
+        if (allCombinationsMade)
+        {
+            sakariPatsas.SetActive(true);
         }
     }
 
