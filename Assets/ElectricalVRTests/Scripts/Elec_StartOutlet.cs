@@ -36,14 +36,21 @@ public class Elec_StartOutlet : MonoBehaviour
     public void OnTriggerExit(Collider other)
     {      
          if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
-        {         
-            multimeter.VoltageMusltimeter = 0;
-            multimeter = null;
+        {
+            if (multimeter != null)
+            {
+                multimeter.VoltageMusltimeter = 0;
+                multimeter = null;
+            }
+           
         }
         else if (other.tag == "StickyMultiMeter")
-        {          
-            multimeter.StickyVoltage = 0;
-            multimeter = null;
+        {
+            if (multimeter != null)
+            {
+                multimeter.StickyVoltage = 0;
+                multimeter = null;
+            }
         }
     }
 }
