@@ -1,3 +1,4 @@
+using Kekw.VuoksiBotti;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class TV_NewSakari : MonoBehaviour
 
 
     [SerializeField] Transform whereBottleGoesWhenPicked, theDoor, theDesk, throwPoint;
-
+    [SerializeField] TV_SakariTalk talk;
     private Animator anim;
     private NavMeshAgent navMeshAgent;
     private bool hasBottleEquiped = false;
@@ -134,6 +135,7 @@ public class TV_NewSakari : MonoBehaviour
     void FollowFirstBottle()
     {
         UpdateAnims(false);
+        talk.ActivateBottle();
         GameObject firstBottle = bottlesToThrow[0];
         navMeshAgent.SetDestination(firstBottle.transform.position);
     }

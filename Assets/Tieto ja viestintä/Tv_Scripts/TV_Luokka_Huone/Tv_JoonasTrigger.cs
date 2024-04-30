@@ -5,10 +5,19 @@ public class Tv_JoonasTrigger : MonoBehaviour
     public TV_CheckIfCompletedRise check;
     public TV_JoonasBehaviour joonas;
     bool hasTalked;
+    [SerializeField] AudioSource joonasAudio;
+
+    private void Start()
+    {
+        joonasAudio.dopplerLevel = .1f;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            joonasAudio.dopplerLevel = 1f;
+
             if (!hasTalked && check != null && check.hasTheNumber != 0)
             {
                 check.Congratulations();
@@ -16,5 +25,11 @@ public class Tv_JoonasTrigger : MonoBehaviour
             }
         }
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            joonasAudio.dopplerLevel = .1f;
+        }
+    }
 }

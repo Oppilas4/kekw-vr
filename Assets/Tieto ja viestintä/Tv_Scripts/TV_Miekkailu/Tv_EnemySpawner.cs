@@ -17,6 +17,8 @@ public class Tv_EnemySpawner : MonoBehaviour
     public AudioSource spawnSound;
     public AudioSource killSound;
 
+    [SerializeField] bool enemiesPartrol = false;
+
     void Start()
     {
         allEnemies = totalEnemy1ToSpawn + totalEnemy2ToSpawn;
@@ -43,7 +45,8 @@ public class Tv_EnemySpawner : MonoBehaviour
             }
 
             // Instantiate the selected enemy prefab at the chosen spawn point
-            Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+            GameObject enemyHEHE = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+            enemyHEHE.GetComponent<Tv_EnemyMovement>().runAway = enemiesPartrol;
             spawnSound.Play();
 
             // Wait for the next spawn
