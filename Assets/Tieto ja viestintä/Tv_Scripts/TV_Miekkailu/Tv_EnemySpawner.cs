@@ -4,8 +4,9 @@ using UnityEngine;
 public class Tv_EnemySpawner : MonoBehaviour
 {
     public GameObject enemy1Prefab, enemy2Prefab, teleport;
-    public int totalEnemy1ToSpawn, totalEnemy2ToSpawn, allnemies, enemiesSpawned;
+    public int totalEnemy1ToSpawn, totalEnemy2ToSpawn, allEnemies, enemiesSpawned;
     public Transform[] spawnPoints;
+    
     public float timeBetweenSpawns = 2.0f;
     public float spawnCooldown = 1.0f;
     
@@ -18,7 +19,7 @@ public class Tv_EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        allnemies = totalEnemy1ToSpawn + totalEnemy2ToSpawn;
+        allEnemies = totalEnemy1ToSpawn + totalEnemy2ToSpawn;
         enemiesSpawned = totalEnemy1ToSpawn + totalEnemy2ToSpawn;
         StartCoroutine(SpawnEnemies());
     }
@@ -27,24 +28,25 @@ public class Tv_EnemySpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(spawnCooldown);
 
-        for (int i = 0; i < allnemies; i++)
+        for (int i = 0; i < allEnemies; i++)
         {
-            
+            // Randomly select a spawn point and enemy type
             Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            if (totalEnemy1ToSpawn > enemiesMeleeSpawned)
-            {        
-                Instantiate(enemy1Prefab, spawnPoint.position, spawnPoint.rotation);
-                spawnSound.Play();
-                enemiesMeleeSpawned++;
+            GameObject enemyPrefab;
+            if (Random.Range(0f, 1f) < 0.5f)
+            {
+                enemyPrefab = enemy1Prefab;
+            }
+            else
+            {
+                enemyPrefab = enemy2Prefab;
             }
 
-             if (totalEnemy2ToSpawn  > enemiesRangedSpawned)
-            {
-                Instantiate(enemy2Prefab, spawnPoint.position, spawnPoint.rotation);
-                spawnSound.Play();
-                enemiesRangedSpawned++;
-            }
-           
+            // Instantiate the selected enemy prefab at the chosen spawn point
+            Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+            spawnSound.Play();
+
+            // Wait for the next spawn
             yield return new WaitForSeconds(timeBetweenSpawns);
         }
     }
