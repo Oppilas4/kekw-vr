@@ -37,7 +37,8 @@ namespace Kekw.Interaction
         private void OnTriggerStay(Collider other)
         {
             EdibleType edibleType = other.GetComponentInChildren<EdibleType>();
-            
+            if (edibleType == null)
+                return;
             if(edibleType.ETYPE == EdibleTypes.EAT && _eatingDelay == null)
             {
                 _eatingDelay = StartCoroutine(EatSingleChunkDelay(other));
@@ -62,6 +63,8 @@ namespace Kekw.Interaction
         private void OnTriggerExit(Collider other)
         {
             EdibleType edibleType = other.GetComponentInChildren<EdibleType>();
+            if (edibleType == null)
+                return;
             if (edibleType.ETYPE == EdibleTypes.DRINK)
             {
                 _drinkingAudio.Stop();
