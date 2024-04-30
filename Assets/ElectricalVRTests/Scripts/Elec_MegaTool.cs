@@ -22,9 +22,6 @@ public class Elec_MegaTool : MonoBehaviour
     Elec_ToolWireRenderer CurrentWire;
     bool HasShoten;
     XRBaseInteractor InteractorSelecting;
-    public float shootingRate;
-    public float timer;
-
     private void Awake()
     {
         WireSpoolsSaved = new List<Elec_ToolWireRenderer>(WireSpools);
@@ -43,7 +40,7 @@ public class Elec_MegaTool : MonoBehaviour
     }
     public void MakeWireEnd()
     {
-        if (!HasShoten && Time.time > timer) 
+        if (!HasShoten) 
         {
             WirePiece = Instantiate(EndPrefab, SpawnPos.transform.position, SpawnPos.transform.rotation);
             if (WirePiece.GetComponent<Rigidbody>() != null)
@@ -56,7 +53,6 @@ public class Elec_MegaTool : MonoBehaviour
             WirePiece.GetComponent<Elec_StapleMakeStick>().SpoolItIsON = CurrentWire;
             WirePiece.GetComponent<Elec_StapleMakeStick>().currentVoltage = CurrentWire.Voltage_Send();
             if (!IsFullAuto) HasShoten = true;
-            timer = Time.time + shootingRate;
         }
     }
     private void Update()
