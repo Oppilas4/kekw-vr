@@ -17,7 +17,7 @@ public class ElecGridNodEManager : MonoBehaviour
     public int LinesCompleted = 0;
     public int LinesToComplete = 0;
     public bool finished = false;
-    public bool Exploding = false;
+    public bool Exploding = false,BeenCompleted = false;
     Elec_GridNode LastNode;
     private void Start()
     {
@@ -35,6 +35,11 @@ public class ElecGridNodEManager : MonoBehaviour
             Completed.Play();
             Elec_MegaTool Megan = FindObjectOfType<Elec_MegaTool>();
             Megan.ResetWireList();
+            if (!BeenCompleted)
+            {
+                BeenCompleted = true;
+                Elec_PuzzleCompletitionManager.Pointz++;
+            }
             Explosives();
         }
     }
@@ -126,6 +131,10 @@ public class ElecGridNodEManager : MonoBehaviour
         {
             finished = false;
             ResetStuff.Invoke();
+            foreach (var Bulb in GetComponentsInChildren<Elec_LightBulb>())
+            {
+                Bulb.BulbDisable();
+            }
             LinesCompleted = 0;
             foreach (Elec_GridNode ourNodes in Spawned_Nodes)
             {
@@ -140,6 +149,7 @@ public class ElecGridNodEManager : MonoBehaviour
             {
                 ourNodes.NodesResetting = false;
             }
+            latestPluggedIn = null;
         }
                   
     }

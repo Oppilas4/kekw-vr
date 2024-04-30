@@ -40,7 +40,7 @@ public class Elec_GridNode : MonoBehaviour
         if (ourXRSocketInteractor == null) ourXRSocketInteractor = GetComponent<XRSocketInteractor>();
         currentAvailability = ourXRSocketInteractor.socketActive;
         ChildrenMaterial = GetComponentInChildren<MeshRenderer>();
-        if (!currentAvailability && GetComponent<Elec_FinishOutlet>() == null) ChildrenMaterial.material.color = Color.red;
+        if (!currentAvailability && GetComponent<Elec_FinishOutlet>() == null) ChildrenMaterial.material.color = Color.gray;
         else if(GetComponent<Elec_FinishOutlet>() != null) ChildrenMaterial.material.color = Color.blue;
         Confetti = GetComponent<ParticleSystem>();
     }
@@ -199,7 +199,7 @@ public class Elec_GridNode : MonoBehaviour
         {
             if (GetComponent<Elec_FinishOutlet>()) ChildrenMaterial.material.color = Color.blue;
             else if (state) ChildrenMaterial.material.color = Color.green;
-            else if (!state) ChildrenMaterial.material.color = Color.red;
+            else if (!state) ChildrenMaterial.material.color = Color.gray;
         }
         
 
@@ -267,12 +267,12 @@ public class Elec_GridNode : MonoBehaviour
     public IEnumerator DisableTempor()
     {
         ourXRSocketInteractor.enabled = false;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         ourXRSocketInteractor.enabled = true;
     }
     public void StartExlosive(int time)
     {
-        StartCoroutine(Explode(time));
+        if(gameObject.activeSelf)StartCoroutine(Explode(time));
     }
     IEnumerator Explode(float time)
     {

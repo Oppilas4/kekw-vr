@@ -1,12 +1,12 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class Elec_LightBulb : MonoBehaviour
 {
-    ParticleSystem LightParticle;
     public Material EmissionGreen;
     public Material Glass;
     MeshRenderer LightMesh;
@@ -17,7 +17,6 @@ public class Elec_LightBulb : MonoBehaviour
     bool Broken = false;
     public int TimeToDestroy = 5;
     public ParticleSystem shards;
-    Elec_SandNode ThisNode;
 
     // Start is called before the first frame update
     [System.Obsolete]
@@ -26,46 +25,37 @@ public class Elec_LightBulb : MonoBehaviour
         if (Sandbox)
         {
             XRBaseInteractable Interactable = GetComponent<XRBaseInteractable>();
-            Interactable.onSelectEntered.AddListener(CheckVoltage);
             Interactable.onSelectExited.AddListener(DisableBulbXR);          
         }
         LightMesh = GetComponent<MeshRenderer>();
-        LightParticle = GetComponentInChildren<ParticleSystem>();
-        LightParticle.Stop();
         AudioSource = GetComponent<AudioSource>();
     }
     private void Update()
     {
-        if (ThisNode != null && ThisNode.currentVoltage == NeededVoltage)
-        {
-            BulbEnablee();
-        }
     }
     public void BulbEnablee()
     {
         if(!Broken) 
         {
             LightMesh.material = EmissionGreen;
-            if(!Sandbox) LightParticle.Play();
         }
         
     }
     public void BulbDisable()
     {
-        if(!Broken)
+        if(!Broken && Glass != null && LightMesh != null)
         {
             LightMesh.material = Glass;
-            if(!Sandbox) LightParticle.Stop();
         }
         
     }
     public void CheckVoltage(XRBaseInteractor Interactor)
     {
-        ThisNode = Interactor.GetComponent<Elec_SandNode>();        
+ 
     }
     void DisableBulbXR(XRBaseInteractor Interactor)
     {
-        BulbDisable();
+        if(!Sandbox)  BulbDisable();
     }
     private void OnCollisionEnter(Collision collision)
     {

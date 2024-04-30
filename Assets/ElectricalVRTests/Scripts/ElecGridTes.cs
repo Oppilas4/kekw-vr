@@ -15,8 +15,13 @@ public class ElecGridTes : MonoBehaviour
         originRot = transform.rotation;
         SpawnGrid();
     }
+    [ContextMenu("Respawn")]
     public void SpawnGrid()
     {
+        for(int i = 0;i < transform.childCount;i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
         for( int i = 0; i < gridHEight; i++ ) 
         {
             for( int j = 0; j < gridWidght; j++ ) 

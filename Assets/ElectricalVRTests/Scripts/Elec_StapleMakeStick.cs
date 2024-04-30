@@ -13,7 +13,7 @@ public class Elec_StapleMakeStick : MonoBehaviour, IVoltage
     public void Voltage_Receive(int newVoltage)
     {
         currentVoltage = newVoltage;
-        SpoolItIsON.Voltage_Receive(currentVoltage);
+        SpoolItIsON?.Voltage_Receive(currentVoltage);
     }
     public int Voltage_Send()
     {
@@ -31,10 +31,12 @@ public class Elec_StapleMakeStick : MonoBehaviour, IVoltage
     public IEnumerator DestroyUnused()
     {
         yield return null;
-        KillAfter = KillAfter + SpoolItIsON.WireComponents.Count / 10;
-        yield return new WaitForSeconds(KillAfter);
-        if (gameObject != null) DestroySafely();
-        
+        if(SpoolItIsON != null)
+        {
+            KillAfter = KillAfter + SpoolItIsON.WireComponents.Count / 10;
+            yield return new WaitForSeconds(KillAfter);
+            if (gameObject != null) DestroySafely();
+        }        
     }
     public void DestroySafely()
     {

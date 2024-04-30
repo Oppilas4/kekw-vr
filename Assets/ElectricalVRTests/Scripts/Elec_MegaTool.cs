@@ -22,7 +22,6 @@ public class Elec_MegaTool : MonoBehaviour
     Elec_ToolWireRenderer CurrentWire;
     bool HasShoten;
     XRBaseInteractor InteractorSelecting;
-
     private void Awake()
     {
         WireSpoolsSaved = new List<Elec_ToolWireRenderer>(WireSpools);
@@ -53,7 +52,7 @@ public class Elec_MegaTool : MonoBehaviour
             WirePiece.GetComponent<Elec_StapleMakeStick>().ListID = CurrentWire.WireComponents.Count - 1;
             WirePiece.GetComponent<Elec_StapleMakeStick>().SpoolItIsON = CurrentWire;
             WirePiece.GetComponent<Elec_StapleMakeStick>().currentVoltage = CurrentWire.Voltage_Send();
-            if (!IsFullAuto) HasShoten = true; 
+            if (!IsFullAuto) HasShoten = true;
         }
     }
     private void Update()

@@ -9,7 +9,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Elec_FinishOutlet : MonoBehaviour
 {
-    public UnityEvent OnFinish;
+    public UnityEvent OnFinish,OnEnabled;
     private bool hasFinished = false;
     XRBaseInteractor interactor;
     public Elec_GridNode ourGridNode;
@@ -20,7 +20,6 @@ public class Elec_FinishOutlet : MonoBehaviour
     [Obsolete]
     private void Start()
     {
-        multimeter = GameObject.FindObjectOfType<Elec_Multimeter>();
         ourGridNode= GetComponent<Elec_GridNode>();
         interactor = GetComponent<XRBaseInteractor>();
         interactor.onSelectEntered.AddListener(ReceiveVoltageFromCable);
@@ -52,11 +51,13 @@ public class Elec_FinishOutlet : MonoBehaviour
         if (ourGridNode.ElectricityIsOn)
         {
             if(other.gameObject.GetComponent<Elec_Multimeter>() != null) 
-            {         
+            {
+                multimeter = other.GetComponent<Elec_Multimeter>();
                 multimeter.VoltageMusltimeter = goalVoltage;
             }
             else if (other.tag == "StickyMultiMeter")
             {
+                multimeter = other.GetComponent<Elec_MultiStick>().MamaMultimeter;
                 if (multimeter != null) { multimeter.StickyVoltage = goalVoltage; }
             }
         }
@@ -64,15 +65,19 @@ public class Elec_FinishOutlet : MonoBehaviour
     }
     public void OnTriggerExit(Collider other)
     {
-       if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
+        if (other.gameObject.GetComponent<Elec_Multimeter>() != null)
         {
+            multimeter = other.GetComponent<Elec_Multimeter>();
             multimeter.VoltageMusltimeter = 0;
+            multimeter = null;
         }
         else if (other.tag == "StickyMultiMeter")
         {
+            multimeter = other.GetComponent<Elec_MultiStick>().MamaMultimeter;
             multimeter.StickyVoltage = 0;
+            multimeter = null;
         }
-    }
+    }   
     void ReceiveVoltageFromCable(XRBaseInteractable Staple)
     {
         if (Staple.GetComponent<Elec_StapleMakeStick>().SpoolItIsON.Voltage_Send() == goalVoltage)
@@ -88,5 +93,8 @@ public class Elec_FinishOutlet : MonoBehaviour
     {
         GoalReached = false;
     }
-
+    private void OnEnable()
+    {
+        OnEnabled.Invoke();
+    }
 }
