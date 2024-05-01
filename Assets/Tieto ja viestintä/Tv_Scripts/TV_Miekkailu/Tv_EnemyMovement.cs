@@ -13,8 +13,9 @@ public class Tv_EnemyMovement : MonoBehaviour
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
-
+    private bool isCalculatingWalkPoint = false;
     //Patrolling
+    private bool isFirstTime = true;
 
 
     //States
@@ -70,11 +71,18 @@ public class Tv_EnemyMovement : MonoBehaviour
 
     private void Patroling()
     {
-
         agent.speed = 3;
-        if (!walkPointSet)
+        if (!walkPointSet && !isCalculatingWalkPoint)
         {
-            SearchWalkPoint();
+            if (isFirstTime)
+            {
+                SearchWalkPoint();
+                isFirstTime = false;
+            }
+            else
+            {
+                StartCoroutine(WaitAndSearchWalkPoint());
+            }
         }
 
         if (walkPointSet)
@@ -88,6 +96,14 @@ public class Tv_EnemyMovement : MonoBehaviour
         {
             walkPointSet = false;
         }
+    }
+
+    private IEnumerator WaitAndSearchWalkPoint()
+    {
+        isCalculatingWalkPoint = true;
+        yield return new WaitForSeconds(1f); // Adjust the time to wait here (3 seconds in this case)
+        SearchWalkPoint();
+        isCalculatingWalkPoint = false;
     }
 
     private void SearchWalkPoint()
