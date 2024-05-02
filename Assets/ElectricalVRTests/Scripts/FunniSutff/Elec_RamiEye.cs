@@ -14,8 +14,9 @@ public class Elec_RamiEye : MonoBehaviour
     public XRSocketInteractor RamiSocketInteractable;
     Animator Animator;
     public AudioSource GuitarSource;
-    public AudioClip GuitarLoop,GuitarStart;
-
+    public AudioClip GuitarLoop,GuitarStart,Squeek;
+    public List <AudioClip> FunnySounds;
+    public float RandomSound;
     [Obsolete]
     void Start()
     
@@ -35,7 +36,12 @@ public class Elec_RamiEye : MonoBehaviour
         GuitarSource.Stop();
         GuitarSource.enabled = false;
     }
-
+    public void PlaySound()
+    {
+        RandomSound = UnityEngine.Random.Range(0f, 100f);
+        if (RandomSound < 5f) GuitarSource.PlayOneShot(FunnySounds[UnityEngine.Random.Range(0, FunnySounds.Count)]);
+        else GuitarSource.PlayOneShot(Squeek);
+    }
     void Update()
     {
         Reye.transform.LookAt(LookAtWhat.transform);
