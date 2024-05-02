@@ -27,8 +27,7 @@ public class Tv_OttoBehaviour : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // Play trigger enter clip and stop playing idle clips
-        if (!isTriggerAudioPlaying)
+        if (!isTriggerAudioPlaying && other.CompareTag("Player"))
         {
             isTriggerAudioPlaying = true;
             StopAllCoroutines();
