@@ -9,6 +9,8 @@ public class TV_ElementChecker : MonoBehaviour
     public Transform elementSpawnTransform;
     public GameObject activeElement;
 
+    [SerializeField] TV_SakariVesi vesilol;
+
     [SerializeField] GameObject sakariPatsas;
 
     // Start is called before the first frame update
@@ -63,6 +65,11 @@ public class TV_ElementChecker : MonoBehaviour
             SpawnElement(element1);
             SpawnElement(element2);
         }
+
+        if (!waterPrefab.activeInHierarchy)
+        {
+            vesilol.SetFilling(false);
+        }
     }
 
     void SpawnElement(string element)
@@ -76,6 +83,7 @@ public class TV_ElementChecker : MonoBehaviour
                     activeElement.SetActive(false);
                 }
                 activeElement = waterPrefab;
+                vesilol.SetFilling(true);
                 activeElement.SetActive(true);
 
                 break;

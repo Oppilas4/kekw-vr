@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4877817839653979923
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 5
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tv_LiquidMat
-  m_Shader: {fileID: -6465566751694194690, guid: 2148dd1627624ad42b4bf929af625fa4,
+  m_Name: Shader Graphs_TV_LiquidShader
+  m_Shader: {fileID: -6465566751694194690, guid: 9d0a60124389f594989d333f482645a4,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -48,7 +35,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Fill: 1
+    - _Fill: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _WobbleX: 0
@@ -56,6 +43,19 @@ Material:
     m_Colors:
     - _RemapIn: {r: 0, g: 1, b: 0, a: 0}
     - _RemapOut: {r: -0.172, g: 0.11, b: 0, a: 0}
-    - _SideColor: {r: 0, g: 0.99010324, b: 1, a: 1}
-    - _TopColor: {r: 0, g: 0.13710785, b: 1, a: 1}
+    - _SideColor: {r: 0, g: 0.7221024, b: 1, a: 1}
+    - _TopColor: {r: 0, g: 0.27328658, b: 1, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &3245334659854300351
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
