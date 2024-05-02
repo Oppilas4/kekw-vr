@@ -21,9 +21,15 @@ public class Elec_CatAI : MonoBehaviour
     public LayerMask whatIsGround;
     public InteractionLayerMask InteractionLayerMask;
 
+    public List<AudioClip> Meows;
+    public List<AudioClip> AngyMeow;
+    public AudioSource AudioSource;
+    public AudioSource Purr;
+
     XRSocketInteractor socketInteractor;
     private void Start()
     {
+        AudioSource = GetComponent<AudioSource>();
         MainCamera = Camera.main.gameObject;
         animator = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -32,10 +38,12 @@ public class Elec_CatAI : MonoBehaviour
         socketInteractor = GetComponentInChildren<XRSocketInteractor>();
         socketInteractor.selectEntered.AddListener(GoodSir);
     }
+    //It works so idc how much "if" it uses;
     private void Update()
     {
         if(Vector3.Distance(GoTo.transform.position,transform.position ) < 2)Destroy(gameObject);
         Speed = agent.velocity.magnitude;
+        if(Speed < 1 && !AudioSource.isPlaying ) AudioSource.Play();
         animator.SetFloat("Speed",Speed);    
         if (Slepy && Vector3.Distance(Player.position, transform.position) < 4)
         {
@@ -49,10 +57,10 @@ public class Elec_CatAI : MonoBehaviour
             }
             else if (!FelineIncstinctON)
             {
+                animator.SetBool("CatchBool", false);
                 agent.speed = 1.0f;
                 agent.stoppingDistance = 2f;
-                agent.SetDestination(Player.position);
-                animator.SetBool("CatchBool", false);
+                agent.SetDestination(Player.position);                
             }
             else if (FelineIncstinctON)
             {
@@ -64,8 +72,11 @@ public class Elec_CatAI : MonoBehaviour
                     animator.SetBool("CatchBool", true);
                 }
             }
-        }
-       
+        }      
+    }
+    public void PlayAngyMew()
+    {
+        AudioSource.PlayOneShot(AngyMeow[Random.Range(0, 2)]);
     }
     void GoodSir(SelectEnterEventArgs pp)
     {
@@ -86,24 +97,17 @@ public class Elec_CatAI : MonoBehaviour
         {
             agent.SetDestination(walkPoint);
 
-        }
-           
-       
+        }                
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
             walkPointSet = false;
     }
     private void SearchWalkPoint()
     {
         StartCoroutine(DontGetStuck());
-        //Calculate random point in range
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
-
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
         if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
             walkPointSet = true;
     }
@@ -115,13 +119,13 @@ public class Elec_CatAI : MonoBehaviour
             yield return new WaitForSeconds(5);
             walkPointSet = false;
             RoutineGoing = false;
-        }
-       
+        }       
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "ShredEye")
         {
+            AudioSource.PlayOneShot(AngyMeow[Random.Range(0, 2)]);
             animator.SetTrigger("RamiOn");
             other.GetComponent<XRBaseInteractable>().enabled = false;
             other.gameObject.transform.parent = RamiPos.transform;

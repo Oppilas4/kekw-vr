@@ -30,6 +30,7 @@ public class Elec_LaserPointer : MonoBehaviour
         }
         else if(!lineRenderer.enabled) 
         {
+            Kissa.PlayAngyMew();
             Kissa.FelineIncstinctON = true;
             lineRenderer.enabled = true;
             Point.SetActive(true);
