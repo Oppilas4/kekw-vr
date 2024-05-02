@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Elec_WireSpawner : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject WirePrefab;
     void Start()
     {
         
     }
-
-    // Update is called once per frame
-    void Update()
+    [ContextMenu("SpawnWire")]
+    public void SpawnWire()
     {
-        
+        Instantiate(WirePrefab,transform.position,transform.rotation);
     }
 }
