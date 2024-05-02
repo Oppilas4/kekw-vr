@@ -10,7 +10,7 @@ public class TV_NewSakari : MonoBehaviour
     public GameObject currentBottle;
 
 
-    [SerializeField] Transform whereBottleGoesWhenPicked, theDoor, theDesk, throwPoint;
+    [SerializeField] Transform whereBottleGoesWhenPicked, theDoor, theDesk, throwPoint, sakariLookHere;
     [SerializeField] TV_SakariTalk talk;
     private Animator anim;
     private NavMeshAgent navMeshAgent;
@@ -83,7 +83,6 @@ public class TV_NewSakari : MonoBehaviour
     {
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            Debug.Log("Reached the Door");
             isGoingToThrow = true;
         }
     }
@@ -92,15 +91,20 @@ public class TV_NewSakari : MonoBehaviour
     {
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            Debug.Log("Reached the Desk");
+            Debug.Log("Desk");
             UpdateAnims(true);
             hasThrow = false;
+            Vector3 directionToDesk = sakariLookHere.position - transform.position;
+            directionToDesk.y = 0f; // Ignore y-axis
+
+            // Rotate smoothly towards the desk
+            Quaternion targetRotation = Quaternion.LookRotation(directionToDesk);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0f, targetRotation.eulerAngles.y, 0f), Time.deltaTime * 100f);
         }
     }
 
     IEnumerator StartToTrowh()
     {
-        Debug.Log("Started To Threw");
         UpdateAnims(true);
         yield return new WaitForSeconds(1f); // Wait for 1 second
         if (!hasThrow)
@@ -115,7 +119,6 @@ public class TV_NewSakari : MonoBehaviour
     void Throw()
     {
         hasThrow = true;
-        Debug.Log("Threw");
         Rigidbody rb = currentBottle.GetComponent<Rigidbody>();
         TV_SakariThrowObject throws = currentBottle.GetComponent<TV_SakariThrowObject>();
         throws.ShowTheMagic(false);

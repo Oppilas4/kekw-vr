@@ -9,14 +9,14 @@ public class Tv_JoonasTrigger : MonoBehaviour
 
     private void Start()
     {
-        joonasAudio.dopplerLevel = .1f;
+        joonasAudio.volume = .1f;
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            joonasAudio.dopplerLevel = 1f;
+            joonasAudio.volume = 1f;
 
             if (!hasTalked && check != null && check.hasTheNumber != 0)
             {
@@ -29,7 +29,7 @@ public class Tv_JoonasTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            joonasAudio.dopplerLevel = .1f;
+            joonasAudio.volume = .1f;
         }
     }
 }
