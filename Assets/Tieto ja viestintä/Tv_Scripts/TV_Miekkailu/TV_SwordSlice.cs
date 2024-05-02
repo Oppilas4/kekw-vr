@@ -11,9 +11,8 @@ public class TV_SwordSlice : MonoBehaviour
     public Transform startSlicePoint;
     public Transform endSlicePoint;
     public VelocityEstimator velocityEstimator;
-    public Material dissolveMat;
+    public Material errorDissolveMat, warningDissolve;
     public LayerMask layer;
-    Color color;
 
     public float knockback = 30;
 
@@ -32,8 +31,6 @@ public class TV_SwordSlice : MonoBehaviour
                     TV_EnemyHealth healt = target.GetComponent<TV_EnemyHealth>();
                     healt.TakeDamage();
                 }
-                TV_DisolveScript dissolve = target.GetComponent<TV_DisolveScript>();
-                color = dissolve.color;
                 Slice(target);
             }
         }
@@ -46,24 +43,33 @@ public class TV_SwordSlice : MonoBehaviour
         planeNormal.Normalize();
 
         SlicedHull hull = target.Slice(endSlicePoint.position, planeNormal);
+        TV_DisolveScript disovle = target.GetComponent<TV_DisolveScript>();
+        int id = disovle.ID;
 
         if (hull != null)
         {
             GameObject upperHull = hull.CreateUpperHull(target);
-            SetupSlicedComponent(upperHull);
+            SetupSlicedComponent(upperHull, id);
 
             GameObject lowerHull = hull.CreateLowerHull(target);
-            SetupSlicedComponent(lowerHull);
+            SetupSlicedComponent(lowerHull, id);
 
             Destroy(target);
         }
     }
 
-    public void SetupSlicedComponent(GameObject slicedObject)
+    public void SetupSlicedComponent(GameObject slicedObject, int id)
     {
         TV_DisolveScript matTest = slicedObject.AddComponent<TV_DisolveScript>();
-        matTest.color = color;
-        matTest.oringinalDisolveMat = dissolveMat;
+        if (id == 0)
+        {
+            matTest.oringinalDisolveMat = errorDissolveMat;
+        }
+        else if (id == 1)
+        {
+            matTest.oringinalDisolveMat = warningDissolve;
+        }
+
         matTest.RenewTheInfo();
         matTest.StartDissolve();
         Rigidbody rb = slicedObject.AddComponent<Rigidbody>();

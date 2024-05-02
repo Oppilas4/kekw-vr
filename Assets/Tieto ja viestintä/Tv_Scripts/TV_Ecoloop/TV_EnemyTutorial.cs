@@ -8,6 +8,7 @@ public class TV_EnemyTutorial : MonoBehaviour
     GameObject currentEnemy;
     bool hasStartedToSpawn = false;
     [SerializeField] Transform whereToSpawn;
+    [SerializeField] AudioSource audioSour;
 
     private void Update()
     {
@@ -22,6 +23,7 @@ public class TV_EnemyTutorial : MonoBehaviour
         hasStartedToSpawn = true;
         yield return new WaitForSeconds(delay);
         currentEnemy = Instantiate(enemyToSpawn, whereToSpawn.position, whereToSpawn.rotation);
+        audioSour.Play();
         hasStartedToSpawn = false;
     }
 }
