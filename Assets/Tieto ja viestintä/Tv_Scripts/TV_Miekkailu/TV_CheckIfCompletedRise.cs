@@ -1,17 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TV_CheckIfCompletedRise : MonoBehaviour
 {
     public Tv_JoonasAudioManager audioManager;
     public int hasTheNumber = 0;
-    AudioSource audioSource;
     public AudioClip audioClip;
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         hasTheNumber = PlayerPrefs.GetInt("TV_RiseOfTheDark", 0);
 
         if(hasTheNumber == 0)
@@ -24,6 +20,11 @@ public class TV_CheckIfCompletedRise : MonoBehaviour
     public void Congratulations()
     {
         audioManager.PlayVoiceline(audioClip);
-        //audioSource.Play();
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("TV_RiseOfTheDark", 0);
+        PlayerPrefs.Save();
     }
 }

@@ -7,6 +7,8 @@ public class TV_EcoloopButton : MonoBehaviour
     [SerializeField] GameObject[] objectsToActivate;
     [SerializeField] GameObject[] objectsToDeactivate;
 
+    [SerializeField] AudioSource audioThingy;
+
     private bool isActivated = false;
 
     private void OnTriggerEnter(Collider other)
@@ -19,7 +21,7 @@ public class TV_EcoloopButton : MonoBehaviour
 
     private void ToggleActivation()
     {
-        // Toggle the activation state
+        audioThingy.Play();
         isActivated = !isActivated;
 
         // Activate or deactivate objects based on the current state

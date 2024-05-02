@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 6052626474255334321}
   - component: {fileID: 8366501718066581371}
   - component: {fileID: 7195166011396284696}
-  - component: {fileID: 7195166011396284703}
-  - component: {fileID: 5064065566838888156}
+  - component: {fileID: 3387673774651772906}
   m_Layer: 13
   m_Name: TV_Ecoloop_Sitruuna_Prefab
   m_TagString: TV_BeltObject
@@ -103,22 +102,8 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!136 &7195166011396284703
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8006050538760335022}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.77273655
-  m_Height: 4.7079706
-  m_Direction: 2
-  m_Center: {x: 0.12173408, y: -9.403795e-15, z: 2.289419}
---- !u!64 &5064065566838888156
-MeshCollider:
+--- !u!65 &3387673774651772906
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -127,7 +112,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2124705421725058983, guid: 6cd219a9f37a8524ab228342d560dace, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 2.087605, y: 2.0876052, z: 4.707971}
+  m_Center: {x: 0.000000059604645, y: 0, z: 2.2894194}

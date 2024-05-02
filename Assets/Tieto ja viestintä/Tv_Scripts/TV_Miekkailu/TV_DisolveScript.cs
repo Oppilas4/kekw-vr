@@ -9,6 +9,8 @@ public class TV_DisolveScript : MonoBehaviour
     public Material newlyCreatedDissolveMat;
     public MeshRenderer meshRenderer;
 
+    public int ID = 0;
+
 
     public void StartDissolve()
     {

@@ -21,7 +21,7 @@ public class TV_SakariTalk : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(15f); // Wait for 15 seconds
+            yield return new WaitForSeconds(20f); // Wait for 15 seconds
             if (!isPlayingSpecialClip)
             {
                 // Play a random idle clip
