@@ -715,7 +715,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh48130
+  m_Name: pb_Mesh120164
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5006,6 +5006,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7298808535633094086, guid: 46ffb1bbed23de7449cdc26d71e27172,
+        type: 3}
+      propertyPath: m_AgentTypeID
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7298808535633094106, guid: 46ffb1bbed23de7449cdc26d71e27172,
         type: 3}
       propertyPath: m_RootOrder
@@ -7102,6 +7107,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 90d8fa7e22ad4dd4e8bb3cf5ff1ec0ea, type: 3}
   - {fileID: 8300000, guid: b932788ef1b5f224882ec528d4cb8d0e, type: 3}
   - {fileID: 8300000, guid: 4fd45aae51c11b84ea2392105a27b26b, type: 3}
+  - {fileID: 8300000, guid: 6c25a665f8a4e6849a417d85359c410b, type: 3}
+  - {fileID: 8300000, guid: 5fef41ff4387edd4ea778e9f92131cb2, type: 3}
+  - {fileID: 8300000, guid: ef2bebb36fc5ee14f892e22acd82a904, type: 3}
 --- !u!65 &919132148560778271
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7262,11 +7270,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1114350022607860536, guid: 9bc280dbdeadb484b935bedb9d6223c5,
         type: 3}
+      propertyPath: m_UseDynamicAttach
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1114350022607860536, guid: 9bc280dbdeadb484b935bedb9d6223c5,
+        type: 3}
       propertyPath: m_InteractionManager
       value: 
-      objectReference: {fileID: 7783266926830105768}
+      objectReference: {fileID: 0}
+    - target: {fileID: 1114350022607860536, guid: 9bc280dbdeadb484b935bedb9d6223c5,
+        type: 3}
+      propertyPath: m_Colliders.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1114350022607860536, guid: 9bc280dbdeadb484b935bedb9d6223c5,
+        type: 3}
+      propertyPath: m_Colliders.Array.data[0]
+      value: 
+      objectReference: {fileID: 1114350024338489071}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bc280dbdeadb484b935bedb9d6223c5, type: 3}
+--- !u!65 &1114350024338489071 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 1114350022607860534, guid: 9bc280dbdeadb484b935bedb9d6223c5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1114350024338489070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1190489817244689543
 PrefabInstance:
   m_ObjectHideFlags: 0
