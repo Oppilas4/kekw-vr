@@ -15,15 +15,11 @@ public class TV_SakariVesi : MonoBehaviour
     {
         if (isFilling)
         {
-            Debug.Log("Hsaodasä");
-            // If filling is true, increase fill
             currentFill += fillSpeed * Time.deltaTime;
             currentFill = Mathf.Clamp01(currentFill); // Clamp between 0 and 1
         }
         else
         {
-            Debug.Log("Hyvä");
-            // If filling is false, decrease fill
             currentFill -= decreaseSpeed * Time.deltaTime;
             currentFill = Mathf.Clamp01(currentFill); // Clamp between 0 and 1
         }
