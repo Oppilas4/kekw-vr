@@ -35,7 +35,8 @@ public class Elec_Televisio : MonoBehaviour
     {
         if (!brokey)
         {
-            player.enabled = false;
+            player.clip = null;
+            player.isLooping = false;
             PluggedIn = false;
         }
     }
