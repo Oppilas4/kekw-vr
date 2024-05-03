@@ -135,6 +135,7 @@ public class Elec_CatAI : MonoBehaviour
             other.GetComponent<Rigidbody>().isKinematic = true;
             other.GetComponentInChildren<Animator>().SetTrigger("Ridin");           
             RamiOn = true;
+            socketInteractor.enabled = false ;
         }
     }
 }
