@@ -75,7 +75,7 @@ public class Elec_Tero_AI : MonoBehaviour
             else
             {
                 Say(dialoguetype.IDLE);
-                TimerForIdle = Random.Range(10, 20);
+                TimerForIdle = Random.Range(30, 50);
             }
         }
     }

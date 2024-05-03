@@ -5,6 +5,7 @@ using UnityEngine;
 public class Elec_WireSpawner : MonoBehaviour
 {
     public GameObject WirePrefab;
+    public Transform WirePos;
     void Start()
     {
         
@@ -12,6 +13,6 @@ public class Elec_WireSpawner : MonoBehaviour
     [ContextMenu("SpawnWire")]
     public void SpawnWire()
     {
-        Instantiate(WirePrefab,transform.position,transform.rotation);
+        Instantiate(WirePrefab,WirePos.position,WirePos.rotation);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.XR.Interaction.Toolkit;
+using static Elec_Tero_AI;
 
 public class Elec_CatAI : MonoBehaviour
 {
@@ -27,6 +28,9 @@ public class Elec_CatAI : MonoBehaviour
     public AudioSource Purr;
 
     XRSocketInteractor socketInteractor;
+
+    //Meowing Stuff
+    public float TimerForIdle = 10;
     private void Start()
     {
         AudioSource = GetComponent<AudioSource>();
@@ -71,6 +75,16 @@ public class Elec_CatAI : MonoBehaviour
                 {
                     animator.SetBool("CatchBool", true);
                 }
+            }
+            //MeowingStuff
+            if (TimerForIdle > 0)
+            {
+                TimerForIdle = TimerForIdle - 1 * Time.deltaTime;
+            }
+            else
+            {
+                    AudioSource.PlayOneShot(Meows[Random.Range(0, Meows.Count)]);
+                    TimerForIdle = Random.Range(10, 30);
             }
         }      
     }
@@ -132,9 +146,11 @@ public class Elec_CatAI : MonoBehaviour
             other.gameObject.transform.position = RamiPos.transform.position;
             other.gameObject.transform.rotation = RamiPos.transform.rotation;
             other.enabled = false;
+            other.GetComponentInChildren<XRBaseInteractor>().enabled = false;
             other.GetComponent<Rigidbody>().isKinematic = true;
-            other.GetComponent<Animator>().SetTrigger("Ridin");           
+            other.GetComponentInChildren<Animator>().SetTrigger("Ridin");           
             RamiOn = true;
+            socketInteractor.enabled = false ;
         }
     }
 }

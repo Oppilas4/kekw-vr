@@ -20,8 +20,7 @@ public class Elec_SithShocker : MonoBehaviour
         interactable = GetComponent<XRBaseInteractable>();
         interactable.onSelectEntered.AddListener(TookTheWireEnd);
         interactable.onSelectExited.AddListener(LmaoYouDied);
-        LeftHand = GameObject.FindGameObjectWithTag("LeftHand").GetComponent<XRDirectInteractor>();
-        RightHand = GameObject.FindGameObjectWithTag("RightHand").GetComponent<XRDirectInteractor>();
+        
         SithParticles = GameObject.Find("SithLightning").GetComponent<ParticleSystem>();
         Bob = GameObject.FindObjectOfType<Elec_DeathItself>();
     }
@@ -37,6 +36,8 @@ public class Elec_SithShocker : MonoBehaviour
     {
         SithParticles.Play();
         Shocking = true;
+        LeftHand = GameObject.FindGameObjectWithTag("LeftHand")?.GetComponent<XRDirectInteractor>();
+        RightHand = GameObject.FindGameObjectWithTag("RightHand")?.GetComponent<XRDirectInteractor>();
         if (interactor.GetComponent<XRDirectInteractor>() != null)
         {
             if (interactor.tag == "LeftHand")
