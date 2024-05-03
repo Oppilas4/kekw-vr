@@ -16,6 +16,7 @@ public class Tv_EnemySpawner : MonoBehaviour
     public AudioSource winAudio;
     public AudioSource spawnSound;
     public AudioSource killSound;
+    public AudioSource Music;
 
     [SerializeField] bool enemiesPartrol = false;
 
@@ -79,5 +80,6 @@ public class Tv_EnemySpawner : MonoBehaviour
     void PlayAudio()
     {
         winAudio.Play();
+        Music.volume = 0.04f;
     }
 }
