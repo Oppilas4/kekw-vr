@@ -15,7 +15,6 @@ public class Elec_LostNFound : MonoBehaviour
         else
         {
             other.transform.position = PlayerSpawn.position;
-            print("player triggered");
         }
     }
 }

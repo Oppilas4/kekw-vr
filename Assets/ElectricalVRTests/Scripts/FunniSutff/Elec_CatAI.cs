@@ -133,7 +133,7 @@ public class Elec_CatAI : MonoBehaviour
             other.gameObject.transform.rotation = RamiPos.transform.rotation;
             other.enabled = false;
             other.GetComponent<Rigidbody>().isKinematic = true;
-            other.GetComponent<Animator>().SetTrigger("Ridin");           
+            other.GetComponentInChildren<Animator>().SetTrigger("Ridin");           
             RamiOn = true;
         }
     }
