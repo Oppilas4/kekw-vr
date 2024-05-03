@@ -132,6 +132,7 @@ public class Elec_CatAI : MonoBehaviour
             other.gameObject.transform.position = RamiPos.transform.position;
             other.gameObject.transform.rotation = RamiPos.transform.rotation;
             other.enabled = false;
+            other.GetComponentInChildren<XRBaseInteractor>().enabled = false;
             other.GetComponent<Rigidbody>().isKinematic = true;
             other.GetComponentInChildren<Animator>().SetTrigger("Ridin");           
             RamiOn = true;
