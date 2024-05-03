@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Elec_Tero_AI : MonoBehaviour
 {
@@ -87,7 +88,14 @@ public class Elec_Tero_AI : MonoBehaviour
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(scene.buildIndex != 5) Destroy(gameObject);
+        if (scene.buildIndex != 5)
+        {
+            Destroy(gameObject);
+            foreach (XRBaseInteractor interactor in FindObjectsOfType<XRBaseInteractor>())
+            {
+                interactor.interactionManager = null;
+            }
+        }
         switch (kindaDed)
         {
             case DeathKind.DEATHBYSCREWDRIVER:

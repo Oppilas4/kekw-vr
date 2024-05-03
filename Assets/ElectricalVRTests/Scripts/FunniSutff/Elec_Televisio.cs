@@ -8,7 +8,7 @@ public class Elec_Televisio : MonoBehaviour
 {
     VideoPlayer player;
     public List<VideoClip> clipList;
-    public VideoClip Static, NananaNA,Broken;
+    public VideoClip Static,Broken;
     public int channelID = 0;
     public bool PluggedIn = false;
     public float staticShowsFor = 0.1f;
@@ -35,7 +35,7 @@ public class Elec_Televisio : MonoBehaviour
     {
         if (!brokey)
         {
-            player.clip = NananaNA;
+            player.clip = null;
             player.isLooping = false;
             PluggedIn = false;
         }
