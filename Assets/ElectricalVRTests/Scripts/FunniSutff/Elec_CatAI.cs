@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.XR.Interaction.Toolkit;
+using static Elec_Tero_AI;
 
 public class Elec_CatAI : MonoBehaviour
 {
@@ -27,6 +28,9 @@ public class Elec_CatAI : MonoBehaviour
     public AudioSource Purr;
 
     XRSocketInteractor socketInteractor;
+
+    //Meowing Stuff
+    public float TimerForIdle = 10;
     private void Start()
     {
         AudioSource = GetComponent<AudioSource>();
@@ -71,6 +75,16 @@ public class Elec_CatAI : MonoBehaviour
                 {
                     animator.SetBool("CatchBool", true);
                 }
+            }
+            //MeowingStuff
+            if (TimerForIdle > 0)
+            {
+                TimerForIdle = TimerForIdle - 1 * Time.deltaTime;
+            }
+            else
+            {
+                    AudioSource.PlayOneShot(Meows[Random.Range(0, Meows.Count)]);
+                    TimerForIdle = Random.Range(10, 30);
             }
         }      
     }
