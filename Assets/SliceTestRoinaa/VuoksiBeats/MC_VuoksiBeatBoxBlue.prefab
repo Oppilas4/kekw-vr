@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5260287262741596568}
   - component: {fileID: 5260287262741596571}
   - component: {fileID: 5260287262741596570}
+  - component: {fileID: 229466018076267553}
   m_Layer: 19
   m_Name: MC_VuoksiBeatBoxBlue
   m_TagString: VuoksiBeats
@@ -28,15 +29,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5260287262741596573}
-  m_LocalRotation: {x: -0.014440759, y: 0.70695937, z: -0.014440759, w: 0.70695937}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -39.241035, y: 2.4025974, z: 8.973779}
-  m_LocalScale: {x: 14.620091, y: 14.620091, z: 14.620091}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5260287263908823775}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -2.34}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &5260287262741596582
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -128,6 +129,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &229466018076267553
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5260287262741596573}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fab0eb9abe88b4747aa199438883770a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &5260287263908823774
 GameObject:
   m_ObjectHideFlags: 0
