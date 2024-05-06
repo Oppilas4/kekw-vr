@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Elec_SandBoxWire : MonoBehaviour,IVoltage
+public class Elec_SandBoxWire : MonoBehaviour,Elec_IVoltage
 {
     LineRenderer lineRenderer;
     public GameObject End1, End2;

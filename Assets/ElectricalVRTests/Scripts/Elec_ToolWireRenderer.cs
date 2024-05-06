@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Elec_ToolWireRenderer : MonoBehaviour , IVoltage
+public class Elec_ToolWireRenderer : MonoBehaviour , Elec_IVoltage
 {
     public List<GameObject> WireComponents = new List<GameObject>();
     public LineRenderer WireRenderer;

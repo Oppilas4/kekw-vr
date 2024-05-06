@@ -160,12 +160,12 @@ public class Elec_GridNode : MonoBehaviour
         {
             Electricute.Invoke();
         }
-        IVoltage foundIVoltage;
-        if (ref_interactable.gameObject.TryGetComponent<IVoltage>(out foundIVoltage))
+        Elec_IVoltage foundIVoltage;
+        if (ref_interactable.gameObject.TryGetComponent<Elec_IVoltage>(out foundIVoltage))
         {
             if (LockVoltage)
             {
-                ref_interactable.GetComponent<IVoltage>().Voltage_Receive(currentVoltage);    
+                ref_interactable.GetComponent<Elec_IVoltage>().Voltage_Receive(currentVoltage);    
             }       
             if (ReceivedVoltagesATM.ContainsKey(ref_interactable.gameObject) == false) ReceivedVoltagesATM.Add(ref_interactable.gameObject, foundIVoltage.Voltage_Send());
             UpdateVoltage(true);
@@ -181,8 +181,8 @@ public class Elec_GridNode : MonoBehaviour
 
     public void SomethingExits(XRBaseInteractable ref_interactable)
     {
-        IVoltage foundIVoltage;
-        if (ref_interactable.gameObject.TryGetComponent<IVoltage>(out foundIVoltage))
+        Elec_IVoltage foundIVoltage;
+        if (ref_interactable.gameObject.TryGetComponent<Elec_IVoltage>(out foundIVoltage))
         {
             if(ReceivedVoltagesATM.ContainsKey(ref_interactable.gameObject)) ReceivedVoltagesATM.Remove(ref_interactable.gameObject);
             UpdateVoltage(true);

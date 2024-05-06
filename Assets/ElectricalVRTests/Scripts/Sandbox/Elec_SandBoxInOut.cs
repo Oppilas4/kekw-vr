@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class Elec_SandBoxInOut : MonoBehaviour , IVoltage
+public class Elec_SandBoxInOut : MonoBehaviour , Elec_IVoltage
 {
     XRBaseInteractor interactor;
     public InOrOut orOut;
     public Elec_SandBoxItem item;
-    IVoltage connectedEnd;
+    Elec_IVoltage connectedEnd;
     public bool GiveOut = true;
     private void Start()
     {
@@ -35,7 +35,7 @@ public class Elec_SandBoxInOut : MonoBehaviour , IVoltage
     }
     void CheckInOrOut(SelectEnterEventArgs e)
     {
-        connectedEnd = e.interactableObject.transform.GetComponent<IVoltage>(); 
+        connectedEnd = e.interactableObject.transform.GetComponent<Elec_IVoltage>(); 
         switch (orOut)
         {
             case InOrOut.OUT:

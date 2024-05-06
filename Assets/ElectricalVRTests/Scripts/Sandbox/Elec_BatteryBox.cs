@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class Elec_BatteryBox : MonoBehaviour, IVoltage 
+public class Elec_BatteryBox : MonoBehaviour, Elec_IVoltage 
 {
     GameObject battery;
     XRBaseInteractable ThisInteractable;

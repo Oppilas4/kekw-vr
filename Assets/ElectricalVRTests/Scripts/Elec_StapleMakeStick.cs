@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class Elec_StapleMakeStick : MonoBehaviour, IVoltage
+public class Elec_StapleMakeStick : MonoBehaviour, Elec_IVoltage
 {
     public int currentVoltage = 0;
     public int KillAfter = 2;
