@@ -46,8 +46,7 @@ public class Elec_CatAI : MonoBehaviour
     private void Update()
     {
         if(Vector3.Distance(GoTo.transform.position,transform.position ) < 2)Destroy(gameObject);
-        Speed = agent.velocity.magnitude;
-        if(Speed < 1 && !AudioSource.isPlaying ) AudioSource.Play();
+        Speed = agent.velocity.magnitude;     
         animator.SetFloat("Speed",Speed);    
         if (Slepy && Vector3.Distance(Player.position, transform.position) < 4)
         {
@@ -55,6 +54,7 @@ public class Elec_CatAI : MonoBehaviour
         }
         if(agent.enabled && !Slepy) 
         {
+            if (Speed < 1 && !Purr.isPlaying) Purr.Play();
             if (RamiOn)
             {
                 Zoomies();
