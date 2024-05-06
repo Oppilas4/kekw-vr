@@ -84,7 +84,6 @@ public class Elec_Tero_AI : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         Say(dialoguetype.WELCOME);
-        print("Harro");
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {

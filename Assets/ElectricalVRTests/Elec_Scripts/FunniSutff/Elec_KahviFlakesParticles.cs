@@ -11,7 +11,7 @@ public class Elec_KahviFlakesParticles : MonoBehaviour
     }
     public void PartIt()
     {
-        CoffeeSystem.Play();
+        CoffeeSystem.Emit(10);
     }
     private void OnParticleCollision(GameObject other)
     {

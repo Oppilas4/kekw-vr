@@ -66,6 +66,7 @@ public class Elec_LightBulb : MonoBehaviour
             AudioSource.Play();
             shards.Play();
             StartCoroutine(DestroyAfterTime(TimeToDestroy));
+            Elec_Tero_AI.Instance.Say(Elec_Tero_AI.dialoguetype.LIGHTBULB);
         }
     }
     IEnumerator DestroyAfterTime(int time)
