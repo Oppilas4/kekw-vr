@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Elec_SandBoxWireEnd : MonoBehaviour, IVoltage
+public class Elec_SandBoxWireEnd : MonoBehaviour, Elec_IVoltage
 {
     public Elec_SandBoxWire mamaWire;
 
