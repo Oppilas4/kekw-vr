@@ -12,7 +12,7 @@ public class Elec_LostNFound : MonoBehaviour
         {
             other.gameObject.transform.position = Box.position;           
         }
-        else
+        else if(other.CompareTag("Player"))
         {
             other.transform.position = PlayerSpawn.position;
         }
