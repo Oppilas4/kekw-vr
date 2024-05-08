@@ -15,11 +15,18 @@ public class MC_CustomerSpawner : MonoBehaviour
     private int customersServed = 0; // Customers served and left
     private bool gameTimeHasRunOut = false;
     private bool endGameTriggered = false;
+
+    private float elapsedTime;
+    private float targetTime;
+    private float targetHalfTime;
     private void Start()
     {
         orderInteraction = FindAnyObjectByType<OrderInteraction>();
         seatManager = FindAnyObjectByType<MC_SeatManager>();
         StartCoroutine(SpawnCustomers());
+        elapsedTime = Time.time;
+        targetTime = elapsedTime + 300f;
+        targetHalfTime = elapsedTime + halfTimeThreshold;
     }
 
     private void Update()
@@ -35,7 +42,7 @@ public class MC_CustomerSpawner : MonoBehaviour
         // Initial delay before spawning the first customer
         yield return new WaitForSeconds(initialSpawnDelay);
 
-        while (Time.time < halfTimeThreshold)
+        while (Time.time < targetHalfTime)
         {
             SpawnCustomer();
             yield return new WaitForSeconds(timeBetweenCustomers);
@@ -44,13 +51,13 @@ public class MC_CustomerSpawner : MonoBehaviour
         // Halve the time between customers
         timeBetweenCustomers /= 2;
 
-        while (Time.time < 300f)
+        while (Time.time < targetTime)
         {
             SpawnCustomer();
             yield return new WaitForSeconds(timeBetweenCustomers);
         }
 
-        if (Time.time >= 300f && !gameTimeHasRunOut)
+        if (Time.time >= targetTime && !gameTimeHasRunOut)
         {
             gameTimeHasRunOut = true;
         }
