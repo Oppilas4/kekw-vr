@@ -28,23 +28,22 @@ public class Elec_FinishOutlet : MonoBehaviour
 
     private void Update()
     {
-            if (hasFinished == false)
+        if (interactor.interactablesSelected.Count > 0 && interactor.interactablesSelected[0] != null) 
+        {
+            if (!hasFinished && ourGridNode.currentVoltage == goalVoltage && !GoalReached)
             {
-                if (ourGridNode.currentVoltage == goalVoltage && GoalReached)
-                {
-                    OnFinish.Invoke();
-                    hasFinished = true;
-                }
-                else if (GoalReached)
-                {
-                    OnFinish.Invoke();
-                    hasFinished = true;
-                }
+                OnFinish.Invoke();
+                hasFinished = true;
+                GoalReached = true;
+                ourGridNode.ourManager.LinesCompleted++;
             }
-            else
+            else if (ourGridNode.currentVoltage == goalVoltage && !GoalReached)
             {
-                if (ourGridNode.currentVoltage != goalVoltage) hasFinished = false;
-            }   
+                OnFinish.Invoke();
+                GoalReached = true;
+                ourGridNode.ourManager.LinesCompleted++;
+            }
+        }
     }
     public void OnTriggerStay(Collider other)
     {   
@@ -79,12 +78,17 @@ public class Elec_FinishOutlet : MonoBehaviour
         }
     }   
     void ReceiveVoltageFromCable(XRBaseInteractable Staple)
-    {
-            GoalReached = true;
+    {      
             Staple.GetComponent<Elec_StapleMakeStick>().SpoolItIsON.DisableWireSafely();
             LineRenderer temp = Staple.GetComponent<Elec_StapleMakeStick>().SpoolItIsON.GetComponent<LineRenderer>();
             temp.SetPosition(temp.positionCount - 1,interactor.attachTransform.transform.position);
-            ourGridNode.ourManager.LinesCompleted++; 
+        if (!hasFinished && ourGridNode.currentVoltage == goalVoltage && !GoalReached)
+        {
+            OnFinish.Invoke();
+            hasFinished = true;
+            GoalReached = true;
+            ourGridNode.ourManager.LinesCompleted++;
+        }
     }
     void UnconnectedWire(XRBaseInteractable Staple)
     {

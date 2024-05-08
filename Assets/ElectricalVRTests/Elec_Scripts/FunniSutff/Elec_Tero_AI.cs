@@ -87,7 +87,7 @@ public class Elec_Tero_AI : MonoBehaviour
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.buildIndex != 5)
+        if (scene.buildIndex != 5 && gameObject != null)
         {
             Destroy(gameObject);
             foreach (XRBaseInteractor interactor in FindObjectsOfType<XRBaseInteractor>())

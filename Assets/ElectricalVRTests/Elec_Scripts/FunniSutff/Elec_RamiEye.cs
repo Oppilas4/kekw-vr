@@ -55,13 +55,15 @@ public class Elec_RamiEye : MonoBehaviour
                 LeyeScale = Input.GetAxis("XRI_Left_Trigger") + 1;
                 Reye.transform.localScale = new Vector3(ReyeScale,ReyeScale,ReyeScale);
                 Leye.transform.localScale = new Vector3(LeyeScale, LeyeScale, LeyeScale);
+                Animator.Play("Elec_RamiTpose", 0, Input.GetAxis("XRI_Left_Trigger"));
             }
-            if (interactor.transform.gameObject.tag == "RightHand")
+            else if (interactor.transform.gameObject.tag == "RightHand")
             {
                 ReyeScale = Input.GetAxis("XRI_Right_Trigger") + 1;
                 LeyeScale = Input.GetAxis("XRI_Right_Trigger") + 1;
                 Reye.transform.localScale = new Vector3(ReyeScale, ReyeScale, ReyeScale);
                 Leye.transform.localScale = new Vector3(LeyeScale, LeyeScale, LeyeScale);
+                Animator.Play("Elec_RamiTpose", 0, Input.GetAxis("XRI_Right_Trigger"));
             }
         }
     }
