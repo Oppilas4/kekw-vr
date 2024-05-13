@@ -9,12 +9,14 @@ public class MC_AdjustAttachTransform : MonoBehaviour
     public Transform leftHandAttachTransform;
 
     public XRGrabInteractable grabInteractable;
-    private XRSocketInteractor socketInteractor;
+    public XRSocketInteractor socketInteractor;
 
     void Start()
     {
-        socketInteractor = GetComponentInChildren<XRSocketInteractor>();
-
+        if (socketInteractor == null)
+        {
+            socketInteractor = GetComponentInChildren<XRSocketInteractor>();
+        }
         // Subscribe to the OnHoverEntered event
         socketInteractor.onHoverEnter.AddListener(HandleHoverEnter);
         // Subscribe to the OnHoverExited event
