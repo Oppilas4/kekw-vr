@@ -39,7 +39,7 @@ public class Tv_OttoBehaviour : MonoBehaviour
     {
         audioSource.clip = triggerEnterClip;
         audioSource.Play();
-        yield return new WaitForSeconds(triggerEnterClip.length);
+        yield return new WaitForSeconds(triggerEnterClip.length + 10f);
         isTriggerAudioPlaying = false;
     }
 
