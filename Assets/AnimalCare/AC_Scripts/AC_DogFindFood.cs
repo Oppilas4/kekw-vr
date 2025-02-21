@@ -9,7 +9,7 @@ public class AC_DogFindFood : MonoBehaviour
     public string eatAnimationTrigger = "Eat"; // The trigger to start the eat animation
     public float detectionRadius = 10f;      // The radius in which the dog can detect food
     public LayerMask foodLayer;              // To detect only food objects
-    public float moveSpeed = 3f;             // Speed at which the dog moves towards food
+    public float moveSpeed = 1.5f;             // Speed at which the dog moves towards food
 
     private NavMeshAgent navAgent;           // Reference to the dog's NavMeshAgent for movement
     private bool isEating = false;           // To check if the dog is already eating
@@ -60,7 +60,14 @@ public class AC_DogFindFood : MonoBehaviour
         // Start the movement towards the food
         if (targetFood != null)
         {
-            navAgent.SetDestination(targetFood.position); // Set the food position as the target
+            // Get the dog's current Y position
+            float dogYPosition = transform.position.y;
+
+            // Set the target position, but keep the dog's current Y position
+            Vector3 targetPosition = new Vector3(targetFood.position.x, dogYPosition, targetFood.position.z);
+
+            // Set the adjusted target position as the NavMeshAgent's destination
+            navAgent.SetDestination(targetPosition);
         }
     }
 
