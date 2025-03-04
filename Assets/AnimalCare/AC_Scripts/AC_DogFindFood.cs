@@ -14,7 +14,7 @@ public class AC_DogFindFood : MonoBehaviour
     private NavMeshAgent navAgent;           // Reference to the dog's NavMeshAgent for movement
     private bool isEating = false;           // To check if the dog is already eating
     private Transform targetFood = null;     // The food the dog is going towards
-
+    public Vector3 offset = new Vector3(0, 0, 0.5f); // The offset to be added to the agent's position.
     // Start is called before the first frame update
     void Start()
     {
@@ -65,12 +65,13 @@ public class AC_DogFindFood : MonoBehaviour
 
             // Set the target position, but keep the dog's current Y position
             Vector3 targetPosition = new Vector3(targetFood.position.x, dogYPosition, targetFood.position.z);
-
+            // Trigger the "Walk" animation
+            dogAnimator.SetFloat("Speed",moveSpeed);
             // Set the adjusted target position as the NavMeshAgent's destination
             navAgent.SetDestination(targetPosition);
+            MoveTowardsFood();
         }
     }
-
     // Move the dog towards the food
     void MoveTowardsFood()
     {
@@ -79,12 +80,12 @@ public class AC_DogFindFood : MonoBehaviour
         {
             // Stop the movement
             navAgent.isStopped = true;
-
+            Debug.Log("Moved");
             // Trigger the eating animation
             StartEating(targetFood);
         }
     }
-
+    
     // Start the eating animation and logic
     void StartEating(Transform food)
     {
@@ -92,14 +93,20 @@ public class AC_DogFindFood : MonoBehaviour
         {
             isEating = true;
             Debug.Log("Dog found food and started eating!");
-
+            dogAnimator.SetFloat("Speed", 0);
             // Trigger the "Eat" animation
             dogAnimator.SetTrigger(eatAnimationTrigger);
 
-            // Optionally, destroy the food or hide it after eating
-            Destroy(food.gameObject); // Or use food.SetActive(false); to hide the food instead
+            StartCoroutine(WaitAndDestroy(food.gameObject)); // Or use food.SetActive(false); to hide the food instead
 
             // Stop further movement or reset any necessary variables after eating
         }
+    }
+    private IEnumerator WaitAndDestroy(GameObject DestroyedObject)
+    {
+        yield return new WaitForSeconds(4f);
+        Destroy(DestroyedObject); // Or use food.SetActive(false); to hide the food instead
+        isEating = false;
+        navAgent.isStopped = false;
     }
 }
