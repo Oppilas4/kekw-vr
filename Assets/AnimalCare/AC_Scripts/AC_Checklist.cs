@@ -1,25 +1,31 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class AC_Checklist : MonoBehaviour
 {
-    public GameObject[] tasks;
-    private bool isExpanded = false;
+    public GameObject checklistUI; 
 
     private void Start()
     {
         XRGrabInteractable grabInteractable = GetComponent<XRGrabInteractable>();
-        grabInteractable.selectEntered.AddListener(ToggleChecklist);  
+
+       
+        grabInteractable.activated.AddListener(OnGrab); 
+        grabInteractable.deactivated.AddListener(OnRelease); 
     }
 
-    private void ToggleChecklist(SelectEnterEventArgs args)  
+   
+    private void OnGrab(ActivateEventArgs arg)
     {
-        isExpanded = !isExpanded;
+        
 
-        foreach (GameObject task in tasks)
-        {
-            task.SetActive(isExpanded);
-        }
+        Debug.Log("Object grabbed");
+    }
+
+    
+    private void OnRelease(DeactivateEventArgs arg)
+    {
+       
+        Debug.Log("Object released");
     }
 }
