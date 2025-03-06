@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class AC_DogMaterialChance : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class AC_DogMaterialChance : MonoBehaviour
     public Material wetMaterial; // material for indication when dog is wet
     private Material originalMaterial;
     private Renderer objectRenderer;
+
+    public GameObject dripping;
+
+    ParticleSystem waterDripping;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +27,14 @@ public class AC_DogMaterialChance : MonoBehaviour
                 Debug.Log("original material saved");
             }
         }
+
+       
+        
+        
+        waterDripping = dripping.GetComponent<ParticleSystem>();
+        
+
+        
     }
 
     // Update is called once per frame
@@ -34,7 +47,9 @@ public class AC_DogMaterialChance : MonoBehaviour
     {
         Debug.Log("particle hit");
         if (objectRenderer != null && wetMaterial != null)
-        {
+        {   
+            dripping.SetActive(true);
+            waterDripping.Play();
             objectRenderer.material = wetMaterial; // chance wet material
         }
     }
