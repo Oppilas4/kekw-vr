@@ -13,7 +13,8 @@ public class AC_DogFindFood : MonoBehaviour
     public float detectionRadius = 10f;      // The radius in which the dog can detect food
     public LayerMask foodLayer;              // To detect only food objects
     public float moveSpeed = 1.5f;             // Speed at which the dog moves towards food
-    [SerializeField] TextMeshProUGUI Task2;
+
+    public AC_ChecklistManager checklistManager;
 
     private NavMeshAgent navAgent;           // Reference to the dog's NavMeshAgent for movement
     private bool isEating = false;           // To check if the dog is already eating
@@ -103,8 +104,9 @@ public class AC_DogFindFood : MonoBehaviour
 
             StartCoroutine(WaitAndDestroy(food.gameObject)); // Or use food.SetActive(false); to hide the food instead
 
+            checklistManager.CompleteTask(2);
             // Stop further movement or reset any necessary variables after eating
-            Task2.color = Color.green;
+
         }
     }
     private IEnumerator WaitAndDestroy(GameObject DestroyedObject)
