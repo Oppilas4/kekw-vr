@@ -104,7 +104,7 @@ public class AC_DogFindFood : MonoBehaviour
 
             StartCoroutine(WaitAndDestroy(food.gameObject)); // Or use food.SetActive(false); to hide the food instead
 
-            checklistManager.CompleteTask(2);
+            checklistManager.CompleteTask(1);
             // Stop further movement or reset any necessary variables after eating
 
         }

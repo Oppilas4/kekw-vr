@@ -10,6 +10,8 @@ public class AC_DogMaterialChance : MonoBehaviour
     private Material originalMaterial;
     private Renderer objectRenderer;
 
+    public AC_ChecklistManager checklistManager;
+
     public GameObject dripping;
 
     ParticleSystem waterDripping;
@@ -51,6 +53,7 @@ public class AC_DogMaterialChance : MonoBehaviour
             dripping.SetActive(true);
             waterDripping.Play();
             objectRenderer.material = wetMaterial; // chance wet material
+            checklistManager.CompleteTask(0);
         }
     }
 }
