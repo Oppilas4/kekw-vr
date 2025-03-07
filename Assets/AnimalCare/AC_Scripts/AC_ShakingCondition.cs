@@ -19,9 +19,11 @@ public class AC_ShakingCondition : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        
-        Rigidbody StuffRigidbody = collision.gameObject.GetComponent<Rigidbody>();
-        StuffRigidbody.AddForce(transform.right * forceSpeed, ForceMode.Impulse);
-        dogAnimator.SetTrigger(shakeAnimationTrigger);
+        if(collision.gameObject.tag == "Cereal")
+        {
+            dogAnimator.SetTrigger(shakeAnimationTrigger);
+            Rigidbody StuffRigidbody = collision.gameObject.GetComponent<Rigidbody>();
+            StuffRigidbody.AddForce(transform.right * forceSpeed, ForceMode.Impulse);
+        }
     }
 }

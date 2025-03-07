@@ -7,7 +7,7 @@ public class AC_Water : MonoBehaviour
 {
     public GameObject water;
     ParticleSystem waterFlow;
-
+    public bool waterRunning = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +23,7 @@ public class AC_Water : MonoBehaviour
     // This function is called when the grab button is pressed
     public void PourWater(ActivateEventArgs arg)
     {
+        waterRunning = true;
         water.SetActive(true);
         waterFlow.Play();
     }
@@ -30,6 +31,7 @@ public class AC_Water : MonoBehaviour
     // This function is called when the grab button is released
     public void StopWater(DeactivateEventArgs arg)
     {
+        waterRunning = false;
         waterFlow.Stop();
         water.SetActive(false);  // You can also disable the water GameObject if needed
     }
