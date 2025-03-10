@@ -129,7 +129,7 @@ public class AC_DogMovement : MonoBehaviour
     }
     void MoveToBathTub()
     {
-        if (water.activeSelf)
+        if (showerhead.waterRunning)
         {
             // Set the target position, but keep the dog's current Y position
             Vector3 target2Position = new Vector3(bathtub.position.x, 0, bathtub.position.z);
@@ -163,16 +163,6 @@ public class AC_DogMovement : MonoBehaviour
         if (Vector3.Distance(transform.position, outoftub.position) <= 0.3)
         {
             dogAnimator.SetFloat("Speed", 0);
-        }
-    }
-
-    //Sponge dog
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        if (collision.gameObject.tag == "Sponge")
-        {
-            Debug.Log(" Sponge hit");
         }
     }
 }
