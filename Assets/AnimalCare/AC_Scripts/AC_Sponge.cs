@@ -7,7 +7,7 @@ public class AC_Sponge : MonoBehaviour
 {
     public GameObject foam;
     ParticleSystem foamParticle;
-
+    public bool foamRunning = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +23,7 @@ public class AC_Sponge : MonoBehaviour
     // This function is called when the grab button is pressed
     public void MakeFoam(ActivateEventArgs arg)
     {
+        foamRunning = true;
         foam.SetActive(true);
         foamParticle.Play();
     }
@@ -30,6 +31,7 @@ public class AC_Sponge : MonoBehaviour
     // This function is called when the grab button is released
     public void StopFoam(DeactivateEventArgs arg)
     {
+        foamRunning = false;
         foamParticle.Stop();
         foam.SetActive(false);  // You can also disable the water GameObject if needed
     }

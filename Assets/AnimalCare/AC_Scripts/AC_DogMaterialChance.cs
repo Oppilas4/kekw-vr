@@ -11,10 +11,15 @@ public class AC_DogMaterialChance : MonoBehaviour
     private Renderer objectRenderer;
 
     public AC_ChecklistManager checklistManager;
+    public AC_Soap soap;
+    public AC_DogMovement dog;
 
     public GameObject dripping;
-
     ParticleSystem waterDripping;
+
+    public bool wet = false;
+    public bool wet1 = false;
+    public bool wet2 = false;
 
     // Start is called before the first frame update
     void Start()
@@ -29,14 +34,7 @@ public class AC_DogMaterialChance : MonoBehaviour
                 Debug.Log("original material saved");
             }
         }
-
-       
-        
-        
         waterDripping = dripping.GetComponent<ParticleSystem>();
-        
-
-        
     }
 
     // Update is called once per frame
@@ -53,7 +51,28 @@ public class AC_DogMaterialChance : MonoBehaviour
             dripping.SetActive(true);
             waterDripping.Play();
             objectRenderer.material = wetMaterial; // chance wet material
-            checklistManager.CompleteTask(0);
+            wet = true;
+            if (!wet1)
+            {
+                checklistManager.CompleteTask(0);
+                wet1 = true;
+            }
+            else if (!wet2 && soap.foamed)
+            {
+                checklistManager.CompleteTask(2);
+                dog.AfterShower();
+                wet2 = true;
+            }
         }
+    }
+    public void ChangeColorBack()
+    {
+        objectRenderer.material = originalMaterial;
+        wet1 = false;
+        wet2 = false;
+        wet = false;
+        soap.foamed = false;
+        waterDripping.Stop();
+        dripping.SetActive(false);
     }
 }

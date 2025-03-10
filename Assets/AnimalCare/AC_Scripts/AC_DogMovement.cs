@@ -19,7 +19,6 @@ public class AC_DogMovement : MonoBehaviour
     private NavMeshAgent navAgent;           // Reference to the dog's NavMeshAgent for movement
     private bool isEating = false;           // To check if the dog is already eating
     private Transform targetFood = null;     // The food the dog is going towards
-    public Vector3 offset = new Vector3(0, 0, 0.5f); // The offset to be added to the agent's position.
 
     public GameObject water;
     public GameObject towel;
@@ -115,7 +114,7 @@ public class AC_DogMovement : MonoBehaviour
 
             StartCoroutine(WaitAndDestroy(food.gameObject)); // Or use food.SetActive(false); to hide the food instead
 
-            checklistManager.CompleteTask(1);
+            checklistManager.CompleteTask(4);
             // Stop further movement or reset any necessary variables after eating
 
         }
@@ -140,18 +139,22 @@ public class AC_DogMovement : MonoBehaviour
             if (Vector3.Distance(transform.position, bathtub.position) <= 0.3)
             {
                 dogAnimator.SetFloat("Speed", 0);
-                // Align the dog's rotation with the bathtub's rotation
+                /* Align the dog's rotation with the bathtub's rotation
                 // Assuming you want the dog to face the same direction as the bathtub
                 Quaternion targetRotation = Quaternion.Euler(0, bathtub.rotation.eulerAngles.y, 0);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f); // Smooth rotation over time
+                */
                 Debug.Log("Dog is on Bathtub");
-                
             }
-           
         }
+    }
+    public void AfterShower()
+    {
+        StartCoroutine(WaitAndMoveOut(towel));
     }
     private IEnumerator WaitAndMoveOut(GameObject towel)
     {
+        yield return new WaitForSeconds(1f);
         towel.SetActive(true);
         yield return new WaitForSeconds(2.5f);
         towel.SetActive(false);
@@ -160,7 +163,7 @@ public class AC_DogMovement : MonoBehaviour
         dogAnimator.SetFloat("Speed", moveSpeed);
         // Set the adjusted target position as the NavMeshAgent's destination
         navAgent.SetDestination(target3Position);
-        if (Vector3.Distance(transform.position, outoftub.position) <= 0.3)
+        if (Vector3.Distance(transform.position, target3Position) <= 0.5)
         {
             dogAnimator.SetFloat("Speed", 0);
         }

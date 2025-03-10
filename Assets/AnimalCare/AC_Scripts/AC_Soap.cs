@@ -6,27 +6,32 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class AC_Soap : MonoBehaviour
 {
     public GameObject soap;
+    public AC_Sponge sponge;
+    public AC_ChecklistManager checklistManager;
+    public bool foamed = false;
     ParticleSystem soapParticle;
+    public AC_DogMaterialChance wetdog;
     void Start()
     {
         soapParticle = soap.GetComponent<ParticleSystem>();
     }
+    void Update()
+    {
+        if (wetdog.wet2)
+        {
+            soapParticle.Stop();
+            soap.SetActive(false);
+        }
+    }
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Sponge")
+        if (collision.gameObject.tag == "Sponge" && sponge.foamRunning && wetdog.wet1)
         {
             Debug.Log("Sponge hit");
             soap.SetActive(true);
             soapParticle.Play();
-        }
-    }
-    private void OnTriggerExit(Collider collision)
-    {
-        if (collision.gameObject.tag == "Sponge")
-        {
-            Debug.Log("Sponge out");
-            soapParticle.Stop();
-            soap.SetActive(false);
+            checklistManager.CompleteTask(1);
+            foamed = true;
         }
     }
 }
