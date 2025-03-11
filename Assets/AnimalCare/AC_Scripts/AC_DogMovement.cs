@@ -75,9 +75,6 @@ public class AC_DogMovement : MonoBehaviour
         // Start the movement towards the food
         if (targetFood != null)
         {
-            // Get the dog's current Y position
-            float dogYPosition = transform.position.y;
-
             // Set the target position, but keep the dog's current Y position
             Vector3 targetPosition = new Vector3(targetFood.position.x, 0, targetFood.position.z);
             // Trigger the "Walk" animation
@@ -163,8 +160,9 @@ public class AC_DogMovement : MonoBehaviour
         dogAnimator.SetFloat("Speed", moveSpeed);
         // Set the adjusted target position as the NavMeshAgent's destination
         navAgent.SetDestination(target3Position);
-        if (Vector3.Distance(transform.position, target3Position) <= 0.5)
+        if (Vector3.Distance(transform.position, target3Position) <= 10)
         {
+            Debug.Log("dog is out of bath");
             dogAnimator.SetFloat("Speed", 0);
         }
     }
