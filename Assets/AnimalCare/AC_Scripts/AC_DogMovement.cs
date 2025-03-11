@@ -133,7 +133,7 @@ public class AC_DogMovement : MonoBehaviour
             dogAnimator.SetFloat("Speed", moveSpeed);
             // Set the adjusted target position as the NavMeshAgent's destination
             navAgent.SetDestination(target2Position);
-            if (Vector3.Distance(transform.position, bathtub.position) <= 0.3)
+            if (Vector3.Distance(transform.position, bathtub.position) <= 1)
             {
                 dogAnimator.SetFloat("Speed", 0);
                 /* Align the dog's rotation with the bathtub's rotation
@@ -160,7 +160,7 @@ public class AC_DogMovement : MonoBehaviour
         dogAnimator.SetFloat("Speed", moveSpeed);
         // Set the adjusted target position as the NavMeshAgent's destination
         navAgent.SetDestination(target3Position);
-        if (Vector3.Distance(transform.position, target3Position) <= 10)
+        if (Vector3.Distance(transform.position, target3Position) <= 1)
         {
             Debug.Log("dog is out of bath");
             dogAnimator.SetFloat("Speed", 0);
