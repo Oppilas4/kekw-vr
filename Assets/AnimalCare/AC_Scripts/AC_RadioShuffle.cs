@@ -1,31 +1,45 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR;
 using System.Collections.Generic;
 
 public class AC_RadioShuffle : MonoBehaviour
 {
     private AudioSource radioAudio;
     public List<AudioClip> songs; // List of audio clips
-    public XRGrabInteractable grabInteractable; // VR interaction component
+
+    private XRNode inputSource = XRNode.RightHand; // You can change this to LeftHand if needed
+    private InputDevice device;
 
     void Start()
     {
         radioAudio = GetComponent<AudioSource>();
 
-        // Make sure we have at least one song
+        // Ensure we have at least one song
         if (songs.Count > 0)
         {
             PlayRandomSong();
         }
 
-        // Listen for user input (if you want a button to change songs)
-        grabInteractable = GetComponent<XRGrabInteractable>();
-        grabInteractable.activated.AddListener(SkipSong);
+        // Get the input device for the selected XRNode (Right Hand by default)
+        device = InputDevices.GetDeviceAtXRNode(inputSource);
     }
 
     void Update()
     {
-        // Check if the song finished playing
+        // Check if the input device is valid
+        if (!device.isValid)
+        {
+            device = InputDevices.GetDeviceAtXRNode(inputSource); // Re-check the device
+        }
+
+        // Listen for the trigger press on the controller
+        bool triggerPressed;
+        if (device.TryGetFeatureValue(CommonUsages.triggerButton, out triggerPressed) && triggerPressed)
+        {
+            StopMusic(); // Stop the music when the trigger is pressed
+        }
+
+        // Check if the song finished playing and play a random song
         if (!radioAudio.isPlaying && radioAudio.clip != null)
         {
             PlayRandomSong();
@@ -48,8 +62,12 @@ public class AC_RadioShuffle : MonoBehaviour
         radioAudio.Play();
     }
 
-    void SkipSong(ActivateEventArgs args) // If the player interacts with the radio
+    // This method stops the music when the trigger is pressed
+    void StopMusic()
     {
-        PlayRandomSong();
+        if (radioAudio.isPlaying)
+        {
+            radioAudio.Stop();
+        }
     }
 }
