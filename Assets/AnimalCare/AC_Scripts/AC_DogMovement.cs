@@ -15,6 +15,8 @@ public class AC_DogMovement : MonoBehaviour
     public float moveSpeed = 1.5f;             // Speed at which the dog moves towards food
 
     public AC_ChecklistManager checklistManager;
+    public AC_ShakingCondition shakingCondition;
+    
 
     private NavMeshAgent navAgent;           // Reference to the dog's NavMeshAgent for movement
     private bool isEating = false;           // To check if the dog is already eating
@@ -25,6 +27,9 @@ public class AC_DogMovement : MonoBehaviour
     public AC_Water showerhead;
     public Transform bathtub;
     public Transform outoftub;
+
+    public Vector3 velocity;
+    public Vector3 previousPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +50,12 @@ public class AC_DogMovement : MonoBehaviour
         {
             SearchForFood(); // Keep searching for food
         }
+        
+    }
+
+    private void FixedUpdate()
+    {
+       
     }
 
     // Search for food within the detection radius
@@ -95,17 +106,20 @@ public class AC_DogMovement : MonoBehaviour
     {
         if (!isEating)
         {
-            isEating = true;
-            Debug.Log("Dog found food and started eating!");
-            dogAnimator.SetFloat("Speed", 0);
-            // Trigger the "Eat" animation
-            dogAnimator.SetTrigger(eatAnimationTrigger);
+            if (shakingCondition.cerealOnHead == true)
+            {
+                isEating = true;
+                Debug.Log("Dog found food and started eating!");
+                dogAnimator.SetFloat("Speed", 0);
+                // Trigger the "Eat" animation
+                dogAnimator.SetTrigger(shakingCondition.shakeAnimationTrigger);
+                dogAnimator.SetTrigger(eatAnimationTrigger);
 
-            StartCoroutine(WaitAndDestroy(food.gameObject)); // Or use food.SetActive(false); to hide the food instead
+                StartCoroutine(WaitAndDestroy(food.gameObject)); // Or use food.SetActive(false); to hide the food instead
 
-            checklistManager.CompleteTask(4);
-            // Stop further movement or reset any necessary variables after eating
-
+                checklistManager.CompleteTask(4);
+                // Stop further movement or reset any necessary variables after eating
+            }
         }
     }
     private IEnumerator WaitAndDestroy(GameObject DestroyedObject)

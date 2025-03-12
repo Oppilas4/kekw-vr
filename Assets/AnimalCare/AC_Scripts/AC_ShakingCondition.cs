@@ -10,6 +10,8 @@ public class AC_ShakingCondition : MonoBehaviour
 
     public string shakeAnimationTrigger = "Shake"; // The trigger to start the shake animation
 
+    public bool cerealOnHead = false;
+
     public void Start()
     {
         if (dogAnimator == null)
@@ -21,7 +23,8 @@ public class AC_ShakingCondition : MonoBehaviour
     {
         if(collision.gameObject.tag == "Cereal")
         {
-            dogAnimator.SetTrigger(shakeAnimationTrigger);
+            cerealOnHead=true;
+            //dogAnimator.SetTrigger(shakeAnimationTrigger);
             Rigidbody StuffRigidbody = collision.gameObject.GetComponent<Rigidbody>();
             StuffRigidbody.AddForce(transform.right * forceSpeed, ForceMode.Impulse);
         }

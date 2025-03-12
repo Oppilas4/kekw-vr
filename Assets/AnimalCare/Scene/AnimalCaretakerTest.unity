@@ -1135,6 +1135,7 @@ MonoBehaviour:
   forceSpeed: 2
   dogAnimator: {fileID: 2132980630}
   shakeAnimationTrigger: Shake
+  cerealOnHead: 0
 --- !u!1001 &119652624
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4587,11 +4588,14 @@ MonoBehaviour:
     m_Bits: 4194304
   moveSpeed: 1.5
   checklistManager: {fileID: 1245970686}
+  shakingCondition: {fileID: 103888788}
   water: {fileID: 11262942}
   towel: {fileID: 1393004714}
   showerhead: {fileID: 85427672}
   bathtub: {fileID: 812080991}
   outoftub: {fileID: 1403227389}
+  velocity: {x: 0, y: 0, z: 0}
+  previousPosition: {x: 0, y: 0, z: 0}
 --- !u!195 &827086019
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -14120,7 +14124,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
