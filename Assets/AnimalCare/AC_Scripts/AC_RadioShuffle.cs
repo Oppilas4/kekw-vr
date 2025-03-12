@@ -60,6 +60,7 @@ public class AC_RadioShuffle : MonoBehaviour
         // Play the selected song
         radioAudio.clip = newSong;
         radioAudio.Play();
+        Debug.Log("Audio is playing");
     }
 
     // This method stops the music when the trigger is pressed

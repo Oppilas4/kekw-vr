@@ -6,6 +6,7 @@ public class AC_ChecklistManager : MonoBehaviour
     public TextMeshProUGUI[] taskTexts;  // Assign task texts in the Inspector
     public GameObject objectToEnable;    // Object to enable when all tasks are completed
     private bool[] taskCompletion;       // Track which tasks are completed
+    public AudioClip reward;             // AudioClip to play as reward (assigned in the Inspector)
 
     void Start()
     {
@@ -30,5 +31,15 @@ public class AC_ChecklistManager : MonoBehaviour
             if (!task) return; // If any task is false, return without enabling the object
         }
         objectToEnable.SetActive(true); // Enable the object when all tasks are complete
+        PlayRewardAudio(); // Play reward sound immediately after enabling the object
+    }
+
+    private void PlayRewardAudio()
+    {
+        if (reward != null) // Ensure the reward AudioClip is set
+        {
+            // Play the audio clip at the position of the current GameObject
+            AudioSource.PlayClipAtPoint(reward, transform.position);
+        }
     }
 }
