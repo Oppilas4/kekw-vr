@@ -9,9 +9,7 @@ public class AC_ShakingCondition : MonoBehaviour
     public Animator dogAnimator;             // Reference to the dog's Animator
 
     public string shakeAnimationTrigger = "Shake"; // The trigger to start the shake animation
-
-    public bool cerealOnHead = false;
-
+    public bool isShaking = false;
     public void Start()
     {
         if (dogAnimator == null)
@@ -19,14 +17,21 @@ public class AC_ShakingCondition : MonoBehaviour
             dogAnimator = GetComponent<Animator>(); // Assign the Animator if not set in the inspector
         }
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if(collision.gameObject.tag == "Cereal")
         {
-            cerealOnHead=true;
-            //dogAnimator.SetTrigger(shakeAnimationTrigger);
+            StartCoroutine(WaitAndStop());
             Rigidbody StuffRigidbody = collision.gameObject.GetComponent<Rigidbody>();
             StuffRigidbody.AddForce(transform.right * forceSpeed, ForceMode.Impulse);
         }
+    }
+    private IEnumerator WaitAndStop()
+    {
+        isShaking = true;
+        dogAnimator.SetFloat("Speed", 0);
+        dogAnimator.SetTrigger(shakeAnimationTrigger);
+        yield return new WaitForSeconds(2.1f);
+        isShaking = false;
     }
 }
