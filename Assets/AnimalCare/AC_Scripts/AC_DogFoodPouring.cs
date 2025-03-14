@@ -7,6 +7,7 @@ public class AC_DogFoodPouring : MonoBehaviour
     public GameObject cereal;
     public Transform spawnPoint;
     public float fireSpeed = 20;
+    public int amount = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,8 +16,13 @@ public class AC_DogFoodPouring : MonoBehaviour
     }
     public void PourFood(ActivateEventArgs arg)
     {
-        GameObject spawnedFood = Instantiate(cereal);
-        spawnedFood.transform.position = spawnPoint.position;
-        spawnedFood.GetComponent<Rigidbody>().velocity = spawnPoint.forward * fireSpeed;
+        if (amount == 0)
+        {
+            GameObject spawnedFood = Instantiate(cereal);
+            spawnedFood.transform.position = spawnPoint.position;
+            spawnedFood.GetComponent<Rigidbody>().velocity = spawnPoint.forward * fireSpeed;
+            amount++;
+        }
+        
     }
 }

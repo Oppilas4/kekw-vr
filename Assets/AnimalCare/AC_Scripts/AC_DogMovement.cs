@@ -16,6 +16,7 @@ public class AC_DogMovement : MonoBehaviour
 
     public AC_ChecklistManager checklistManager;
     public AC_ShakingCondition shakingCondition;
+    public AC_DogFoodPouring foodPouring;
 
     private NavMeshAgent navAgent;           // Reference to the dog's NavMeshAgent for movement
     private bool isEating = false;           // To check if the dog is already eating
@@ -115,6 +116,7 @@ public class AC_DogMovement : MonoBehaviour
     private IEnumerator WaitAndDestroy(GameObject DestroyedObject)
     {
         yield return new WaitForSeconds(4f);
+        foodPouring.amount = 0;
         Destroy(DestroyedObject); // Or use food.SetActive(false); to hide the food instead
         isEating = false;
         navAgent.isStopped = false;
