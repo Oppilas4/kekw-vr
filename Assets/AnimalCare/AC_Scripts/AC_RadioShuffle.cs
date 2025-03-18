@@ -1,14 +1,10 @@
 using UnityEngine;
-using UnityEngine.XR;
 using System.Collections.Generic;
 
 public class AC_RadioShuffle : MonoBehaviour
 {
     private AudioSource radioAudio;
     public List<AudioClip> songs; // List of audio clips
-
-    private XRNode inputSource = XRNode.RightHand; // You can change this to LeftHand if needed
-    private InputDevice device;
 
     void Start()
     {
@@ -19,26 +15,10 @@ public class AC_RadioShuffle : MonoBehaviour
         {
             PlayRandomSong();
         }
-
-        // Get the input device for the selected XRNode (Right Hand by default)
-        device = InputDevices.GetDeviceAtXRNode(inputSource);
     }
 
     void Update()
     {
-        // Check if the input device is valid
-        if (!device.isValid)
-        {
-            device = InputDevices.GetDeviceAtXRNode(inputSource); // Re-check the device
-        }
-
-        // Listen for the trigger press on the controller
-        bool triggerPressed;
-        if (device.TryGetFeatureValue(CommonUsages.triggerButton, out triggerPressed) && triggerPressed)
-        {
-            StopMusic(); // Stop the music when the trigger is pressed
-        }
-
         // Check if the song finished playing and play a random song
         if (!radioAudio.isPlaying && radioAudio.clip != null)
         {
@@ -61,14 +41,5 @@ public class AC_RadioShuffle : MonoBehaviour
         radioAudio.clip = newSong;
         radioAudio.Play();
         Debug.Log("Audio is playing");
-    }
-
-    // This method stops the music when the trigger is pressed
-    void StopMusic()
-    {
-        if (radioAudio.isPlaying)
-        {
-            radioAudio.Stop();
-        }
     }
 }

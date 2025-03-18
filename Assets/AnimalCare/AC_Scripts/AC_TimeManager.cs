@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class AC_TimeManager : MonoBehaviour
 {
-    public static float timeInSeconds = 0f;  // This will keep track of the time in seconds.
+    public static float timeInSeconds = 0f;  
 
     void Update()
     {
-        timeInSeconds += Time.deltaTime;  // Increase time by deltaTime each frame.
+        timeInSeconds += Time.deltaTime;  
     }
 }
