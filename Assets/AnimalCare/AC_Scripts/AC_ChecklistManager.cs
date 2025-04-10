@@ -42,7 +42,7 @@ public class AC_ChecklistManager : MonoBehaviour
     {
         if (scoreText != null)
         {
-            scoreText.text = "0" + totalScore.ToString();
+            scoreText.text = totalScore.ToString();
         }
     }
 
