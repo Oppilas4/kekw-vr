@@ -33,7 +33,7 @@ public class AC_Dryer : MonoBehaviour
         windFlow.Play();
         if (dog.wet2 && Vector3.Distance(transform.position, dog.transform.position) <= proximityThreshold)
         {
-            checklistManager.CompleteTask(3);
+            checklistManager.CompleteTask(2);
             dog.ChangeColorBack();
         }
     }

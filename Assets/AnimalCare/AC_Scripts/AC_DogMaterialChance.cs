@@ -10,7 +10,7 @@ public class AC_DogMaterialChance : MonoBehaviour
     private Material originalMaterial;
     private Renderer objectRenderer;
 
-    public AC_ChecklistManager checklistManager;
+    
     public AC_Soap soap;
     public AC_DogMovement dog;
 
@@ -54,12 +54,12 @@ public class AC_DogMaterialChance : MonoBehaviour
             wet = true;
             if (!wet1)
             {
-                checklistManager.CompleteTask(0);
+                
                 wet1 = true;
             }
             else if (!wet2 && soap.foamed)
             {
-                checklistManager.CompleteTask(2);
+                
                 dog.AfterShower();
                 wet2 = true;
             }

@@ -7,7 +7,7 @@ public class AC_Soap : MonoBehaviour
 {
     public GameObject soap;
     public AC_Sponge sponge;
-    public AC_ChecklistManager checklistManager;
+   
     public bool foamed = false;
     ParticleSystem soapParticle;
     public AC_DogMaterialChance wetdog;
@@ -30,7 +30,7 @@ public class AC_Soap : MonoBehaviour
             Debug.Log("Sponge hit");
             soap.SetActive(true);
             soapParticle.Play();
-            checklistManager.CompleteTask(1);
+            
             foamed = true;
         }
     }

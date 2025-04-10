@@ -3,42 +3,63 @@ using TMPro;
 
 public class AC_ChecklistManager : MonoBehaviour
 {
-    public TextMeshProUGUI[] taskTexts;  // Assign task texts in the Inspector
-    public GameObject objectToEnable;    // Object to enable when all tasks are completed
-    private bool[] taskCompletion;       // Track which tasks are completed
-    public AudioClip reward;             // AudioClip to play as reward (assigned in the Inspector)
+    public TextMeshProUGUI[] taskTexts;
+    public GameObject objectToEnable;
+    public AudioClip reward;
+    public int[] taskPoints;
+    public TextMeshProUGUI scoreText;
+
+    public int rewardThreshold = 50; 
+
+    private bool[] taskCompletion;
+    private int totalScore = 0;
+    private bool rewardGiven = false;
 
     void Start()
     {
         taskCompletion = new bool[taskTexts.Length];
-        objectToEnable.SetActive(false); // Ensure the object starts disabled
+        objectToEnable.SetActive(false);
+        UpdateScoreDisplay();
     }
 
     public void CompleteTask(int taskIndex)
     {
-        if (taskIndex >= 0 && taskIndex < taskTexts.Length)
+        if (taskIndex >= 0 && taskIndex < taskTexts.Length && !taskCompletion[taskIndex])
         {
             taskCompletion[taskIndex] = true;
-            taskTexts[taskIndex].color = Color.green; // Change text color to green
-            CheckAllTasksCompleted();
+            taskTexts[taskIndex].color = Color.green;
+
+            if (taskIndex < taskPoints.Length)
+            {
+                totalScore += taskPoints[taskIndex];
+                UpdateScoreDisplay();
+                CheckScoreForReward();
+            }
         }
     }
 
-    private void CheckAllTasksCompleted()
+    private void UpdateScoreDisplay()
     {
-        foreach (bool task in taskCompletion)
+        if (scoreText != null)
         {
-            if (!task) return; // If any task is false, return without enabling the object
+            scoreText.text = "0" + totalScore.ToString();
         }
-        objectToEnable.SetActive(true); // Enable the object when all tasks are complete
-        PlayRewardAudio(); // Play reward sound immediately after enabling the object
+    }
+
+    private void CheckScoreForReward()
+    {
+        if (!rewardGiven && totalScore >= rewardThreshold)
+        {
+            objectToEnable.SetActive(true);
+            PlayRewardAudio();
+            rewardGiven = true;
+        }
     }
 
     private void PlayRewardAudio()
     {
-        if (reward != null) // Ensure the reward AudioClip is set
+        if (reward != null)
         {
-            // Play the audio clip at the position of the current GameObject
             AudioSource.PlayClipAtPoint(reward, transform.position);
         }
     }
