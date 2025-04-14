@@ -24,8 +24,10 @@ public class AC_DogMovement : MonoBehaviour
 
     public GameObject water;
     public GameObject towel;
-    public bool movetoTub = false;
+    public bool movetoNearTub = false;
+    public bool movetoTrim = false;
     public Transform bathtub;
+    public Transform trimmingTable;
     public Transform outoftub;
     // Start is called before the first frame update
     void Start()
@@ -109,7 +111,7 @@ public class AC_DogMovement : MonoBehaviour
 
             StartCoroutine(WaitAndDestroy(food.gameObject)); // Or use food.SetActive(false); to hide the food instead
 
-            checklistManager.CompleteTask(1);
+            checklistManager.CompleteTask(2);
             // Stop further movement or reset any necessary variables after eating
         }
     }
@@ -123,7 +125,7 @@ public class AC_DogMovement : MonoBehaviour
     }
     void MoveToBathTub()
     {
-        if (movetoTub)
+        if (movetoNearTub)
         {
             // Set the target position, but keep the dog's current Y position
             Vector3 target2Position = new Vector3(bathtub.position.x, 0, bathtub.position.z);
@@ -132,11 +134,22 @@ public class AC_DogMovement : MonoBehaviour
             navAgent.SetDestination(target2Position);
 
             // Start checking the destination arrival status once the dog is moving
-            StartCoroutine(CheckIfDogReachedDestination());
+            StartCoroutine(CheckIfDogReachedDestinationOfTub());
+        }
+        else if(movetoTrim)
+        {
+            // Set the target position, but keep the dog's current Y position
+            Vector3 target3Position = new Vector3(trimmingTable.position.x, 0, trimmingTable.position.z);
+
+            // Set the adjusted target position as the NavMeshAgent's destination
+            navAgent.SetDestination(target3Position);
+
+            // Start checking the destination arrival status once the dog is moving
+            StartCoroutine(CheckIfDogReachedDestinationOfTrim());
         }
     }
 
-    IEnumerator CheckIfDogReachedDestination()
+    IEnumerator CheckIfDogReachedDestinationOfTub()
     {
         // Wait for the agent to start moving (it may take a brief moment for the agent to calculate the path)
         yield return new WaitUntil(() => !navAgent.pathPending);
@@ -153,11 +166,31 @@ public class AC_DogMovement : MonoBehaviour
         }
 
         // Once the dog has reached the target
-        movetoTub = false;
+        movetoNearTub = false;
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
         Debug.Log("Dog is on Bathtub");
     }
+    IEnumerator CheckIfDogReachedDestinationOfTrim()
+    {
+        // Wait for the agent to start moving (it may take a brief moment for the agent to calculate the path)
+        yield return new WaitUntil(() => !navAgent.pathPending);
 
+        // Start checking the remaining distance
+        while (navAgent.remainingDistance > navAgent.stoppingDistance)
+        {
+
+            // Trigger the "Walk" animation
+            dogAnimator.SetFloat("Speed", moveSpeed);
+
+            // Wait a frame before checking again, allowing other systems to run
+            yield return null;
+        }
+
+        // Once the dog has reached the target
+        movetoTrim = false;
+        dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
+        Debug.Log("Dog is on Bathtub");
+    }
     public void AfterShower()
     {
         StartCoroutine(WaitAndMoveOut(towel));

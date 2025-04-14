@@ -7,7 +7,7 @@ public class AC_Trimming : MonoBehaviour
     public Material trimmedMaterial; // Assign this in the Inspector
     public SkinnedMeshRenderer skinnedMeshRenderer;
     private bool isTrimmed = false;
-
+    public AC_ChecklistManager checklistManager;
     void Start()
     {
         SkinnedMeshRenderer skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
@@ -38,6 +38,7 @@ public class AC_Trimming : MonoBehaviour
 
             skinnedMeshRenderer.materials = materials;
             isTrimmed = true;
+            checklistManager.CompleteTask(1);
         }
         else
         {

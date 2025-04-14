@@ -28,7 +28,11 @@ public class AC_Clicker : MonoBehaviour
         animator.SetTrigger("Pressed");
         if(this.gameObject.name == "SinkClicker")
         {
-            dog.movetoTub = true;
+            dog.movetoNearTub = true;
+        }
+        else if (this.gameObject.name == "TrimClicker")
+        {
+            dog.movetoTrim = true;
         }
     }
 }

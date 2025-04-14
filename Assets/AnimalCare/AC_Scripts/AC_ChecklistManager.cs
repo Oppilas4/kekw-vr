@@ -5,7 +5,6 @@ public class AC_ChecklistManager : MonoBehaviour
 {
     public TextMeshProUGUI[] taskTexts;
     public GameObject objectToEnable;
-    public AudioClip reward;
     public int[] taskPoints;
     public TextMeshProUGUI scoreText;
 
@@ -51,16 +50,7 @@ public class AC_ChecklistManager : MonoBehaviour
         if (!rewardGiven && totalScore >= rewardThreshold)
         {
             objectToEnable.SetActive(true);
-            PlayRewardAudio();
             rewardGiven = true;
-        }
-    }
-
-    private void PlayRewardAudio()
-    {
-        if (reward != null)
-        {
-            AudioSource.PlayClipAtPoint(reward, transform.position);
         }
     }
 }
