@@ -17,6 +17,13 @@ public class AC_CustomerManager : MonoBehaviour
         { "Caring", 10 }
     };
 
+    private Dictionary<string, int> serviceSlotIndices = new Dictionary<string, int>()
+    {
+        { "Washing", 0 },
+        { "Trimming", 1 },
+        { "Caring", 2 }
+    };
+
     private GameObject currentCustomerObj;
     public TextMeshProUGUI[] taskTexts;
     public TextMeshProUGUI[] priceTexts;
@@ -47,13 +54,14 @@ public class AC_CustomerManager : MonoBehaviour
             }
 
             // Show services and prices
-            for (int i = 0; i < currentCustomer.services.Count && i < taskTexts.Length && i < priceTexts.Length; i++)
+            foreach (string serviceName in currentCustomer.services)
             {
-                string serviceName = currentCustomer.services[i];
-                int servicePrice = servicePrices[serviceName];
-
-                taskTexts[i].text = serviceName;
-                priceTexts[i].text = servicePrice + "€";
+                if (serviceSlotIndices.TryGetValue(serviceName, out int index) &&
+                    index < taskTexts.Length && index < priceTexts.Length)
+                {
+                    taskTexts[index].text = serviceName;
+                    priceTexts[index].text = servicePrices[serviceName] + "€";
+                }
             }
             Debug.Log($"New customer arrived! Wants: {string.Join(", ", currentCustomer.services)} | Will pay: {currentCustomer.totalPayment}e");
 

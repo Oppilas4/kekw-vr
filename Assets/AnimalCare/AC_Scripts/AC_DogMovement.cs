@@ -24,7 +24,7 @@ public class AC_DogMovement : MonoBehaviour
 
     public GameObject water;
     public GameObject towel;
-    public AC_Water showerhead;
+    public bool movetoTub = false;
     public Transform bathtub;
     public Transform outoftub;
     // Start is called before the first frame update
@@ -109,7 +109,7 @@ public class AC_DogMovement : MonoBehaviour
 
             StartCoroutine(WaitAndDestroy(food.gameObject)); // Or use food.SetActive(false); to hide the food instead
 
-            checklistManager.CompleteTask(4);
+            checklistManager.CompleteTask(1);
             // Stop further movement or reset any necessary variables after eating
         }
     }
@@ -123,7 +123,7 @@ public class AC_DogMovement : MonoBehaviour
     }
     void MoveToBathTub()
     {
-        if (showerhead.waterRunning)
+        if (movetoTub)
         {
             // Set the target position, but keep the dog's current Y position
             Vector3 target2Position = new Vector3(bathtub.position.x, 0, bathtub.position.z);
@@ -153,6 +153,7 @@ public class AC_DogMovement : MonoBehaviour
         }
 
         // Once the dog has reached the target
+        movetoTub = false;
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
         Debug.Log("Dog is on Bathtub");
     }
