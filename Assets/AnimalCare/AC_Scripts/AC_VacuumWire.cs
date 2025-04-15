@@ -8,14 +8,17 @@ public class AC_VacuumWire : MonoBehaviour
     public Transform vacuumHead;
 
     public GameObject wireSegmentPrefab;
-    public int segmentCount = 20;
+    public int segmentCount = 10;
     public float segmentSpacing = 0.2f;
 
-    public int radialSegments = 6; // for cylinder smoothness
+    public int radialSegments = 6;
     public float wireRadius = 0.03f;
 
     private List<Transform> segments = new List<Transform>();
     private Mesh mesh;
+
+    private float maxHoseLength;
+    private Vector3 hoseOrigin;
 
     void Start()
     {
@@ -23,6 +26,20 @@ public class AC_VacuumWire : MonoBehaviour
         {
             Debug.LogError("Missing references. Please assign vacuumBase, vacuumHead, and wireSegmentPrefab.");
             return;
+        }
+
+        // Set max length and hose origin
+        hoseOrigin = vacuumBase.position;
+        maxHoseLength = segmentCount * segmentSpacing * 0.95f; // Add slight slack
+
+        // Setup vacuum head Rigidbody
+        Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
+        if (headRb != null)
+        {
+            headRb.mass = 10f;
+            headRb.drag = 0.1f;
+            headRb.angularDrag = 0.05f;
+            headRb.interpolation = RigidbodyInterpolation.Interpolate;
         }
 
         GetComponent<MeshFilter>().mesh = mesh = new Mesh();
@@ -44,9 +61,13 @@ public class AC_VacuumWire : MonoBehaviour
             Vector3 position = Vector3.Lerp(start, end, (float)i / (segmentCount - 1));
             GameObject segment = Instantiate(wireSegmentPrefab, position, Quaternion.identity);
             segment.transform.localScale = Vector3.one * 0.05f;
+
             Rigidbody rb = segment.GetComponent<Rigidbody>();
-            rb.mass = 0.1f;
+            rb.mass = 5f;
+            rb.drag = 0.1f;
+            rb.angularDrag = 0.05f;
             rb.interpolation = RigidbodyInterpolation.Interpolate;
+
             segments.Add(segment.transform);
 
             if (i == 0)
@@ -58,21 +79,74 @@ public class AC_VacuumWire : MonoBehaviour
             {
                 ConfigurableJoint joint = segment.AddComponent<ConfigurableJoint>();
                 joint.connectedBody = previousRb;
+
                 joint.xMotion = joint.yMotion = joint.zMotion = ConfigurableJointMotion.Limited;
-                joint.linearLimit = new SoftJointLimit { limit = spacing };
+                joint.angularXMotion = joint.angularYMotion = joint.angularZMotion = ConfigurableJointMotion.Locked;
+
+                joint.linearLimit = new SoftJointLimit { limit = spacing * 0.6f }; // A bit of slack
+
+                JointDrive drive = new JointDrive
+                {
+                    positionSpring = 3000f,
+                    positionDamper = 100f,
+                    maximumForce = Mathf.Infinity
+                };
+
+                joint.xDrive = joint.yDrive = joint.zDrive = drive;
+                joint.configuredInWorldSpace = false;
+                joint.slerpDrive = drive;
                 joint.enableCollision = false;
             }
 
             previousRb = rb;
         }
 
-        FixedJoint endJoint = segments[^1].gameObject.AddComponent<FixedJoint>();
+        // Attach end to vacuum head with a soft joint
+        ConfigurableJoint endJoint = segments[^1].gameObject.AddComponent<ConfigurableJoint>();
         endJoint.connectedBody = vacuumHead.GetComponent<Rigidbody>();
+
+        endJoint.xMotion = endJoint.yMotion = endJoint.zMotion = ConfigurableJointMotion.Limited;
+        endJoint.angularXMotion = endJoint.angularYMotion = endJoint.angularZMotion = ConfigurableJointMotion.Locked;
+
+        endJoint.linearLimit = new SoftJointLimit { limit = segmentSpacing * 0.75f };
+
+        JointDrive endDrive = new JointDrive
+        {
+            positionSpring = 2000f,
+            positionDamper = 100f,
+            maximumForce = Mathf.Infinity
+        };
+
+        endJoint.xDrive = endJoint.yDrive = endJoint.zDrive = endDrive;
+        endJoint.configuredInWorldSpace = false;
     }
 
     void LateUpdate()
     {
+        ClampVacuumHeadPosition();
         UpdateMesh();
+    }
+
+    void ClampVacuumHeadPosition()
+    {
+        Vector3 toHead = vacuumHead.position - hoseOrigin;
+        float distance = toHead.magnitude;
+
+        if (distance > maxHoseLength)
+        {
+            Vector3 clampedPosition = hoseOrigin + toHead.normalized * maxHoseLength;
+
+            Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
+            if (headRb)
+            {
+                headRb.velocity = Vector3.zero;
+                headRb.MovePosition(clampedPosition);
+            }
+            else
+            {
+                vacuumHead.position = clampedPosition;
+            }
+        }
     }
 
     void UpdateMesh()
