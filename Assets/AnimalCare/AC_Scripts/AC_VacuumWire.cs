@@ -169,11 +169,11 @@ public class AC_VacuumWire : MonoBehaviour
             {
                 headRb.velocity = Vector3.zero;
                 headRb.angularVelocity = Vector3.zero;
-                headRb.MovePosition(clampedPosition);
+                headRb.MovePosition(clampedPosition); // Directly move the head to clamp position
             }
             else
             {
-                vacuumHead.position = clampedPosition;
+                vacuumHead.position = clampedPosition; // If no rigidbody, set position directly
             }
         }
     }
