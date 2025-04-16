@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 using System.Collections.Generic;
+using UnityEngine.XR.Interaction.Toolkit;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class AC_VacuumWire : MonoBehaviour
@@ -20,7 +20,6 @@ public class AC_VacuumWire : MonoBehaviour
 
     private float maxHoseLength;
     private Vector3 hoseOrigin;
-
     private bool hoseDetached = false;
 
     void Start()
@@ -32,7 +31,9 @@ public class AC_VacuumWire : MonoBehaviour
         }
 
         hoseOrigin = vacuumBase.position;
-        maxHoseLength = segmentCount * segmentSpacing * 0.95f;
+
+        // LIMIT HOW FAR IT CAN STRETCH — keep this low for strict clamping
+        maxHoseLength = segmentCount * segmentSpacing * 0.4f;
 
         Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
         if (headRb != null)
@@ -79,7 +80,6 @@ public class AC_VacuumWire : MonoBehaviour
             {
                 ConfigurableJoint joint = segment.AddComponent<ConfigurableJoint>();
                 joint.connectedBody = previousRb;
-
                 joint.xMotion = joint.yMotion = joint.zMotion = ConfigurableJointMotion.Limited;
                 joint.angularXMotion = joint.angularYMotion = joint.angularZMotion = ConfigurableJointMotion.Locked;
 
@@ -101,6 +101,7 @@ public class AC_VacuumWire : MonoBehaviour
             previousRb = rb;
         }
 
+        // Connect last segment to vacuum head
         ConfigurableJoint endJoint = segments[^1].gameObject.AddComponent<ConfigurableJoint>();
         endJoint.connectedBody = vacuumHead.GetComponent<Rigidbody>();
 
@@ -123,9 +124,7 @@ public class AC_VacuumWire : MonoBehaviour
     void FixedUpdate()
     {
         if (!hoseDetached)
-        {
             ClampVacuumHeadPosition();
-        }
     }
 
     void LateUpdate()
@@ -140,6 +139,7 @@ public class AC_VacuumWire : MonoBehaviour
 
         if (distance > maxHoseLength)
         {
+            // If holding with XR, drop it
             XRGrabInteractable grabInteractable = vacuumHead.GetComponent<XRGrabInteractable>();
             if (grabInteractable != null && grabInteractable.isSelected)
             {
@@ -147,16 +147,20 @@ public class AC_VacuumWire : MonoBehaviour
                 if (interactor != null && grabInteractable.interactionManager != null)
                 {
                     grabInteractable.interactionManager.SelectExit(interactor, grabInteractable);
-                    Debug.Log("Hose was force-dropped due to overstretch!");
+                    Debug.Log("Hose dropped due to overstretch.");
                 }
             }
 
+            // Make the hose stop pulling but stay flexible
             ConfigurableJoint endJoint = segments[^1].GetComponent<ConfigurableJoint>();
             if (endJoint != null)
             {
-                Destroy(endJoint);
+                endJoint.connectedBody = null;
+                endJoint.xMotion = endJoint.yMotion = endJoint.zMotion = ConfigurableJointMotion.Free;
+                endJoint.angularXMotion = endJoint.angularYMotion = endJoint.angularZMotion = ConfigurableJointMotion.Free;
             }
 
+            // Optional: slight snapback force
             Rigidbody lastRb = segments[^1].GetComponent<Rigidbody>();
             if (lastRb != null)
             {
