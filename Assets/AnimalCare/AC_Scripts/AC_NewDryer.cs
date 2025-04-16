@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-public class AC_VacuumWire : MonoBehaviour
+public class AC_NewDryer : MonoBehaviour
 {
     // References to the start and end points of the hose
     public Transform vacuumBase; // The base of the vacuum where the hose starts
