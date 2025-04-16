@@ -4,185 +4,150 @@ using System.Collections.Generic;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class AC_NewDryer : MonoBehaviour
 {
-    // References to the start and end points of the hose
-    public Transform vacuumBase; // The base of the vacuum where the hose starts
-    public Transform vacuumHead; // The end point of the hose (usually the handle)
-
-    // The prefab used for each wire segment
+    [Header("References")]
+    public Transform vacuumBase;
+    public Transform vacuumHead;
     public GameObject wireSegmentPrefab;
 
-    // Hose settings
-    public int segmentCount = 10;           // Number of segments making up the wire
-    public float segmentSpacing = 0.2f;     // Distance between segments
+    [Header("Settings")]
+    public int segmentCount = 20;
+    public float segmentSpacing = 0.2f;
+    public float wireRadius = 0.03f;
+    public int radialSegments = 6;
 
-    // Mesh visual settings
-    public int radialSegments = 6;          // How smooth the circular hose mesh is
-    public float wireRadius = 0.03f;        // Radius of the visual wire
+    [Header("Physics")]
+    public float segmentMass = 2f;
+    public float jointLimitFactor = 0.6f;
+    public float jointSpring = 4000f;
+    public float jointDamper = 200f;
 
-    // Internal storage
-    private List<Transform> segments = new List<Transform>(); // All segments in order
-    private Mesh mesh; // The visual mesh
-
-    // Clamping values
-    private float maxHoseLength; // Max allowed hose length (calculated)
-    private Vector3 hoseOrigin;  // Where the hose starts (vacuum base)
+    private List<Transform> segments = new List<Transform>();
+    private Mesh mesh;
+    private float maxHoseLength;
 
     void Start()
     {
-        // Validate references
         if (!vacuumBase || !vacuumHead || !wireSegmentPrefab)
         {
-            Debug.LogError("Missing references. Please assign vacuumBase, vacuumHead, and wireSegmentPrefab.");
+            Debug.LogError("Missing references.");
             return;
         }
 
-        // Set initial values for hose limit
-        hoseOrigin = vacuumBase.position;
-        maxHoseLength = segmentCount * segmentSpacing * 0.95f; // Slightly less than total possible length
-
-        // Optional: configure head's Rigidbody for smoother physics
-        Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
-        if (headRb != null)
-        {
-            headRb.mass = 10f;
-            headRb.drag = 0.1f;
-            headRb.angularDrag = 0.05f;
-            headRb.interpolation = RigidbodyInterpolation.Interpolate;
-        }
-
-        // Setup the mesh
         GetComponent<MeshFilter>().mesh = mesh = new Mesh();
-        mesh.name = "Vacuum Wire Mesh";
+        mesh.name = "Vacuum Hose Mesh";
 
-        // Create the hose chain
-        GenerateWire();
+        maxHoseLength = segmentSpacing * (segmentCount - 1) * 1.1f; // Clamp safety margin
+        GenerateHose();
     }
 
-    void GenerateWire()
+    void GenerateHose()
     {
-        // Generate evenly spaced segments between base and head
-        Vector3 start = vacuumBase.position;
-        Vector3 end = vacuumHead.position;
-        float spacing = Vector3.Distance(start, end) / (segmentCount - 1);
+        segments.Clear();
         Rigidbody previousRb = null;
 
         for (int i = 0; i < segmentCount; i++)
         {
-            // Calculate this segment's position
-            Vector3 position = Vector3.Lerp(start, end, (float)i / (segmentCount - 1));
-            GameObject segment = Instantiate(wireSegmentPrefab, position, Quaternion.identity);
+            Vector3 pos = Vector3.Lerp(vacuumBase.position, vacuumHead.position, i / (float)(segmentCount - 1));
+            GameObject segment = Instantiate(wireSegmentPrefab, pos, Quaternion.identity, transform);
+            segment.name = $"Hose Segment {i}";
             segment.transform.localScale = Vector3.one * 0.05f;
 
-            // Setup Rigidbody
             Rigidbody rb = segment.GetComponent<Rigidbody>();
-            rb.mass = 5f;
-            rb.drag = 0.1f;
-            rb.angularDrag = 0.05f;
+            rb.mass = segmentMass;
             rb.interpolation = RigidbodyInterpolation.Interpolate;
+            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            rb.useGravity = false;
 
-            // Add to list
             segments.Add(segment.transform);
 
-            // Attach to base or previous segment
             if (i == 0)
             {
-                // First segment is fixed to the base
-                FixedJoint joint = segment.AddComponent<FixedJoint>();
-                joint.connectedBody = vacuumBase.GetComponent<Rigidbody>();
+                FixedJoint baseJoint = segment.AddComponent<FixedJoint>();
+                baseJoint.connectedBody = vacuumBase.GetComponent<Rigidbody>();
             }
             else
             {
-                // Other segments use ConfigurableJoints for flexibility
                 ConfigurableJoint joint = segment.AddComponent<ConfigurableJoint>();
                 joint.connectedBody = previousRb;
+                joint.autoConfigureConnectedAnchor = false;
+                joint.anchor = Vector3.zero;
+                joint.connectedAnchor = Vector3.zero;
 
-                // Limit movement along all axes
                 joint.xMotion = joint.yMotion = joint.zMotion = ConfigurableJointMotion.Limited;
                 joint.angularXMotion = joint.angularYMotion = joint.angularZMotion = ConfigurableJointMotion.Locked;
 
-                // Limit how far segments can move from each other
-                joint.linearLimit = new SoftJointLimit { limit = spacing * 0.6f };
+                joint.linearLimit = new SoftJointLimit { limit = segmentSpacing * jointLimitFactor };
 
-                // Add springy resistance to movement
                 JointDrive drive = new JointDrive
                 {
-                    positionSpring = 3000f,
-                    positionDamper = 100f,
+                    positionSpring = jointSpring,
+                    positionDamper = jointDamper,
                     maximumForce = Mathf.Infinity
                 };
 
                 joint.xDrive = joint.yDrive = joint.zDrive = drive;
-                joint.configuredInWorldSpace = false;
-                joint.slerpDrive = drive;
-                joint.enableCollision = false;
             }
 
             previousRb = rb;
         }
 
-        // Connect last segment to vacuum head
+        // Connect last segment to the vacuum head
         ConfigurableJoint endJoint = segments[^1].gameObject.AddComponent<ConfigurableJoint>();
         endJoint.connectedBody = vacuumHead.GetComponent<Rigidbody>();
+        endJoint.autoConfigureConnectedAnchor = false;
+        endJoint.anchor = Vector3.zero;
+        endJoint.connectedAnchor = Vector3.zero;
 
         endJoint.xMotion = endJoint.yMotion = endJoint.zMotion = ConfigurableJointMotion.Limited;
         endJoint.angularXMotion = endJoint.angularYMotion = endJoint.angularZMotion = ConfigurableJointMotion.Locked;
-
-        endJoint.linearLimit = new SoftJointLimit { limit = segmentSpacing * 0.75f };
+        endJoint.linearLimit = new SoftJointLimit { limit = segmentSpacing * jointLimitFactor };
 
         JointDrive endDrive = new JointDrive
         {
-            positionSpring = 3000f,
-            positionDamper = 100f,
+            positionSpring = jointSpring,
+            positionDamper = jointDamper,
             maximumForce = Mathf.Infinity
         };
 
         endJoint.xDrive = endJoint.yDrive = endJoint.zDrive = endDrive;
-        endJoint.configuredInWorldSpace = false;
     }
 
     void FixedUpdate()
     {
-        // Prevent hose from stretching too far
-        ClampVacuumHeadPosition();
+        ClampVacuumHeadDistance();
+    }
+
+    void ClampVacuumHeadDistance()
+    {
+        Vector3 direction = vacuumHead.position - vacuumBase.position;
+        float distance = direction.magnitude;
+
+        if (distance > maxHoseLength)
+        {
+            Rigidbody rb = vacuumHead.GetComponent<Rigidbody>();
+            Vector3 clampedPos = vacuumBase.position + direction.normalized * maxHoseLength;
+
+            if (rb)
+            {
+                rb.velocity = Vector3.zero;
+                rb.MovePosition(clampedPos);
+            }
+            else
+            {
+                vacuumHead.position = clampedPos;
+            }
+        }
     }
 
     void LateUpdate()
     {
-        // Update the visual mesh based on current segment positions
         UpdateMesh();
-    }
-
-    void ClampVacuumHeadPosition()
-    {
-        // Distance vector from base to head
-        Vector3 toHead = vacuumHead.position - hoseOrigin;
-        float distance = toHead.magnitude;
-
-        if (distance > maxHoseLength)
-        {
-            // Clamp the head position within the max range
-            Vector3 clampedPosition = hoseOrigin + toHead.normalized * maxHoseLength;
-
-            // Move the rigidbody safely within bounds
-            Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
-            if (headRb)
-            {
-                headRb.velocity = Vector3.zero;
-                headRb.angularVelocity = Vector3.zero;
-                headRb.MovePosition(clampedPosition); // Directly move the head to clamp position
-            }
-            else
-            {
-                vacuumHead.position = clampedPosition; // If no rigidbody, set position directly
-            }
-        }
     }
 
     void UpdateMesh()
     {
         if (segments.Count < 2) return;
 
-        // One ring per segment, each with radial segments + 1 for wrapping
         int vertsPerRing = radialSegments + 1;
         int vertexCount = vertsPerRing * segments.Count;
         int triangleCount = (segments.Count - 1) * radialSegments * 2 * 3;
@@ -196,17 +161,13 @@ public class AC_NewDryer : MonoBehaviour
             Transform seg = segments[i];
             Vector3 center = seg.position;
 
-            // Get the forward direction along the hose
             Vector3 forward = (i == segments.Count - 1)
                 ? (center - segments[i - 1].position).normalized
                 : (segments[i + 1].position - center).normalized;
 
-            // Choose a stable up vector
             Vector3 up = Vector3.up;
-            if (Vector3.Dot(forward, up) > 0.9f)
-                up = Vector3.right;
+            if (Vector3.Dot(forward, up) > 0.9f) up = Vector3.right;
 
-            // Create a rotation frame
             Vector3 right = Vector3.Cross(forward, up).normalized;
             up = Vector3.Cross(right, forward).normalized;
 
@@ -219,7 +180,6 @@ public class AC_NewDryer : MonoBehaviour
             }
         }
 
-        // Connect rings with quads (two triangles each)
         int triIndex = 0;
         for (int i = 0; i < segments.Count - 1; i++)
         {
@@ -238,7 +198,6 @@ public class AC_NewDryer : MonoBehaviour
             }
         }
 
-        // Update the mesh
         mesh.Clear();
         mesh.vertices = vertices;
         mesh.normals = normals;
