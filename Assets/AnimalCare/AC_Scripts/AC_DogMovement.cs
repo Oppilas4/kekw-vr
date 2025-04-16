@@ -32,6 +32,7 @@ public class AC_DogMovement : MonoBehaviour
 
     public AC_DoorToggle door;
     public Transform InTub;
+    bool waitingToEnterSink = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,7 +52,12 @@ public class AC_DogMovement : MonoBehaviour
         {
             SearchForFood(); // Keep searching for food
         }
-        
+        // Check if dog is waiting and door is now open
+        if (waitingToEnterSink && door.checkOpening)
+        {
+            waitingToEnterSink = false;
+            MoveIntoSink();
+        }
     }
     // Search for food within the detection radius
     void SearchForFood()
@@ -142,7 +148,7 @@ public class AC_DogMovement : MonoBehaviour
         else if(movetoTrim)
         {
             // Set the target position, but keep the dog's current Y position
-            Vector3 target4Position = new Vector3(trimmingTable.position.x, 0, trimmingTable.position.z);
+            Vector3 target4Position = new Vector3(trimmingTable.position.x, trimmingTable.position.y, trimmingTable.position.z);
 
             // Set the adjusted target position as the NavMeshAgent's destination
             navAgent.SetDestination(target4Position);
@@ -173,7 +179,14 @@ public class AC_DogMovement : MonoBehaviour
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
         Debug.Log("Dog is near Bathtub");
 
-        MoveIntoSink();
+        if (door.checkOpening)
+        {
+            MoveIntoSink();
+        }
+        else
+        {
+            waitingToEnterSink = true; // Wait for door to open
+        }
     }
     IEnumerator CheckIfDogReachedDestinationOfTrim()
     {
@@ -206,7 +219,7 @@ public class AC_DogMovement : MonoBehaviour
         towel.SetActive(true);
         yield return new WaitForSeconds(2.5f);
         towel.SetActive(false);
-        Vector3 target3Position = new Vector3(outoftub.position.x, 0, outoftub.position.z);
+        Vector3 target3Position = new Vector3(outoftub.position.x, outoftub.position.y, outoftub.position.z);
         // Set the adjusted target position as the NavMeshAgent's destination
         navAgent.SetDestination(target3Position);
 
@@ -235,17 +248,14 @@ public class AC_DogMovement : MonoBehaviour
     }
     void MoveIntoSink()
     {
-        if (door.checkOpening)
-        {
-            // Set the target position, but keep the dog's current Y position
-            Vector3 target5Position = new Vector3(InTub.position.x, InTub.position.y, InTub.position.z);
+        // Set the target position, but keep the dog's current Y position
+        Vector3 target5Position = new Vector3(InTub.position.x, InTub.position.y, InTub.position.z);
 
-            // Set the adjusted target position as the NavMeshAgent's destination
-            navAgent.SetDestination(target5Position);
+        // Set the adjusted target position as the NavMeshAgent's destination
+        navAgent.SetDestination(target5Position);
 
-            // Start checking the destination arrival status once the dog is moving
-            StartCoroutine(CheckIfDogInTub());
-        }
+        // Start checking the destination arrival status once the dog is moving
+        StartCoroutine(CheckIfDogInTub());
     }
     IEnumerator CheckIfDogInTub()
     {
@@ -255,13 +265,14 @@ public class AC_DogMovement : MonoBehaviour
         // Start checking the remaining distance
         while (navAgent.remainingDistance > navAgent.stoppingDistance)
         {
-
             // Trigger the "Walk" animation
             dogAnimator.SetFloat("Speed", moveSpeed);
 
             // Wait a frame before checking again, allowing other systems to run
             yield return null;
         }
+        Vector3 currentRotation = transform.eulerAngles;
+        transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y + 30f, currentRotation.z);
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
         Debug.Log("Dog is on Bathtub");
     }

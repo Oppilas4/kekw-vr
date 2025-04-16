@@ -1,48 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class AC_Trimming : MonoBehaviour
 {
-    public Material trimmedMaterial; // Assign this in the Inspector
-    public SkinnedMeshRenderer skinnedMeshRenderer;
-    private bool isTrimmed = false;
-    public AC_ChecklistManager checklistManager;
+    public GameObject invisibleParicle;
+    ParticleSystem particleFlow;
     void Start()
     {
-        SkinnedMeshRenderer skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
-        if (trimmedMaterial == null)
-        {
-            Debug.LogWarning("Trimmed material not assigned.");
-        }
+        XRGrabInteractable grabbable2 = GetComponent<XRGrabInteractable>();
+
+        // Listen for both activated and deactivated events
+        grabbable2.activated.AddListener(StartTrim);
+        grabbable2.deactivated.AddListener(Stop);
+
+        particleFlow = invisibleParicle.GetComponent<ParticleSystem>();
     }
 
-    void OnTriggerEnter(Collider other)
+    void StartTrim(ActivateEventArgs arg)
     {
-        if (other.CompareTag("Trimmer") && !isTrimmed)
-        {
-            ApplyTrimmedMaterial();
-        }
+        invisibleParicle.SetActive(true);
+        particleFlow.Play();
     }
-
-    void ApplyTrimmedMaterial()
+    public void Stop(DeactivateEventArgs arg)
     {
-        if (skinnedMeshRenderer != null && trimmedMaterial != null)
-        {
-            Material[] materials = skinnedMeshRenderer.materials;
-
-            for (int i = 0; i < materials.Length; i++)
-            {
-                materials[i] = trimmedMaterial; // Replace all materials with the trimmed one
-            }
-
-            skinnedMeshRenderer.materials = materials;
-            isTrimmed = true;
-            checklistManager.CompleteTask(1);
-        }
-        else
-        {
-            Debug.LogWarning("SkinnedMeshRenderer or trimmedMaterial is missing.");
-        }
+        particleFlow.Stop();
+        invisibleParicle.SetActive(false);  // You can also disable the water GameObject if needed
     }
 }
