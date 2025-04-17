@@ -203,7 +203,6 @@ public class AC_DogMovement : MonoBehaviour
             // Wait a frame before checking again, allowing other systems to run
             yield return null;
         }
-
         // Once the dog has reached the target
         movetoTrim = false;
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
@@ -211,7 +210,7 @@ public class AC_DogMovement : MonoBehaviour
     }
     public void AfterShower()
     {
-        StartCoroutine(WaitAndMoveOut(towel));
+        // StartCoroutine(WaitAndMoveOut(towel)); I disable this so dog does not move automatically to the drying place itself, need to click the clicker at trimming place
     }
     private IEnumerator WaitAndMoveOut(GameObject towel)
     {
@@ -241,7 +240,6 @@ public class AC_DogMovement : MonoBehaviour
             // Wait a frame before checking again, allowing other systems to run
             yield return null;
         }
-
         // Once the dog has reached the target
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
         Debug.Log("Dog is Out");

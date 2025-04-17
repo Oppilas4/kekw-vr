@@ -27,6 +27,7 @@ public class AC_CustomerManager : MonoBehaviour
     private GameObject currentCustomerObj;
     public TextMeshProUGUI[] taskTexts;
     public TextMeshProUGUI[] priceTexts;
+    public AC_ChecklistManager checklistManager;
     void Start()
     {
         StartCoroutine(ServeNextCustomer());
@@ -63,6 +64,19 @@ public class AC_CustomerManager : MonoBehaviour
                     priceTexts[index].text = servicePrices[serviceName] + "€";
                 }
             }
+            // Convert service names to checklist indices
+            List<int> validTaskIndices = new List<int>();
+            foreach (string serviceName in currentCustomer.services)
+            {
+                if (serviceSlotIndices.TryGetValue(serviceName, out int index))
+                {
+                    validTaskIndices.Add(index);
+                }
+            }
+
+            // Tell checklist manager what tasks are valid
+            checklistManager.SetValidTasks(validTaskIndices);
+
             Debug.Log($"New customer arrived! Wants: {string.Join(", ", currentCustomer.services)} | Will pay: {currentCustomer.totalPayment}e");
 
             // Wait until all tasks are marked green

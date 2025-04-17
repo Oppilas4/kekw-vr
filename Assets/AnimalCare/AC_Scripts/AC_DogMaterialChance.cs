@@ -7,12 +7,14 @@ public class AC_DogMaterialChance : MonoBehaviour
 {
     public string childObjectName = "Plane";
     public Material wetMaterial; // material for indication when dog is wet
+    public Material trimmedMaterial; // material for indication when dog is wet
     private Material originalMaterial;
     private Renderer objectRenderer;
 
     
     public AC_Soap soap;
     public AC_DogMovement dog;
+    public AC_ChecklistManager checklistManager;
 
     public GameObject dripping;
     ParticleSystem waterDripping;
@@ -48,20 +50,28 @@ public class AC_DogMaterialChance : MonoBehaviour
         Debug.Log("particle hit");
         if (objectRenderer != null && wetMaterial != null)
         {   
-            dripping.SetActive(true);
-            waterDripping.Play();
-            objectRenderer.material = wetMaterial; // chance wet material
-            wet = true;
-            if (!wet1)
+            if (other.CompareTag("Water"))
             {
-                
-                wet1 = true;
+                dripping.SetActive(true);
+                waterDripping.Play();
+                objectRenderer.material = wetMaterial; // chance wet material
+                wet = true;
+                if (!wet1)
+                {
+
+                    wet1 = true;
+                }
+                else if (!wet2 && soap.foamed)
+                {
+
+                    dog.AfterShower();
+                    wet2 = true;
+                }
             }
-            else if (!wet2 && soap.foamed)
+            else if (other.CompareTag("Trimmer"))
             {
-                
-                dog.AfterShower();
-                wet2 = true;
+                objectRenderer.material = trimmedMaterial;
+                checklistManager.CompleteTask(1);
             }
         }
     }
