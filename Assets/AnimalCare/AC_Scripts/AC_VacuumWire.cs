@@ -138,7 +138,10 @@ public class AC_VacuumWire : MonoBehaviour
         Vector3 toHead = vacuumHead.position - hoseOrigin;
         float distance = toHead.magnitude;
 
-        if (distance > maxHoseLength)
+        // Set a drop threshold so the vacuum head is dropped if pulled too far
+        float dropThreshold = maxHoseLength * 0.75f; // Adjust this to control the drop distance (lower means it drops sooner)
+
+        if (distance > dropThreshold)
         {
             // Force drop if held by XR
             if (grabInteractable && grabInteractable.isSelected)
@@ -147,7 +150,7 @@ public class AC_VacuumWire : MonoBehaviour
                 if (interactor != null && interactor.interactionManager != null)
                 {
                     interactor.interactionManager.SelectExit(interactor, grabInteractable);
-                    Debug.Log("Vacuum head pulled too far — forced drop.");
+                    Debug.Log("Vacuum head pulled too far — forced early drop.");
                 }
             }
 
