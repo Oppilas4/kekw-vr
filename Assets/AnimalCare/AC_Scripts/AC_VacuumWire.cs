@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
@@ -20,8 +21,8 @@ public class AC_VacuumWire : MonoBehaviour
     private float maxHoseLength;
     private Vector3 hoseOrigin;
 
-    private bool isDetached = false;
     private ConfigurableJoint endJoint;
+    private XRGrabInteractable grabInteractable;
 
     void Start()
     {
@@ -33,6 +34,8 @@ public class AC_VacuumWire : MonoBehaviour
 
         hoseOrigin = vacuumBase.position;
         maxHoseLength = segmentCount * segmentSpacing * 0.95f;
+
+        grabInteractable = vacuumHead.GetComponent<XRGrabInteractable>();
 
         Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
         if (headRb != null)
@@ -101,7 +104,6 @@ public class AC_VacuumWire : MonoBehaviour
             previousRb = rb;
         }
 
-        // Store reference to the joint to break it later
         endJoint = segments[^1].gameObject.AddComponent<ConfigurableJoint>();
         endJoint.connectedBody = vacuumHead.GetComponent<Rigidbody>();
 
@@ -133,30 +135,28 @@ public class AC_VacuumWire : MonoBehaviour
 
     void ClampVacuumHeadPosition()
     {
-        if (isDetached) return;
-
         Vector3 toHead = vacuumHead.position - hoseOrigin;
         float distance = toHead.magnitude;
 
         if (distance > maxHoseLength)
         {
-            if (endJoint != null)
+            // Force drop if held by XR
+            if (grabInteractable && grabInteractable.isSelected)
             {
-                Destroy(endJoint);
+                var interactor = grabInteractable.selectingInteractor;
+                if (interactor != null && interactor.interactionManager != null)
+                {
+                    interactor.interactionManager.SelectExit(interactor, grabInteractable);
+                    Debug.Log("Vacuum head pulled too far — forced drop.");
+                }
             }
-
-            isDetached = true;
 
             Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
             if (headRb)
             {
-                Vector3 yankDirection = toHead.normalized;
                 headRb.velocity = Vector3.zero;
                 headRb.angularVelocity = Vector3.zero;
-                headRb.AddForce(yankDirection * 5f, ForceMode.Impulse);
             }
-
-            Debug.Log("Vacuum hose detached from hand!");
         }
     }
 
