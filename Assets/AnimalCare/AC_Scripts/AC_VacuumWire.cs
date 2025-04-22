@@ -139,7 +139,7 @@ public class AC_VacuumWire : MonoBehaviour
         float distance = toHead.magnitude;
 
         // Set a drop threshold so the vacuum head is dropped if pulled too far
-        float dropThreshold = maxHoseLength * 0.75f; // Adjust this to control the drop distance (lower means it drops sooner)
+        float dropThreshold = maxHoseLength * 0.55f; // Adjust this to control the drop distance (lower means it drops sooner)
 
         if (distance > dropThreshold)
         {
