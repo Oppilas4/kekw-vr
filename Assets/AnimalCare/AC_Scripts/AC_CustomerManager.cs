@@ -86,7 +86,7 @@ public class AC_CustomerManager : MonoBehaviour
 
             Destroy(currentCustomerObj);
 
-            yield return new WaitForSeconds(1f); // short delay before next customer
+            yield return new WaitForSeconds(3f); // short delay before next customer
         }
     }
 
