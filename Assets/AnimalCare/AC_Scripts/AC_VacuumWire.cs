@@ -1,6 +1,6 @@
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.XR.Interaction.Toolkit;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class AC_VacuumWire : MonoBehaviour
@@ -21,9 +21,8 @@ public class AC_VacuumWire : MonoBehaviour
     private float maxHoseLength;
     private Vector3 hoseOrigin;
 
+    private ConfigurableJoint endJoint;
     private XRGrabInteractable grabInteractable;
-
-    private bool isGrabbed = false;
 
     void Start()
     {
@@ -34,7 +33,9 @@ public class AC_VacuumWire : MonoBehaviour
         }
 
         hoseOrigin = vacuumBase.position;
-        maxHoseLength = segmentCount * segmentSpacing * 0.75f; // tighter max length
+        maxHoseLength = segmentCount * segmentSpacing * 0.95f;
+
+        grabInteractable = vacuumHead.GetComponent<XRGrabInteractable>();
 
         Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
         if (headRb != null)
@@ -43,13 +44,6 @@ public class AC_VacuumWire : MonoBehaviour
             headRb.drag = 0.1f;
             headRb.angularDrag = 0.05f;
             headRb.interpolation = RigidbodyInterpolation.Interpolate;
-        }
-
-        grabInteractable = vacuumHead.GetComponent<XRGrabInteractable>();
-        if (grabInteractable != null)
-        {
-            grabInteractable.selectEntered.AddListener(_ => isGrabbed = true);
-            grabInteractable.selectExited.AddListener(_ => isGrabbed = false);
         }
 
         GetComponent<MeshFilter>().mesh = mesh = new Mesh();
@@ -102,15 +96,15 @@ public class AC_VacuumWire : MonoBehaviour
                 };
 
                 joint.xDrive = joint.yDrive = joint.zDrive = drive;
-                joint.slerpDrive = drive;
                 joint.configuredInWorldSpace = false;
+                joint.slerpDrive = drive;
                 joint.enableCollision = false;
             }
 
             previousRb = rb;
         }
 
-        ConfigurableJoint endJoint = segments[^1].gameObject.AddComponent<ConfigurableJoint>();
+        endJoint = segments[^1].gameObject.AddComponent<ConfigurableJoint>();
         endJoint.connectedBody = vacuumHead.GetComponent<Rigidbody>();
 
         endJoint.xMotion = endJoint.yMotion = endJoint.zMotion = ConfigurableJointMotion.Limited;
@@ -126,7 +120,6 @@ public class AC_VacuumWire : MonoBehaviour
         };
 
         endJoint.xDrive = endJoint.yDrive = endJoint.zDrive = endDrive;
-        endJoint.slerpDrive = endDrive;
         endJoint.configuredInWorldSpace = false;
     }
 
@@ -145,50 +138,27 @@ public class AC_VacuumWire : MonoBehaviour
         Vector3 toHead = vacuumHead.position - hoseOrigin;
         float distance = toHead.magnitude;
 
-        if (distance > maxHoseLength)
+        // Set a drop threshold so the vacuum head is dropped if pulled too far
+        float dropThreshold = maxHoseLength * 0.55f; // Adjust this to control the drop distance (lower means it drops sooner)
+
+        if (distance > dropThreshold)
         {
-            if (isGrabbed && grabInteractable != null)
+            // Force drop if held by XR
+            if (grabInteractable && grabInteractable.isSelected)
             {
-                grabInteractable.interactionManager.SelectExit(grabInteractable.firstInteractorSelecting, grabInteractable);
-                isGrabbed = false;
-
-                // Soften joints and damp segments
-                foreach (var segment in segments)
+                var interactor = grabInteractable.selectingInteractor;
+                if (interactor != null && interactor.interactionManager != null)
                 {
-                    var joint = segment.GetComponent<ConfigurableJoint>();
-                    if (joint != null)
-                    {
-                        JointDrive softenedDrive = new JointDrive
-                        {
-                            positionSpring = 200f,
-                            positionDamper = 50f,
-                            maximumForce = Mathf.Infinity
-                        };
-
-                        joint.xDrive = joint.yDrive = joint.zDrive = softenedDrive;
-                        joint.slerpDrive = softenedDrive;
-                    }
-
-                    Rigidbody rb = segment.GetComponent<Rigidbody>();
-                    if (rb != null)
-                    {
-                        rb.drag = 5f;
-                    }
+                    interactor.interactionManager.SelectExit(interactor, grabInteractable);
+                    Debug.Log("Vacuum head pulled too far — forced early drop.");
                 }
             }
 
-            // Clamp position to max length
-            Vector3 clampedPosition = hoseOrigin + toHead.normalized * maxHoseLength;
             Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
             if (headRb)
             {
                 headRb.velocity = Vector3.zero;
                 headRb.angularVelocity = Vector3.zero;
-                headRb.MovePosition(clampedPosition);
-            }
-            else
-            {
-                vacuumHead.position = clampedPosition;
             }
         }
     }
