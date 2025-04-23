@@ -26,4 +26,18 @@ public class AC_HoseResetClicker : MonoBehaviour
         if (vacuumWire != null)
             vacuumWire.ResetHose();
     }
+    public void Press(ActivateEventArgs arg)
+    {
+        animator.SetTrigger("Pressed");
+
+        if (vacuumWire != null)
+        {
+            vacuumWire.FullReset();
+        }
+        else
+        {
+            Debug.LogError("No AC_VacuumWire assigned to this reset button.");
+        }
+    }
+
 }
