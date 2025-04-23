@@ -195,6 +195,7 @@ public class AC_DogMovement : MonoBehaviour
 
         if (door.checkOpening)
         {
+            StartCoroutine(Wait(1.5f));
             MoveIntoSink();
         }
         else
@@ -287,5 +288,9 @@ public class AC_DogMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y + 30f, currentRotation.z);
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
         Debug.Log("Dog is on Bathtub");
+    }
+    IEnumerator Wait(float time)
+    {
+        yield return new WaitForSeconds(time);
     }
 }
