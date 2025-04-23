@@ -52,6 +52,22 @@ public class AC_VacuumWire : MonoBehaviour
         GenerateWire();
     }
 
+    public void ResetHose()
+    {
+        // Reset head position and velocity
+        Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
+        if (headRb != null)
+        {
+            headRb.velocity = Vector3.zero;
+            headRb.angularVelocity = Vector3.zero;
+            headRb.MovePosition(vacuumBase.position + Vector3.forward * 0.5f); // or wherever you want it to reset
+        }
+        else
+        {
+            vacuumHead.position = vacuumBase.position + Vector3.forward * 0.5f;
+        }
+    }
+
     void GenerateWire()
     {
         Vector3 start = vacuumBase.position;

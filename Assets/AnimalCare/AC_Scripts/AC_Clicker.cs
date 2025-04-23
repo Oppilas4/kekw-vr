@@ -6,6 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class AC_Clicker : MonoBehaviour
 {
     public AC_DogMovement dog;
+    
     Animator animator;
     // Start is called before the first frame update
     void Start()
