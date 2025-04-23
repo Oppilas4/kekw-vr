@@ -28,6 +28,7 @@ public class AC_CustomerManager : MonoBehaviour
     public TextMeshProUGUI[] taskTexts;
     public TextMeshProUGUI[] priceTexts;
     public AC_ChecklistManager checklistManager;
+    public GameObject dog;
     void Start()
     {
         StartCoroutine(ServeNextCustomer());
@@ -39,7 +40,7 @@ public class AC_CustomerManager : MonoBehaviour
         {
             // Instantiate a new customer prefab
             currentCustomerObj = Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);
-
+            dog.SetActive(true);
             // Generate a random service order for this customer
             Customer currentCustomer = GenerateRandomCustomer();
 
@@ -85,7 +86,7 @@ public class AC_CustomerManager : MonoBehaviour
             Debug.Log($"Customer done! Earned: {currentCustomer.totalPayment}e");
 
             Destroy(currentCustomerObj);
-
+            dog.SetActive(false);
             yield return new WaitForSeconds(3f); // short delay before next customer
         }
     }

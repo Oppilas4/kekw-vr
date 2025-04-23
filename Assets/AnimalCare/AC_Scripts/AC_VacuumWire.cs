@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using System.Collections.Generic;
+using System.Collections;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class AC_VacuumWire : MonoBehaviour
@@ -69,34 +70,64 @@ public class AC_VacuumWire : MonoBehaviour
     }
     public void FullReset()
     {
-        // Destroy all existing segments
+        StartCoroutine(ResetCoroutine());
+    }
+
+    private IEnumerator ResetCoroutine()
+    {
+        // Step 1: Disable physics and destroy segments
         foreach (Transform seg in segments)
         {
             if (seg != null)
             {
-                Destroy(seg.gameObject);
+                Rigidbody rb = seg.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.velocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                    rb.isKinematic = true;
+                }
+
+                Joint[] joints = seg.GetComponents<Joint>();
+                foreach (var j in joints)
+                    Destroy(j);
             }
         }
+
+        // Destroy segment GameObjects
+        foreach (Transform seg in segments)
+        {
+            if (seg != null)
+                Destroy(seg.gameObject);
+        }
+
         segments.Clear();
 
-        // Reset vacuum head position
-        Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
-        if (headRb)
+        // Step 2: Reset vacuum head
+        if (vacuumHead != null)
         {
-            headRb.velocity = Vector3.zero;
-            headRb.angularVelocity = Vector3.zero;
-            headRb.MovePosition(vacuumBase.position + Vector3.forward * segmentCount * segmentSpacing * 0.5f);
-            headRb.rotation = Quaternion.identity;
-        }
-        else
-        {
-            vacuumHead.position = vacuumBase.position + Vector3.forward * segmentCount * segmentSpacing * 0.5f;
-            vacuumHead.rotation = Quaternion.identity;
+            Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
+            if (headRb != null)
+            {
+                headRb.velocity = Vector3.zero;
+                headRb.angularVelocity = Vector3.zero;
+                headRb.MovePosition(vacuumBase.position + Vector3.forward * segmentCount * segmentSpacing * 0.5f);
+                headRb.rotation = Quaternion.identity;
+            }
+            else
+            {
+                vacuumHead.position = vacuumBase.position + Vector3.forward * segmentCount * segmentSpacing * 0.5f;
+                vacuumHead.rotation = Quaternion.identity;
+            }
         }
 
-        // Recreate the hose chain
+        // Step 3: Wait a single frame to let physics settle
+        yield return null;
+
+        // Step 4: Regenerate the wire
         GenerateWire();
     }
+
 
     void GenerateWire()
     {

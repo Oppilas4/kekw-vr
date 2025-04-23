@@ -29,6 +29,7 @@ public class AC_DogMovement : MonoBehaviour
     public Transform bathtub;
     public Transform trimmingTable;
     public Transform outoftub;
+    public Transform start;
 
     public AC_DoorToggle door;
     public Transform InTub;
@@ -44,7 +45,20 @@ public class AC_DogMovement : MonoBehaviour
         navAgent = GetComponent<NavMeshAgent>(); // Get the NavMeshAgent component on the dog
         navAgent.speed = moveSpeed;              // Set movement speed for the NavMeshAgent
     }
-
+    void OnEnable()
+    {
+        if (navAgent == null)
+            navAgent = GetComponent<NavMeshAgent>();
+        if (start != null)
+        {
+            navAgent.Warp(start.position); // Teleport the dog to the start position
+            transform.rotation = start.rotation; // Optional: match the rotation
+            dogAnimator.SetFloat("Speed", 0); // Reset animation to idle
+            isEating = false; // Reset eating state
+            navAgent.isStopped = false;
+            targetFood = null;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
