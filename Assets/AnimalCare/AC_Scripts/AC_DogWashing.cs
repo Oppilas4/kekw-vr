@@ -14,7 +14,7 @@ public class AC_DogWashing : MonoBehaviour
     private List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
 
     private float wetnessAmount = 0f;
-    private const float hitRadiusSqr = 0.20f * 0.20f; //hit ara size
+    private const float hitRadiusSqr = 0.75f * 0.75f; //hit area size
     private const float wetnessThreshold = 2f; // M‰‰r‰, jolla koko koira muuttuu m‰r‰ksi
 
     void Start()
@@ -73,7 +73,7 @@ public class AC_DogWashing : MonoBehaviour
             float distSqr = (vertices[i] - localHitPoint).sqrMagnitude;
             if (distSqr < hitRadiusSqr)
             {
-                colors[i] = Color.Lerp(colors[i], wetColor, 0.2f);
+                colors[i] = Color.Lerp(colors[i], wetColor, 0.5f);
                 wetnessAmount += 1f / vertices.Length; // Kasvata wetnessAmountia, kun osumia tulee
             }
         }
@@ -84,7 +84,7 @@ public class AC_DogWashing : MonoBehaviour
         // Kun m‰rkyys ylitt‰‰ rajan, koko koira saa m‰r‰n v‰rin
         for (int i = 0; i < colors.Length; i++)
         {
-            colors[i] = Color.Lerp(colors[i], wetColor, 0.1f);
+            colors[i] = Color.Lerp(colors[i], wetColor, 0.05f);
         }
         Debug.Log("The dog is fully wet!");
     }

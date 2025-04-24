@@ -89,6 +89,7 @@ Shader "Unlit/NewUnlitShader"
                 return baseColor * IN.color * NdotL;
             }
             ENDHLSL
+           
         }
     }
 }

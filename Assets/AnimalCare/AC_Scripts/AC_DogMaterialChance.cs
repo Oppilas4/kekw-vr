@@ -47,7 +47,7 @@ public class AC_DogMaterialChance : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        Debug.Log("particle hit");
+        //Debug.Log("particle hit");
         if (objectRenderer != null && wetMaterial != null)
         {   
             if (other.CompareTag("Water"))
