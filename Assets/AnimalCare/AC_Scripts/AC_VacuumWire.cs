@@ -1,7 +1,5 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 using System.Collections.Generic;
-using System.Collections;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class AC_VacuumWire : MonoBehaviour
@@ -16,14 +14,13 @@ public class AC_VacuumWire : MonoBehaviour
     public int radialSegments = 6;
     public float wireRadius = 0.03f;
 
+    public Transform hoseHeadResetPoint;
+
     private List<Transform> segments = new List<Transform>();
     private Mesh mesh;
 
     private float maxHoseLength;
     private Vector3 hoseOrigin;
-
-    private ConfigurableJoint endJoint;
-    private XRGrabInteractable grabInteractable;
 
     void Start()
     {
@@ -35,8 +32,6 @@ public class AC_VacuumWire : MonoBehaviour
 
         hoseOrigin = vacuumBase.position;
         maxHoseLength = segmentCount * segmentSpacing * 0.95f;
-
-        grabInteractable = vacuumHead.GetComponent<XRGrabInteractable>();
 
         Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
         if (headRb != null)
@@ -53,82 +48,6 @@ public class AC_VacuumWire : MonoBehaviour
         GenerateWire();
     }
 
-    public void ResetHose()
-    {
-        // Reset head position and velocity
-        Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
-        if (headRb != null)
-        {
-            headRb.velocity = Vector3.zero;
-            headRb.angularVelocity = Vector3.zero;
-            headRb.MovePosition(vacuumBase.position + Vector3.forward * 0.5f); // or wherever you want it to reset
-        }
-        else
-        {
-            vacuumHead.position = vacuumBase.position + Vector3.forward * 0.5f;
-        }
-    }
-    public void FullReset()
-    {
-        StartCoroutine(ResetCoroutine());
-    }
-
-    private IEnumerator ResetCoroutine()
-    {
-        // Step 1: Disable physics and destroy segments
-        foreach (Transform seg in segments)
-        {
-            if (seg != null)
-            {
-                Rigidbody rb = seg.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    rb.velocity = Vector3.zero;
-                    rb.angularVelocity = Vector3.zero;
-                    rb.isKinematic = true;
-                }
-
-                Joint[] joints = seg.GetComponents<Joint>();
-                foreach (var j in joints)
-                    Destroy(j);
-            }
-        }
-
-        // Destroy segment GameObjects
-        foreach (Transform seg in segments)
-        {
-            if (seg != null)
-                Destroy(seg.gameObject);
-        }
-
-        segments.Clear();
-
-        // Step 2: Reset vacuum head
-        if (vacuumHead != null)
-        {
-            Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
-            if (headRb != null)
-            {
-                headRb.velocity = Vector3.zero;
-                headRb.angularVelocity = Vector3.zero;
-                headRb.MovePosition(vacuumBase.position + Vector3.forward * segmentCount * segmentSpacing * 0.5f);
-                headRb.rotation = Quaternion.identity;
-            }
-            else
-            {
-                vacuumHead.position = vacuumBase.position + Vector3.forward * segmentCount * segmentSpacing * 0.5f;
-                vacuumHead.rotation = Quaternion.identity;
-            }
-        }
-
-        // Step 3: Wait a single frame to let physics settle
-        yield return null;
-
-        // Step 4: Regenerate the wire
-        GenerateWire();
-    }
-
-
     void GenerateWire()
     {
         Vector3 start = vacuumBase.position;
@@ -140,7 +59,6 @@ public class AC_VacuumWire : MonoBehaviour
         {
             Vector3 position = Vector3.Lerp(start, end, (float)i / (segmentCount - 1));
             GameObject segment = Instantiate(wireSegmentPrefab, position, Quaternion.identity);
-            segment.tag = "HoseSegment";
             segment.transform.localScale = Vector3.one * 0.05f;
 
             Rigidbody rb = segment.GetComponent<Rigidbody>();
@@ -182,7 +100,7 @@ public class AC_VacuumWire : MonoBehaviour
             previousRb = rb;
         }
 
-        endJoint = segments[^1].gameObject.AddComponent<ConfigurableJoint>();
+        ConfigurableJoint endJoint = segments[^1].gameObject.AddComponent<ConfigurableJoint>();
         endJoint.connectedBody = vacuumHead.GetComponent<Rigidbody>();
 
         endJoint.xMotion = endJoint.yMotion = endJoint.zMotion = ConfigurableJointMotion.Limited;
@@ -201,35 +119,6 @@ public class AC_VacuumWire : MonoBehaviour
         endJoint.configuredInWorldSpace = false;
     }
 
-    public void ResetEntireHose()
-    {
-        // Destroy old segments
-        foreach (Transform seg in segments)
-        {
-            if (seg != null)
-                Destroy(seg.gameObject);
-        }
-
-        segments.Clear();
-
-        // Reset head
-        if (vacuumHead.TryGetComponent<Rigidbody>(out var headRb))
-        {
-            headRb.velocity = Vector3.zero;
-            headRb.angularVelocity = Vector3.zero;
-            headRb.position = vacuumBase.position + Vector3.forward * 0.5f; // Adjust as needed
-            headRb.rotation = Quaternion.identity;
-        }
-        else
-        {
-            vacuumHead.position = vacuumBase.position + Vector3.forward * 0.5f;
-            vacuumHead.rotation = Quaternion.identity;
-        }
-
-        // Rebuild the hose
-        GenerateWire();
-    }
-
     void FixedUpdate()
     {
         ClampVacuumHeadPosition();
@@ -245,27 +134,19 @@ public class AC_VacuumWire : MonoBehaviour
         Vector3 toHead = vacuumHead.position - hoseOrigin;
         float distance = toHead.magnitude;
 
-        // Set a drop threshold so the vacuum head is dropped if pulled too far
-        float dropThreshold = maxHoseLength * 0.55f; // Adjust this to control the drop distance (lower means it drops sooner)
-
-        if (distance > dropThreshold)
+        if (distance > maxHoseLength)
         {
-            // Force drop if held by XR
-            if (grabInteractable && grabInteractable.isSelected)
-            {
-                var interactor = grabInteractable.selectingInteractor;
-                if (interactor != null && interactor.interactionManager != null)
-                {
-                    interactor.interactionManager.SelectExit(interactor, grabInteractable);
-                    Debug.Log("Vacuum head pulled too far — forced early drop.");
-                }
-            }
-
+            Vector3 clampedPosition = hoseOrigin + toHead.normalized * maxHoseLength;
             Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
             if (headRb)
             {
                 headRb.velocity = Vector3.zero;
                 headRb.angularVelocity = Vector3.zero;
+                headRb.MovePosition(clampedPosition);
+            }
+            else
+            {
+                vacuumHead.position = clampedPosition;
             }
         }
     }
@@ -286,7 +167,6 @@ public class AC_VacuumWire : MonoBehaviour
         {
             Transform seg = segments[i];
             Vector3 center = seg.position;
-
             Vector3 forward = (i == segments.Count - 1)
                 ? (center - segments[i - 1].position).normalized
                 : (segments[i + 1].position - center).normalized;
@@ -329,5 +209,36 @@ public class AC_VacuumWire : MonoBehaviour
         mesh.vertices = vertices;
         mesh.normals = normals;
         mesh.triangles = triangles;
+    }
+
+    public void ResetEntireHose()
+    {
+        foreach (Transform seg in segments)
+        {
+            if (seg != null)
+                Destroy(seg.gameObject);
+        }
+
+        segments.Clear();
+
+        foreach (Joint joint in vacuumHead.GetComponents<Joint>())
+        {
+            Destroy(joint);
+        }
+
+        if (vacuumHead.TryGetComponent<Rigidbody>(out var headRb))
+        {
+            headRb.velocity = Vector3.zero;
+            headRb.angularVelocity = Vector3.zero;
+            headRb.MovePosition(hoseHeadResetPoint.position);
+            headRb.MoveRotation(hoseHeadResetPoint.rotation);
+        }
+        else
+        {
+            vacuumHead.position = hoseHeadResetPoint.position;
+            vacuumHead.rotation = hoseHeadResetPoint.rotation;
+        }
+
+        GenerateWire();
     }
 }
