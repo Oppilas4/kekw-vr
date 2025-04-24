@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AC_DogWashing : MonoBehaviour
 {
-    public SkinnedMeshRenderer skinnedMeshRenderer;
+    private SkinnedMeshRenderer skinnedMeshRenderer;
     private Mesh mesh;
     private Color[] colors;
     private Vector3[] vertices;
@@ -14,12 +14,12 @@ public class AC_DogWashing : MonoBehaviour
     private List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
 
     private float wetnessAmount = 0f;
-    private const float hitRadiusSqr = 0.75f * 0.75f; //hit area size
+    private const float hitRadiusSqr = 0.002f * 0.002f; //hit area size
     private const float wetnessThreshold = 2f; // M‰‰r‰, jolla koko koira muuttuu m‰r‰ksi
 
     void Start()
     {
-        
+        skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
         if (skinnedMeshRenderer == null)
         {
             Debug.LogError("SkinnedMeshRenderer not found!");

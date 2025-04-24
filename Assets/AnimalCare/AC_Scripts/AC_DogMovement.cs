@@ -233,7 +233,7 @@ public class AC_DogMovement : MonoBehaviour
     }
     public void AfterShower()
     {
-        // StartCoroutine(WaitAndMoveOut(towel)); I disable this so dog does not move automatically to the drying place itself, need to click the clicker at trimming place
+        StartCoroutine(WaitAndMoveOut(towel));
     }
     private IEnumerator WaitAndMoveOut(GameObject towel)
     {
@@ -293,7 +293,7 @@ public class AC_DogMovement : MonoBehaviour
             yield return null;
         }
         Vector3 currentRotation = transform.eulerAngles;
-        transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y + 30f, currentRotation.z);
+        transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y + 40f, currentRotation.z);
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
         Debug.Log("Dog is on Bathtub");
     }
