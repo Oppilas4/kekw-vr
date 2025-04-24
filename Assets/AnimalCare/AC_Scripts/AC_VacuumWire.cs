@@ -140,6 +140,7 @@ public class AC_VacuumWire : MonoBehaviour
         {
             Vector3 position = Vector3.Lerp(start, end, (float)i / (segmentCount - 1));
             GameObject segment = Instantiate(wireSegmentPrefab, position, Quaternion.identity);
+            segment.tag = "HoseSegment";
             segment.transform.localScale = Vector3.one * 0.05f;
 
             Rigidbody rb = segment.GetComponent<Rigidbody>();
