@@ -84,7 +84,7 @@ public class AC_CustomerManager : MonoBehaviour
             yield return new WaitUntil(() => AreAllTasksGreen());
 
             Debug.Log($"Customer done! Earned: {currentCustomer.totalPayment}e");
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(10f);
             Destroy(currentCustomerObj);
             dog.SetActive(false);
             yield return new WaitForSeconds(3f); // short delay before next customer

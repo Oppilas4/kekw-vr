@@ -288,12 +288,18 @@ public class AC_DogMovement : MonoBehaviour
         {
             // Trigger the "Walk" animation
             dogAnimator.SetFloat("Speed", moveSpeed);
+            // Rotate the dog slightly (you can adjust the angle of rotation as needed)
+            float rotationSpeed = 40f; // Adjust rotation speed
+            Vector3 directionToTarget = navAgent.steeringTarget - transform.position;
+            directionToTarget.y = 0; // Make sure to rotate only around the Y-axis
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget) * Quaternion.Euler(0, 15f, 0);
+
+            // Smoothly rotate towards the target rotation
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
             // Wait a frame before checking again, allowing other systems to run
             yield return null;
         }
-        Vector3 currentRotation = transform.eulerAngles;
-        transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y + 40f, currentRotation.z);
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
         Debug.Log("Dog is on Bathtub");
     }
