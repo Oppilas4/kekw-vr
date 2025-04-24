@@ -201,6 +201,35 @@ public class AC_VacuumWire : MonoBehaviour
         endJoint.configuredInWorldSpace = false;
     }
 
+    public void ResetEntireHose()
+    {
+        // Destroy old segments
+        foreach (Transform seg in segments)
+        {
+            if (seg != null)
+                Destroy(seg.gameObject);
+        }
+
+        segments.Clear();
+
+        // Reset head
+        if (vacuumHead.TryGetComponent<Rigidbody>(out var headRb))
+        {
+            headRb.velocity = Vector3.zero;
+            headRb.angularVelocity = Vector3.zero;
+            headRb.position = vacuumBase.position + Vector3.forward * 0.5f; // Adjust as needed
+            headRb.rotation = Quaternion.identity;
+        }
+        else
+        {
+            vacuumHead.position = vacuumBase.position + Vector3.forward * 0.5f;
+            vacuumHead.rotation = Quaternion.identity;
+        }
+
+        // Rebuild the hose
+        GenerateWire();
+    }
+
     void FixedUpdate()
     {
         ClampVacuumHeadPosition();
