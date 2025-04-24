@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AC_DogWashing : MonoBehaviour
 {
@@ -14,11 +15,15 @@ public class AC_DogWashing : MonoBehaviour
     private List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
 
     private float wetnessAmount = 0f;
-    private const float hitRadiusSqr = 0.002f * 0.002f; //hit area size
+    private const float hitRadiusSqr = 0.0015f * 0.0015f; //hit area size
     private const float wetnessThreshold = 2f; // M‰‰r‰, jolla koko koira muuttuu m‰r‰ksi
+
+    public GameObject dripping;
+    ParticleSystem waterDripping;
 
     void Start()
     {
+        waterDripping = dripping.GetComponent<ParticleSystem>();
         skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
         if (skinnedMeshRenderer == null)
         {
@@ -84,7 +89,9 @@ public class AC_DogWashing : MonoBehaviour
         // Kun m‰rkyys ylitt‰‰ rajan, koko koira saa m‰r‰n v‰rin
         for (int i = 0; i < colors.Length; i++)
         {
-            colors[i] = Color.Lerp(colors[i], wetColor, 0.05f);
+            dripping.SetActive(true);
+            waterDripping.Play();
+            colors[i] = Color.Lerp(colors[i], wetColor, 0.025f);
         }
         Debug.Log("The dog is fully wet!");
     }
