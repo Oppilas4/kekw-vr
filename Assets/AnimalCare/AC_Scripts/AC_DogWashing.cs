@@ -10,21 +10,38 @@ public class AC_DogWashing : MonoBehaviour
     private Color[] colors;
     private Vector3[] vertices;
 
-    private Color wetColor = new Color(0.3f, 0.15f, 0.035f); // Tumma ruskea m‰rk‰ v‰ri
-    private Color dryColor = Color.white; // Kuiva v‰ri
+    private Color wetColor = new Color(0.165f, 0.129f, 0.106f); // Tumma ruskea m‰rk‰ v‰ri
+    private Color trimColor = Color.white; // trimmed v‰ri
+    private Color dryColor = new Color(0.773f, 0.502f, 0.294f); // Kuiva v‰ri
     private List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
 
     private float wetnessAmount = 0f;
     private const float hitRadiusSqr = 0.0015f * 0.0015f; //hit area size
     private const float wetnessThreshold = 2f; // M‰‰r‰, jolla koko koira muuttuu m‰r‰ksi
+    private const float dryThreshold = 0.1f;   // Kuivuusraja
+
+    private float trimAmount = 0f;
+    private const float trimThreshold = 2f; // M‰‰r‰, jolla koko koira muuttuu m‰r‰ksi
 
     public GameObject dripping;
     ParticleSystem waterDripping;
+
+    public AC_Soap soap;
+    public AC_DogMovement dog;
+    public AC_ChecklistManager checklistManager;
+
+    public bool wet = false;
+    public bool wet1 = false;
+    public bool wet2 = false;
+    public bool notTrimmed = true;
+
+    private Material mat;
 
     void Start()
     {
         waterDripping = dripping.GetComponent<ParticleSystem>();
         skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
+        mat = skinnedMeshRenderer.material;
         if (skinnedMeshRenderer == null)
         {
             Debug.LogError("SkinnedMeshRenderer not found!");
@@ -45,31 +62,55 @@ public class AC_DogWashing : MonoBehaviour
 
         mesh.colors = colors;
     }
-
+    void OnEnable()
+    {
+        trimAmount = 0f;
+        SetDryColorImmediately();
+    }
     void OnParticleCollision(GameObject other)
     {
-        if (!other.CompareTag("Water")) return;
-
         ParticleSystem ps = other.GetComponent<ParticleSystem>();
         if (ps == null) return;
 
         int numCollisions = ps.GetCollisionEvents(gameObject, collisionEvents);
         for (int i = 0; i < numCollisions; i++)
         {
-            PaintVertex(collisionEvents[i].intersection);
+            Vector3 hitPoint = collisionEvents[i].intersection;
+
+            if (other.CompareTag("Water"))
+            {
+                PaintVertex(hitPoint, "Water"); // Kastelee
+            }
+            else if (other.CompareTag("Dryer"))
+            {
+                PaintVertex(hitPoint, "Dryer"); // Kuivattaa
+            }
+            else if (other.CompareTag("Trimmer"))
+            {
+                notTrimmed = false;
+                PaintVertex(hitPoint, "Trimmer"); // Kuivattaa
+            }
         }
 
-        // Varmistetaan, ett‰ v‰ri p‰ivittyy vain kerran, kun m‰rkyys ylitt‰‰ rajan
         if (wetnessAmount >= wetnessThreshold)
         {
-            SetFullWetColor(); // Asetetaan koko koira m‰r‰ksi
+            SetFullWetColor(); // T‰ysin m‰rk‰
+        }
+        else if (wetnessAmount <= dryThreshold && notTrimmed)
+        {
+            SetFullDryColor(); // T‰ysin kuiva
+        }
+        else if (trimAmount >= trimThreshold && !notTrimmed)
+        {
+            SetFullTrimColor(); // T‰ysin kuiva
         }
 
-        mesh.colors = colors; // P‰ivitet‰‰n v‰rit
+        mesh.colors = colors;
         Debug.Log($"Wetness: {wetnessAmount:F4}");
+        Debug.Log($"TrimAmount: {trimAmount:F4}");
     }
 
-    void PaintVertex(Vector3 hitPoint)
+    void PaintVertex(Vector3 hitPoint, string nametag)
     {
         Vector3 localHitPoint = transform.InverseTransformPoint(hitPoint);
 
@@ -78,10 +119,27 @@ public class AC_DogWashing : MonoBehaviour
             float distSqr = (vertices[i] - localHitPoint).sqrMagnitude;
             if (distSqr < hitRadiusSqr)
             {
-                colors[i] = Color.Lerp(colors[i], wetColor, 0.5f);
-                wetnessAmount += 1f / vertices.Length; // Kasvata wetnessAmountia, kun osumia tulee
+                if (nametag == "Water")
+                {
+                    colors[i] = Color.Lerp(colors[i], wetColor, 0.2f);
+                    wetnessAmount += 1f / vertices.Length;
+                }
+                else if (nametag == "Dryer")
+                {
+                    colors[i] = Color.Lerp(colors[i], dryColor, 0.2f);
+                    wetnessAmount -= 1f / vertices.Length;
+                }
+                else if (nametag == "Trimmer")
+                {
+                    colors[i] = Color.Lerp(colors[i], trimColor, 0.2f);
+                    trimAmount += 1f / vertices.Length;
+                    notTrimmed = false;
+                }
             }
         }
+
+        wetnessAmount = Mathf.Clamp(wetnessAmount, 0f, wetnessThreshold);
+        trimAmount = Mathf.Clamp(trimAmount, 0f, trimThreshold);
     }
 
     void SetFullWetColor()
@@ -91,9 +149,57 @@ public class AC_DogWashing : MonoBehaviour
         {
             dripping.SetActive(true);
             waterDripping.Play();
+            wet = true;
+            if (!wet1)
+            {
+
+                wet1 = true;
+            }
+            else if (!wet2 && soap.foamed)
+            {
+                dog.AfterShower();
+                wet2 = true;
+            }
             colors[i] = Color.Lerp(colors[i], wetColor, 0.025f);
         }
         Debug.Log("The dog is fully wet!");
     }
+    void SetFullDryColor()
+    {
+        for (int i = 0; i < colors.Length; i++)
+        {
+            colors[i] = Color.Lerp(colors[i], dryColor, 0.05f);
+        }
+        Debug.Log("The dog is fully dry!");
+        if (wet2) checklistManager.CompleteTask(0);
+        wet1 = false;
+        wet2 = false;
+        wet = false;
+        soap.foamed = false;
+        waterDripping.Stop();
+        dripping.SetActive(false);
+    }
+    void SetFullTrimColor()
+    {
+        for (int i = 0; i < colors.Length; i++)
+        {
+            colors[i] = Color.Lerp(colors[i], trimColor, 0.1f);
+            mat.SetTexture("_BumpMap", null); //delete normal from material 
+        }
+        Debug.Log("The dog is fully trimmed!");
+        checklistManager.CompleteTask(1);
+        notTrimmed = true;
+    }
+    public void SetDryColorImmediately()
+    {
+        if (colors == null || colors.Length == 0 || mesh == null)
+            return;
 
+        for (int i = 0; i < colors.Length; i++)
+        {
+            colors[i] = dryColor;
+        }
+
+        mesh.colors = colors;
+    }
 }

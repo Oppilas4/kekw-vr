@@ -9,11 +9,6 @@ public class AC_Dryer : MonoBehaviour
     public GameObject wind;
     ParticleSystem windFlow;
 
-    public AC_DogMaterialChance dog;
-    public AC_ChecklistManager checklistManager;
-
-    public float proximityThreshold = 1f;  // Set this to the distance at which the dog should be considered "near"
-
     // Start is called before the first frame update
     void Start()
     {
@@ -31,11 +26,6 @@ public class AC_Dryer : MonoBehaviour
     {
         wind.SetActive(true);
         windFlow.Play();
-        if (dog.wet2 && Vector3.Distance(transform.position, dog.transform.position) <= proximityThreshold)
-        {
-            checklistManager.CompleteTask(0);
-            dog.ChangeColorBack();
-        }
     }
 
     // This function is called when the grab button is released

@@ -8,12 +8,13 @@ public class AC_CustomerController : MonoBehaviour
 
     private NavMeshAgent agent;
     private bool hasArrived = false;
-
+    private AudioSource talk;
     public bool IsReadyToOrder => hasArrived;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        talk = GetComponent<AudioSource>();
         MoveToTarget();
     }
 
@@ -36,6 +37,7 @@ public class AC_CustomerController : MonoBehaviour
             hasArrived = true;
             agent.isStopped = true;
             animator.SetTrigger("Stop");
+            talk.Play();
             StartCoroutine(TalkForSeconds(3f));
         }
     }

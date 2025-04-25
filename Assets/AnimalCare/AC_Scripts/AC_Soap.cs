@@ -10,7 +10,7 @@ public class AC_Soap : MonoBehaviour
    
     public bool foamed = false;
     ParticleSystem soapParticle;
-    public AC_DogMaterialChance wetdog;
+    public AC_DogWashing wetdog;
     void Start()
     {
         soapParticle = soap.GetComponent<ParticleSystem>();

@@ -238,9 +238,6 @@ public class AC_DogMovement : MonoBehaviour
     private IEnumerator WaitAndMoveOut(GameObject towel)
     {
         yield return new WaitForSeconds(1f);
-        towel.SetActive(true);
-        yield return new WaitForSeconds(2.5f);
-        towel.SetActive(false);
         Vector3 target3Position = new Vector3(outoftub.position.x, outoftub.position.y, outoftub.position.z);
         // Set the adjusted target position as the NavMeshAgent's destination
         navAgent.SetDestination(target3Position);
@@ -266,6 +263,11 @@ public class AC_DogMovement : MonoBehaviour
         // Once the dog has reached the target
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
         Debug.Log("Dog is Out");
+
+        yield return new WaitForSeconds(1f);
+        towel.SetActive(true);
+        yield return new WaitForSeconds(2.5f);
+        towel.SetActive(false);
     }
     void MoveIntoSink()
     {
