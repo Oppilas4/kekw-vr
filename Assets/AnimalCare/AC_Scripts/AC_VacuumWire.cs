@@ -136,15 +136,17 @@ public class AC_VacuumWire : MonoBehaviour
 
         if (distance > maxHoseLength)
         {
-            // Drop the hose if held
+            // Drop the hose head if it's being grabbed
             var grabbable = vacuumHead.GetComponent<UnityEngine.XR.Interaction.Toolkit.XRGrabInteractable>();
             if (grabbable != null && grabbable.selectingInteractor != null)
             {
+                // Force release using deprecated method (still works in Unity 2021)
                 grabbable.selectingInteractor.EndManualInteraction();
             }
 
-            // Optionally clamp the position too if you want to prevent flying off
+            // Optional: clamp it to a legal position so it doesn't float off
             Vector3 clampedPosition = hoseOrigin + toHead.normalized * maxHoseLength;
+
             Rigidbody headRb = vacuumHead.GetComponent<Rigidbody>();
             if (headRb)
             {
@@ -158,6 +160,7 @@ public class AC_VacuumWire : MonoBehaviour
             }
         }
     }
+
 
 
     void UpdateMesh()
