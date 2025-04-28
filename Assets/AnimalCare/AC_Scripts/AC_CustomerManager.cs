@@ -13,15 +13,15 @@ public class AC_CustomerManager : MonoBehaviour
     private Dictionary<string, int> servicePrices = new Dictionary<string, int>()
     {
         { "Trimming", 20 },
-        { "Washing", 30 },
-        { "Caring", 10 }
+        { "Washing", 50 },
+        { "Feeding", 5 }
     };
 
     private Dictionary<string, int> serviceSlotIndices = new Dictionary<string, int>()
     {
         { "Washing", 0 },
         { "Trimming", 1 },
-        { "Caring", 2 }
+        { "Feeding", 2 }
     };
 
     private GameObject currentCustomerObj;
@@ -29,6 +29,7 @@ public class AC_CustomerManager : MonoBehaviour
     public TextMeshProUGUI[] priceTexts;
     public AC_ChecklistManager checklistManager;
     public GameObject dog;
+    public AC_CountdownTimer timer;
     void Start()
     {
         StartCoroutine(ServeNextCustomer());
@@ -36,7 +37,7 @@ public class AC_CustomerManager : MonoBehaviour
 
     IEnumerator ServeNextCustomer()
     {
-        while (true)
+        while (!timer.timeover)
         {
             // Instantiate a new customer prefab
             currentCustomerObj = Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);

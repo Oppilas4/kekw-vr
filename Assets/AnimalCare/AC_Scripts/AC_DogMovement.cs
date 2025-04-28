@@ -13,8 +13,7 @@ public class AC_DogMovement : MonoBehaviour
     public float detectionRadius = 10f;      // The radius in which the dog can detect food
     public LayerMask foodLayer;              // To detect only food objects
     public float moveSpeed = 1.5f;             // Speed at which the dog moves towards food
-    public Material[] dogMaterials;
-    public SkinnedMeshRenderer dogRenderer;
+    public AudioSource eatingsound;
 
     public AC_ChecklistManager checklistManager;
     public AC_ShakingCondition shakingCondition;
@@ -59,12 +58,6 @@ public class AC_DogMovement : MonoBehaviour
             isEating = false; // Reset eating state
             navAgent.isStopped = false;
             targetFood = null;
-        }
-        // Randomize dog material
-        if (dogRenderer != null && dogMaterials.Length > 0)
-        {
-            Material randomMat = dogMaterials[Random.Range(0, dogMaterials.Length)];
-            dogRenderer.material = randomMat;
         }
     }
     // Update is called once per frame
@@ -139,7 +132,7 @@ public class AC_DogMovement : MonoBehaviour
             dogAnimator.SetFloat("Speed", 0);
             // Trigger the "Eat" animation
             dogAnimator.SetTrigger(eatAnimationTrigger);
-
+            eatingsound.Play();
             StartCoroutine(WaitAndDestroy(food.gameObject)); // Or use food.SetActive(false); to hide the food instead
 
             checklistManager.CompleteTask(2);
@@ -237,7 +230,7 @@ public class AC_DogMovement : MonoBehaviour
     }
     private IEnumerator WaitAndMoveOut(GameObject towel)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(8f);
         Vector3 target3Position = new Vector3(outoftub.position.x, outoftub.position.y, outoftub.position.z);
         // Set the adjusted target position as the NavMeshAgent's destination
         navAgent.SetDestination(target3Position);

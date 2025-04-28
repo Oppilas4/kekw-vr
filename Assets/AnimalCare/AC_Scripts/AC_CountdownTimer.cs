@@ -10,7 +10,9 @@ public class AC_CountdownTimer : MonoBehaviour
     public TextMeshProUGUI countdownText; // Text to display the countdown
     private float currentTime; // Current time remaining
     private bool timerStarted = false; // Flag to check if the timer has been started
+    public bool timeover = false;
     public AC_ChecklistManager checklist;
+    public AudioSource dingSound;
     private void Update()
     {
         // Check if the Hi object is inactive and the timer hasn't been started yet
@@ -50,6 +52,8 @@ public class AC_CountdownTimer : MonoBehaviour
 
     private void EndTime()
     {
+        dingSound.Play();
         checklist.CheckScoreForReward();
+        timeover = true;
     }
 }

@@ -9,6 +9,7 @@ public class AC_ChecklistManager : MonoBehaviour
     public int[] taskPoints;
     public TextMeshProUGUI scoreText;
     public int rewardThreshold = 300;
+    public GameObject failText;
 
     private bool[] taskCompletion;
     private int totalScore = 0;
@@ -69,10 +70,17 @@ public class AC_ChecklistManager : MonoBehaviour
 
     public void CheckScoreForReward()
     {
-        if (!rewardGiven && totalScore >= rewardThreshold)
+        if (!rewardGiven)
         {
-            objectToEnable.SetActive(true);
-            rewardGiven = true;
+            if(totalScore >= rewardThreshold)
+            {
+                objectToEnable.SetActive(true);
+                rewardGiven = true;
+            }
+            else
+            {
+                failText.SetActive(true);
+            }
         }
     }
 }

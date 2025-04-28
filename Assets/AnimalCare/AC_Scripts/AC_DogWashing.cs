@@ -10,7 +10,9 @@ public class AC_DogWashing : MonoBehaviour
     private Color[] colors;
     private Vector3[] vertices;
 
-    private Color wetColor = new Color(0.165f, 0.129f, 0.106f); // Tumma ruskea märkä väri
+    public Material[] dogMaterials;
+
+    private Color wetColor = new Color(0.3882f, 0.2941f, 0.2314f); // Tumma ruskea märkä väri
     private Color trimColor = Color.white; // trimmed väri
     private Color dryColor = new Color(0.773f, 0.502f, 0.294f); // Kuiva väri
     private List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
@@ -61,9 +63,17 @@ public class AC_DogWashing : MonoBehaviour
         }
 
         mesh.colors = colors;
+        Debug.Log("Playing Start");
     }
     void OnEnable()
     {
+        // Randomize dog material
+        if (skinnedMeshRenderer != null && dogMaterials.Length > 0)
+        {
+            Material randomMat = dogMaterials[Random.Range(0, dogMaterials.Length)];
+            skinnedMeshRenderer.material = randomMat;
+        }
+        mat = skinnedMeshRenderer.material;
         trimAmount = 0f;
         SetDryColorImmediately();
     }
@@ -184,8 +194,8 @@ public class AC_DogWashing : MonoBehaviour
         for (int i = 0; i < colors.Length; i++)
         {
             colors[i] = Color.Lerp(colors[i], trimColor, 0.1f);
-            mat.SetTexture("_BumpMap", null); //delete normal from material 
         }
+        mat.SetTexture("_BumpMap", null); //delete normal from material 
         Debug.Log("The dog is fully trimmed!");
         checklistManager.CompleteTask(1);
         notTrimmed = true;
