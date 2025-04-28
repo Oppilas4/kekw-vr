@@ -14,7 +14,7 @@ public class AC_RadioShuffle : MonoBehaviour
         radioAudio = GetComponent<AudioSource>();
         grabInteractable = GetComponent<XRGrabInteractable>();
 
-        // Listen for trigger press (activated)
+        // Listen for the trigger press (activated)
         grabInteractable.activated.AddListener(OnTriggerPressed);
 
         if (songs.Count > 0)
@@ -30,23 +30,38 @@ public class AC_RadioShuffle : MonoBehaviour
 
     void PlayRandomSong()
     {
-        if (songs.Count == 0) return;
+        if (songs.Count == 0) return; // Safety check to ensure we have at least one song
 
+        // Pick a random song
         AudioClip newSong;
         do
         {
             newSong = songs[Random.Range(0, songs.Count)];
-        } while (newSong == radioAudio.clip && songs.Count > 1);
+        } while (newSong == radioAudio.clip && songs.Count > 1); // Ensure the song isn't the same as the current one
 
+        // Set the new song and play it
         radioAudio.clip = newSong;
         radioAudio.Play();
-        Debug.Log("Audio is playing");
+        Debug.Log("Playing new random song: " + newSong.name);
     }
 
-    // Press trigger once while holding = mute/unmute
+    // Called when the trigger is pressed while holding the object
     public void OnTriggerPressed(ActivateEventArgs args)
     {
-        radioAudio.mute = !radioAudio.mute; // Toggle mute/unmute
-        Debug.Log("Trigger pressed. Radio muted: " + radioAudio.mute);
+        if (radioAudio.mute)
+        {
+            // If it was muted, unmute and play a random song
+            radioAudio.mute = false;
+
+            // Pick and play a random song
+            PlayRandomSong();
+            Debug.Log("Radio unmuted and playing a random song.");
+        }
+        else
+        {
+            // If it's not muted, mute the audio
+            radioAudio.mute = true;
+            Debug.Log("Radio muted.");
+        }
     }
 }
