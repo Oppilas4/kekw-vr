@@ -64,4 +64,16 @@ public class AC_RadioShuffle : MonoBehaviour
             Debug.Log("Radio muted.");
         }
     }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Check if the current song has finished playing and it's not muted
+        if (!radioAudio.isPlaying && radioAudio.clip != null && !radioAudio.mute)
+        {
+            // Play a new random song when the current one finishes
+            PlayRandomSong();
+            Debug.Log("Song finished. Playing a new random song.");
+        }
+    }
 }
