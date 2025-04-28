@@ -1,45 +1,52 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using System.Collections.Generic;
 
 public class AC_RadioShuffle : MonoBehaviour
 {
     private AudioSource radioAudio;
-    public List<AudioClip> songs; // List of audio clips
+    private XRGrabInteractable grabInteractable;
 
-    void Start()
+    public List<AudioClip> songs; // List of songs
+
+    private void Start()
     {
         radioAudio = GetComponent<AudioSource>();
+        grabInteractable = GetComponent<XRGrabInteractable>();
 
-        // Ensure we have at least one song
+        // Listen for trigger press (activated)
+        grabInteractable.activated.AddListener(OnTriggerPressed);
+
         if (songs.Count > 0)
         {
             PlayRandomSong();
         }
     }
 
-    void Update()
+    private void OnDestroy()
     {
-        // Check if the song finished playing and play a random song
-        if (!radioAudio.isPlaying && radioAudio.clip != null)
-        {
-            PlayRandomSong();
-        }
+        grabInteractable.activated.RemoveListener(OnTriggerPressed);
     }
 
     void PlayRandomSong()
     {
-        if (songs.Count == 0) return; // Safety check
+        if (songs.Count == 0) return;
 
-        // Pick a random song that isn't the current one
         AudioClip newSong;
         do
         {
             newSong = songs[Random.Range(0, songs.Count)];
         } while (newSong == radioAudio.clip && songs.Count > 1);
 
-        // Play the selected song
         radioAudio.clip = newSong;
         radioAudio.Play();
         Debug.Log("Audio is playing");
+    }
+
+    // Press trigger once while holding = mute/unmute
+    public void OnTriggerPressed(ActivateEventArgs args)
+    {
+        radioAudio.mute = !radioAudio.mute; // Toggle mute/unmute
+        Debug.Log("Trigger pressed. Radio muted: " + radioAudio.mute);
     }
 }
