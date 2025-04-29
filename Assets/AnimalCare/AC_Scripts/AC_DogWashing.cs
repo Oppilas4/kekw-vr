@@ -12,7 +12,7 @@ public class AC_DogWashing : MonoBehaviour
 
     public Material[] dogMaterials;
 
-    private Color wetColor = new Color(0.3882f, 0.2941f, 0.2314f); // Tumma ruskea märkä väri
+    private Color wetColor = new Color(0.3137f, 0.2392f, 0.1882f); // Tumma ruskea märkä väri
     private Color trimColor = Color.white; // trimmed väri
     private Color dryColor = new Color(0.773f, 0.502f, 0.294f); // Kuiva väri
     private List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
@@ -63,7 +63,6 @@ public class AC_DogWashing : MonoBehaviour
         }
 
         mesh.colors = colors;
-        Debug.Log("Playing Start");
     }
     void OnEnable()
     {
@@ -73,6 +72,7 @@ public class AC_DogWashing : MonoBehaviour
             Material randomMat = dogMaterials[Random.Range(0, dogMaterials.Length)];
             skinnedMeshRenderer.material = randomMat;
         }
+        skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
         mat = skinnedMeshRenderer.material;
         trimAmount = 0f;
         SetDryColorImmediately();
