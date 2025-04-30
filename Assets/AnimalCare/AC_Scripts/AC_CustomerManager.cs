@@ -99,12 +99,18 @@ public class AC_CustomerManager : MonoBehaviour
 
         int serviceCount = Random.Range(1, 4); // choose 1 to 3 services
 
-        while (selectedServices.Count < serviceCount)
+        // Keep generating until Feeding is not the only service
+        do
         {
-            string randomService = possibleServices[Random.Range(0, possibleServices.Count)];
-            if (!selectedServices.Contains(randomService))
-                selectedServices.Add(randomService);
+            selectedServices.Clear();
+            while (selectedServices.Count < serviceCount)
+            {
+                string randomService = possibleServices[Random.Range(0, possibleServices.Count)];
+                if (!selectedServices.Contains(randomService))
+                    selectedServices.Add(randomService);
+            }
         }
+        while (selectedServices.Count == 1 && selectedServices.Contains("Feeding"));
 
         int totalCost = 0;
         foreach (string service in selectedServices)
