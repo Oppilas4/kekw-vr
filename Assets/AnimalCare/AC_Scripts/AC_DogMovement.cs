@@ -302,4 +302,31 @@ public class AC_DogMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
     }
+    public void MoveToDoor()
+    {
+        // Set the target position, but keep the dog's current Y position
+        Vector3 target5Position = new Vector3(start.position.x, 0, start.position.z);
+
+        // Set the adjusted target position as the NavMeshAgent's destination
+        navAgent.SetDestination(target5Position);
+
+        // Start checking the destination arrival status once the dog is moving
+        StartCoroutine(CheckIfDogAtDoor());
+    }
+    IEnumerator CheckIfDogAtDoor()
+    {
+        // Wait for the agent to start moving (it may take a brief moment for the agent to calculate the path)
+        yield return new WaitUntil(() => !navAgent.pathPending);
+
+        // Start checking the remaining distance
+        while (navAgent.remainingDistance > navAgent.stoppingDistance)
+        {
+            // Trigger the "Walk" animation
+            dogAnimator.SetFloat("Speed", moveSpeed);
+            // Wait a frame before checking again, allowing other systems to run
+            yield return null;
+        }
+        dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
+        gameObject.SetActive(false);
+    }
 }

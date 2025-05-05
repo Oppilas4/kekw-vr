@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AC_CustomerManager : MonoBehaviour
@@ -28,7 +29,7 @@ public class AC_CustomerManager : MonoBehaviour
     public TextMeshProUGUI[] taskTexts;
     public TextMeshProUGUI[] priceTexts;
     public AC_ChecklistManager checklistManager;
-    public GameObject dog;
+    public AC_DogMovement dog;
     public AC_CountdownTimer timer;
     void Start()
     {
@@ -41,7 +42,7 @@ public class AC_CustomerManager : MonoBehaviour
         {
             // Instantiate a new customer prefab
             currentCustomerObj = Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);
-            dog.SetActive(true);
+            dog.gameObject.SetActive(true);
             // Generate a random service order for this customer
             Customer currentCustomer = GenerateRandomCustomer();
 
@@ -85,9 +86,10 @@ public class AC_CustomerManager : MonoBehaviour
             yield return new WaitUntil(() => AreAllTasksGreen());
 
             Debug.Log($"Customer done! Earned: {currentCustomer.totalPayment}e");
-            yield return new WaitForSeconds(10f);
+
+            dog.MoveToDoor();
+            yield return new WaitUntil(() => !dog.gameObject.activeSelf);
             Destroy(currentCustomerObj);
-            dog.SetActive(false);
             yield return new WaitForSeconds(3f); // short delay before next customer
         }
     }
