@@ -16,19 +16,19 @@ public class AC_TrophySnapper : MonoBehaviour
 
         if (other.CompareTag(trophyTag))
         {
+            // Snap object to position and rotation
+            other.transform.position = transform.position;
+            other.transform.rotation = transform.rotation;
+
             Rigidbody rb = other.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                // Lock it in place
+                // Freeze object after snapping
                 rb.isKinematic = true;
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
                 rb.constraints = RigidbodyConstraints.FreezeAll;
             }
-
-            // Snap to this transform
-            other.transform.position = transform.position;
-            other.transform.rotation = transform.rotation;
 
 #if ENABLE_INPUT_SYSTEM
             XRGrabInteractable grab = other.GetComponent<XRGrabInteractable>();
