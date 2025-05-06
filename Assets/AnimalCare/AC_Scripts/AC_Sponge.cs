@@ -8,6 +8,7 @@ public class AC_Sponge : MonoBehaviour
     public GameObject foam;
     ParticleSystem foamParticle;
     public bool foamRunning = false;
+    public bool hasShampoo = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,13 +20,23 @@ public class AC_Sponge : MonoBehaviour
 
         foamParticle = foam.GetComponent<ParticleSystem>();
     }
-
+    void OnParticleCollision(GameObject other)
+    {
+        if (other.CompareTag("Shampoo"))
+        {
+            hasShampoo = true;
+            Debug.Log("Shampoo is on sponge");
+        }
+    }
     // This function is called when the grab button is pressed
     public void MakeFoam(ActivateEventArgs arg)
     {
-        foamRunning = true;
-        foam.SetActive(true);
-        foamParticle.Play();
+        if (hasShampoo)
+        {
+            foamRunning = true;
+            foam.SetActive(true);
+            foamParticle.Play();
+        }
     }
 
     // This function is called when the grab button is released

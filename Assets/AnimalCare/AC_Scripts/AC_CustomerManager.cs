@@ -24,15 +24,24 @@ public class AC_CustomerManager : MonoBehaviour
         { "Trimming", 1 },
         { "Feeding", 2 }
     };
-
+    private Dictionary<string, float> serviceDurations = new Dictionary<string, float>()
+    {
+        { "Trimming", 60f },
+        { "Washing", 80f },
+        { "Feeding", 20f }
+    };
     private GameObject currentCustomerObj;
     public TextMeshProUGUI[] taskTexts;
     public TextMeshProUGUI[] priceTexts;
     public AC_ChecklistManager checklistManager;
     public AC_DogMovement dog;
     public AC_CountdownTimer timer;
+    public TextMeshProUGUI timeLimitText;
+    public GameObject dripping;
+    ParticleSystem waterDripping;
     void Start()
     {
+        waterDripping = dripping.GetComponent<ParticleSystem>();
         StartCoroutine(ServeNextCustomer());
     }
 
@@ -82,11 +91,37 @@ public class AC_CustomerManager : MonoBehaviour
 
             Debug.Log($"New customer arrived! Wants: {string.Join(", ", currentCustomer.services)} | Will pay: {currentCustomer.totalPayment}e");
 
-            // Wait until all tasks are marked green
-            yield return new WaitUntil(() => AreAllTasksGreen());
+            // Start countdown based on total task time
+            float totalCustomerTime = 0f;
+            foreach (string service in currentCustomer.services)
+            {
+                totalCustomerTime += serviceDurations[service];
+            }
+            Debug.Log($"Customer time limit: {totalCustomerTime} seconds");
 
-            Debug.Log($"Customer done! Earned: {currentCustomer.totalPayment}e");
+            // Start parallel coroutines
+            bool tasksCompleted = false;
+            Coroutine timerCoroutine = StartCoroutine(CustomerTimer(totalCustomerTime, () =>
+            {
+                if (!tasksCompleted)
+                {
+                    Debug.Log("Time ran out! Customer is leaving.");
+                    dog.MoveToDoor();
+                    waterDripping.Stop();
+                    dripping.SetActive(false);
+                }
+            }));
+            yield return new WaitUntil(() => AreAllTasksGreen() || !dog.gameObject.activeSelf);
+            // Mark tasks as completed only if within time
+            if (AreAllTasksGreen())
+            {
+                tasksCompleted = true;
+                Debug.Log($"Customer done! Earned: {currentCustomer.totalPayment}e");
+            }
 
+            // Cleanup
+            StopCoroutine(timerCoroutine); // Stop timer if it hasn't finished
+            timeLimitText.text = "";
             dog.MoveToDoor();
             yield return new WaitUntil(() => !dog.gameObject.activeSelf);
             Destroy(currentCustomerObj);
@@ -144,5 +179,23 @@ public class AC_CustomerManager : MonoBehaviour
             }
         }
         return true;
+    }
+    IEnumerator CustomerTimer(float duration, System.Action onTimeout)
+    {
+        float timeLeft = duration;
+
+        while (timeLeft > 0)
+        {
+            int minutes = Mathf.FloorToInt(timeLeft / 60f);
+            int seconds = Mathf.FloorToInt(timeLeft % 60f);
+            string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
+            timeLimitText.text = "Time Left: " + timeString;
+
+            yield return new WaitForSeconds(1f);
+            timeLeft -= 1f;
+        }
+
+        timeLimitText.text = "Time Left: 00:00";
+        onTimeout?.Invoke();
     }
 }
