@@ -35,6 +35,7 @@ public class AC_DogMovement : MonoBehaviour
     public AC_DoorToggle door;
     public Transform InTub;
     bool waitingToEnterSink = false;
+    public bool movedInTub = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -231,6 +232,7 @@ public class AC_DogMovement : MonoBehaviour
     private IEnumerator WaitAndMoveOut(GameObject towel)
     {
         yield return new WaitForSeconds(8f);
+        movedInTub = false;
         Vector3 target3Position = new Vector3(outoftub.position.x, outoftub.position.y, outoftub.position.z);
         // Set the adjusted target position as the NavMeshAgent's destination
         navAgent.SetDestination(target3Position);
@@ -296,6 +298,7 @@ public class AC_DogMovement : MonoBehaviour
             yield return null;
         }
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
+        movedInTub = true;
         Debug.Log("Dog is on Bathtub");
     }
     IEnumerator Wait(float time)

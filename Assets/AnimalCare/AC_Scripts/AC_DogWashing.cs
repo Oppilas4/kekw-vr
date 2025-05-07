@@ -95,7 +95,7 @@ public class AC_DogWashing : MonoBehaviour
             {
                 PaintVertex(hitPoint, "Dryer"); // Kuivattaa
             }
-            else if (other.CompareTag("Trimmer"))
+            else if (other.CompareTag("Trimmer") && !(wetnessAmount > dryThreshold))
             {
                 notTrimmed = false;
                 PaintVertex(hitPoint, "Trimmer"); // Kuivattaa

@@ -27,7 +27,7 @@ public class AC_CustomerManager : MonoBehaviour
     private Dictionary<string, float> serviceDurations = new Dictionary<string, float>()
     {
         { "Trimming", 60f },
-        { "Washing", 180f },
+        { "Washing", 100f },
         { "Feeding", 20f }
     };
     private GameObject currentCustomerObj;

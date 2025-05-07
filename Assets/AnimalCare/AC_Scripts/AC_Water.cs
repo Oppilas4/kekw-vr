@@ -5,6 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class AC_Water : MonoBehaviour
 {
+    public AC_DogMovement dog;
     public GameObject water;
     ParticleSystem waterFlow;
     // Start is called before the first frame update
@@ -22,8 +23,11 @@ public class AC_Water : MonoBehaviour
     // This function is called when the grab button is pressed
     public void PourWater(ActivateEventArgs arg)
     {
-        water.SetActive(true);
-        waterFlow.Play();
+        if (dog.movedInTub)
+        {
+            water.SetActive(true);
+            waterFlow.Play();
+        }
     }
 
     // This function is called when the grab button is released
