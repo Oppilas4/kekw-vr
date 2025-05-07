@@ -12,35 +12,25 @@ public class AC_Sponge : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        XRGrabInteractable grabbable2 = GetComponent<XRGrabInteractable>();
-
-        // Listen for both activated and deactivated events
-        grabbable2.activated.AddListener(MakeFoam);
-        grabbable2.deactivated.AddListener(StopFoam);
-
         foamParticle = foam.GetComponent<ParticleSystem>();
     }
     void OnParticleCollision(GameObject other)
     {
         if (other.CompareTag("Shampoo"))
         {
-            hasShampoo = true;
-            Debug.Log("Shampoo is on sponge");
+            MakeFoam();
         }
     }
     // This function is called when the grab button is pressed
-    public void MakeFoam(ActivateEventArgs arg)
+    public void MakeFoam()
     {
-        if (hasShampoo)
-        {
-            foamRunning = true;
-            foam.SetActive(true);
-            foamParticle.Play();
-        }
+        foamRunning = true;
+        foam.SetActive(true);
+        foamParticle.Play();
     }
 
     // This function is called when the grab button is released
-    public void StopFoam(DeactivateEventArgs arg)
+    public void StopFoam()
     {
         foamRunning = false;
         foamParticle.Stop();

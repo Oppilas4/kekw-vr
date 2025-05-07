@@ -32,7 +32,7 @@ public class AC_Soap : MonoBehaviour
             soapParticle.Play();
             
             foamed = true;
-            sponge.hasShampoo = false;
+            sponge.StopFoam();
         }
     }
 }

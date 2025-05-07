@@ -27,7 +27,7 @@ public class AC_CustomerManager : MonoBehaviour
     private Dictionary<string, float> serviceDurations = new Dictionary<string, float>()
     {
         { "Trimming", 60f },
-        { "Washing", 80f },
+        { "Washing", 180f },
         { "Feeding", 20f }
     };
     private GameObject currentCustomerObj;
@@ -35,10 +35,12 @@ public class AC_CustomerManager : MonoBehaviour
     public TextMeshProUGUI[] priceTexts;
     public AC_ChecklistManager checklistManager;
     public AC_DogMovement dog;
-    public AC_CountdownTimer timer;
     public TextMeshProUGUI timeLimitText;
     public GameObject dripping;
     ParticleSystem waterDripping;
+    public AudioSource dingSound;
+    public AudioSource failSound;
+    public TextMeshProUGUI resultText;
     void Start()
     {
         waterDripping = dripping.GetComponent<ParticleSystem>();
@@ -47,10 +49,11 @@ public class AC_CustomerManager : MonoBehaviour
 
     IEnumerator ServeNextCustomer()
     {
-        while (!timer.timeover)
+        while (true)
         {
-            // Instantiate a new customer prefab
-            currentCustomerObj = Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);
+            resultText.text = "";
+           // Instantiate a new customer prefab
+           currentCustomerObj = Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);
             dog.gameObject.SetActive(true);
             // Generate a random service order for this customer
             Customer currentCustomer = GenerateRandomCustomer();
@@ -105,7 +108,8 @@ public class AC_CustomerManager : MonoBehaviour
             {
                 if (!tasksCompleted)
                 {
-                    Debug.Log("Time ran out! Customer is leaving.");
+                    resultText.text = "Time ran out! Customer is leaving.";
+                    failSound.Play();
                     dog.MoveToDoor();
                     waterDripping.Stop();
                     dripping.SetActive(false);
@@ -116,7 +120,8 @@ public class AC_CustomerManager : MonoBehaviour
             if (AreAllTasksGreen())
             {
                 tasksCompleted = true;
-                Debug.Log($"Customer done! Earned: {currentCustomer.totalPayment}e");
+                dingSound.Play();
+                resultText.text = $"Customer done! Earned: {currentCustomer.totalPayment}e";
             }
 
             // Cleanup
@@ -125,6 +130,7 @@ public class AC_CustomerManager : MonoBehaviour
             dog.MoveToDoor();
             yield return new WaitUntil(() => !dog.gameObject.activeSelf);
             Destroy(currentCustomerObj);
+            checklistManager.CheckScoreForReward();
             yield return new WaitForSeconds(3f); // short delay before next customer
         }
     }

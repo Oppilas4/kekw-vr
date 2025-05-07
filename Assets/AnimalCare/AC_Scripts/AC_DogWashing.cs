@@ -209,7 +209,7 @@ public class AC_DogWashing : MonoBehaviour
         {
             colors[i] = dryColor;
         }
-
+        wetnessAmount = 0;
         mesh.colors = colors;
     }
 }
