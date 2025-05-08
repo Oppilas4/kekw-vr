@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class AC_ShampooParticleCollision : MonoBehaviour
 {
-    public GameObject foamEffectPrefab; // Optional: spawn on impact
-    public string spongeTag = "Sponge"; // Match the tag on your sponge
+    public GameObject foamEffectPrefab;        // Foam prefab to spawn (only on first hit)
+    public float foamLifetime = 2f;            // Auto-destroy foam after this time
+    public string spongeTag = "Sponge";        // Tag your sponge GameObject with this
 
     private ParticleSystem ps;
     private List<ParticleCollisionEvent> collisionEvents;
+    private bool foamTriggered = false;       // To track if foam has been triggered
 
     void Start()
     {
@@ -17,9 +19,12 @@ public class AC_ShampooParticleCollision : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
+        // Check if the collision is with the sponge
         if (!other.CompareTag(spongeTag)) return;
 
-        // Clear and reuse the list to avoid GC
+        // If foam has already been triggered, do nothing
+        if (foamTriggered) return;
+
         collisionEvents.Clear();
         int numEvents = ps.GetCollisionEvents(other, collisionEvents);
 
@@ -27,13 +32,15 @@ public class AC_ShampooParticleCollision : MonoBehaviour
         {
             Vector3 hitPos = collisionEvents[i].intersection;
 
-            // Optional: spawn foam or splash effect
+            // Trigger foam only on the first hit
             if (foamEffectPrefab != null)
             {
-                Instantiate(foamEffectPrefab, hitPos, Quaternion.identity);
+                GameObject foam = Instantiate(foamEffectPrefab, hitPos, Quaternion.identity);
+                Destroy(foam, foamLifetime); // Auto-destroy foam after X seconds
             }
 
-            // Note: Particle is automatically destroyed via Lifetime Loss = 1.0 in Collision module
+            // Mark foam as triggered, so no more foam will spawn
+            foamTriggered = true;
         }
     }
 }
