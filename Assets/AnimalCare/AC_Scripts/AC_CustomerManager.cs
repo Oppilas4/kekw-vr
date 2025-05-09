@@ -41,8 +41,12 @@ public class AC_CustomerManager : MonoBehaviour
     public AudioSource dingSound;
     public AudioSource failSound;
     public TextMeshProUGUI resultText;
+    public GameObject soap;
+    ParticleSystem soapParticle;
+    bool movedToDoor = false;
     void Start()
     {
+        soapParticle = soap.GetComponent<ParticleSystem>();
         waterDripping = dripping.GetComponent<ParticleSystem>();
         StartCoroutine(ServeNextCustomer());
     }
@@ -111,8 +115,11 @@ public class AC_CustomerManager : MonoBehaviour
                     resultText.text = "Time ran out! Customer is leaving.";
                     failSound.Play();
                     dog.MoveToDoor();
+                    movedToDoor = true;
                     waterDripping.Stop();
                     dripping.SetActive(false);
+                    soapParticle.Stop();
+                    soap.SetActive(false);
                 }
             }));
             yield return new WaitUntil(() => AreAllTasksGreen() || !dog.gameObject.activeSelf);
@@ -127,7 +134,8 @@ public class AC_CustomerManager : MonoBehaviour
             // Cleanup
             StopCoroutine(timerCoroutine); // Stop timer if it hasn't finished
             timeLimitText.text = "";
-            dog.MoveToDoor();
+            if(!movedToDoor) dog.MoveToDoor();
+            movedToDoor = false;
             yield return new WaitUntil(() => !dog.gameObject.activeSelf);
             Destroy(currentCustomerObj);
             checklistManager.CheckScoreForReward();
