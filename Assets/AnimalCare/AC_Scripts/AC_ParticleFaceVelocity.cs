@@ -1,10 +1,10 @@
 using UnityEngine;
 
 [RequireComponent(typeof(ParticleSystem))]
-public class AC_ParticleFaceVelocity : MonoBehaviour
+public class AC_ParticleFaceVelocity: MonoBehaviour
 {
-    ParticleSystem ps;
-    ParticleSystem.Particle[] particles;
+    private ParticleSystem ps;
+    private ParticleSystem.Particle[] particles;
 
     void Start()
     {
@@ -15,15 +15,11 @@ public class AC_ParticleFaceVelocity : MonoBehaviour
     void LateUpdate()
     {
         int count = ps.GetParticles(particles);
+        Quaternion parentRotation = transform.parent.rotation;
 
         for (int i = 0; i < count; i++)
         {
-            Vector3 velocity = particles[i].velocity;
-            if (velocity.sqrMagnitude > 0.001f)
-            {
-                float angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
-                particles[i].rotation = -angle; // flip if needed
-            }
+            particles[i].rotation3D = parentRotation.eulerAngles * Mathf.Deg2Rad;
         }
 
         ps.SetParticles(particles, count);
