@@ -75,6 +75,10 @@ public class AC_DogWashing : MonoBehaviour
         skinnedMeshRenderer = GetComponent<SkinnedMeshRenderer>();
         mat = skinnedMeshRenderer.material;
         trimAmount = 0f;
+        wet1 = false;
+        wet2 = false;
+        wet = false;
+        soap.foamed = false;
         SetDryColorImmediately();
     }
     void OnParticleCollision(GameObject other)
@@ -156,22 +160,21 @@ public class AC_DogWashing : MonoBehaviour
 
     void SetFullWetColor()
     {
+        dripping.SetActive(true);
+        waterDripping.Play();
+        wet = true;
+        if (!wet1)
+        {
+            wet1 = true;
+        }
+        else if (!wet2 && soap.foamed)
+        {
+            dog.AfterShower();
+            wet2 = true;
+        }
         // Kun m‰rkyys ylitt‰‰ rajan, koko koira saa m‰r‰n v‰rin
         for (int i = 0; i < colors.Length; i++)
         {
-            dripping.SetActive(true);
-            waterDripping.Play();
-            wet = true;
-            if (!wet1)
-            {
-
-                wet1 = true;
-            }
-            else if (!wet2 && soap.foamed)
-            {
-                dog.AfterShower();
-                wet2 = true;
-            }
             colors[i] = Color.Lerp(colors[i], wetColor, 0.025f);
         }
         Debug.Log("The dog is fully wet!");
