@@ -38,7 +38,7 @@ public class AC_DogWashing : MonoBehaviour
     public bool notTrimmed = true;
 
     private Material mat;
-
+    bool showering = false;
     void Start()
     {
         waterDripping = dripping.GetComponent<ParticleSystem>();
@@ -89,10 +89,12 @@ public class AC_DogWashing : MonoBehaviour
 
             if (other.CompareTag("Water"))
             {
+                showering = true;
                 PaintVertex(hitPoint, "Water"); // Kastelee
             }
             else if (other.CompareTag("Dryer"))
             {
+                showering = false;
                 PaintVertex(hitPoint, "Dryer"); // Kuivattaa
             }
             else if (other.CompareTag("Trimmer") && !(wetnessAmount > dryThreshold))
@@ -106,7 +108,7 @@ public class AC_DogWashing : MonoBehaviour
         {
             SetFullWetColor(); // Täysin märkä
         }
-        else if (wetnessAmount <= dryThreshold && notTrimmed)
+        else if (wetnessAmount <= dryThreshold && notTrimmed && !showering)
         {
             SetFullDryColor(); // Täysin kuiva
         }
