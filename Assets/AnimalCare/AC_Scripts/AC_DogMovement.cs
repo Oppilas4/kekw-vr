@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -12,7 +13,6 @@ public class AC_DogMovement : MonoBehaviour
     public string eatAnimationTrigger = "Eat"; // The trigger to start the eat animation
     public float detectionRadius = 10f;      // The radius in which the dog can detect food
     public LayerMask foodLayer;              // To detect only food objects
-    public LayerMask ballLayer;              // To detect only ball objects
     public float moveSpeed = 1.5f;             // Speed at which the dog moves towards food
     public AudioSource eatingsound;
 
@@ -363,26 +363,23 @@ public class AC_DogMovement : MonoBehaviour
     // Start the eating animation and logic
     void StartTakingBall(Transform ball)
     {
-        if (!isEating)
-        {
-            isEating = true;
-            Debug.Log("Dog found ball!");
-            dogAnimator.SetFloat("Speed", 0);
-            // Trigger the "Eat" animation
-            dogAnimator.SetTrigger(eatAnimationTrigger);
-            eatingsound.Play();
-            StartCoroutine(WaitAndSnap(ball.gameObject)); // Or use food.SetActive(false); to hide the food instead
-
-            checklistManager.CompleteTask(2);
-            // Stop further movement or reset any necessary variables after eating
-        }
+        Debug.Log("Dog found ball!");
+        dogAnimator.SetFloat("Speed", 0);
+        // Trigger the "Eat" animation
+        dogAnimator.SetTrigger("TakingBall");
+        StartCoroutine(WaitAndSnap(ball.gameObject)); // Or use food.SetActive(false); to hide the food instead
     }
     private IEnumerator WaitAndSnap(GameObject DestroyedObject)
     {
         yield return new WaitForSeconds(4f);
-        foodPouring.amount = 0;
-        Destroy(DestroyedObject); // Or use food.SetActive(false); to hide the food instead
-        isEating = false;
+        
         navAgent.isStopped = false;
+    }
+    void Jump()
+    {
+        if (gameObject.transform.position.y > 0.1f)
+        {
+            dogAnimator.SetTrigger("Jump");
+        }
     }
 }
