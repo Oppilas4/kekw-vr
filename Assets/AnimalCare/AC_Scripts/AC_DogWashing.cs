@@ -183,7 +183,8 @@ public class AC_DogWashing : MonoBehaviour
     {
         for (int i = 0; i < colors.Length; i++)
         {
-            colors[i] = Color.Lerp(colors[i], dryColor, 0.05f);
+            colors[i] = dryColor;
+            //Test to fix the bug that dog is half wet but task is done in second time
         }
         Debug.Log("The dog is fully dry!");
         if (wet2) checklistManager.CompleteTask(0);
