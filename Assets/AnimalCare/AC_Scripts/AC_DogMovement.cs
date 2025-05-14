@@ -39,6 +39,10 @@ public class AC_DogMovement : MonoBehaviour
     public Transform InTub;
     bool waitingToEnterSink = false;
     public bool movedInTub = false;
+
+    bool takeBall = false;
+    bool giveBall = false;
+    public Transform mouthTransform; // Assign this in the Inspector
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +81,7 @@ public class AC_DogMovement : MonoBehaviour
             waitingToEnterSink = false;
             MoveIntoSink();
         }
+        Jump();
     }
     // Search for food within the detection radius
     void SearchForFood()
@@ -94,7 +99,7 @@ public class AC_DogMovement : MonoBehaviour
             }
             StartMovingToFood();
         }
-        else if (ballCheck.isOnGround)
+        else if (ballCheck.isOnGround && !takeBall)
         {
             targetBall = ballCheck.transform;
             StartMovingToBall();
@@ -292,7 +297,16 @@ public class AC_DogMovement : MonoBehaviour
         {
             // Trigger the "Walk" animation
             dogAnimator.SetFloat("Speed", moveSpeed);
-            
+
+            // Rotate the dog slightly (you can adjust the angle of rotation as needed)
+            float rotationSpeed = 40f; // Adjust rotation speed
+            Vector3 directionToTarget = navAgent.steeringTarget - transform.position;
+            directionToTarget.y = 0; // Make sure to rotate only around the Y-axis
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget) * Quaternion.Euler(0, 15f, 0);
+
+            // Smoothly rotate towards the target rotation
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
             // Wait a frame before checking again, allowing other systems to run
             yield return null;
         }
@@ -360,25 +374,74 @@ public class AC_DogMovement : MonoBehaviour
         }
     }
 
-    // Start the eating animation and logic
     void StartTakingBall(Transform ball)
     {
-        Debug.Log("Dog found ball!");
-        dogAnimator.SetFloat("Speed", 0);
-        // Trigger the "Eat" animation
-        dogAnimator.SetTrigger("TakingBall");
-        StartCoroutine(WaitAndSnap(ball.gameObject)); // Or use food.SetActive(false); to hide the food instead
+        if (!takeBall)
+        {
+            takeBall = true;
+            Debug.Log("Dog found ball!");
+            dogAnimator.SetFloat("Speed", 0);
+            // Trigger the "Eat" animation
+            dogAnimator.SetTrigger("TakingBall");
+            StartCoroutine(WaitAndSnap(ball.gameObject));
+        }
     }
-    private IEnumerator WaitAndSnap(GameObject DestroyedObject)
-    {
-        yield return new WaitForSeconds(4f);
         
+    private IEnumerator WaitAndSnap(GameObject BallObject)
+    {
+        yield return new WaitForSeconds(3f);
+        BallObject.GetComponent<Rigidbody>().useGravity = false;
+        BallObject.GetComponent<Collider>().isTrigger = true;
+        // Snap the ball to the dog's mouth position and rotation (world space)
+        BallObject.transform.SetParent(mouthTransform);
+        BallObject.transform.localPosition = Vector3.zero;
+        BallObject.transform.localRotation = Quaternion.identity;
         navAgent.isStopped = false;
+        // Move to player
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Debug.Log("Player found");
+        if (player != null)
+        {
+            // Offset 2 units in player's forward (Z) direction
+            Vector3 offsetPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 0.2f);
+            Debug.Log(offsetPosition + " Player position");
+            dogAnimator.SetFloat("TakingBallSpeed", moveSpeed);
+            // Move the dog to the offset position
+            navAgent.SetDestination(offsetPosition);
+            StopAtPlayer(offsetPosition);
+        }
+    }
+    void StopAtPlayer(Vector3 offsetPosition)
+    {
+        // Check if the dog is close enough to the food (within a certain threshold)
+        if (Vector3.Distance(transform.position, offsetPosition) <= navAgent.stoppingDistance)
+        {
+            // Stop the movement
+            navAgent.isStopped = true;
+            Debug.Log("Moved");
+            // Trigger the eating animation
+            dogAnimator.SetFloat("TakingBallSpeed", 0);
+            // Trigger the "Eat" animation
+            dogAnimator.SetTrigger("Sit");
+            //StartGivingBall(targetBall);
+        }
+    }
+    void StartGivingBall(Transform ball)
+    {
+        //if (!giveBall)
+        //{
+            giveBall = true;
+            Debug.Log("Dog gave ball!");
+            dogAnimator.SetFloat("TakingBallSpeed", 0);
+            // Trigger the "Eat" animation
+            dogAnimator.SetTrigger("Sit");
+        //}
     }
     void Jump()
     {
         if (gameObject.transform.position.y > 0.1f)
         {
+            dogAnimator.SetFloat("Speed", 0);
             dogAnimator.SetTrigger("Jump");
         }
     }
