@@ -81,7 +81,6 @@ public class AC_DogMovement : MonoBehaviour
             waitingToEnterSink = false;
             MoveIntoSink();
         }
-        Jump();
     }
     // Search for food within the detection radius
     void SearchForFood()
@@ -102,6 +101,7 @@ public class AC_DogMovement : MonoBehaviour
         else if (ballCheck.isOnGround && !takeBall)
         {
             targetBall = ballCheck.transform;
+            Debug.Log("Start moving to the ball");
             StartMovingToBall();
         }
         else MoveToBathTub();
@@ -117,6 +117,7 @@ public class AC_DogMovement : MonoBehaviour
             Vector3 targetPosition = new Vector3(targetFood.position.x, 0, targetFood.position.z);
             // Trigger the "Walk" animation
             dogAnimator.SetFloat("Speed",moveSpeed);
+            Debug.Log("Walking to food");
             // Set the adjusted target position as the NavMeshAgent's destination
             navAgent.SetDestination(targetPosition);
             StopAtFood();
@@ -355,7 +356,7 @@ public class AC_DogMovement : MonoBehaviour
             // Set the target position, but keep the dog's current Y position
             Vector3 target5Position = new Vector3(targetBall.position.x, 0, targetBall.position.z);
             // Trigger the "Walk" animation
-            dogAnimator.SetFloat("Speed", moveSpeed);
+            dogAnimator.SetFloat("TakingBallSpeed", moveSpeed);
             // Set the adjusted target position as the NavMeshAgent's destination
             navAgent.SetDestination(target5Position);
             StopAtBall();
@@ -380,7 +381,7 @@ public class AC_DogMovement : MonoBehaviour
         {
             takeBall = true;
             Debug.Log("Dog found ball!");
-            dogAnimator.SetFloat("Speed", 0);
+            dogAnimator.SetFloat("TakingBallSpeed", 0);
             // Trigger the "Eat" animation
             dogAnimator.SetTrigger("TakingBall");
             StartCoroutine(WaitAndSnap(ball.gameObject));
@@ -410,6 +411,7 @@ public class AC_DogMovement : MonoBehaviour
             // Move the dog to the offset position
             navAgent.SetDestination(offsetPosition);
             StartCoroutine(WaitUntilAtPlayer(offsetPosition));
+            //StopAtPlayer(offsetPosition);
         }
     }
     void StopAtPlayer(Vector3 offsetPosition)
@@ -437,32 +439,40 @@ public class AC_DogMovement : MonoBehaviour
     }
     void StartGivingBall(Transform ball)
     {
-            Debug.Log("Dog gave ball!");
-            dogAnimator.SetFloat("TakingBallSpeed", 0);
-            // Trigger the "Eat" animation
-            dogAnimator.SetTrigger("Sit");
-            // Unparent the ball
-            ball.SetParent(null);
+        Debug.Log("Dog gave ball!");
+        dogAnimator.SetFloat("TakingBallSpeed", 0);
+        // Trigger the "Eat" animation
+        dogAnimator.SetTrigger("Sit");
+        // Unparent the ball
+        ball.SetParent(null);
 
-            // Drop the ball on the ground in front of the dog
-            Vector3 dropPosition = transform.position + transform.forward * 0.5f;
-            dropPosition.y = 0.2f; // Adjust height so it doesn't clip into floor
-            ball.position = dropPosition;
+        // Drop the ball on the ground in front of the dog
+        Vector3 dropPosition = transform.position + transform.forward * 0.5f;
+        dropPosition.y = 0.2f; // Adjust height so it doesn't clip into floor
+        ball.position = dropPosition;
 
-            // Re-enable physics
-            Rigidbody rb = ball.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.useGravity = true;
-                rb.velocity = Vector3.zero; // Optional: Stop any leftover movement
-            }
+        // Re-enable physics
+        Rigidbody rb = ball.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.useGravity = true;
+            rb.velocity = Vector3.zero; // Optional: Stop any leftover movement
+        }
 
-            // Re-enable collision
-            Collider col = ball.GetComponent<Collider>();
-            if (col != null)
-            {
-                col.isTrigger = false;
-            }
+        // Re-enable collision
+        Collider col = ball.GetComponent<Collider>();
+        if (col != null)
+        {
+            col.isTrigger = false;
+        }
+    }
+    public void DogStandUp()
+    {
+        if (takeBall)
+        {
+            dogAnimator.SetTrigger("Continue");
+            takeBall = false;
+        }
     }
     void Jump()
     {
