@@ -322,10 +322,10 @@ public class AC_DogMovement : MonoBehaviour
     public void MoveToDoor()
     {
         // Set the target position, but keep the dog's current Y position
-        Vector3 target5Position = new Vector3(start.position.x, 0, start.position.z);
+        Vector3 target6Position = new Vector3(start.position.x, 0, start.position.z);
 
         // Set the adjusted target position as the NavMeshAgent's destination
-        navAgent.SetDestination(target5Position);
+        navAgent.SetDestination(target6Position);
 
         // Start checking the destination arrival status once the dog is moving
         StartCoroutine(CheckIfDogAtDoor());
@@ -354,12 +354,12 @@ public class AC_DogMovement : MonoBehaviour
         if (targetBall != null)
         {
             // Set the target position, but keep the dog's current Y position
-            Vector3 target5Position = new Vector3(targetBall.position.x, 0, targetBall.position.z);
+            Vector3 target7Position = new Vector3(targetBall.position.x, 0, targetBall.position.z);
             // Trigger the "Walk" animation
             dogAnimator.SetFloat("TakingBallSpeed", moveSpeed);
             Debug.Log("Start to move to the ball");
             // Set the adjusted target position as the NavMeshAgent's destination
-            navAgent.SetDestination(target5Position);
+            navAgent.SetDestination(target7Position);
             StopAtBall();
         }
     }
