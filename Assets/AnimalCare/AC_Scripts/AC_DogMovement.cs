@@ -41,7 +41,7 @@ public class AC_DogMovement : MonoBehaviour
     public bool movedInTub = false;
 
     bool takeBall = false;
-    bool giveBall = false;
+    //bool giveBall = false;
     public Transform mouthTransform; // Assign this in the Inspector
     // Start is called before the first frame update
     void Start()
@@ -391,6 +391,7 @@ public class AC_DogMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         BallObject.GetComponent<Rigidbody>().useGravity = false;
+
         BallObject.GetComponent<Collider>().isTrigger = true;
         // Snap the ball to the dog's mouth position and rotation (world space)
         BallObject.transform.SetParent(mouthTransform);
@@ -398,17 +399,17 @@ public class AC_DogMovement : MonoBehaviour
         BallObject.transform.localRotation = Quaternion.identity;
         navAgent.isStopped = false;
         // Move to player
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = GameObject.Find("XR Origin");
         Debug.Log("Player found");
         if (player != null)
         {
             // Offset 2 units in player's forward (Z) direction
-            Vector3 offsetPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z + 0.2f);
+            Vector3 offsetPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z + 0.5f);
             Debug.Log(offsetPosition + " Player position");
             dogAnimator.SetFloat("TakingBallSpeed", moveSpeed);
             // Move the dog to the offset position
             navAgent.SetDestination(offsetPosition);
-            StopAtPlayer(offsetPosition);
+            StartCoroutine(WaitUntilAtPlayer(offsetPosition));
         }
     }
     void StopAtPlayer(Vector3 offsetPosition)
@@ -419,23 +420,49 @@ public class AC_DogMovement : MonoBehaviour
             // Stop the movement
             navAgent.isStopped = true;
             Debug.Log("Moved");
-            // Trigger the eating animation
-            dogAnimator.SetFloat("TakingBallSpeed", 0);
-            // Trigger the "Eat" animation
-            dogAnimator.SetTrigger("Sit");
-            //StartGivingBall(targetBall);
+            StartGivingBall(targetBall);
         }
+    }
+    private IEnumerator WaitUntilAtPlayer(Vector3 offsetPosition)
+    {
+        // Wait until the dog is close enough to the player
+        while (Vector3.Distance(transform.position, offsetPosition) > navAgent.stoppingDistance + 0.1f)
+        {
+            yield return null; // Wait for the next frame
+        }
+
+        navAgent.isStopped = true;
+        Debug.Log("Moved to player");
+        StartGivingBall(targetBall);
     }
     void StartGivingBall(Transform ball)
     {
-        //if (!giveBall)
-        //{
-            giveBall = true;
             Debug.Log("Dog gave ball!");
             dogAnimator.SetFloat("TakingBallSpeed", 0);
             // Trigger the "Eat" animation
             dogAnimator.SetTrigger("Sit");
-        //}
+            // Unparent the ball
+            ball.SetParent(null);
+
+            // Drop the ball on the ground in front of the dog
+            Vector3 dropPosition = transform.position + transform.forward * 0.5f;
+            dropPosition.y = 0.2f; // Adjust height so it doesn't clip into floor
+            ball.position = dropPosition;
+
+            // Re-enable physics
+            Rigidbody rb = ball.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.useGravity = true;
+                rb.velocity = Vector3.zero; // Optional: Stop any leftover movement
+            }
+
+            // Re-enable collision
+            Collider col = ball.GetComponent<Collider>();
+            if (col != null)
+            {
+                col.isTrigger = false;
+            }
     }
     void Jump()
     {
