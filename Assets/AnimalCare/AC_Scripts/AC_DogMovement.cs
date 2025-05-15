@@ -357,6 +357,7 @@ public class AC_DogMovement : MonoBehaviour
             Vector3 target5Position = new Vector3(targetBall.position.x, 0, targetBall.position.z);
             // Trigger the "Walk" animation
             dogAnimator.SetFloat("TakingBallSpeed", moveSpeed);
+            Debug.Log("Start to move to the ball");
             // Set the adjusted target position as the NavMeshAgent's destination
             navAgent.SetDestination(target5Position);
             StopAtBall();
@@ -407,7 +408,6 @@ public class AC_DogMovement : MonoBehaviour
             // Offset 2 units in player's forward (Z) direction
             Vector3 offsetPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z + 0.5f);
             Debug.Log(offsetPosition + " Player position");
-            dogAnimator.SetFloat("TakingBallSpeed", moveSpeed);
             // Move the dog to the offset position
             navAgent.SetDestination(offsetPosition);
             StartCoroutine(WaitUntilAtPlayer(offsetPosition));
@@ -430,6 +430,7 @@ public class AC_DogMovement : MonoBehaviour
         // Wait until the dog is close enough to the player
         while (Vector3.Distance(transform.position, offsetPosition) > navAgent.stoppingDistance + 0.1f)
         {
+            dogAnimator.SetFloat("TakingBallSpeed", moveSpeed);
             yield return null; // Wait for the next frame
         }
 
@@ -471,7 +472,6 @@ public class AC_DogMovement : MonoBehaviour
         if (takeBall)
         {
             dogAnimator.SetTrigger("Continue");
-            takeBall = false;
         }
     }
     void Jump()
