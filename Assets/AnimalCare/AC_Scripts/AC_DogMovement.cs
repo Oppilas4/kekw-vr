@@ -41,6 +41,7 @@ public class AC_DogMovement : MonoBehaviour
     public bool movedInTub = false;
 
     bool takeBall = false;
+    bool hasJumped = false;
     //bool giveBall = false;
     public Transform mouthTransform; // Assign this in the Inspector
     // Start is called before the first frame update
@@ -230,6 +231,11 @@ public class AC_DogMovement : MonoBehaviour
             // Trigger the "Walk" animation
             dogAnimator.SetFloat("Speed", moveSpeed);
 
+            if (!hasJumped && (trimmingTable.position.y - transform.position.y) <= 0.6f)
+            {
+                hasJumped = true;
+                Jump(); // Play the jump animation if target is higher
+            }
             // Wait a frame before checking again, allowing other systems to run
             yield return null;
         }
@@ -237,6 +243,7 @@ public class AC_DogMovement : MonoBehaviour
         movetoTrim = false;
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
         Debug.Log("Dog is at Trimmer");
+        hasJumped = false;
     }
     public void AfterShower()
     {
@@ -264,7 +271,6 @@ public class AC_DogMovement : MonoBehaviour
 
             // Trigger the "Walk" animation
             dogAnimator.SetFloat("Speed", moveSpeed);
-
             // Wait a frame before checking again, allowing other systems to run
             yield return null;
         }
@@ -298,7 +304,6 @@ public class AC_DogMovement : MonoBehaviour
         {
             // Trigger the "Walk" animation
             dogAnimator.SetFloat("Speed", moveSpeed);
-
             // Rotate the dog slightly (you can adjust the angle of rotation as needed)
             float rotationSpeed = 40f; // Adjust rotation speed
             Vector3 directionToTarget = navAgent.steeringTarget - transform.position;
@@ -307,7 +312,6 @@ public class AC_DogMovement : MonoBehaviour
 
             // Smoothly rotate towards the target rotation
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
             // Wait a frame before checking again, allowing other systems to run
             yield return null;
         }
@@ -356,7 +360,7 @@ public class AC_DogMovement : MonoBehaviour
             // Set the target position, but keep the dog's current Y position
             Vector3 target7Position = new Vector3(targetBall.position.x, 0, targetBall.position.z);
             // Trigger the "Walk" animation
-            dogAnimator.SetFloat("TakingBallSpeed", moveSpeed);
+            dogAnimator.SetFloat("Speed", moveSpeed);
             Debug.Log("Start to move to the ball");
             // Set the adjusted target position as the NavMeshAgent's destination
             navAgent.SetDestination(target7Position);
@@ -382,7 +386,7 @@ public class AC_DogMovement : MonoBehaviour
         {
             takeBall = true;
             Debug.Log("Dog found ball!");
-            dogAnimator.SetFloat("TakingBallSpeed", 0);
+            dogAnimator.SetFloat("Speed", 0);
             // Trigger the "Eat" animation
             dogAnimator.SetTrigger("TakingBall");
             StartCoroutine(WaitAndSnap(ball.gameObject));
@@ -406,10 +410,12 @@ public class AC_DogMovement : MonoBehaviour
         if (player != null)
         {
             // Offset 2 units in player's forward (Z) direction
-            Vector3 offsetPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z + 0.5f);
+            Vector3 offsetPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z);
             Debug.Log(offsetPosition + " Player position");
+            yield return new WaitForSeconds(2f);
             // Move the dog to the offset position
             navAgent.SetDestination(offsetPosition);
+            dogAnimator.SetFloat("TakingBallSpeed", moveSpeed);
             StartCoroutine(WaitUntilAtPlayer(offsetPosition));
             //StopAtPlayer(offsetPosition);
         }
@@ -448,7 +454,7 @@ public class AC_DogMovement : MonoBehaviour
         ball.SetParent(null);
 
         // Drop the ball on the ground in front of the dog
-        Vector3 dropPosition = transform.position + transform.forward * 0.5f;
+        Vector3 dropPosition = transform.position + transform.forward * 0.2f;
         dropPosition.y = 0.2f; // Adjust height so it doesn't clip into floor
         ball.position = dropPosition;
 
@@ -471,8 +477,15 @@ public class AC_DogMovement : MonoBehaviour
     {
         if (takeBall)
         {
+            navAgent.isStopped = false;
             dogAnimator.SetTrigger("Continue");
+            StartCoroutine(WaitToActivateBall());
         }
+    }
+    private IEnumerator WaitToActivateBall()
+    {
+        yield return new WaitForSeconds(2f);
+        takeBall = false;
     }
     void Jump()
     {
