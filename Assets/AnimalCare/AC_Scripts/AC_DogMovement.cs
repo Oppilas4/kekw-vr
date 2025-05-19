@@ -15,6 +15,7 @@ public class AC_DogMovement : MonoBehaviour
     public LayerMask foodLayer;              // To detect only food objects
     public float moveSpeed = 1.5f;             // Speed at which the dog moves towards food
     public AudioSource eatingsound;
+    public AudioSource barkingsound;
 
     public AC_ChecklistManager checklistManager;
     public AC_ShakingCondition shakingCondition;
@@ -43,7 +44,10 @@ public class AC_DogMovement : MonoBehaviour
     bool takeBall = false;
     bool hasJumped = false;
     bool jumping = false;
-    //bool giveBall = false;
+    bool giveBall = false;
+    bool eaten = false;
+    bool eatAnimation = false;
+    bool takeBallAnimation = false;
     public Transform mouthTransform; // Assign this in the Inspector
     // Start is called before the first frame update
     void Start()
@@ -83,13 +87,19 @@ public class AC_DogMovement : MonoBehaviour
             waitingToEnterSink = false;
             MoveIntoSink();
         }
+        if (eaten && giveBall)
+        {
+            checklistManager.CompleteTask(2);
+            eaten = false;
+            giveBall = false;
+        }
     }
     // Search for food within the detection radius
     void SearchForFood()
     {
         // Use a sphere cast (or you could use a simple OverlapSphere) to find food in range
         Collider[] foodColliders = Physics.OverlapSphere(transform.position, detectionRadius, foodLayer);
-        if (foodColliders.Length > 0) // If food is found
+        if (foodColliders.Length > 0 && !takeBall) // If food is found
         {
             // Choose the closest food (you could add a loop for multiple foods)
             targetFood = foodColliders[0].transform;
@@ -118,7 +128,7 @@ public class AC_DogMovement : MonoBehaviour
             // Set the target position, but keep the dog's current Y position
             Vector3 targetPosition = new Vector3(targetFood.position.x, 0, targetFood.position.z);
             // Trigger the "Walk" animation
-            dogAnimator.SetFloat("Speed",moveSpeed);
+            if (!eatAnimation) dogAnimator.SetFloat("Speed",moveSpeed);
             Debug.Log("Walking to food");
             // Set the adjusted target position as the NavMeshAgent's destination
             navAgent.SetDestination(targetPosition);
@@ -144,15 +154,14 @@ public class AC_DogMovement : MonoBehaviour
         if (!isEating)
         {
             isEating = true;
+            eatAnimation = true;
             Debug.Log("Dog found food and started eating!");
             dogAnimator.SetFloat("Speed", 0);
             // Trigger the "Eat" animation
             dogAnimator.SetTrigger(eatAnimationTrigger);
             eatingsound.Play();
             StartCoroutine(WaitAndDestroy(food.gameObject)); // Or use food.SetActive(false); to hide the food instead
-
-            checklistManager.CompleteTask(2);
-            // Stop further movement or reset any necessary variables after eating
+            eaten = true;
         }
     }
     private IEnumerator WaitAndDestroy(GameObject DestroyedObject)
@@ -162,6 +171,7 @@ public class AC_DogMovement : MonoBehaviour
         Destroy(DestroyedObject); // Or use food.SetActive(false); to hide the food instead
         isEating = false;
         navAgent.isStopped = false;
+        eatAnimation = false;
     }
     void MoveToBathTub()
     {
@@ -384,7 +394,7 @@ public class AC_DogMovement : MonoBehaviour
             // Set the target position, but keep the dog's current Y position
             Vector3 target7Position = new Vector3(targetBall.position.x, 0, targetBall.position.z);
             // Trigger the "Walk" animation
-            dogAnimator.SetFloat("Speed", moveSpeed);
+            if (!takeBallAnimation) dogAnimator.SetFloat("Speed", moveSpeed);
             Debug.Log("Start to move to the ball");
             // Set the adjusted target position as the NavMeshAgent's destination
             navAgent.SetDestination(target7Position);
@@ -408,6 +418,7 @@ public class AC_DogMovement : MonoBehaviour
     {
         if (!takeBall)
         {
+            takeBallAnimation = true;
             takeBall = true;
             Debug.Log("Dog found ball!");
             dogAnimator.SetFloat("Speed", 0);
@@ -428,6 +439,7 @@ public class AC_DogMovement : MonoBehaviour
         BallObject.transform.localPosition = Vector3.zero;
         BallObject.transform.localRotation = Quaternion.identity;
         navAgent.isStopped = false;
+        takeBallAnimation = false;
         // Move to player
         GameObject player = GameObject.Find("XR Origin");
         Debug.Log("Player found");
@@ -472,7 +484,7 @@ public class AC_DogMovement : MonoBehaviour
     {
         Debug.Log("Dog gave ball!");
         dogAnimator.SetFloat("TakingBallSpeed", 0);
-        // Trigger the "Eat" animation
+        // Trigger the "Sit" animation
         dogAnimator.SetTrigger("Sit");
         // Unparent the ball
         ball.SetParent(null);
@@ -496,6 +508,7 @@ public class AC_DogMovement : MonoBehaviour
         {
             col.isTrigger = false;
         }
+        barkingsound.Play();
     }
     public void DogStandUp()
     {
@@ -504,6 +517,7 @@ public class AC_DogMovement : MonoBehaviour
             navAgent.isStopped = false;
             dogAnimator.SetTrigger("Continue");
             StartCoroutine(WaitToActivateBall());
+            giveBall = true;
         }
     }
     private IEnumerator WaitToActivateBall()

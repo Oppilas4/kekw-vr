@@ -15,20 +15,20 @@ public class AC_CustomerManager : MonoBehaviour
     {
         { "Trimming", 20 },
         { "Washing", 50 },
-        { "Feeding", 5 }
+        { "Caring", 10 }
     };
 
     private Dictionary<string, int> serviceSlotIndices = new Dictionary<string, int>()
     {
         { "Washing", 0 },
         { "Trimming", 1 },
-        { "Feeding", 2 }
+        { "Caring", 2 }
     };
     private Dictionary<string, float> serviceDurations = new Dictionary<string, float>()
     {
         { "Trimming", 60f },
-        { "Washing", 100f },
-        { "Feeding", 20f }
+        { "Washing", 120f },
+        { "Caring", 60f }
     };
     private GameObject currentCustomerObj;
     public TextMeshProUGUI[] taskTexts;
@@ -56,8 +56,8 @@ public class AC_CustomerManager : MonoBehaviour
         while (true)
         {
             resultText.text = "";
-           // Instantiate a new customer prefab
-           currentCustomerObj = Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);
+            // Instantiate a new customer prefab
+            currentCustomerObj = Instantiate(customerPrefab, spawnPoint.position, spawnPoint.rotation);
             dog.gameObject.SetActive(true);
             // Generate a random service order for this customer
             Customer currentCustomer = GenerateRandomCustomer();
@@ -128,7 +128,7 @@ public class AC_CustomerManager : MonoBehaviour
             {
                 tasksCompleted = true;
                 dingSound.Play();
-                resultText.text = $"Customer done! Earned: {currentCustomer.totalPayment}e";
+                resultText.text = $"Customer done! Earned: {currentCustomer.totalPayment}€";
             }
 
             // Cleanup
@@ -161,7 +161,7 @@ public class AC_CustomerManager : MonoBehaviour
                     selectedServices.Add(randomService);
             }
         }
-        while (selectedServices.Count == 1 && selectedServices.Contains("Feeding"));
+        while (selectedServices.Count == 1 && selectedServices.Contains("Caring"));
 
         int totalCost = 0;
         foreach (string service in selectedServices)

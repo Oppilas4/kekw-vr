@@ -3723,7 +3723,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: be5c822a0a8b4b948bc90c16d7de4faf,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.638
+      value: -0.702
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: be5c822a0a8b4b948bc90c16d7de4faf,
         type: 3}
@@ -4019,7 +4019,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8ded3e76b95d38c4db4f85ad3e870545,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.678
+      value: -0.705
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8ded3e76b95d38c4db4f85ad3e870545,
         type: 3}
@@ -4079,6 +4079,25 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 240800428}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &240800430 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8ded3e76b95d38c4db4f85ad3e870545,
+    type: 3}
+  m_PrefabInstance: {fileID: 240800428}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &240800431
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240800430}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0069682663, y: 0.007848155, z: 0.011509568}
+  m_Center: {x: -5.8921756e-10, y: -0.00020992837, z: -0.00023961229}
 --- !u!1001 &255577448
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6964,9 +6983,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '5
-
-'
+  m_text: 10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10291,7 +10308,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Feeding
+  m_text: Caring
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11992,6 +12009,7 @@ MonoBehaviour:
     m_Bits: 4194304
   moveSpeed: 1.5
   eatingsound: {fileID: 827086022}
+  barkingsound: {fileID: 827086021}
   checklistManager: {fileID: 1245970686}
   shakingCondition: {fileID: 103888788}
   foodPouring: {fileID: 131099791}
@@ -13140,6 +13158,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ChairV4 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8ded3e76b95d38c4db4f85ad3e870545,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8ded3e76b95d38c4db4f85ad3e870545,
         type: 3}
@@ -15418,7 +15441,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.06666667
+  m_VoxelSize: 0.023333333
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: da684757997c85647b85f989b91fbcf2, type: 2}
   m_BuildHeightMesh: 0
@@ -21620,7 +21643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1162994894
 Transform:
   m_ObjectHideFlags: 0
@@ -32528,9 +32551,9 @@ MonoBehaviour:
   - {fileID: 733645819}
   - {fileID: 679034363}
   objectToEnable: {fileID: 1160423294}
-  taskPoints: 320000001400000005000000
+  taskPoints: 32000000140000000a000000
   scoreText: {fileID: 562464722}
-  rewardThreshold: 70
+  rewardThreshold: 200
 --- !u!114 &1245970687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39598,8 +39621,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859498347}
   m_LocalRotation: {x: -0.7069834, y: -0, z: -0, w: 0.7072302}
-  m_LocalPosition: {x: -0.104200125, y: -0.079773605, z: 6.4381013}
-  m_LocalScale: {x: 0.6981, y: 0.513, z: 0.6019648}
+  m_LocalPosition: {x: -0.104200125, y: -0.079773605, z: 6.308}
+  m_LocalScale: {x: 0.6981, y: 0.7912564, z: 0.6019648}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1907652626}
