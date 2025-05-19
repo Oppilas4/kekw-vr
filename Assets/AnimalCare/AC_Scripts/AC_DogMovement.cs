@@ -42,6 +42,7 @@ public class AC_DogMovement : MonoBehaviour
 
     bool takeBall = false;
     bool hasJumped = false;
+    bool jumping = false;
     //bool giveBall = false;
     public Transform mouthTransform; // Assign this in the Inspector
     // Start is called before the first frame update
@@ -229,12 +230,19 @@ public class AC_DogMovement : MonoBehaviour
         {
 
             // Trigger the "Walk" animation
-            dogAnimator.SetFloat("Speed", moveSpeed);
+            if (!jumping) dogAnimator.SetFloat("Speed", moveSpeed);
 
-            if (!hasJumped && (trimmingTable.position.y - transform.position.y) <= 0.6f)
+            float verticalDifference = trimmingTable.position.y - transform.position.y;
+
+            if (!hasJumped && verticalDifference < 0.4f && navAgent.remainingDistance < 1.7f)
             {
+                jumping = true;
                 hasJumped = true;
-                Jump(); // Play the jump animation if target is higher
+                Debug.Log("JUMP TRIGGERED");
+                dogAnimator.SetFloat("Speed", 0);
+                dogAnimator.SetTrigger("Jump");
+
+                yield return new WaitForSeconds(1.2f);
             }
             // Wait a frame before checking again, allowing other systems to run
             yield return null;
@@ -244,6 +252,7 @@ public class AC_DogMovement : MonoBehaviour
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
         Debug.Log("Dog is at Trimmer");
         hasJumped = false;
+        jumping = false;
     }
     public void AfterShower()
     {
@@ -270,7 +279,20 @@ public class AC_DogMovement : MonoBehaviour
         {
 
             // Trigger the "Walk" animation
-            dogAnimator.SetFloat("Speed", moveSpeed);
+            if (!jumping) dogAnimator.SetFloat("Speed", moveSpeed);
+
+            float verticalDifference2 = outoftub.position.y - transform.position.y;
+
+            if (!hasJumped && verticalDifference2 < 0.4f && navAgent.remainingDistance < 1.7f)
+            {
+                jumping = true;
+                hasJumped = true;
+                Debug.Log("JUMP TRIGGERED");
+                dogAnimator.SetFloat("Speed", 0);
+                dogAnimator.SetTrigger("Jump");
+
+                yield return new WaitForSeconds(1.2f);
+            }
             // Wait a frame before checking again, allowing other systems to run
             yield return null;
         }
@@ -282,6 +304,8 @@ public class AC_DogMovement : MonoBehaviour
         towel.SetActive(true);
         yield return new WaitForSeconds(2.5f);
         towel.SetActive(false);
+        jumping = false;
+        hasJumped = false;
     }
     void MoveIntoSink()
     {
@@ -486,13 +510,5 @@ public class AC_DogMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         takeBall = false;
-    }
-    void Jump()
-    {
-        if (gameObject.transform.position.y > 0.1f)
-        {
-            dogAnimator.SetFloat("Speed", 0);
-            dogAnimator.SetTrigger("Jump");
-        }
     }
 }
