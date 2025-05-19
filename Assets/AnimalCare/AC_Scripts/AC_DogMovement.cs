@@ -143,6 +143,7 @@ public class AC_DogMovement : MonoBehaviour
             // Stop the movement
             navAgent.isStopped = true;
             Debug.Log("Moved");
+            eatAnimation = true;
             // Trigger the eating animation
             StartEating(targetFood);
         }
@@ -154,7 +155,6 @@ public class AC_DogMovement : MonoBehaviour
         if (!isEating)
         {
             isEating = true;
-            eatAnimation = true;
             Debug.Log("Dog found food and started eating!");
             dogAnimator.SetFloat("Speed", 0);
             // Trigger the "Eat" animation
@@ -343,9 +343,10 @@ public class AC_DogMovement : MonoBehaviour
             Vector3 directionToTarget = navAgent.steeringTarget - transform.position;
             directionToTarget.y = 0; // Make sure to rotate only around the Y-axis
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget) * Quaternion.Euler(0, 15f, 0);
-
+            Debug.Log("Rotate the dog");
             // Smoothly rotate towards the target rotation
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
             // Wait a frame before checking again, allowing other systems to run
             yield return null;
         }

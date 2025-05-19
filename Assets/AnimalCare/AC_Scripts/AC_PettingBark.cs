@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AC_PettingBark : MonoBehaviour
 {
-    AudioSource audioSource;
     float cooldown = 2f;
     float lastPlayTime;
     public AudioSource myclip;
