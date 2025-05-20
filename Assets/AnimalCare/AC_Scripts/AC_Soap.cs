@@ -11,6 +11,7 @@ public class AC_Soap : MonoBehaviour
     public bool foamed = false;
     ParticleSystem soapParticle;
     public AC_DogWashing wetdog;
+    public AudioSource foamSound;
     void Start()
     {
         soapParticle = soap.GetComponent<ParticleSystem>();
@@ -33,6 +34,7 @@ public class AC_Soap : MonoBehaviour
             
             foamed = true;
             sponge.StopFoam();
+            foamSound.Play();
         }
     }
 }

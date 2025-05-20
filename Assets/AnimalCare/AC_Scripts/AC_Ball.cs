@@ -7,7 +7,7 @@ public class AC_Ball : MonoBehaviour
     public bool isOnGround = false;
     private void Update()
     {
-        if (transform.position.y > 0.05)
+        if (transform.position.y > 0.07)
         {
             isOnGround = false;
         }
