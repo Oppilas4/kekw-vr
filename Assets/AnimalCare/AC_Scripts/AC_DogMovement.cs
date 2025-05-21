@@ -50,6 +50,7 @@ public class AC_DogMovement : MonoBehaviour
     bool takeBallAnimation = false;
     public Transform mouthTransform; // Assign this in the Inspector
     bool notReadyToLeave = false;
+    bool movingToDoor = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -111,7 +112,7 @@ public class AC_DogMovement : MonoBehaviour
             }
             StartMovingToFood();
         }
-        else if (ballCheck.isOnGround && !takeBall && !eatAnimation)
+        else if (ballCheck.isOnGround && !takeBall && !eatAnimation && !movingToDoor)
         {
             notReadyToLeave = true;
             targetBall = ballCheck.transform;
@@ -368,6 +369,7 @@ public class AC_DogMovement : MonoBehaviour
     IEnumerator CheckToLeave()
     {   
         yield return new WaitUntil(() => !notReadyToLeave);
+        movingToDoor = true;
         // Set the target position, but keep the dog's current Y position
         Vector3 target6Position = new Vector3(start.position.x, 0, start.position.z);
 
@@ -391,6 +393,7 @@ public class AC_DogMovement : MonoBehaviour
             yield return null;
         }
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
+        movingToDoor = false;
         gameObject.SetActive(false);
     }
     
@@ -529,12 +532,12 @@ public class AC_DogMovement : MonoBehaviour
             dogAnimator.SetTrigger("Continue");
             StartCoroutine(WaitToActivateBall());
             giveBall = true;
-            notReadyToLeave = false;
         }
     }
     private IEnumerator WaitToActivateBall()
     {
         yield return new WaitForSeconds(2f);
         takeBall = false;
+        notReadyToLeave = false;
     }
 }
