@@ -42,7 +42,6 @@ public class AC_RadioShuffle : MonoBehaviour
         // Set the new song and play it
         radioAudio.clip = newSong;
         radioAudio.Play();
-        Debug.Log("Playing new random song: " + newSong.name);
     }
 
     // Called when the trigger is pressed while holding the object
@@ -55,13 +54,11 @@ public class AC_RadioShuffle : MonoBehaviour
 
             // Pick and play a random song
             PlayRandomSong();
-            Debug.Log("Radio unmuted and playing a random song.");
         }
         else
         {
             // If it's not muted, mute the audio
             radioAudio.mute = true;
-            Debug.Log("Radio muted.");
         }
     }
 
@@ -73,7 +70,6 @@ public class AC_RadioShuffle : MonoBehaviour
         {
             // Play a new random song when the current one finishes
             PlayRandomSong();
-            Debug.Log("Song finished. Playing a new random song.");
         }
     }
 }

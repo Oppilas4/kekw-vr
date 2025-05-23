@@ -13,7 +13,6 @@ public class AC_NewDryer : MonoBehaviour
     {
         if (!vacuumBase || !vacuumHead)
         {
-            Debug.LogError("Missing references. Please assign vacuumBase and vacuumHead.");
             return;
         }
 

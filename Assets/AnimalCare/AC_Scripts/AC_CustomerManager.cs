@@ -96,15 +96,12 @@ public class AC_CustomerManager : MonoBehaviour
             // Tell checklist manager what tasks are valid
             checklistManager.SetValidTasks(validTaskIndices);
 
-            Debug.Log($"New customer arrived! Wants: {string.Join(", ", currentCustomer.services)} | Will pay: {currentCustomer.totalPayment}e");
-
             // Start countdown based on total task time
             float totalCustomerTime = 0f;
             foreach (string service in currentCustomer.services)
             {
                 totalCustomerTime += serviceDurations[service];
             }
-            Debug.Log($"Customer time limit: {totalCustomerTime} seconds");
 
             // Start parallel coroutines
             bool tasksCompleted = false;

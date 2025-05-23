@@ -46,7 +46,6 @@ public class AC_DogWashing : MonoBehaviour
         mat = skinnedMeshRenderer.material;
         if (skinnedMeshRenderer == null)
         {
-            Debug.LogError("SkinnedMeshRenderer not found!");
             return;
         }
 
@@ -122,8 +121,6 @@ public class AC_DogWashing : MonoBehaviour
         }
 
         mesh.colors = colors;
-        Debug.Log($"Wetness: {wetnessAmount:F4}");
-        Debug.Log($"TrimAmount: {trimAmount:F4}");
     }
 
     void PaintVertex(Vector3 hitPoint, string nametag)
@@ -177,7 +174,6 @@ public class AC_DogWashing : MonoBehaviour
         {
             colors[i] = Color.Lerp(colors[i], wetColor, 0.025f);
         }
-        Debug.Log("The dog is fully wet!");
     }
     void SetFullDryColor()
     {
@@ -186,7 +182,6 @@ public class AC_DogWashing : MonoBehaviour
             colors[i] = dryColor;
             //Test to fix the bug that dog is half wet but task is done in second time
         }
-        Debug.Log("The dog is fully dry!");
         if (wet2) checklistManager.CompleteTask(0);
         wet1 = false;
         wet2 = false;
@@ -201,8 +196,8 @@ public class AC_DogWashing : MonoBehaviour
         {
             colors[i] = Color.Lerp(colors[i], trimColor, 0.1f);
         }
-        mat.SetTexture("_BumpMap", null); //delete normal from material 
-        Debug.Log("The dog is fully trimmed!");
+        mat.SetFloat("_BumpScale", 0f); // tai jokin pienempi arvo kuten 0.2f
+        //mat.SetTexture("_BumpMap", null); //delete normal from material
         checklistManager.CompleteTask(1);
         notTrimmed = true;
     }

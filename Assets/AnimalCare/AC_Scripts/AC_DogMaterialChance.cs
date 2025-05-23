@@ -32,7 +32,6 @@ public class AC_DogMaterialChance : MonoBehaviour
             if (objectRenderer != null)
             {
                 originalMaterial = objectRenderer.material; // saves original material
-                Debug.Log("original material saved");
             }
         }
         waterDripping = dripping.GetComponent<ParticleSystem>();

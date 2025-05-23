@@ -28,7 +28,6 @@ public class AC_Soap : MonoBehaviour
     {
         if (collision.gameObject.tag == "Sponge" && sponge.foamRunning && wetdog.wet1)
         {
-            Debug.Log("Sponge hit");
             soap.SetActive(true);
             soapParticle.Play();
             

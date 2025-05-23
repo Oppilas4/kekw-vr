@@ -18,14 +18,11 @@ public class AC_Checklist : MonoBehaviour
     private void OnGrab(ActivateEventArgs arg)
     {
         
-
-        Debug.Log("Object grabbed");
     }
 
     
     private void OnRelease(DeactivateEventArgs arg)
     {
        
-        Debug.Log("Object released");
     }
 }

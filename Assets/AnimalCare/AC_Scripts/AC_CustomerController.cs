@@ -22,7 +22,6 @@ public class AC_CustomerController : MonoBehaviour
     {
         if (targetPoint == null)
         {
-            Debug.LogWarning("No target point set for customer!");
             return;
         }
 

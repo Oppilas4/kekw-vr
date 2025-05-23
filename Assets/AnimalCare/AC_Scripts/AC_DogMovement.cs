@@ -51,6 +51,7 @@ public class AC_DogMovement : MonoBehaviour
     public Transform mouthTransform; // Assign this in the Inspector
     bool notReadyToLeave = false;
     bool movingToDoor = false;
+    bool dogHoldBall = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -87,7 +88,6 @@ public class AC_DogMovement : MonoBehaviour
         if (waitingToEnterSink && door.checkOpening)
         {
             waitingToEnterSink = false;
-            MoveIntoSink();
         }
         if (eaten && giveBall)
         {
@@ -131,7 +131,6 @@ public class AC_DogMovement : MonoBehaviour
             Vector3 targetPosition = new Vector3(targetFood.position.x, 0, targetFood.position.z);
             // Trigger the "Walk" animation
             if (!eatAnimation) dogAnimator.SetFloat("Speed",moveSpeed);
-            Debug.Log("Walking to food");
             // Set the adjusted target position as the NavMeshAgent's destination
             navAgent.SetDestination(targetPosition);
             StopAtFood();
@@ -144,7 +143,6 @@ public class AC_DogMovement : MonoBehaviour
         {
             // Stop the movement
             navAgent.isStopped = true;
-            Debug.Log("Moved");
             eatAnimation = true;
             // Trigger the eating animation
             StartEating(targetFood);
@@ -157,7 +155,6 @@ public class AC_DogMovement : MonoBehaviour
         if (!isEating)
         {
             isEating = true;
-            Debug.Log("Dog found food and started eating!");
             dogAnimator.SetFloat("Speed", 0);
             // Trigger the "Eat" animation
             dogAnimator.SetTrigger(eatAnimationTrigger);
@@ -173,13 +170,12 @@ public class AC_DogMovement : MonoBehaviour
         Destroy(DestroyedObject); // Or use food.SetActive(false); to hide the food instead
         isEating = false;
         navAgent.isStopped = false;
-        Debug.Log("Have done eating");
         yield return new WaitForSeconds(4f);
         eatAnimation = false;
     }
     void MoveToBathTub()
     {
-        if (movetoNearTub)
+        if (!notReadyToLeave && movetoNearTub)
         {
             // Set the target position, but keep the dog's current Y position
             Vector3 target2Position = new Vector3(bathtub.position.x, 0, bathtub.position.z);
@@ -190,7 +186,7 @@ public class AC_DogMovement : MonoBehaviour
             // Start checking the destination arrival status once the dog is moving
             StartCoroutine(CheckIfDogReachedDestinationOfTub());
         }
-        else if(movetoTrim)
+        else if(!notReadyToLeave && movetoTrim)
         {
             // Set the target position, but keep the dog's current Y position
             Vector3 target4Position = new Vector3(trimmingTable.position.x, trimmingTable.position.y, trimmingTable.position.z);
@@ -222,7 +218,6 @@ public class AC_DogMovement : MonoBehaviour
         // Once the dog has reached the target
         movetoNearTub = false;
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
-        Debug.Log("Dog is near Bathtub");
 
         if (door.checkOpening)
         {
@@ -252,7 +247,6 @@ public class AC_DogMovement : MonoBehaviour
             {
                 jumping = true;
                 hasJumped = true;
-                Debug.Log("JUMP TRIGGERED");
                 dogAnimator.SetFloat("Speed", 0);
                 dogAnimator.SetTrigger("Jump");
 
@@ -264,7 +258,6 @@ public class AC_DogMovement : MonoBehaviour
         // Once the dog has reached the target
         movetoTrim = false;
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
-        Debug.Log("Dog is at Trimmer");
         hasJumped = false;
         jumping = false;
     }
@@ -301,7 +294,6 @@ public class AC_DogMovement : MonoBehaviour
             {
                 jumping = true;
                 hasJumped = true;
-                Debug.Log("JUMP TRIGGERED");
                 dogAnimator.SetFloat("Speed", 0);
                 dogAnimator.SetTrigger("Jump");
 
@@ -312,7 +304,6 @@ public class AC_DogMovement : MonoBehaviour
         }
         // Once the dog has reached the target
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
-        Debug.Log("Dog is Out");
 
         yield return new WaitForSeconds(1f);
         towel.SetActive(true);
@@ -347,7 +338,6 @@ public class AC_DogMovement : MonoBehaviour
             Vector3 directionToTarget = navAgent.steeringTarget - transform.position;
             directionToTarget.y = 0; // Make sure to rotate only around the Y-axis
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget) * Quaternion.Euler(0, 15f, 0);
-            Debug.Log("Rotate the dog");
             // Smoothly rotate towards the target rotation
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
@@ -356,11 +346,11 @@ public class AC_DogMovement : MonoBehaviour
         }
         dogAnimator.SetFloat("Speed", 0);  // Stop walking animation
         movedInTub = true;
-        Debug.Log("Dog is on Bathtub");
     }
     IEnumerator Wait(float time)
     {
         yield return new WaitForSeconds(time);
+        MoveIntoSink();
     }
     public void MoveToDoor()
     {
@@ -414,13 +404,11 @@ public class AC_DogMovement : MonoBehaviour
     }
     void StopAtBall()
     {
-        Debug.Log("Distance: " + Vector3.Distance(transform.position, new Vector3(targetBall.position.x, 0, targetBall.position.z)));
         // Check if the dog is close enough to the ball (within a certain threshold)
         if (Vector3.Distance(transform.position, new Vector3(targetBall.position.x, 0, targetBall.position.z)) <= 0.3f)
         {
             // Stop the movement
             navAgent.isStopped = true;
-            Debug.Log("Moved");
             ballCheck.transform.GetComponent<XRGrabInteractable>().enabled = false;
             // Trigger the eating animation
             StartTakingBall(targetBall);
@@ -433,7 +421,6 @@ public class AC_DogMovement : MonoBehaviour
         {
             takeBallAnimation = true;
             takeBall = true;
-            Debug.Log("Dog found ball!");
             dogAnimator.SetFloat("Speed", 0);
             // Trigger the "Eat" animation
             dogAnimator.SetTrigger("TakingBall");
@@ -455,12 +442,10 @@ public class AC_DogMovement : MonoBehaviour
         takeBallAnimation = false;
         // Move to player
         GameObject player = GameObject.Find("XR Origin");
-        Debug.Log("Player found");
         if (player != null)
         {
             // Offset 2 units in player's forward (Z) direction
             Vector3 offsetPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z);
-            Debug.Log(offsetPosition + " Player position");
             yield return new WaitForSeconds(2f);
             // Move the dog to the offset position
             navAgent.SetDestination(offsetPosition);
@@ -476,7 +461,6 @@ public class AC_DogMovement : MonoBehaviour
         {
             // Stop the movement
             navAgent.isStopped = true;
-            Debug.Log("Moved");
             StartGivingBall(targetBall);
         }
     }
@@ -490,12 +474,10 @@ public class AC_DogMovement : MonoBehaviour
         }
 
         navAgent.isStopped = true;
-        Debug.Log("Moved to player");
         StartGivingBall(targetBall);
     }
     void StartGivingBall(Transform ball)
     {
-        Debug.Log("Dog gave ball!");
         dogAnimator.SetFloat("TakingBallSpeed", 0);
         // Trigger the "Sit" animation
         dogAnimator.SetTrigger("Sit");
@@ -523,10 +505,11 @@ public class AC_DogMovement : MonoBehaviour
         }
         barkingsound.Play();
         ballCheck.transform.GetComponent<XRGrabInteractable>().enabled = true;
+        dogHoldBall = true;
     }
     public void DogStandUp()
     {
-        if (takeBall)
+        if (dogHoldBall)
         {
             navAgent.isStopped = false;
             dogAnimator.SetTrigger("Continue");
@@ -539,5 +522,6 @@ public class AC_DogMovement : MonoBehaviour
         yield return new WaitForSeconds(2f);
         takeBall = false;
         notReadyToLeave = false;
+        dogHoldBall = false;
     }
 }

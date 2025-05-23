@@ -14,7 +14,6 @@ public class AC_CustomerAppearance : MonoBehaviour
     {
         if (clothesMaterials.Length == 0 || clothingRenderer == null)
         {
-            Debug.LogWarning("Missing materials or renderer!");
             return;
         }
 
